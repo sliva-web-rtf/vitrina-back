@@ -12,12 +12,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Saritasa.RedMan.Infrastructure.Abstractions\Saritasa.RedMan.Infrastructure.Abstractions.csproj" />
-    <ProjectReference Include="..\Saritasa.RedMan.UseCases.Common\Saritasa.RedMan.UseCases.Common.csproj" />
+    <EmbeddedResource Include="**\*.html" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="**\*.html" />
+    <ProjectReference Include="..\Vitrina.Infrastructure.Abstractions\Vitrina.Infrastructure.Abstractions.csproj" />
+    <ProjectReference Include="..\Vitrina.UseCases.Common\Vitrina.UseCases.Common.csproj" />
   </ItemGroup>
 
 </Project>

@@ -11,8 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Saritasa.RedMan.Domain\Saritasa.RedMan.Domain.csproj" />
-    <ProjectReference Include="..\Saritasa.RedMan.Infrastructure.Abstractions\Saritasa.RedMan.Infrastructure.Abstractions.csproj" />
+    <ProjectReference Include="..\Vitrina.Domain\Vitrina.Domain.csproj" />
+    <ProjectReference Include="..\Vitrina.Infrastructure.Abstractions\Vitrina.Infrastructure.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>
