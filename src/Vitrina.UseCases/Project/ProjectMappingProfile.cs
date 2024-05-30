@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Vitrina.UseCases.Common;
 using Vitrina.UseCases.Project.AddProject;
+using Vitrina.UseCases.Project.SearchProjects;
 
 namespace Vitrina.UseCases.Project;
 
@@ -20,5 +21,6 @@ public class ProjectMappingProfile : Profile
         CreateMap<Domain.Project.Role, RoleDto>().ReverseMap();
         CreateMap<Domain.Project.User, UserDto>().ReverseMap();
         CreateMap<Domain.Project.Project, ProjectDto>().ReverseMap();
+        CreateMap<Domain.Project.Project, ShortProjectDto>().ReverseMap();
     }
 }

@@ -34,6 +34,16 @@ public class Project
     public string? Client { get; set; }
 
     /// <summary>
+    /// Semester.
+    /// </summary>
+    public SemesterEnum Semester { get; set; }
+
+    /// <summary>
+    /// Period.
+    /// </summary>
+    required public string Period { get; set; }
+
+    /// <summary>
     /// Project content.
     /// </summary>
     public ICollection<Content> Contents { get; private set; } = new List<Content>();

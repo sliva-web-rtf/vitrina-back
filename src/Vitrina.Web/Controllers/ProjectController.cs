@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Vitrina.UseCases.Common;
 using Vitrina.UseCases.Project.AddProject;
 using Vitrina.UseCases.Project.GetProjectById;
+using Vitrina.UseCases.Project.SearchProjects;
 
 namespace Vitrina.Web.Controllers;
 
@@ -36,4 +37,12 @@ public class ProjectController : ControllerBase
     [HttpGet("{id}")]
     public async Task<ProjectDto> GetProject(int id, CancellationToken cancellationToken)
         => await mediator.Send(new GetProjectByIdQuery(id), cancellationToken);
+
+    /// <summary>
+    /// Search projects by query.
+    /// </summary>
+    [HttpPost("search")]
+    public async Task<ICollection<ShortProjectDto>> SearchProjects([FromBody] SearchProjectsQuery query, CancellationToken cancellationToken)
+        => await mediator.Send(query, cancellationToken);
+
 }
