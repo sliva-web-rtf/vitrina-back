@@ -1,0 +1,46 @@
+﻿using MediatR;
+using Vitrina.Domain.Project;
+using Vitrina.UseCases.Common;
+
+namespace Vitrina.UseCases.Project.AddProject;
+
+/// <summary>
+/// Add project command.
+/// </summary>
+public class AddProjectCommand : IRequest<int>
+{
+    /// <summary>
+    /// Name.
+    /// </summary>
+    required public string Name { get; init; }
+
+    /// <summary>
+    /// Project description.
+    /// </summary>
+    public string? Description { get; init; }
+
+    /// <summary>
+    /// Project aim.
+    /// </summary>
+    public string? Aim { get; init; }
+
+    /// <summary>
+    /// Project client.
+    /// </summary>
+    public string? Client { get; init; }
+
+    /// <summary>
+    /// Project content.
+    /// </summary>
+    public ICollection<ContentDto> Contents { get; init; } = new List<ContentDto>();
+
+    /// <summary>
+    /// Project tags.
+    /// </summary>
+    public ICollection<TagDto> Tags { get; init; } = new List<TagDto>();
+
+    /// <summary>
+    /// Project team.
+    /// </summary>
+    public ICollection<UserDto> Users { get; init; } = new List<UserDto>();
+}

@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using Saritasa.RedMan.Infrastructure.DataAccess;
+using Vitrina.Infrastructure.DataAccess;
 
-namespace Saritasa.RedMan.Web.Infrastructure.Startup;
+namespace Vitrina.Web.Infrastructure.Startup;
 
 /// <summary>
 /// Database context setup.

@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace Saritasa.RedMan.Infrastructure.Abstractions.Interfaces;
+namespace Vitrina.Infrastructure.Abstractions.Interfaces;
 
 /// <summary>
 /// Database context that can retrieve entities collection by providing type.

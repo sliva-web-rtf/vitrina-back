@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Saritasa.RedMan.Domain.Project;
-using Saritasa.RedMan.Infrastructure.Abstractions.Interfaces;
+using Vitrina.Domain.Project;
+using Vitrina.Infrastructure.Abstractions.Interfaces;
 
-namespace Saritasa.RedMan.Infrastructure.DataAccess;
+namespace Vitrina.Infrastructure.DataAccess;
 
 /// <summary>
 /// Application unit of work.

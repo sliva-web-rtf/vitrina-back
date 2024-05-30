@@ -5,7 +5,7 @@ using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using Unchase.Swashbuckle.AspNetCore.Extensions.Extensions;
 
-namespace Saritasa.RedMan.Web.Infrastructure.Startup.Swagger;
+namespace Vitrina.Web.Infrastructure.Startup.Swagger;
 
 /// <summary>
 /// Swagger generation options.

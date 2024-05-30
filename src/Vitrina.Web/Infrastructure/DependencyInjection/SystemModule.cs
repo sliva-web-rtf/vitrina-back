@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Saritasa.RedMan.Infrastructure.Abstractions.Interfaces;
-using Saritasa.RedMan.Infrastructure.DataAccess;
-using Saritasa.RedMan.Web.Infrastructure.Web;
+using Vitrina.Infrastructure.Abstractions.Interfaces;
+using Vitrina.Infrastructure.DataAccess;
+using Vitrina.Web.Infrastructure.Web;
 
-namespace Saritasa.RedMan.Web.Infrastructure.DependencyInjection;
+namespace Vitrina.Web.Infrastructure.DependencyInjection;
 
 /// <summary>
 /// System specific dependencies.

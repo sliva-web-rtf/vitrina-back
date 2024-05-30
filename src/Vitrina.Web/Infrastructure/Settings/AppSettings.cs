@@ -1,4 +1,4 @@
-﻿namespace Saritasa.RedMan.Web.Infrastructure.Settings;
+﻿namespace Vitrina.Web.Infrastructure.Settings;
 
 /// <summary>
 /// Global application settings.

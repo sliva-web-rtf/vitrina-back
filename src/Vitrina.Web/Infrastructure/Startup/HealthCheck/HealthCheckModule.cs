@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Net.Http.Headers;
 
-namespace Saritasa.RedMan.Web.Infrastructure.Startup.HealthCheck;
+namespace Vitrina.Web.Infrastructure.Startup.HealthCheck;
 
 /// <summary>
 /// Module responsible for configuring application health checks.

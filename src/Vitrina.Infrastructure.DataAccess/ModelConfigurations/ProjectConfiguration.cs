@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Saritasa.RedMan.Domain.Project;
+using Vitrina.Domain.Project;
 
-namespace Saritasa.RedMan.Infrastructure.DataAccess.ModelConfigurations;
+namespace Vitrina.Infrastructure.DataAccess.ModelConfigurations;
 
 /// <summary>
 /// Configeration of project.

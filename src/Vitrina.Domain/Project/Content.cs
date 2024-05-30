@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Saritasa.RedMan.Domain.Project;
+namespace Vitrina.Domain.Project;
 
 /// <summary>
 /// Project content.

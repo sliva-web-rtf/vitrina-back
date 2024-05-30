@@ -1,7 +1,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Saritasa.RedMan.Web.Infrastructure.DependencyInjection;
+namespace Vitrina.Web.Infrastructure.DependencyInjection;
 
 /// <summary>
 /// Application specific dependencies.

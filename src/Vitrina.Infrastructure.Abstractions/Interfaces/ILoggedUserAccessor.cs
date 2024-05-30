@@ -1,4 +1,4 @@
-namespace Saritasa.RedMan.Infrastructure.Abstractions.Interfaces;
+namespace Vitrina.Infrastructure.Abstractions.Interfaces;
 
 /// <summary>
 /// Logged user accessor routines.

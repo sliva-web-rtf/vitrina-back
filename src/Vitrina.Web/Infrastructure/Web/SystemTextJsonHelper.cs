@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Http.Json;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Options;
 
-namespace Saritasa.RedMan.Web.Infrastructure.Web;
+namespace Vitrina.Web.Infrastructure.Web;
 
 /// <summary>
 /// System JSON helper that implements <see cref="IJsonHelper" /> interface.

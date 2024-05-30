@@ -1,4 +1,4 @@
-namespace Saritasa.RedMan.Web.Infrastructure.Middlewares;
+namespace Vitrina.Web.Infrastructure.Middlewares;
 
 /// <summary>
 /// Problem field DTO.

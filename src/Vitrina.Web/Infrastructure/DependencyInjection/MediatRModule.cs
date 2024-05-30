@@ -1,4 +1,6 @@
-namespace Saritasa.RedMan.Web.Infrastructure.DependencyInjection;
+using Vitrina.UseCases.Project.AddProject;
+
+namespace Vitrina.Web.Infrastructure.DependencyInjection;
 
 /// <summary>
 /// Register Mediator as dependency.
@@ -11,6 +13,6 @@ internal static class MediatRModule
     /// <param name="services">Services.</param>
     public static void Register(IServiceCollection services)
     {
-        //services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(LoginUserCommand).Assembly));
+        services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(AddProjectCommand).Assembly));
     }
 }

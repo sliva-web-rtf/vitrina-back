@@ -1,7 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Vitrina.UseCases.Project.AddProject;
 
-namespace Saritasa.RedMan.Web.Controllers;
+namespace Vitrina.Web.Controllers;
 
 /// <summary>
 /// Project controller.
@@ -16,11 +17,13 @@ public class ProjectController : ControllerBase
     /// <summary>
     /// Constructor.
     /// </summary>
-    //public ProjectController(IMediator mediator) => this.mediator = mediator;
+    public ProjectController(IMediator mediator) => this.mediator = mediator;
 
-    [HttpGet]
-    public IActionResult GetProjects()
-    {
-        return Ok("Hello world.");
-    }
+    /// <summary>
+    /// Add project.
+    /// </summary>
+    /// <returns>Project id.</returns>
+    [HttpPost("create")]
+    public async Task<int> GetProjects([FromBody] AddProjectCommand command, CancellationToken cancellationToken)
+        => await mediator.Send(command, cancellationToken);
 }

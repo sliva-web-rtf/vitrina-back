@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Saritasa.RedMan.UseCases.Common.Pagination;
+namespace Vitrina.UseCases.Common.Pagination;
 
 /// <summary>
 /// Base class for filters that contains page, page size and sorting entries.

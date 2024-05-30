@@ -1,6 +1,6 @@
 using Swashbuckle.AspNetCore.SwaggerUI;
 
-namespace Saritasa.RedMan.Web.Infrastructure.Startup.Swagger;
+namespace Vitrina.Web.Infrastructure.Startup.Swagger;
 
 /// <summary>
 /// Swagger UI options.

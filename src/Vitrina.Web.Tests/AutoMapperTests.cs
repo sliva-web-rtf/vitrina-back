@@ -1,9 +1,9 @@
 using AutoMapper;
 using Microsoft.Extensions.DependencyInjection;
-using Saritasa.RedMan.Web.Infrastructure.DependencyInjection;
+using Vitrina.Web.Infrastructure.DependencyInjection;
 using Xunit;
 
-namespace Saritasa.RedMan.Web.Tests;
+namespace Vitrina.Web.Tests;
 
 /// <summary>
 /// Test for AutoMapper configuration.

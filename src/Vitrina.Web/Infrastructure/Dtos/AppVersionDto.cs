@@ -1,4 +1,4 @@
-﻿namespace Saritasa.RedMan.Web.Infrastructure.Dtos;
+﻿namespace Vitrina.Web.Infrastructure.Dtos;
 
 /// <summary>
 /// DTO for application version.

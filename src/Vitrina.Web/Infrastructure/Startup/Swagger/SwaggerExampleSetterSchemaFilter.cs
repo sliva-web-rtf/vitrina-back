@@ -2,7 +2,7 @@
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace Saritasa.RedMan.Web.Infrastructure.Startup.Swagger;
+namespace Vitrina.Web.Infrastructure.Startup.Swagger;
 
 /// <summary>
 /// Generates standard example for Swagger document properties. For example it puts

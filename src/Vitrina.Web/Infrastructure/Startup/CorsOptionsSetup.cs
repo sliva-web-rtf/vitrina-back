@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Cors.Infrastructure;
 
-namespace Saritasa.RedMan.Web.Infrastructure.Startup;
+namespace Vitrina.Web.Infrastructure.Startup;
 
 /// <summary>
 /// CORS options setup.

@@ -8,7 +8,7 @@ using Saritasa.Tools.Common.Utils;
 using Saritasa.Tools.Domain.Exceptions;
 using ValidationException = Saritasa.Tools.Domain.Exceptions.ValidationException;
 
-namespace Saritasa.RedMan.Web.Infrastructure.Middlewares;
+namespace Vitrina.Web.Infrastructure.Middlewares;
 
 /// <summary>
 /// Exception handling middleware. In general:

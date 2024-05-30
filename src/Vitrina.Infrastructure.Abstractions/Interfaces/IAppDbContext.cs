@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Saritasa.RedMan.Domain.Project;
+using Vitrina.Domain.Project;
 
-namespace Saritasa.RedMan.Infrastructure.Abstractions.Interfaces;
+namespace Vitrina.Infrastructure.Abstractions.Interfaces;
 
 /// <summary>
 /// Application abstraction for unit of work.

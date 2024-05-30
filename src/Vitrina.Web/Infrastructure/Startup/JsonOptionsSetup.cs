@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Saritasa.RedMan.Web.Infrastructure.Startup;
+namespace Vitrina.Web.Infrastructure.Startup;
 
 /// <summary>
 /// JSON options setup.

@@ -1,6 +1,6 @@
 ﻿using McMaster.Extensions.CommandLineUtils;
 
-namespace Saritasa.RedMan.Web;
+namespace Vitrina.Web;
 
 /// <summary>
 /// Entry point class.

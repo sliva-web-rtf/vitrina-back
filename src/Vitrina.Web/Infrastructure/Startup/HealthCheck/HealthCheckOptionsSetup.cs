@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 
-namespace Saritasa.RedMan.Web.Infrastructure.Startup.HealthCheck;
+namespace Vitrina.Web.Infrastructure.Startup.HealthCheck;
 
 /// <summary>
 /// The class returns configured health check.

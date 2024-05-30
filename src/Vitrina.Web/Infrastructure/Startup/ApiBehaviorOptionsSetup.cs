@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Options;
-using Saritasa.RedMan.Web.Infrastructure.Middlewares;
+using Vitrina.Web.Infrastructure.Middlewares;
 using Saritasa.Tools.Domain.Exceptions;
 
-namespace Saritasa.RedMan.Web.Infrastructure.Startup;
+namespace Vitrina.Web.Infrastructure.Startup;
 
 /// <summary>
 /// API behavior setup. In this behavior we override default 400 errors handler to

@@ -1,8 +1,8 @@
 using Extensions.Hosting.AsyncInitialization;
 using Microsoft.EntityFrameworkCore;
-using Saritasa.RedMan.Infrastructure.DataAccess;
+using Vitrina.Infrastructure.DataAccess;
 
-namespace Saritasa.RedMan.Web.Infrastructure.Startup;
+namespace Vitrina.Web.Infrastructure.Startup;
 
 /// <summary>
 /// Contains database migration helper methods.

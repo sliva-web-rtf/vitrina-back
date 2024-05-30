@@ -1,6 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Vitrina.UseCases.Project.AddProject;
 
-namespace Saritasa.RedMan.Web.Infrastructure.DependencyInjection;
+namespace Vitrina.Web.Infrastructure.DependencyInjection;
 
 /// <summary>
 /// Register AutoMapper dependencies.
@@ -13,7 +13,7 @@ public class AutoMapperModule
     /// <param name="services">Services.</param>
     public static void Register(IServiceCollection services)
     {
-        //services.AddAutoMapper(
-            //typeof(TokenModel).Assembly);
+        services.AddAutoMapper(
+            typeof(AddProjectCommand).Assembly);
     }
 }

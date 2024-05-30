@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Vitrina.Domain\Vitrina.Domain.csproj" />
     <ProjectReference Include="..\Vitrina.Infrastructure.Abstractions\Vitrina.Infrastructure.Abstractions.csproj" />
     <ProjectReference Include="..\Vitrina.UseCases.Common\Vitrina.UseCases.Common.csproj" />
   </ItemGroup>

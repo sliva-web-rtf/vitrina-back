@@ -1,13 +1,13 @@
 ﻿using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc;
-using Saritasa.RedMan.Infrastructure.DataAccess;
-using Saritasa.RedMan.Web.Infrastructure.Middlewares;
-using Saritasa.RedMan.Web.Infrastructure.Settings;
-using Saritasa.RedMan.Web.Infrastructure.Startup;
-using Saritasa.RedMan.Web.Infrastructure.Startup.Swagger;
+using Vitrina.Infrastructure.DataAccess;
+using Vitrina.Web.Infrastructure.Middlewares;
+using Vitrina.Web.Infrastructure.Settings;
+using Vitrina.Web.Infrastructure.Startup;
+using Vitrina.Web.Infrastructure.Startup.Swagger;
 
-namespace Saritasa.RedMan.Web;
+namespace Vitrina.Web;
 
 /// <summary>
 /// Entry point for ASP.NET Core app.

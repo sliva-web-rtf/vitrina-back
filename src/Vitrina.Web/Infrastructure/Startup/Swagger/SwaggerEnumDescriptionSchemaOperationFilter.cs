@@ -2,7 +2,7 @@ using System.ComponentModel;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace Saritasa.RedMan.Web.Infrastructure.Startup.Swagger;
+namespace Vitrina.Web.Infrastructure.Startup.Swagger;
 
 /// <summary>
 /// A filter that adds descriptions of enums depending on their name.
