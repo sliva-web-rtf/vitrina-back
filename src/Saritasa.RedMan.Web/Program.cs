@@ -1,14 +1,10 @@
 ﻿using McMaster.Extensions.CommandLineUtils;
-using Saritasa.RedMan.Web.Commands;
 
 namespace Saritasa.RedMan.Web;
 
 /// <summary>
 /// Entry point class.
 /// </summary>
-[Command(Name = "redman")]
-[Subcommand(typeof(Seed))]
-[Subcommand(typeof(CreateUser))]
 internal sealed class Program
 {
     private static WebApplication? app;
@@ -34,13 +30,6 @@ internal sealed class Program
             .UseDefaultConventions();
         return await commandLineApplication.ExecuteAsync(args);
     }
-
-    /// <summary>
-    /// This options is there to allow running the application with `--urls` parameter.
-    /// https://paketo.io/docs/reference/dotnet-core-reference/#self-contained-deployment-and-framework-dependent-executables.
-    /// </summary>
-    [Option]
-    public string? Urls { get; }
 
     /// <summary>
     /// Command line application execution callback.

@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Saritasa.RedMan.Domain.Store;
-using Saritasa.RedMan.Domain.Users;
+using Saritasa.RedMan.Domain.Project;
 using Saritasa.RedMan.Infrastructure.Abstractions.Interfaces;
 
 namespace Saritasa.RedMan.Infrastructure.DataAccess;
@@ -11,15 +9,24 @@ namespace Saritasa.RedMan.Infrastructure.DataAccess;
 /// <summary>
 /// Application unit of work.
 /// </summary>
-public class AppDbContext : IdentityDbContext<User, AppIdentityRole, int>, IAppDbContext, IDataProtectionKeyContext
+public class AppDbContext : DbContext, IAppDbContext, IDataProtectionKeyContext
 {
-    /// <summary>
-    /// Products set.
-    /// </summary>
-    public DbSet<Product> Products { get; private set; }
+    public DbSet<Project> Projects => Set<Project>();
 
     /// <inheritdoc/>
     public DbSet<DataProtectionKey> DataProtectionKeys { get; private set; }
+
+    /// <inheritdoc/>
+    public DbSet<User> Users => Set<User>();
+
+    /// <inheritdoc/>
+    public DbSet<Tag> Tags => Set<Tag>();
+
+    /// <inheritdoc/>
+    public DbSet<Role> Roles => Set<Role>();
+
+    /// <inheritdoc/>
+    public DbSet<Content> Contents => Set<Content>();
 
     /// <summary>
     /// Constructor.

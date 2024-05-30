@@ -1,9 +1,6 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.DataProtection;
+﻿using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.HttpOverrides;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Saritasa.RedMan.Domain.Users;
 using Saritasa.RedMan.Infrastructure.DataAccess;
 using Saritasa.RedMan.Web.Infrastructure.Middlewares;
 using Saritasa.RedMan.Web.Infrastructure.Settings;
@@ -65,25 +62,6 @@ public class Startup
         // tokens from different instances will be incompatible.
         services.AddDataProtection().SetApplicationName("Application")
             .PersistKeysToDbContext<AppDbContext>();
-
-        // Identity.
-        services.AddIdentity<User, AppIdentityRole>()
-            .AddEntityFrameworkStores<AppDbContext>()
-            .AddDefaultTokenProviders();
-        services.Configure<IdentityOptions>(new IdentityOptionsSetup().Setup);
-
-        // JWT.
-        var jwtSecretKey = configuration["Jwt:SecretKey"] ?? throw new ArgumentNullException("Jwt:SecretKey");
-        var jwtIssuer = configuration["Jwt:Issuer"] ?? throw new ArgumentNullException("Jwt:Issuer");
-        services.AddAuthentication(options =>
-        {
-            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-        })
-        .AddJwtBearer(new JwtBearerOptionsSetup(
-            jwtSecretKey,
-            jwtIssuer).Setup
-        );
 
         // Database.
         services.AddDbContext<AppDbContext>(

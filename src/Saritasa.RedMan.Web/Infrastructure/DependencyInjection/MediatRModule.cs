@@ -1,5 +1,3 @@
-using Saritasa.RedMan.UseCases.Users.AuthenticateUser.LoginUser;
-
 namespace Saritasa.RedMan.Web.Infrastructure.DependencyInjection;
 
 /// <summary>
@@ -13,6 +11,6 @@ internal static class MediatRModule
     /// <param name="services">Services.</param>
     public static void Register(IServiceCollection services)
     {
-        services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(LoginUserCommand).Assembly));
+        //services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(LoginUserCommand).Assembly));
     }
 }

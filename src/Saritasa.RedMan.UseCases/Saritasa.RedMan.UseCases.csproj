@@ -12,7 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Saritasa.RedMan.DomainServices\Saritasa.RedMan.DomainServices.csproj" />
     <ProjectReference Include="..\Saritasa.RedMan.Infrastructure.Abstractions\Saritasa.RedMan.Infrastructure.Abstractions.csproj" />
     <ProjectReference Include="..\Saritasa.RedMan.UseCases.Common\Saritasa.RedMan.UseCases.Common.csproj" />
   </ItemGroup>

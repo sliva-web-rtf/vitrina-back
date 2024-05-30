@@ -1,0 +1,16 @@
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Saritasa.RedMan.Domain.Project;
+
+namespace Saritasa.RedMan.Infrastructure.DataAccess.ModelConfigurations;
+
+/// <summary>
+/// Configuration of tags.
+/// </summary>
+internal class TagConfiguration : IEntityTypeConfiguration<Tag>
+{
+    public void Configure(EntityTypeBuilder<Tag> builder)
+    {
+        builder.HasIndex(e => e.Name).IsUnique();
+    }
+}

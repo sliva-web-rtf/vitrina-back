@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Saritasa.RedMan.UseCases.Users.AuthenticateUser;
 
 namespace Saritasa.RedMan.Web.Infrastructure.DependencyInjection;
 
@@ -14,7 +13,7 @@ public class AutoMapperModule
     /// <param name="services">Services.</param>
     public static void Register(IServiceCollection services)
     {
-        services.AddAutoMapper(
-            typeof(TokenModel).Assembly);
+        //services.AddAutoMapper(
+            //typeof(TokenModel).Assembly);
     }
 }
