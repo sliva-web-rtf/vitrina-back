@@ -19,5 +19,6 @@ public class ProjectMappingProfile : Profile
         CreateMap<Domain.Project.Tag, TagDto>().ReverseMap();
         CreateMap<Domain.Project.Role, RoleDto>().ReverseMap();
         CreateMap<Domain.Project.User, UserDto>().ReverseMap();
+        CreateMap<Domain.Project.Project, ProjectDto>().ReverseMap();
     }
 }

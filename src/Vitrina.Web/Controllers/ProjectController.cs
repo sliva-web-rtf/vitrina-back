@@ -1,6 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Vitrina.UseCases.Common;
 using Vitrina.UseCases.Project.AddProject;
+using Vitrina.UseCases.Project.GetProjectById;
 
 namespace Vitrina.Web.Controllers;
 
@@ -24,6 +26,14 @@ public class ProjectController : ControllerBase
     /// </summary>
     /// <returns>Project id.</returns>
     [HttpPost("create")]
-    public async Task<int> GetProjects([FromBody] AddProjectCommand command, CancellationToken cancellationToken)
+    public async Task<int> CreateProject([FromBody] AddProjectCommand command, CancellationToken cancellationToken)
         => await mediator.Send(command, cancellationToken);
+
+    /// <summary>
+    /// Get project by id.
+    /// </summary>
+    /// <returns>Project.</returns>
+    [HttpGet("{id}")]
+    public async Task<ProjectDto> GetProject(int id, CancellationToken cancellationToken)
+        => await mediator.Send(new GetProjectByIdQuery(id), cancellationToken);
 }
