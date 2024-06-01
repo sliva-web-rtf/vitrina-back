@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Saritasa.Tools.Common.Pagination;
 using Vitrina.UseCases.Common.Pagination;
 
 namespace Vitrina.UseCases.Project.SearchProjects;
@@ -6,7 +7,7 @@ namespace Vitrina.UseCases.Project.SearchProjects;
 /// <summary>
 /// Search projects.
 /// </summary>
-public class SearchProjectsQuery : PageQueryFilter, IRequest<ICollection<ShortProjectDto>>
+public class SearchProjectsQuery : PageQueryFilter, IRequest<PagedList<ShortProjectDto>>
 {
     /// <summary>
     /// Name.

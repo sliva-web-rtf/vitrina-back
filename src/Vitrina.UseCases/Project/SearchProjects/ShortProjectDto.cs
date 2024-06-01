@@ -12,7 +12,6 @@ public class ShortProjectDto
     /// <summary>
     /// Project id.
     /// </summary>
-    [JsonIgnore]
     public int Id { get; init; }
 
     /// <summary>
@@ -30,6 +29,11 @@ public class ShortProjectDto
     /// </summary>
     [JsonIgnore]
     public string? Period { get; init; }
+
+    /// <summary>
+    /// Image url.
+    /// </summary>
+    public string ImageUrl { get; set; } = "";
 
     /// <summary>
     /// Organization.

@@ -1,11 +1,15 @@
-﻿using MediatR;
+﻿using System.IO;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Saritasa.Tools.Common.Pagination;
 using Vitrina.UseCases.Common;
 using Vitrina.UseCases.Project.AddProject;
 using Vitrina.UseCases.Project.GetOrganizations;
 using Vitrina.UseCases.Project.GetPeriods;
 using Vitrina.UseCases.Project.GetProjectById;
 using Vitrina.UseCases.Project.SearchProjects;
+using Vitrina.UseCases.Project.UploadImages;
+using Vitrina.UseCases.Project.UploadImages.Dto;
 
 namespace Vitrina.Web.Controllers;
 
@@ -29,7 +33,7 @@ public class ProjectController : ControllerBase
     /// </summary>
     /// <returns>Project id.</returns>
     [HttpPost("create")]
-    public async Task<int> CreateProject([FromBody] AddProjectCommand command, CancellationToken cancellationToken)
+    public async Task<int> CreateProject(AddProjectCommand command, CancellationToken cancellationToken)
         => await mediator.Send(command, cancellationToken);
 
     /// <summary>
@@ -44,8 +48,8 @@ public class ProjectController : ControllerBase
     /// Search projects by query.
     /// </summary>
     [HttpPost("search")]
-    public async Task<ICollection<ShortProjectDto>> SearchProjects([FromBody] SearchProjectsQuery query, CancellationToken cancellationToken)
-        => await mediator.Send(query, cancellationToken);
+    public async Task<PagedListMetadataDto<ShortProjectDto>> SearchProjects([FromBody] SearchProjectsQuery query, CancellationToken cancellationToken)
+        => (await mediator.Send(query, cancellationToken)).ToMetadataObject();
 
     /// <summary>
     /// Project periods.
@@ -62,4 +66,21 @@ public class ProjectController : ControllerBase
     [HttpGet("organizations")]
     public async Task<ICollection<string>> GetProjectOrganizations(CancellationToken cancellationToken)
         => await mediator.Send(new GetOrganizationsQuery(), cancellationToken);
+
+    /// <summary>
+    /// Upload images to project.
+    /// </summary>
+    [HttpPost("project/{id}/upload-images")]
+    public async Task<IActionResult> UploadImagesToProject([FromRoute] int id, IFormFile[] files, CancellationToken cancellationToken)
+    {
+        var command = new UploadImagesCommand { Id = id };
+        foreach (var file in files)
+        {
+            var fileStream = file.OpenReadStream();
+            var fileDto = new FileDto(fileStream, file.FileName, file.ContentType);
+            command.Files.Add(fileDto);
+        }
+        await mediator.Send(command, cancellationToken);
+        return Ok();
+    }
 }

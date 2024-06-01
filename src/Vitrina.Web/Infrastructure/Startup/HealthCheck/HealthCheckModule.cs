@@ -14,14 +14,14 @@ internal static class HealthCheckModule
     /// <param name="endpoints">Endpoints builder.</param>
     public static void Register(IEndpointRouteBuilder endpoints)
     {
-        endpoints.MapHealthChecks("/health",
-            new HealthCheckOptionsSetup().Setup(new HealthCheckOptions())
-        );
-        endpoints.MapGet("/liveness", context =>
-        {
-            context.Response.Headers[HeaderNames.CacheControl] = "no-cache";
-            context.Response.StatusCode = StatusCodes.Status200OK;
-            return Task.CompletedTask;
-        });
+        //endpoints.MapHealthChecks("/health",
+        //    new HealthCheckOptionsSetup().Setup(new HealthCheckOptions())
+        //);
+        //endpoints.MapGet("/liveness", context =>
+        //{
+        //    context.Response.Headers[HeaderNames.CacheControl] = "no-cache";
+        //    context.Response.StatusCode = StatusCodes.Status200OK;
+        //    return Task.CompletedTask;
+        //});
     }
 }

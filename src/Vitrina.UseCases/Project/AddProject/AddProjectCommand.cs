@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Http;
 using Vitrina.Domain.Project;
 using Vitrina.UseCases.Common;
 
@@ -30,9 +31,14 @@ public class AddProjectCommand : IRequest<int>
     public string? Client { get; init; }
 
     /// <summary>
-    /// Project content.
+    /// Project period.
     /// </summary>
-    public ICollection<ContentDto> Contents { get; init; } = new List<ContentDto>();
+    required public string Period { get; init; }
+
+    /// <summary>
+    /// Semester.
+    /// </summary>
+    public SemesterEnum Semester { get; init; }
 
     /// <summary>
     /// Project tags.

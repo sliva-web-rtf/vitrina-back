@@ -2,6 +2,7 @@
 using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Saritasa.Tools.Domain.Exceptions;
 using Vitrina.Infrastructure.Abstractions.Interfaces;
 using Vitrina.UseCases.Common;
 
@@ -26,6 +27,6 @@ internal class GetProjectByIdQueryHandler : IRequestHandler<GetProjectByIdQuery,
         return await dbContext.Projects
             .ProjectTo<ProjectDto>(mapper.ConfigurationProvider)
             .FirstOrDefaultAsync(p => p.Id == request.Id, cancellationToken)
-            ?? throw new ArgumentException($"Project with id {request.Id} not found.");
+            ?? throw new NotFoundException($"Project with id {request.Id} not found.");
     }
 }

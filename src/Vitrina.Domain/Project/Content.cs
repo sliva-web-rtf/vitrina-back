@@ -16,7 +16,7 @@ public class Content
     /// <summary>
     /// Bytes of image.
     /// </summary>
-    required public byte[] ImageBytes { get; set; }
+    required public string ImageUrl { get; set; }
 
     /// <summary>
     /// Project id.

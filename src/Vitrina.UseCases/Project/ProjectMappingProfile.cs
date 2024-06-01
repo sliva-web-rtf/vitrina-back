@@ -21,6 +21,8 @@ public class ProjectMappingProfile : Profile
         CreateMap<Domain.Project.Role, RoleDto>().ReverseMap();
         CreateMap<Domain.Project.User, UserDto>().ReverseMap();
         CreateMap<Domain.Project.Project, ProjectDto>().ReverseMap();
-        CreateMap<Domain.Project.Project, ShortProjectDto>().ReverseMap();
+        CreateMap<Domain.Project.Project, ShortProjectDto>()
+            .ForMember(p => p.ImageUrl, dest => dest.Ignore())
+            .ReverseMap();
     }
 }

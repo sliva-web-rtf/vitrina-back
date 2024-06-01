@@ -25,9 +25,10 @@ internal class DbContextOptionsSetup
     /// <param name="options">Options.</param>
     public void Setup(DbContextOptionsBuilder options)
     {
-        options.UseNpgsql(
+        options
+            .UseMySql(
             connectionString,
-            sqlOptions => sqlOptions.MigrationsAssembly(typeof(AppDbContext).Assembly.GetName().Name)
-        );
+            new MySqlServerVersion(new Version(8, 0, 11)),
+            sql => sql.MigrationsAssembly(typeof(AppDbContext).Assembly.GetName().Name));
     }
 }

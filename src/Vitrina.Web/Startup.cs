@@ -48,8 +48,6 @@ public class Startup
         // Health check.
         var databaseConnectionString = configuration.GetConnectionString("AppDatabase")
             ?? throw new ArgumentNullException("ConnectionStrings:AppDatabase", "Database connection string is not initialized");
-        services.AddHealthChecks()
-            .AddNpgSql(databaseConnectionString);
 
         // MVC.
         services
@@ -91,12 +89,8 @@ public class Startup
     /// <param name="environment">Application environment.</param>
     public void Configure(IApplicationBuilder app, IWebHostEnvironment environment)
     {
-        // Swagger
-        if (!environment.IsProduction())
-        {
-            app.UseSwagger();
-            app.UseSwaggerUI(new SwaggerUIOptionsSetup().Setup);
-        }
+        app.UseSwagger();
+        app.UseSwaggerUI(new SwaggerUIOptionsSetup().Setup);
 
         // Custom middlewares.
         app.UseMiddleware<ApiExceptionMiddleware>();
@@ -110,8 +104,7 @@ public class Startup
         {
             ForwardedHeaders = ForwardedHeaders.All
         });
-        app.UseAuthentication();
-        app.UseAuthorization();
+
         app.UseEndpoints(endpoints =>
         {
             Infrastructure.Startup.HealthCheck.HealthCheckModule.Register(endpoints);
