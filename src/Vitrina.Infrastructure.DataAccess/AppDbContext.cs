@@ -51,7 +51,7 @@ public class AppDbContext : DbContext, IAppDbContext, IDataProtectionKeyContext
     {
         foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
         {
-            relationship.DeleteBehavior = DeleteBehavior.Restrict;
+            relationship.DeleteBehavior = DeleteBehavior.Cascade;
         }
     }
 

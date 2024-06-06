@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Vitrina.Domain.Project;
 using Vitrina.Infrastructure.Abstractions.Interfaces;
@@ -28,9 +29,23 @@ internal class AddProjectCommandHandler : IRequestHandler<AddProjectCommand, int
     /// <inheritdoc/>
     public async Task<int> Handle(AddProjectCommand request, CancellationToken cancellationToken)
     {
-        var project = mapper.Map<AddProjectCommand, Domain.Project.Project>(request);
-        await dbContext.Projects.AddAsync(project, cancellationToken);
-        var id = await dbContext.SaveChangesAsync(cancellationToken);
-        return project.Id;
+        try
+        {
+            var project = mapper.Map<AddProjectCommand, Domain.Project.Project>(request);
+            var user = project.Users.FirstOrDefault(u => u.Roles.Any(r => r.Name.ToLower() == "тимлид"));
+            var role = await dbContext.Roles.FirstAsync(r => r.Name.ToLower() == "тимлид", cancellationToken);
+            if (user != null)
+            {
+                user.Roles.Clear();
+                user.Roles.Add(role);
+            }
+            await dbContext.Projects.AddAsync(project, cancellationToken);
+            var id = await dbContext.SaveChangesAsync(cancellationToken);
+            return project.Id;
+        }
+        catch (Exception ex)
+        {
+            return 0;
+        }
     }
 }

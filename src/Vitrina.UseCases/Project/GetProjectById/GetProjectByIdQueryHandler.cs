@@ -24,9 +24,14 @@ internal class GetProjectByIdQueryHandler : IRequestHandler<GetProjectByIdQuery,
 
     public async Task<ProjectDto> Handle(GetProjectByIdQuery request, CancellationToken cancellationToken)
     {
-        return await dbContext.Projects
+        var project = await dbContext.Projects
             .ProjectTo<ProjectDto>(mapper.ConfigurationProvider)
             .FirstOrDefaultAsync(p => p.Id == request.Id, cancellationToken)
             ?? throw new NotFoundException($"Project with id {request.Id} not found.");
+        foreach (var content in project.Contents)
+        {
+            content.ImageUrl = content.ImageUrl.Split("/").Last();
+        }
+        return project;
     }
 }

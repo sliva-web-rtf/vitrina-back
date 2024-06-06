@@ -54,12 +54,12 @@ internal class SearchProjectsQueryHandler : IRequestHandler<SearchProjectsQuery,
             var content = item.Contents.FirstOrDefault();
             if (content != null)
             {
-                dto.ImageUrl = content.ImageUrl;
+                dto.ImageUrl = content.ImageUrl.Split("/").Last();
             }
 
             result.Add(dto);
         }
-        var newPagedList = PagedListFactory.FromSource(result, request.Page, request.PageSize);
+        var newPagedList = PagedListFactory.Create(result, request.Page, request.PageSize, pagedList.TotalCount);
         return newPagedList;
     }
 }
