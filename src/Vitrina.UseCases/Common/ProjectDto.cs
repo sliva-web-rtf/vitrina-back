@@ -36,6 +36,11 @@ public class ProjectDto
     public string? Markdown { get; init; }
 
     /// <summary>
+    /// Url of project video.
+    /// </summary>
+    public string? VideoUrl { get; init; }
+
+    /// <summary>
     /// Project content.
     /// </summary>
     public ICollection<ContentDto> Contents { get; init; } = new List<ContentDto>();

@@ -45,6 +45,11 @@ public class AddProjectCommand : IRequest<int>
     public string? Markdown { get; init; }
 
     /// <summary>
+    /// Url of project video.
+    /// </summary>
+    public string? VideoUrl { get; init; }
+
+    /// <summary>
     /// Project tags.
     /// </summary>
     public ICollection<TagDto> Tags { get; init; } = new List<TagDto>();

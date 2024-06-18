@@ -49,6 +49,11 @@ public class Project
     public string? Markdown { get; set; }
 
     /// <summary>
+    /// Url of project video.
+    /// </summary>
+    public string? VideoUrl { get; set; }
+
+    /// <summary>
     /// Project content.
     /// </summary>
     public ICollection<Content> Contents { get; private set; } = new List<Content>();
