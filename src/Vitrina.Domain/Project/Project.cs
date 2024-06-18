@@ -44,6 +44,11 @@ public class Project
     required public string Period { get; set; }
 
     /// <summary>
+    /// Markdown of page.
+    /// </summary>
+    public string? Markdown { get; set; }
+
+    /// <summary>
     /// Project content.
     /// </summary>
     public ICollection<Content> Contents { get; private set; } = new List<Content>();

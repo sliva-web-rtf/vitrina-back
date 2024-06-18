@@ -17,7 +17,7 @@ namespace Vitrina.Web.Controllers;
 /// Project controller.
 /// </summary>
 [ApiController]
-[Route("project")]
+[Route("api/project")]
 [ApiExplorerSettings(GroupName = "project")]
 public class ProjectController : ControllerBase
 {

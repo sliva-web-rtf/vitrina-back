@@ -31,6 +31,11 @@ public class ProjectDto
     public string? Client { get; init; }
 
     /// <summary>
+    /// Markdown of page.
+    /// </summary>
+    public string? Markdown { get; init; }
+
+    /// <summary>
     /// Project content.
     /// </summary>
     public ICollection<ContentDto> Contents { get; init; } = new List<ContentDto>();
