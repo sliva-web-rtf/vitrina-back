@@ -32,12 +32,20 @@ internal class AddProjectCommandHandler : IRequestHandler<AddProjectCommand, int
         try
         {
             var project = mapper.Map<AddProjectCommand, Domain.Project.Project>(request);
-            var user = project.Users.FirstOrDefault(u => u.Roles.Any(r => r.Name.ToLower() == "тимлид"));
-            var role = await dbContext.Roles.FirstAsync(r => r.Name.ToLower() == "тимлид", cancellationToken);
-            if (user != null)
+            var allRoles = await dbContext.Roles.ToListAsync(cancellationToken);
+            foreach (var userInProject in project.Users)
             {
-                user.Roles.Clear();
-                user.Roles.Add(role);
+                var clone = new List<Role>(userInProject.Roles);
+                foreach (var t in clone)
+                {
+                    var role = allRoles.FirstOrDefault(r => r.Name.ToLower() == t.Name.ToLower());
+                    if (role != null)
+                    {
+                        var userRole = userInProject.Roles.First(r => r.Name == t.Name);
+                        userInProject.Roles.Remove(userRole);
+                        userInProject.Roles.Add(role);
+                    }
+                }
             }
             await dbContext.Projects.AddAsync(project, cancellationToken);
             var id = await dbContext.SaveChangesAsync(cancellationToken);
