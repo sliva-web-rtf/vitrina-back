@@ -41,6 +41,16 @@ public class ProjectDto
     public string? VideoUrl { get; init; }
 
     /// <summary>
+    /// Priority of project.
+    /// </summary>
+    public int Priority { get; set; }
+
+    /// <summary>
+    /// Path to preview image.
+    /// </summary>
+    public string? PreviewImagePath { get; set; }
+
+    /// <summary>
     /// Project content.
     /// </summary>
     public ICollection<ContentDto> Contents { get; init; } = new List<ContentDto>();

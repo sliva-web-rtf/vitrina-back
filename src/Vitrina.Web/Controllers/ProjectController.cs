@@ -8,6 +8,7 @@ using Vitrina.UseCases.Project.GetOrganizations;
 using Vitrina.UseCases.Project.GetPeriods;
 using Vitrina.UseCases.Project.GetProjectById;
 using Vitrina.UseCases.Project.SearchProjects;
+using Vitrina.UseCases.Project.UpdateProject;
 using Vitrina.UseCases.Project.UploadImages;
 using Vitrina.UseCases.Project.UploadImages.Dto;
 
@@ -75,16 +76,30 @@ public class ProjectController : ControllerBase
     /// <summary>
     /// Upload images to project.
     /// </summary>
-    [HttpPost("project/{id}/upload-images")]
+    [HttpPost("{id}/upload-images")]
     public async Task<IActionResult> UploadImagesToProject([FromRoute] int id, IFormFile[] files, CancellationToken cancellationToken)
     {
-        var command = new UploadImagesCommand { Id = id };
+        var command = new UploadImagesCommand { Id = id, IsAvatar = true };
         foreach (var file in files)
         {
             var fileStream = file.OpenReadStream();
             var fileDto = new FileDto(fileStream, file.FileName, file.ContentType);
             command.Files.Add(fileDto);
         }
+        await mediator.Send(command, cancellationToken);
+        return Ok();
+    }
+
+    /// <summary>
+    /// Upload images to project.
+    /// </summary>
+    [HttpPost("{id}/upload-preview-images")]
+    public async Task<IActionResult> UploadPreviewImagesToProject([FromRoute] int id, IFormFile file, CancellationToken cancellationToken)
+    {
+        var command = new UploadImagesCommand { Id = id, IsAvatar = false };
+        var fileStream = file.OpenReadStream();
+        var fileDto = new FileDto(fileStream, file.FileName, file.ContentType);
+        command.Files.Add(fileDto);
         await mediator.Send(command, cancellationToken);
         return Ok();
     }
@@ -97,10 +112,22 @@ public class ProjectController : ControllerBase
     {
         var webRootDirectory = hostingEnvironment.WebRootPath.TrimEnd('/');
         var path = $"/Avatars/{name}";
-        var mimeType = "image/png";
         var pathToFile = webRootDirectory + path;
 
-        return Results.File(pathToFile, contentType: mimeType);
+        return Results.File(pathToFile);
+    }
+
+    /// <summary>
+    /// Get image.
+    /// </summary>
+    [HttpGet("preview-image/{name}")]
+    public IResult GetPreviewImage(string name)
+    {
+        var webRootDirectory = hostingEnvironment.WebRootPath.TrimEnd('/');
+        var path = $"/Preview/{name}";
+        var pathToFile = webRootDirectory + path;
+
+        return Results.File(pathToFile);
     }
 
     /// <summary>
@@ -110,5 +137,14 @@ public class ProjectController : ControllerBase
     public async Task DeleteProject(int id, CancellationToken cancellationToken)
     {
         await mediator.Send(new DeleteProjectCommand { ProjectId = id }, cancellationToken);
+    }
+
+    /// <summary>
+    /// Update project.
+    /// </summary>
+    [HttpPut("{id}")]
+    public async Task UpdateProject([FromRoute] int id, [FromBody] ProjectDto projectDto, CancellationToken cancellationToken)
+    {
+        await mediator.Send(new UpdateProjectCommand { ProjectId = id, Project = projectDto }, cancellationToken);
     }
 }

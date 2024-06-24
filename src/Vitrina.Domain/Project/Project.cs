@@ -54,6 +54,16 @@ public class Project
     public string? VideoUrl { get; set; }
 
     /// <summary>
+    /// Priority of project.
+    /// </summary>
+    public int Priority { get; set; }
+
+    /// <summary>
+    /// Path to preview image.
+    /// </summary>
+    public string? PreviewImagePath { get; set; }
+
+    /// <summary>
     /// Project content.
     /// </summary>
     public ICollection<Content> Contents { get; private set; } = new List<Content>();

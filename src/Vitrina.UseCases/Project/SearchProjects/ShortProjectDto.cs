@@ -36,6 +36,16 @@ public class ShortProjectDto
     public string ImageUrl { get; set; } = "";
 
     /// <summary>
+    /// Priority of project.
+    /// </summary>
+    public int Priority { get; set; }
+
+    /// <summary>
+    /// Path to preview image.
+    /// </summary>
+    public string? PreviewImagePath { get; set; }
+
+    /// <summary>
     /// Organization.
     /// </summary>
     [JsonIgnore]

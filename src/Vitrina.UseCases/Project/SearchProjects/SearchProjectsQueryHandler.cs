@@ -24,7 +24,10 @@ internal class SearchProjectsQueryHandler : IRequestHandler<SearchProjectsQuery,
 
     public async Task<PagedList<ShortProjectDto>> Handle(SearchProjectsQuery request, CancellationToken cancellationToken)
     {
-        var query = dbContext.Projects.Include(p => p.Contents).AsQueryable();
+        var query = dbContext.Projects
+            .OrderByDescending(p => p.Priority)
+            .Include(p => p.Contents)
+            .AsQueryable();
 
         if (!string.IsNullOrEmpty(request.Name))
         {
@@ -51,6 +54,11 @@ internal class SearchProjectsQueryHandler : IRequestHandler<SearchProjectsQuery,
         foreach (var item in pagedList)
         {
             var dto = mapper.Map<ShortProjectDto>(item);
+            if (item.PreviewImagePath != null)
+            {
+                dto.PreviewImagePath = item.PreviewImagePath.Split("/").Last();
+            }
+
             var content = item.Contents.FirstOrDefault();
             if (content != null)
             {

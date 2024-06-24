@@ -35,6 +35,16 @@ public class AddProjectCommand : IRequest<int>
     required public string Period { get; init; }
 
     /// <summary>
+    /// Priority of project.
+    /// </summary>
+    public int Priority { get; set; }
+
+    /// <summary>
+    /// Path to preview image.
+    /// </summary>
+    public string? PreviewImagePath { get; set; }
+
+    /// <summary>
     /// Semester.
     /// </summary>
     public SemesterEnum Semester { get; init; }

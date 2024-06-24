@@ -52,6 +52,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\Avatars\" />
+    <Folder Include="wwwroot\Preview\" />
   </ItemGroup>
 
 </Project>

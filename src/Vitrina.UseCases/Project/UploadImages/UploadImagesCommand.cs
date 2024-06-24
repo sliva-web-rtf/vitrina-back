@@ -14,6 +14,11 @@ public class UploadImagesCommand : IRequest
     public int Id { get; init; }
 
     /// <summary>
+    /// Is avatar.
+    /// </summary>
+    public bool IsAvatar { get; init; }
+
+    /// <summary>
     /// Files.
     /// </summary>
     public ICollection<FileDto> Files { get; init; } = new List<FileDto>();
