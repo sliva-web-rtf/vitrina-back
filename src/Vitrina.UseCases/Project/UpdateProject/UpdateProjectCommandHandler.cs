@@ -21,7 +21,7 @@ internal class UpdateProjectCommandHandler : IRequestHandler<UpdateProjectComman
     {
         var project = await appDbContext.Projects.FirstOrDefaultAsync(p => p.Id == request.ProjectId, cancellationToken)
             ?? throw new DomainException("Project not found");
-        mapper.Map(request, project);
+        mapper.Map(request.Project, project);
         await appDbContext.SaveChangesAsync(cancellationToken);
     }
 }
