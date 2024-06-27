@@ -9,6 +9,7 @@ using Vitrina.UseCases.Project.GetPeriods;
 using Vitrina.UseCases.Project.GetProjectById;
 using Vitrina.UseCases.Project.SearchProjects;
 using Vitrina.UseCases.Project.UpdateProject;
+using Vitrina.UseCases.Project.UpdateProject.DTO;
 using Vitrina.UseCases.Project.UploadImages;
 using Vitrina.UseCases.Project.UploadImages.Dto;
 
@@ -143,7 +144,7 @@ public class ProjectController : ControllerBase
     /// Update project.
     /// </summary>
     [HttpPut("{id}")]
-    public async Task UpdateProject([FromRoute] int id, [FromBody] ProjectDto projectDto, CancellationToken cancellationToken)
+    public async Task UpdateProject([FromRoute] int id, [FromBody] UpdateProjectDto projectDto, CancellationToken cancellationToken)
     {
         await mediator.Send(new UpdateProjectCommand { ProjectId = id, Project = projectDto }, cancellationToken);
     }

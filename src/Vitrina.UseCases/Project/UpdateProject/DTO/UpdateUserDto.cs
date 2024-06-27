@@ -1,9 +1,9 @@
-﻿namespace Vitrina.UseCases.Common;
+﻿namespace Vitrina.UseCases.Project.UpdateProject.DTO;
 
 /// <summary>
-/// User dto.
+/// Dto for update.
 /// </summary>
-public class UserDto
+public class UpdateUserDto
 {
     /// <summary>
     /// User id.
@@ -38,5 +38,5 @@ public class UserDto
     /// <summary>
     /// User roles.
     /// </summary>
-    public ICollection<RoleDto> Roles { get; init; } = new List<RoleDto>();
+    public ICollection<UpdateRoleDto> Roles { get; init; } = new List<UpdateRoleDto>();
 }

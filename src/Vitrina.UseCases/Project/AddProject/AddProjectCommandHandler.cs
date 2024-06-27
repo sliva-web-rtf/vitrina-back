@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
+using Saritasa.Tools.Domain.Exceptions;
 using Vitrina.Domain.Project;
 using Vitrina.Infrastructure.Abstractions.Interfaces;
 
@@ -53,7 +48,7 @@ internal class AddProjectCommandHandler : IRequestHandler<AddProjectCommand, int
         }
         catch (Exception ex)
         {
-            return 0;
+            throw new DomainException(ex.Message, ex.InnerException);
         }
     }
 }

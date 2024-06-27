@@ -1,9 +1,9 @@
-﻿namespace Vitrina.UseCases.Common;
+﻿namespace Vitrina.UseCases.Project.UpdateProject.DTO;
 
 /// <summary>
-/// Role dto.
+/// Dto for update.
 /// </summary>
-public class RoleDto
+public class UpdateRoleDto
 {
     /// <summary>
     /// Role id.

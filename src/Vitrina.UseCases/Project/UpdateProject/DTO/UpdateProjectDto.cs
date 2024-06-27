@@ -1,11 +1,12 @@
 ﻿using Vitrina.Domain.Project;
+using Vitrina.UseCases.Common;
 
-namespace Vitrina.UseCases.Common;
+namespace Vitrina.UseCases.Project.UpdateProject.DTO;
 
 /// <summary>
-/// Project dto.
+/// Dto for update.
 /// </summary>
-public class ProjectDto
+public class UpdateProjectDto
 {
     /// <summary>
     /// Project id.
@@ -70,5 +71,5 @@ public class ProjectDto
     /// <summary>
     /// Project team.
     /// </summary>
-    public ICollection<UserDto> Users { get; init; } = new List<UserDto>();
+    public ICollection<UpdateUserDto> Users { get; init; } = new List<UpdateUserDto>();
 }

@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using Vitrina.UseCases.Common;
+using Vitrina.UseCases.Project.UpdateProject.DTO;
 
 namespace Vitrina.UseCases.Project.UpdateProject;
 
@@ -16,5 +16,5 @@ public class UpdateProjectCommand : IRequest
     /// <summary>
     /// Updated project.
     /// </summary>
-    required public ProjectDto Project { get; init; }
+    required public UpdateProjectDto Project { get; init; }
 }

@@ -76,5 +76,5 @@ public class Project
     /// <summary>
     /// Project team.
     /// </summary>
-    public ICollection<User> Users { get; private set; } = new List<User>();
+    public ICollection<User> Users { get; set; } = new List<User>();
 }
