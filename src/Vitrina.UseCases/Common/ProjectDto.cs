@@ -53,6 +53,11 @@ public class ProjectDto
     public string? PreviewImagePath { get; set; }
 
     /// <summary>
+    /// Period.
+    /// </summary>
+    required public string Period { get; set; }
+
+    /// <summary>
     /// Semester.
     /// </summary>
     public SemesterEnum Semester { get; set; }

@@ -36,10 +36,8 @@ internal class UpdateProjectCommandHandler : IRequestHandler<UpdateProjectComman
             foreach (var user in request.Project.Users)
             {
                 var userFromDb = users.FirstOrDefault(u => u.Id == user.Id);
-                if (userFromDb == null)
-                {
-                    userFromDb = mapper.Map<User>(user);
-                }
+                mapper.Map(user, userFromDb);
+                userFromDb ??= mapper.Map<User>(user);
                 userFromDb.Roles.Clear();
                 foreach (var role in user.Roles)
                 {

@@ -9,11 +9,6 @@ namespace Vitrina.UseCases.Project.UpdateProject.DTO;
 public class UpdateProjectDto
 {
     /// <summary>
-    /// Project id.
-    /// </summary>
-    required public int Id { get; init; }
-
-    /// <summary>
     /// Name.
     /// </summary>
     required public string Name { get; init; }
