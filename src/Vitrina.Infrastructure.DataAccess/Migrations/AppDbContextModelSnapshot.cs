@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Vitrina.Infrastructure.DataAccess;
 
 #nullable disable
@@ -16,21 +17,25 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.9")
-                .HasAnnotation("Relational:MaxIdentifierLength", 64);
+                .HasAnnotation("Relational:MaxIdentifierLength", 63);
+
+            NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
             modelBuilder.Entity("Microsoft.AspNetCore.DataProtection.EntityFrameworkCore.DataProtectionKey", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("FriendlyName")
                         .IsUnicode(false)
-                        .HasColumnType("longtext");
+                        .HasColumnType("text");
 
                     b.Property<string>("Xml")
                         .IsUnicode(false)
-                        .HasColumnType("longtext");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -40,10 +45,10 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
             modelBuilder.Entity("ProjectTag", b =>
                 {
                     b.Property<int>("ProjectsId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("TagsId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.HasKey("ProjectsId", "TagsId");
 
@@ -55,10 +60,10 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
             modelBuilder.Entity("RoleUser", b =>
                 {
                     b.Property<int>("RolesId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("UsersId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.HasKey("RolesId", "UsersId");
 
@@ -71,15 +76,17 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ImageUrl")
                         .IsRequired()
                         .IsUnicode(false)
-                        .HasColumnType("longtext");
+                        .HasColumnType("text");
 
                     b.Property<int>("ProjectId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -92,47 +99,49 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Aim")
                         .IsUnicode(false)
-                        .HasColumnType("longtext");
+                        .HasColumnType("text");
 
                     b.Property<string>("Client")
                         .IsUnicode(false)
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Description")
                         .IsUnicode(false)
-                        .HasColumnType("longtext");
+                        .HasColumnType("text");
 
                     b.Property<string>("Markdown")
                         .IsUnicode(false)
-                        .HasColumnType("longtext");
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .IsUnicode(false)
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Period")
                         .IsRequired()
                         .IsUnicode(false)
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("text");
 
                     b.Property<string>("PreviewImagePath")
                         .IsUnicode(false)
-                        .HasColumnType("longtext");
+                        .HasColumnType("text");
 
                     b.Property<int>("Priority")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("Semester")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("VideoUrl")
                         .IsUnicode(false)
-                        .HasColumnType("longtext");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -151,12 +160,14 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .IsUnicode(false)
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -170,12 +181,14 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .IsUnicode(false)
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -189,31 +202,33 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<byte[]>("Avatar")
-                        .HasColumnType("longblob");
+                        .HasColumnType("bytea");
 
                     b.Property<string>("Email")
                         .IsUnicode(false)
-                        .HasColumnType("longtext");
+                        .HasColumnType("text");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .IsUnicode(false)
-                        .HasColumnType("longtext");
+                        .HasColumnType("text");
 
                     b.Property<string>("LastName")
                         .IsRequired()
                         .IsUnicode(false)
-                        .HasColumnType("longtext");
+                        .HasColumnType("text");
 
                     b.Property<string>("Patronymic")
                         .IsUnicode(false)
-                        .HasColumnType("longtext");
+                        .HasColumnType("text");
 
                     b.Property<int>("ProjectId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
