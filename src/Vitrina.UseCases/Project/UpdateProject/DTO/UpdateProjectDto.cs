@@ -44,11 +44,6 @@ public class UpdateProjectDto
     public int Priority { get; set; }
 
     /// <summary>
-    /// Path to preview image.
-    /// </summary>
-    public string? PreviewImagePath { get; set; }
-
-    /// <summary>
     /// Semester.
     /// </summary>
     public SemesterEnum Semester { get; set; }

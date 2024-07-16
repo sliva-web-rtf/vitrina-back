@@ -1,23 +1,22 @@
-﻿using System.Xml.Linq;
-using MediatR;
+﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Saritasa.Tools.Domain.Exceptions;
 using Vitrina.Infrastructure.Abstractions.Interfaces;
 
-namespace Vitrina.UseCases.Project.DeleteProject;
+namespace Vitrina.UseCases.Project.DeleteProjectImages;
 
-internal class DeleteProjectCommandHandler : IRequestHandler<DeleteProjectCommand>
+internal class DeleteProjectImagesCommandHandler : IRequestHandler<DeleteProjectImagesCommand>
 {
     private readonly IAppDbContext appDbContext;
     private readonly Microsoft.AspNetCore.Hosting.IHostingEnvironment hostingEnvironment;
 
-    public DeleteProjectCommandHandler(IAppDbContext appDbContext, Microsoft.AspNetCore.Hosting.IHostingEnvironment hostingEnvironment)
+    public DeleteProjectImagesCommandHandler(IAppDbContext appDbContext, Microsoft.AspNetCore.Hosting.IHostingEnvironment hostingEnvironment)
     {
         this.appDbContext = appDbContext;
         this.hostingEnvironment = hostingEnvironment;
     }
 
-    public async Task Handle(DeleteProjectCommand request, CancellationToken cancellationToken)
+    public async Task Handle(DeleteProjectImagesCommand request, CancellationToken cancellationToken)
     {
         var project = await appDbContext.Projects.Include(p => p.Contents).FirstOrDefaultAsync(p => p.Id == request.ProjectId, cancellationToken)
             ?? throw new NotFoundException();
@@ -29,7 +28,8 @@ internal class DeleteProjectCommandHandler : IRequestHandler<DeleteProjectComman
             var pathToFile = webRootDirectory + path;
             File.Delete(pathToFile);
         }
-        appDbContext.Projects.Remove(project);
-        await appDbContext.SaveChangesAsync(cancellationToken);
+        await appDbContext.Contents
+            .Where(c => c.ProjectId == request.ProjectId)
+            .ExecuteDeleteAsync(cancellationToken);
     }
 }

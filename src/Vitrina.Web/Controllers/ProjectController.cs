@@ -4,6 +4,7 @@ using Saritasa.Tools.Common.Pagination;
 using Vitrina.UseCases.Common;
 using Vitrina.UseCases.Project.AddProject;
 using Vitrina.UseCases.Project.DeleteProject;
+using Vitrina.UseCases.Project.DeleteProjectImages;
 using Vitrina.UseCases.Project.GetOrganizations;
 using Vitrina.UseCases.Project.GetPeriods;
 using Vitrina.UseCases.Project.GetProjectById;
@@ -147,5 +148,17 @@ public class ProjectController : ControllerBase
     public async Task UpdateProject([FromRoute] int id, [FromBody] UpdateProjectDto projectDto, CancellationToken cancellationToken)
     {
         await mediator.Send(new UpdateProjectCommand { ProjectId = id, Project = projectDto }, cancellationToken);
+    }
+
+    /// <summary>
+    /// DeleteProjectImages.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    [HttpDelete("{id}/images")]
+    public async Task DeleteProjectImages(int id, CancellationToken cancellationToken)
+    {
+        await mediator.Send(new DeleteProjectImagesCommand { ProjectId = id }, cancellationToken);
     }
 }
