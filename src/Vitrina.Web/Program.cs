@@ -17,6 +17,7 @@ internal sealed class Program
     {
         var builder = WebApplication.CreateBuilder(args);
         var startup = new Startup(builder.Configuration);
+        // For dev: builder.WebHost.UseUrls("http://localhost:5006");
         startup.ConfigureServices(builder.Services, builder.Environment);
         app = builder.Build();
         startup.Configure(app, app.Environment);

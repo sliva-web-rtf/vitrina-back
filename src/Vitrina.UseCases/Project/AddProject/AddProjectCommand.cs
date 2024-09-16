@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using System.ComponentModel.DataAnnotations;
+using MediatR;
 using Vitrina.Domain.Project;
 using Vitrina.UseCases.Common;
 
@@ -12,6 +13,7 @@ public class AddProjectCommand : IRequest<int>
     /// <summary>
     /// Name.
     /// </summary>
+    [Required]
     required public string Name { get; init; }
 
     /// <summary>
@@ -32,11 +34,13 @@ public class AddProjectCommand : IRequest<int>
     /// <summary>
     /// Project period.
     /// </summary>
+    [Required]
     required public string Period { get; init; }
 
     /// <summary>
     /// Priority of project.
     /// </summary>
+    [Required]
     public int Priority { get; set; }
 
     /// <summary>
@@ -47,6 +51,7 @@ public class AddProjectCommand : IRequest<int>
     /// <summary>
     /// Semester.
     /// </summary>
+    [Required]
     public SemesterEnum Semester { get; init; }
 
     /// <summary>
@@ -67,5 +72,6 @@ public class AddProjectCommand : IRequest<int>
     /// <summary>
     /// Project team.
     /// </summary>
+    [Required]
     public ICollection<UserDto> Users { get; init; } = new List<UserDto>();
 }

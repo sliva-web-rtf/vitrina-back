@@ -1,4 +1,6 @@
-﻿namespace Vitrina.UseCases.Common;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Vitrina.UseCases.Common;
 
 /// <summary>
 /// User dto.
@@ -18,11 +20,13 @@ public class UserDto
     /// <summary>
     /// User name.
     /// </summary>
+    [Required]
     required public string FirstName { get; init; }
 
     /// <summary>
     /// User last name.
     /// </summary>
+    [Required]
     required public string LastName { get; init; }
 
     /// <summary>

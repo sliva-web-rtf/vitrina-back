@@ -1,4 +1,5 @@
-﻿using Vitrina.Domain.Project;
+﻿using System.ComponentModel.DataAnnotations;
+using Vitrina.Domain.Project;
 using Vitrina.UseCases.Common;
 
 namespace Vitrina.UseCases.Project.UpdateProject.DTO;
@@ -11,6 +12,7 @@ public class UpdateProjectDto
     /// <summary>
     /// Name.
     /// </summary>
+    [Required]
     required public string Name { get; init; }
 
     /// <summary>
@@ -41,11 +43,13 @@ public class UpdateProjectDto
     /// <summary>
     /// Priority of project.
     /// </summary>
+    [Required]
     public int Priority { get; set; }
 
     /// <summary>
     /// Semester.
     /// </summary>
+    [Required]
     public SemesterEnum Semester { get; set; }
 
     /// <summary>

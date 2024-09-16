@@ -1,4 +1,6 @@
-﻿namespace Vitrina.UseCases.Common;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Vitrina.UseCases.Common;
 
 /// <summary>
 /// Role dto.
@@ -13,5 +15,6 @@ public class RoleDto
     /// <summary>
     /// Name.
     /// </summary>
+    [Required]
     required public string Name { get; init; }
 }

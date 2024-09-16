@@ -20,6 +20,7 @@ namespace Vitrina.Web.Controllers;
 /// Project controller.
 /// </summary>
 [ApiController]
+// For dev [Route("api-dev/project")]
 [Route("api/project")]
 [ApiExplorerSettings(GroupName = "project")]
 public class ProjectController : ControllerBase

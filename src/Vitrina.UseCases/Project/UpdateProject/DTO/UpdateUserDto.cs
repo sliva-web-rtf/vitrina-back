@@ -1,4 +1,6 @@
-﻿namespace Vitrina.UseCases.Project.UpdateProject.DTO;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Vitrina.UseCases.Project.UpdateProject.DTO;
 
 /// <summary>
 /// Dto for update.
@@ -18,11 +20,13 @@ public class UpdateUserDto
     /// <summary>
     /// User name.
     /// </summary>
+    [Required]
     required public string FirstName { get; init; }
 
     /// <summary>
     /// User last name.
     /// </summary>
+    [Required]
     required public string LastName { get; init; }
 
     /// <summary>
