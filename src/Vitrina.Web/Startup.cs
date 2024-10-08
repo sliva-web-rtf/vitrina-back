@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.DataProtection;
+﻿using System.Net;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc;
 using Vitrina.Infrastructure.DataAccess;
+using Vitrina.Web.Infrastructure.DependencyInjection;
 using Vitrina.Web.Infrastructure.Middlewares;
 using Vitrina.Web.Infrastructure.Settings;
 using Vitrina.Web.Infrastructure.Startup;
@@ -36,18 +38,28 @@ public class Startup
         services.AddSwaggerGen(new SwaggerGenOptionsSetup().Setup);
 
         // CORS.
-        string[]? frontendOrigin = null;
-        // TODO: uncomment if you need to specify additional FrontendOrigins for CORS (if you have an Angular/React/etc project).
-        // frontendOrigin = Saritasa.Tools.Common.Utils.StringUtils.NullSafe(configuration["AppSettings:FrontendOrigin"])
-        //        .Split(';', StringSplitOptions.RemoveEmptyEntries);
+        var frontendOrigin = (configuration["AppSettings:FrontendOrigin"] ?? string.Empty)
+            .Split(';', StringSplitOptions.RemoveEmptyEntries);
         services.AddCors(new CorsOptionsSetup(
             environment.IsDevelopment(),
             frontendOrigin
         ).Setup);
 
+        // x-forward
+        var knownProxies = (configuration["AppSettings:KnownProxies"] ?? string.Empty)
+            .Split(';', StringSplitOptions.RemoveEmptyEntries);
+        services.Configure<ForwardedHeadersOptions>(options =>
+        {
+            foreach (var proxy in knownProxies)
+            {
+                options.KnownProxies.Add(IPAddress.Parse(proxy));
+            }
+        });
+
         // Health check.
         var databaseConnectionString = configuration.GetConnectionString("AppDatabase")
-            ?? throw new ArgumentNullException("ConnectionStrings:AppDatabase", "Database connection string is not initialized");
+                                       ?? throw new ArgumentNullException("ConnectionStrings:AppDatabase",
+                                           "Database connection string is not initialized");
 
         // MVC.
         services
@@ -76,10 +88,10 @@ public class Startup
         services.AddHttpClient();
 
         // Other dependencies.
-        Infrastructure.DependencyInjection.AutoMapperModule.Register(services);
-        Infrastructure.DependencyInjection.ApplicationModule.Register(services, configuration);
-        Infrastructure.DependencyInjection.MediatRModule.Register(services);
-        Infrastructure.DependencyInjection.SystemModule.Register(services);
+        AutoMapperModule.Register(services);
+        ApplicationModule.Register(services, configuration);
+        MediatRModule.Register(services);
+        SystemModule.Register(services);
     }
 
     /// <summary>
@@ -100,10 +112,7 @@ public class Startup
 
         // CORS.
         app.UseCors(CorsOptionsSetup.CorsPolicyName);
-        app.UseForwardedHeaders(new ForwardedHeadersOptions
-        {
-            ForwardedHeaders = ForwardedHeaders.All
-        });
+        app.UseForwardedHeaders(new ForwardedHeadersOptions { ForwardedHeaders = ForwardedHeaders.All });
 
         app.UseEndpoints(endpoints =>
         {
