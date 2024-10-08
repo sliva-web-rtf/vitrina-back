@@ -1,0 +1,86 @@
+name: Release
+
+on:
+  workflow_dispatch:
+
+permissions:
+  actions: write
+  attestations: write
+  checks: write
+  contents: write
+  deployments: write
+  id-token: write
+  issues: write
+  discussions: write
+  packages: write
+  pages: write
+  pull-requests: write
+  repository-projects: write
+  security-events: write
+  statuses: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set formatted date and time
+        run: echo "CURRENT_DATE=$(date +'%d-%m-%Y %H:%M')" >> $GITHUB_ENV
+
+      - name: Get release version
+        id: get_version
+        run: |
+          VERSION_MAJOR=1
+          VERSION_MINOR=0
+          VERSION_PATCH=${{ github.run_number }}
+          echo "RELEASE_VERSION=${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}" >> $GITHUB_ENV
+
+      - name: Create release branch
+        run: |
+          git checkout -b releases/${{ env.RELEASE_VERSION }}
+          git push origin releases/${{ env.RELEASE_VERSION }}
+
+      - name: Login to Yandex Cloud Container Registry
+        id: login-cr
+        uses: yc-actions/yc-cr-login@v2
+        with:
+          yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_PUSHER}}
+
+      - name: Build Docker image
+        run: docker build --platform=linux/amd64 -t cr.yandex/${{ vars.CR_ID }}/app:${{ env.RELEASE_VERSION }} -f ./ScientificWork.Web/Dockerfile .
+
+      - name: Tag Docker image with latest
+        run: docker tag cr.yandex/${{ vars.CR_ID }}/app:${{ env.RELEASE_VERSION }} cr.yandex/${{ vars.CR_ID }}/app:${{ env.RELEASE_VERSION }}_latest
+
+      - name: Push Docker image
+        run: |
+          docker push cr.yandex/${{ vars.CR_ID }}/app:${{ env.RELEASE_VERSION }}
+          docker push cr.yandex/${{ vars.CR_ID }}/app:${{ env.RELEASE_VERSION }}_latest
+
+      - name: Configure Git
+        run: |
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com"
+
+      - name: Get previous release tag
+        id: get_prev_tag
+        run: echo "PREV_TAG=$( git ls-remote --tags origin | tail -2 | head -1 | sed 's/.*\///')" >> $GITHUB_ENV
+
+      - name: Create GitHub release tag
+        run: |
+          git tag -a v${{ env.RELEASE_VERSION }} -m "release ${{ env.RELEASE_VERSION }}"
+          git push origin v${{ env.RELEASE_VERSION }}
+
+      - name: Get commit list
+        id: get_commit_list
+        run: |
+          git fetch
+          git branch --set-upstream-to origin/releases/${{ env.RELEASE_VERSION }}
+          echo "COMMITS=$(git log ${{ env.PREV_TAG }}..v${{ env.RELEASE_VERSION }} --pretty=format:"%h - %an, %ar : %s")" >> $GITHUB_ENV
+
+      - name: Create release issue
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh issue create --title "Release v${{ env.RELEASE_VERSION }}" --body "**Date:** ${{ env.CURRENT_DATE }}<br>**Author:** ${{ github.actor }}<br>**Version:** ${{ env.RELEASE_VERSION }}<br>**Commits:**<br>${{ env.COMMITS }}<br>**Docker Image:** cr.yandex/${{ vars.CR_ID }}/app:${{ env.RELEASE_VERSION }}"

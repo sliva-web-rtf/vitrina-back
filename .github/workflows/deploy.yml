@@ -1,0 +1,83 @@
+name: Deploy to Production
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Release version to deploy"
+        required: true
+
+permissions:
+  actions: write
+  attestations: write
+  checks: write
+  contents: write
+  deployments: write
+  id-token: write
+  issues: write
+  discussions: write
+  packages: write
+  pages: write
+  pull-requests: write
+  repository-projects: write
+  security-events: write
+  statuses: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set formatted date and time
+        run: echo "CURRENT_DATE=$(date +'%d-%m-%Y %H:%M')" >> $GITHUB_ENV
+
+      - name: Set up SSH key
+        uses: webfactory/ssh-agent@v0.5.4
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Add host to known_hosts
+        run: ssh-keyscan -H ${{ vars.SERVER_IP }} >> ~/.ssh/known_hosts
+
+      - name: Login to Yandex Cloud Container Registry
+        id: login-cr
+        uses: yc-actions/yc-cr-login@v2
+        with:
+          yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_PULLER}}
+
+      - name: Check Docker image
+        run: docker pull cr.yandex/${{ vars.CR_ID }}/app:${{ github.event.inputs.version }}_latest
+
+      - name: Deploy to production server
+        uses: appleboy/ssh-action@v0.1.6
+        with:
+          host: ${{ vars.SERVER_IP }}
+          username: ${{ secrets.USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+          script: |
+            sudo docker stop app || true
+            sudo docker rm app || true
+            sudo docker run -d --restart unless-stopped --name app -p 80:5000 \
+              -e AdminOptions__Email='${{ secrets.ADMIN_EMAIL }}' \
+              -e AdminOptions__Password='${{ secrets.ADMIN_PASSWORD }}' \
+              -e ConnectionStrings__AppDatabase='${{ secrets.DATABASE }}' \
+              -e ASPNETCORE_HTTP_PORTS=5000 \
+              cr.yandex/${{ vars.CR_ID }}/app:${{ github.event.inputs.version }}_latest
+
+      - name: Remove old Docker image
+        uses: appleboy/ssh-action@v0.1.6
+        with:
+          host: ${{ vars.SERVER_IP }}
+          username: ${{ secrets.USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+          script: "sudo docker image prune -af"
+
+      - name: Add comment to issue
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          ISSUE_NUMBER=$(gh issue list --search ${{ github.event.inputs.version }} --limit 1 --json number --jq ".[0].number")
+          gh issue comment $ISSUE_NUMBER --body "Release v${{ github.event.inputs.version }} has been deployed to production.<br><br>**Date:** ${{ env.CURRENT_DATE }}<br>**Author:** ${{ github.actor }}"

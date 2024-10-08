@@ -8,6 +8,7 @@
     <AssemblyVersion>0.0.0.0</AssemblyVersion>
     <AspNetCoreModuleName>AspNetCoreModule</AspNetCoreModuleName>
     <AspNetCoreHostingModel>OutOfProcess</AspNetCoreHostingModel>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
 
   <ItemGroup>
@@ -53,6 +54,12 @@
   <ItemGroup>
     <Folder Include="wwwroot\Avatars\" />
     <Folder Include="wwwroot\Preview\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="..\.dockerignore">
+      <Link>.dockerignore</Link>
+    </Content>
   </ItemGroup>
 
 </Project>
