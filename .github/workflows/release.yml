@@ -45,7 +45,7 @@ jobs:
         id: login-cr
         uses: yc-actions/yc-cr-login@v2
         with:
-          yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_PUSHER}}
+          yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_PUSHER }}
 
       - name: Build Docker image
         run: docker build --platform=linux/amd64 -t cr.yandex/${{ vars.CR_ID }}/app:${{ env.RELEASE_VERSION }} -f ./ScientificWork.Web/Dockerfile .

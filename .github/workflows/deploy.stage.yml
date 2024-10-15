@@ -1,4 +1,4 @@
-name: Deploy to Production
+name: Deploy to Stage
 
 on:
   workflow_dispatch:
@@ -35,16 +35,16 @@ jobs:
       - name: Set up SSH key
         uses: webfactory/ssh-agent@v0.5.4
         with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY_STAGE }}
 
       - name: Add host to known_hosts
-        run: ssh-keyscan -H ${{ vars.SERVER_IP }} >> ~/.ssh/known_hosts
+        run: ssh-keyscan -H ${{ vars.SERVER_IP_STAGE }} >> ~/.ssh/known_hosts
 
       - name: Login to Yandex Cloud Container Registry
         id: login-cr
         uses: yc-actions/yc-cr-login@v2
         with:
-          yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_PULLER}}
+          yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_PULLER }}
 
       - name: Check Docker image
         run: docker pull cr.yandex/${{ vars.CR_ID }}/app:${{ github.event.inputs.version }}_latest
@@ -52,26 +52,25 @@ jobs:
       - name: Deploy to production server
         uses: appleboy/ssh-action@v0.1.6
         with:
-          host: ${{ vars.SERVER_IP }}
-          username: ${{ secrets.USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          host: ${{ vars.SERVER_IP_STAGE }}
+          username: ${{ secrets.USER_STAGE }}
+          key: ${{ secrets.SSH_PRIVATE_KEY_STAGE }}
           port: 22
           script: |
-            sudo docker stop app || true
-            sudo docker rm app || true
-            sudo docker run -d --restart unless-stopped --name app -p 80:5000 \
-              -e AdminOptions__Email='${{ secrets.ADMIN_EMAIL }}' \
-              -e AdminOptions__Password='${{ secrets.ADMIN_PASSWORD }}' \
-              -e ConnectionStrings__AppDatabase='${{ secrets.DATABASE }}' \
+            sudo docker stop vitrina-back-stage || true
+            sudo docker rm vitrina-back-stage || true
+            sudo docker run -d --restart unless-stopped --name vitrina-back-stage --network vitrina \
+              -e ConnectionStrings__AppDatabase='${{ secrets.DATABASE_STAGE }}' \
+              -e Jwt__SecretKey='${{ secrets.JWT_SECRET_STAGE }}' \
               -e ASPNETCORE_HTTP_PORTS=5000 \
               cr.yandex/${{ vars.CR_ID }}/app:${{ github.event.inputs.version }}_latest
 
       - name: Remove old Docker image
         uses: appleboy/ssh-action@v0.1.6
         with:
-          host: ${{ vars.SERVER_IP }}
-          username: ${{ secrets.USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          host: ${{ vars.SERVER_IP_STAGE }}
+          username: ${{ secrets.USER_STAGE }}
+          key: ${{ secrets.SSH_PRIVATE_KEY_STAGE }}
           port: 22
           script: "sudo docker image prune -af"
 
