@@ -60,8 +60,6 @@ jobs:
             sudo docker stop vitrina-back || true
             sudo docker rm vitrina-back || true
             sudo docker run -d --restart unless-stopped --name vitrina-back --network vitrina \
-              -e AdminOptions__Email='${{ secrets.ADMIN_EMAIL_PROD }}' \
-              -e AdminOptions__Password='${{ secrets.ADMIN_PASSWORD_PROD }}' \
               -e ConnectionStrings__AppDatabase='${{ secrets.DATABASE_PROD }}' \
               -e Jwt__SecretKey='${{ secrets.JWT_SECRET_PROD }}' \
               -e ASPNETCORE_HTTP_PORTS=5000 \
