@@ -48,7 +48,7 @@ jobs:
           yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_PUSHER }}
 
       - name: Build Docker image
-        run: docker build --platform=linux/amd64 -t cr.yandex/${{ vars.CR_ID }}/app:${{ env.RELEASE_VERSION }} -f ./ScientificWork.Web/Dockerfile .
+        run: docker build --platform=linux/amd64 -t cr.yandex/${{ vars.CR_ID }}/app:${{ env.RELEASE_VERSION }} -f ./src/Vitrina.Web/Dockerfile .
 
       - name: Tag Docker image with latest
         run: docker tag cr.yandex/${{ vars.CR_ID }}/app:${{ env.RELEASE_VERSION }} cr.yandex/${{ vars.CR_ID }}/app:${{ env.RELEASE_VERSION }}_latest
