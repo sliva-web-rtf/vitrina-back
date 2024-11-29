@@ -8,6 +8,7 @@ using Vitrina.UseCases.Project.DeleteProjectImages;
 using Vitrina.UseCases.Project.GetOrganizations;
 using Vitrina.UseCases.Project.GetPeriods;
 using Vitrina.UseCases.Project.GetProjectById;
+using Vitrina.UseCases.Project.GetProjectsIds;
 using Vitrina.UseCases.Project.SearchProjects;
 using Vitrina.UseCases.Project.UpdateProject;
 using Vitrina.UseCases.Project.UpdateProject.DTO;
@@ -161,5 +162,16 @@ public class ProjectController : ControllerBase
     public async Task DeleteProjectImages(int id, CancellationToken cancellationToken)
     {
         await mediator.Send(new DeleteProjectImagesCommand { ProjectId = id }, cancellationToken);
+    }
+
+    /// <summary>
+    /// Get all project ids.
+    /// </summary>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    [HttpGet("ids")]
+    public async Task<ICollection<int>> GetProjectsIds(CancellationToken cancellationToken)
+    {
+        return await mediator.Send(new GetProjectIdsQuery(), cancellationToken);
     }
 }

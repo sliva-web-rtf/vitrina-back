@@ -77,4 +77,24 @@ public class Project
     /// Project team.
     /// </summary>
     public ICollection<User> Users { get; set; } = new List<User>();
+
+    /// <summary>
+    /// Problem of project.
+    /// </summary>
+    required public string Problem { get; set; }
+
+    /// <summary>
+    /// Idea of project.
+    /// </summary>
+    required public string Idea { get; set; }
+
+    /// <summary>
+    /// Problem of project.
+    /// </summary>
+    required public string Solution { get; set; }
+
+    /// <summary>
+    /// List of custom blocks.
+    /// </summary>
+    public ICollection<Block> CustomBlocks { get; set; } = new List<Block>();
 }
