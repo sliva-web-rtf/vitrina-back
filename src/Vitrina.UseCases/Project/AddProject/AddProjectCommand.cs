@@ -24,7 +24,8 @@ public class AddProjectCommand : IRequest<int>
     /// <summary>
     /// Project aim.
     /// </summary>
-    public string? Aim { get; init; }
+    [Required]
+    required public string Aim { get; init; }
 
     /// <summary>
     /// Project client.
@@ -74,4 +75,24 @@ public class AddProjectCommand : IRequest<int>
     /// </summary>
     [Required]
     public ICollection<UserDto> Users { get; init; } = new List<UserDto>();
+
+    /// <summary>
+    /// Custom blocks.
+    /// </summary>
+    public ICollection<BlockDto> CustomBlocks { get; init; }
+
+    /// <summary>
+    /// Problem of project.
+    /// </summary>
+    required public string Problem { get; set; }
+
+    /// <summary>
+    /// Idea of project.
+    /// </summary>
+    required public string Idea { get; set; }
+
+    /// <summary>
+    /// Problem of project.
+    /// </summary>
+    required public string Solution { get; set; }
 }

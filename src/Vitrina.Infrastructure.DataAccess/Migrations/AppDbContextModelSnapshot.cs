@@ -72,6 +72,34 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                     b.ToTable("RoleUser");
                 });
 
+            modelBuilder.Entity("Vitrina.Domain.Project.Block", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ProjectId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .IsUnicode(false)
+                        .HasColumnType("text");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .IsUnicode(false)
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProjectId");
+
+                    b.ToTable("Block");
+                });
+
             modelBuilder.Entity("Vitrina.Domain.Project.Content", b =>
                 {
                     b.Property<int>("Id")
@@ -115,6 +143,11 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                         .IsUnicode(false)
                         .HasColumnType("text");
 
+                    b.Property<string>("Idea")
+                        .IsRequired()
+                        .IsUnicode(false)
+                        .HasColumnType("text");
+
                     b.Property<string>("Markdown")
                         .IsUnicode(false)
                         .HasColumnType("text");
@@ -136,8 +169,18 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                     b.Property<int>("Priority")
                         .HasColumnType("integer");
 
+                    b.Property<string>("Problem")
+                        .IsRequired()
+                        .IsUnicode(false)
+                        .HasColumnType("text");
+
                     b.Property<int>("Semester")
                         .HasColumnType("integer");
+
+                    b.Property<string>("Solution")
+                        .IsRequired()
+                        .IsUnicode(false)
+                        .HasColumnType("text");
 
                     b.Property<string>("VideoUrl")
                         .IsUnicode(false)
@@ -267,6 +310,17 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Vitrina.Domain.Project.Block", b =>
+                {
+                    b.HasOne("Vitrina.Domain.Project.Project", "Project")
+                        .WithMany("CustomBlocks")
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Project");
+                });
+
             modelBuilder.Entity("Vitrina.Domain.Project.Content", b =>
                 {
                     b.HasOne("Vitrina.Domain.Project.Project", "Project")
@@ -292,6 +346,8 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
             modelBuilder.Entity("Vitrina.Domain.Project.Project", b =>
                 {
                     b.Navigation("Contents");
+
+                    b.Navigation("CustomBlocks");
 
                     b.Navigation("Users");
                 });
