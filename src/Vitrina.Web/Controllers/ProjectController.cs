@@ -14,6 +14,8 @@ using Vitrina.UseCases.Project.UpdateProject;
 using Vitrina.UseCases.Project.UpdateProject.DTO;
 using Vitrina.UseCases.Project.UploadImages;
 using Vitrina.UseCases.Project.UploadImages.Dto;
+using SearchProjectsQuery = Vitrina.UseCases.Project.SearchProjects.SearchProjectsQuery;
+using V2 = Vitrina.UseCases.Project.SearchProjects.V2;
 
 namespace Vitrina.Web.Controllers;
 
@@ -174,4 +176,8 @@ public class ProjectController : ControllerBase
     {
         return await mediator.Send(new GetProjectIdsQuery(), cancellationToken);
     }
+
+    [HttpPost("v2/search")]
+    public async Task<PagedListMetadataDto<V2.ShortProjectDto>> SearchProjectsV2(V2.SearchProjectsQuery query, CancellationToken cancellationToken)
+        => (await mediator.Send(query, cancellationToken)).ToMetadataObject();
 }
