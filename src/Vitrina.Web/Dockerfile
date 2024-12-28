@@ -22,4 +22,5 @@ RUN dotnet publish "Vitrina.Web.csproj" -c $BUILD_CONFIGURATION -o /app/publish 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+COPY --from=build /src/Vitrina.Web/wwwroot /app/wwwroot
 ENTRYPOINT ["dotnet", "Vitrina.Web.dll"]
