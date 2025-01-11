@@ -81,17 +81,17 @@ public class Project
     /// <summary>
     /// Problem of project.
     /// </summary>
-    required public string Problem { get; set; }
+    public string? Problem { get; set; }
 
     /// <summary>
     /// Idea of project.
     /// </summary>
-    required public string Idea { get; set; }
+    public string? Idea { get; set; }
 
     /// <summary>
     /// Problem of project.
     /// </summary>
-    required public string Solution { get; set; }
+    public string? Solution { get; set; }
 
     /// <summary>
     /// List of custom blocks.
