@@ -41,9 +41,9 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                     VideoUrl = table.Column<string>(type: "text", unicode: false, nullable: true),
                     Priority = table.Column<int>(type: "integer", nullable: false),
                     PreviewImagePath = table.Column<string>(type: "text", unicode: false, nullable: true),
-                    Problem = table.Column<string>(type: "text", unicode: false, nullable: false),
-                    Idea = table.Column<string>(type: "text", unicode: false, nullable: false),
-                    Solution = table.Column<string>(type: "text", unicode: false, nullable: false),
+                    Problem = table.Column<string>(type: "text", unicode: false, nullable: true),
+                    Idea = table.Column<string>(type: "text", unicode: false, nullable: true),
+                    Solution = table.Column<string>(type: "text", unicode: false, nullable: true),
                     Sphere = table.Column<string>(type: "text", unicode: false, nullable: true),
                     Type = table.Column<string>(type: "text", unicode: false, nullable: true)
                 },

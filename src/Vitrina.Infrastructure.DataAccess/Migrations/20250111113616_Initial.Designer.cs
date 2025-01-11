@@ -11,7 +11,7 @@ using Vitrina.Infrastructure.DataAccess;
 namespace Vitrina.Infrastructure.DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250111102140_Initial")]
+    [Migration("20250111113616_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -147,7 +147,6 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Idea")
-                        .IsRequired()
                         .IsUnicode(false)
                         .HasColumnType("text");
 
@@ -173,7 +172,6 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("Problem")
-                        .IsRequired()
                         .IsUnicode(false)
                         .HasColumnType("text");
 
@@ -181,7 +179,6 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("Solution")
-                        .IsRequired()
                         .IsUnicode(false)
                         .HasColumnType("text");
 
