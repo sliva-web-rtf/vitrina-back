@@ -7,7 +7,7 @@ namespace Vitrina.UseCases.Project.SearchProjects.V2;
 /// <summary>
 /// Short project dto.
 /// </summary>
-public class ShortProjectDto
+public class ShortProjectV2Dto
 {
     /// <summary>
     /// Project id.

@@ -97,4 +97,14 @@ public class Project
     /// List of custom blocks.
     /// </summary>
     public ICollection<Block> CustomBlocks { get; set; } = new List<Block>();
+
+    /// <summary>
+    /// Project sphere.
+    /// </summary>
+    public string? Sphere { get; set; }
+
+    /// <summary>
+    /// Project type.
+    /// </summary>
+    public string? Type { get; set; }
 }

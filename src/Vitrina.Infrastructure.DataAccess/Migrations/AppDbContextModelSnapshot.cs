@@ -182,6 +182,14 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                         .IsUnicode(false)
                         .HasColumnType("text");
 
+                    b.Property<string>("Sphere")
+                        .IsUnicode(false)
+                        .HasColumnType("text");
+
+                    b.Property<string>("Type")
+                        .IsUnicode(false)
+                        .HasColumnType("text");
+
                     b.Property<string>("VideoUrl")
                         .IsUnicode(false)
                         .HasColumnType("text");

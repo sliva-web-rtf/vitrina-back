@@ -11,7 +11,7 @@ using Vitrina.Infrastructure.DataAccess;
 namespace Vitrina.Infrastructure.DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20241129080325_Initial")]
+    [Migration("20250111102140_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -182,6 +182,14 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
 
                     b.Property<string>("Solution")
                         .IsRequired()
+                        .IsUnicode(false)
+                        .HasColumnType("text");
+
+                    b.Property<string>("Sphere")
+                        .IsUnicode(false)
+                        .HasColumnType("text");
+
+                    b.Property<string>("Type")
                         .IsUnicode(false)
                         .HasColumnType("text");
 

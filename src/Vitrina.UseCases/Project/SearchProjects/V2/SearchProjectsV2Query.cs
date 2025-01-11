@@ -7,25 +7,25 @@ namespace Vitrina.UseCases.Project.SearchProjects.V2;
 /// <summary>
 /// Search projects.
 /// </summary>
-public class SearchProjectsQuery : PageQueryFilter, IRequest<PagedList<ShortProjectDto>>
+public class SearchProjectsV2Query : PageQueryFilter, IRequest<PagedList<ShortProjectV2Dto>>
 {
     /// <summary>
-    /// Name.
+    /// Project name.
     /// </summary>
     public string? Name { get; init; }
 
     /// <summary>
-    /// Period.
+    /// Project customer.
     /// </summary>
-    public string? Client { get; init; }
+    public string? Customer { get; init; }
 
     /// <summary>
-    /// Organization.
+    /// Project type.
     /// </summary>
-    public string? Type { get; init; }
+    public string? ProjectType { get; init; }
 
     /// <summary>
-    /// Semester.
+    /// Sphere.
     /// </summary>
     public string? Sphere { get; init; }
 }
