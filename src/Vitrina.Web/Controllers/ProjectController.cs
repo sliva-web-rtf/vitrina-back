@@ -9,6 +9,8 @@ using Vitrina.UseCases.Project.GetOrganizations;
 using Vitrina.UseCases.Project.GetPeriods;
 using Vitrina.UseCases.Project.GetProjectById;
 using Vitrina.UseCases.Project.GetProjectsIds;
+using Vitrina.UseCases.Project.GetSpheres;
+using Vitrina.UseCases.Project.GetTypes;
 using Vitrina.UseCases.Project.SearchProjects;
 using Vitrina.UseCases.Project.UpdateProject;
 using Vitrina.UseCases.Project.UpdateProject.DTO;
@@ -177,7 +179,29 @@ public class ProjectController : ControllerBase
         return await mediator.Send(new GetProjectIdsQuery(), cancellationToken);
     }
 
+    /// <summary>
+    /// Search projects with new filters.
+    /// </summary>
+    /// <param name="v2Query">Query to search.</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns>Paged list of projects.</returns>
     [HttpPost("v2/search")]
-    public async Task<PagedListMetadataDto<V2.ShortProjectDto>> SearchProjectsV2(V2.SearchProjectsQuery query, CancellationToken cancellationToken)
-        => (await mediator.Send(query, cancellationToken)).ToMetadataObject();
+    public async Task<PagedListMetadataDto<V2.ShortProjectV2Dto>> SearchProjectsV2(V2.SearchProjectsV2Query v2Query, CancellationToken cancellationToken)
+        => (await mediator.Send(v2Query, cancellationToken)).ToMetadataObject();
+
+    /// <summary>
+    /// Get spheres.
+    /// </summary>
+    /// <returns>Spheres.</returns>
+    [HttpGet("spheres")]
+    public async Task<ICollection<string>> GetProjectSpheres(CancellationToken cancellationToken)
+        => await mediator.Send(new GetSpheresQuery(), cancellationToken);
+
+    /// <summary>
+    /// Get types.
+    /// </summary>
+    /// <returns>Types.</returns>
+    [HttpGet("types")]
+    public async Task<ICollection<string>> GetProjectTypes(CancellationToken cancellationToken)
+        => await mediator.Send(new GetTypesQuery(), cancellationToken);
 }

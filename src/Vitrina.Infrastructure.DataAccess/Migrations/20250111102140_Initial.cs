@@ -43,7 +43,9 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                     PreviewImagePath = table.Column<string>(type: "text", unicode: false, nullable: true),
                     Problem = table.Column<string>(type: "text", unicode: false, nullable: false),
                     Idea = table.Column<string>(type: "text", unicode: false, nullable: false),
-                    Solution = table.Column<string>(type: "text", unicode: false, nullable: false)
+                    Solution = table.Column<string>(type: "text", unicode: false, nullable: false),
+                    Sphere = table.Column<string>(type: "text", unicode: false, nullable: true),
+                    Type = table.Column<string>(type: "text", unicode: false, nullable: true)
                 },
                 constraints: table =>
                 {

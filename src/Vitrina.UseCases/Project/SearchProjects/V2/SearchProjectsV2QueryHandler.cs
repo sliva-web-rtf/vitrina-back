@@ -11,18 +11,18 @@ namespace Vitrina.UseCases.Project.SearchProjects.V2;
 /// <summary>
 /// Search projects handler.
 /// </summary>
-internal class SearchProjectsQueryHandler : IRequestHandler<SearchProjectsQuery, PagedList<ShortProjectDto>>
+internal class SearchProjectsV2QueryHandler : IRequestHandler<SearchProjectsV2Query, PagedList<ShortProjectV2Dto>>
 {
     private readonly IAppDbContext dbContext;
     private readonly IMapper mapper;
 
-    public SearchProjectsQueryHandler(IMapper mapper, IAppDbContext dbContext)
+    public SearchProjectsV2QueryHandler(IMapper mapper, IAppDbContext dbContext)
     {
         this.mapper = mapper;
         this.dbContext = dbContext;
     }
 
-    public async Task<PagedList<ShortProjectDto>> Handle(SearchProjectsQuery request, CancellationToken cancellationToken)
+    public async Task<PagedList<ShortProjectV2Dto>> Handle(SearchProjectsV2Query request, CancellationToken cancellationToken)
     {
         var query = dbContext.Projects
             .OrderByDescending(p => p.Priority)
@@ -34,16 +34,26 @@ internal class SearchProjectsQueryHandler : IRequestHandler<SearchProjectsQuery,
             query = query.Where(p => p.Name.ToLower().Contains(request.Name.ToLower()));
         }
 
-        if (!string.IsNullOrEmpty(request.Client))
+        if (!string.IsNullOrEmpty(request.Customer))
         {
-            query = query.Where(p => p.Client != null && p.Client.Contains(request.Client));
+            query = query.Where(p => p.Client != null && p.Client.Contains(request.Customer));
+        }
+
+        if (!string.IsNullOrEmpty(request.Sphere))
+        {
+            query = query.Where(p => p.Sphere != null && p.Sphere.Contains(request.Sphere));
+        }
+
+        if (!string.IsNullOrEmpty(request.ProjectType))
+        {
+            query = query.Where(p => p.Type != null && p.Type.Contains(request.ProjectType));
         }
 
         var pagedList = await EFPagedListFactory.FromSourceAsync(query, request.Page, request.PageSize, cancellationToken);
-        var result = new List<ShortProjectDto>();
+        var result = new List<ShortProjectV2Dto>();
         foreach (var item in pagedList)
         {
-            var dto = mapper.Map<ShortProjectDto>(item);
+            var dto = mapper.Map<ShortProjectV2Dto>(item);
             if (item.PreviewImagePath != null)
             {
                 dto.PreviewImagePath = item.PreviewImagePath.Split("/").Last();
