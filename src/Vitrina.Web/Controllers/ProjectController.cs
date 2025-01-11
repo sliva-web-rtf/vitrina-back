@@ -177,6 +177,12 @@ public class ProjectController : ControllerBase
         return await mediator.Send(new GetProjectIdsQuery(), cancellationToken);
     }
 
+    /// <summary>
+    /// Search projects with new filters.
+    /// </summary>
+    /// <param name="query">Query to search.</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns>Paged list of projects.</returns>
     [HttpPost("v2/search")]
     public async Task<PagedListMetadataDto<V2.ShortProjectDto>> SearchProjectsV2(V2.SearchProjectsQuery query, CancellationToken cancellationToken)
         => (await mediator.Send(query, cancellationToken)).ToMetadataObject();
