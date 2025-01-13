@@ -63,6 +63,7 @@ jobs:
               -e ConnectionStrings__AppDatabase='${{ secrets.DATABASE_PROD }}' \
               -e Jwt__SecretKey='${{ secrets.JWT_SECRET_PROD }}' \
               -e ASPNETCORE_URLS=http://+:5000 \
+              -v /wwwroot:/app/wwwroot \
               cr.yandex/${{ vars.CR_ID }}/app:${{ github.event.inputs.version }}_latest
 
       - name: Remove old Docker image

@@ -18,6 +18,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		..\.github\workflows\release.yml = ..\.github\workflows\release.yml
 		..\.github\workflows\deploy.prod.yml = ..\.github\workflows\deploy.prod.yml
 		..\.github\workflows\deploy.stage.yml = ..\.github\workflows\deploy.stage.yml
+		..\docker-compose.yaml = ..\docker-compose.yaml
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vitrina.Web.Tests", "Vitrina.Web.Tests\Vitrina.Web.Tests.csproj", "{C0738D4A-3CD3-49E4-A40F-18C1A4F9DA1D}"
