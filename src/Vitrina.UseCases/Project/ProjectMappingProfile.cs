@@ -2,6 +2,7 @@
 using Vitrina.UseCases.Common;
 using Vitrina.UseCases.Project.AddProject;
 using Vitrina.UseCases.Project.SearchProjects;
+using Vitrina.UseCases.Project.SearchProjects.V2;
 using Vitrina.UseCases.Project.UpdateProject.DTO;
 
 namespace Vitrina.UseCases.Project;
@@ -23,6 +24,9 @@ public class ProjectMappingProfile : Profile
         CreateMap<Domain.Project.User, UserDto>().ReverseMap();
         CreateMap<Domain.Project.Project, ProjectDto>().ReverseMap();
         CreateMap<Domain.Project.Project, ShortProjectDto>()
+            .ForMember(p => p.ImageUrl, dest => dest.Ignore())
+            .ReverseMap();
+        CreateMap<Domain.Project.Project, ShortProjectV2Dto>()
             .ForMember(p => p.ImageUrl, dest => dest.Ignore())
             .ReverseMap();
 
