@@ -34,5 +34,6 @@ public class ProjectMappingProfile : Profile
             .ForMember(u => u.Roles, dest => dest.Ignore());
         CreateMap<Domain.Project.Project, UpdateProjectDto>().ReverseMap();
         CreateMap<Domain.Project.Role, UpdateRoleDto>().ReverseMap();
+        CreateMap<Domain.Project.Block, BlockDto>().ReverseMap();
     }
 }

@@ -76,4 +76,34 @@ public class ProjectDto
     /// Project team.
     /// </summary>
     public ICollection<UserDto> Users { get; init; } = new List<UserDto>();
+
+    /// <summary>
+    /// Problem of project.
+    /// </summary>
+    public string? Problem { get; init; }
+
+    /// <summary>
+    /// Idea of project.
+    /// </summary>
+    public string? Idea { get; init; }
+
+    /// <summary>
+    /// Problem of project.
+    /// </summary>
+    public string? Solution { get; init; }
+
+    /// <summary>
+    /// List of custom blocks.
+    /// </summary>
+    public ICollection<BlockDto> CustomBlocks { get; init; } = new List<BlockDto>();
+
+    /// <summary>
+    /// Project sphere.
+    /// </summary>
+    public string? Sphere { get; init; }
+
+    /// <summary>
+    /// Project type.
+    /// </summary>
+    public string? Type { get; init; }
 }
