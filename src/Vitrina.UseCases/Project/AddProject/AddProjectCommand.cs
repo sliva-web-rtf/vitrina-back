@@ -35,8 +35,7 @@ public class AddProjectCommand : IRequest<int>
     /// <summary>
     /// Project period.
     /// </summary>
-    [Required]
-    required public string Period { get; init; }
+    public string Period { get; init; }
 
     /// <summary>
     /// Priority of project.
@@ -66,6 +65,25 @@ public class AddProjectCommand : IRequest<int>
     public string? VideoUrl { get; init; }
 
     /// <summary>
+    /// Problem of project.
+    /// </summary>
+    public string Problem { get; set; }
+
+    /// <summary>
+    /// Idea of project.
+    /// </summary>
+    public string Idea { get; set; }
+
+    /// <summary>
+    /// Problem of project.
+    /// </summary>
+    public string Solution { get; set; }
+
+    public string? Sphere { get; set; }
+
+    public string? Type { get; set; }
+
+    /// <summary>
     /// Project tags.
     /// </summary>
     public ICollection<TagDto> Tags { get; init; } = new List<TagDto>();
@@ -80,19 +98,4 @@ public class AddProjectCommand : IRequest<int>
     /// Custom blocks.
     /// </summary>
     public ICollection<BlockDto> CustomBlocks { get; init; }
-
-    /// <summary>
-    /// Problem of project.
-    /// </summary>
-    required public string Problem { get; set; }
-
-    /// <summary>
-    /// Idea of project.
-    /// </summary>
-    required public string Idea { get; set; }
-
-    /// <summary>
-    /// Problem of project.
-    /// </summary>
-    required public string Solution { get; set; }
 }
