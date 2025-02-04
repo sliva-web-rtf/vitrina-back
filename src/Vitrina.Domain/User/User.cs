@@ -9,20 +9,6 @@ namespace Vitrina.Domain.User;
 public class User : IdentityUser<int>
 {
     /// <summary>
-    /// First name.
-    /// </summary>
-    [MaxLength(255)]
-    [Required]
-    required public string FirstName { get; set; }
-
-    /// <summary>
-    /// Last name.
-    /// </summary>
-    [MaxLength(255)]
-    [Required]
-    required public string LastName { get; set; }
-
-    /// <summary>
     /// The date when user last logged in.
     /// </summary>
     public DateTime? LastLogin { get; set; }
@@ -47,4 +33,14 @@ public class User : IdentityUser<int>
     /// Indicates when the user was removed.
     /// </summary>
     public DateTime? RemovedAt { get; set; }
+
+    /// <summary>
+    /// Education level of user.
+    /// </summary>
+    required public string EducationLevel { get; set; }
+
+    /// <summary>
+    /// Education course of user.
+    /// </summary>
+    public int EducationCourse { get; set; }
 }

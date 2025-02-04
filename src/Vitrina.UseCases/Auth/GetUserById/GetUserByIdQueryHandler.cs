@@ -36,7 +36,7 @@ internal class GetUserByIdQueryHandler : IRequestHandler<GetUserByIdQuery, UserD
     /// <inheritdoc />
     public async Task<UserDetailsDto> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
     {
-        var user = await dbContext.Users.GetAsync(u => u.Id == request.UserId, cancellationToken: cancellationToken);
+        var user = await dbContext.Teammates.GetAsync(u => u.Id == request.UserId, cancellationToken: cancellationToken);
         return mapper.Map<UserDetailsDto>(user);
     }
 }

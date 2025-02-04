@@ -1,6 +1,7 @@
 using AutoMapper;
 using Vitrina.Domain.User;
 using Vitrina.UseCases.Auth.GetUserById;
+using Vitrina.UseCases.Auth.Register;
 using Vitrina.UseCases.Common;
 
 namespace Vitrina.UseCases.Auth;
@@ -17,5 +18,8 @@ public class UserMappingProfile : Profile
     {
         CreateMap<User, UserDto>();
         CreateMap<User, UserDetailsDto>();
+        CreateMap<User, RegisterCommand>()
+            .ForMember(u => u.PasswordConfirm, dest => dest.Ignore())
+            .ForMember(u => u.Password, dest => dest.Ignore());
     }
 }

@@ -5,7 +5,7 @@ namespace Vitrina.Domain.Project;
 /// <summary>
 /// Project users.
 /// </summary>
-public class User
+public class Teammate
 {
     /// <summary>
     /// User id.
@@ -41,7 +41,7 @@ public class User
     /// <summary>
     /// User roles.
     /// </summary>
-    public ICollection<Role> Roles { get; private set; } = new List<Role>();
+    public ICollection<ProjectRole> Roles { get; private set; } = new List<ProjectRole>();
 
     /// <summary>
     /// User project id.

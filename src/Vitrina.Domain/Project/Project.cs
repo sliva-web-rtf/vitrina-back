@@ -76,7 +76,7 @@ public class Project
     /// <summary>
     /// Project team.
     /// </summary>
-    public ICollection<User> Users { get; set; } = new List<User>();
+    public ICollection<Teammate> Users { get; set; } = new List<Teammate>();
 
     /// <summary>
     /// Problem of project.

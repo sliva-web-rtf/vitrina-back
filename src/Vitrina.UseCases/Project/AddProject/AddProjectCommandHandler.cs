@@ -27,10 +27,10 @@ internal class AddProjectCommandHandler : IRequestHandler<AddProjectCommand, int
         try
         {
             var project = mapper.Map<AddProjectCommand, Domain.Project.Project>(request);
-            var allRoles = await dbContext.Roles.ToListAsync(cancellationToken);
+            var allRoles = await dbContext.ProjectRoles.ToListAsync(cancellationToken);
             foreach (var userInProject in project.Users)
             {
-                var clone = new List<Role>(userInProject.Roles);
+                var clone = new List<ProjectRole>(userInProject.Roles);
                 foreach (var t in clone)
                 {
                     var role = allRoles.FirstOrDefault(r => r.Name.ToLower() == t.Name.ToLower());

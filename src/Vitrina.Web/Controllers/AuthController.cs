@@ -6,6 +6,7 @@ using Vitrina.UseCases.Auth;
 using Vitrina.UseCases.Auth.GetUserById;
 using Vitrina.UseCases.Auth.Login;
 using Vitrina.UseCases.Auth.RefreshToken;
+using Vitrina.UseCases.Auth.Register;
 using Vitrina.Web.Infrastructure.Web;
 
 namespace Vitrina.Web.Controllers;
@@ -39,6 +40,19 @@ public class AuthController : ControllerBase
     public async Task<TokenModel> Authenticate([Required] LoginUserCommand command, CancellationToken cancellationToken)
     {
         return (await mediator.Send(command, cancellationToken)).TokenModel;
+    }
+
+    /// <summary>
+    /// Register user.
+    /// </summary>
+    /// <param name="command">Register command.</param>
+    /// <param name="cancellationToken">Cancellation token to cancel the request.</param>
+    [HttpPost]
+    [ProducesResponseType(200)]
+    [ProducesResponseType(400)]
+    public async Task Register([Required] RegisterCommand command, CancellationToken cancellationToken)
+    {
+        await mediator.Send(command, cancellationToken);
     }
 
     /// <summary>

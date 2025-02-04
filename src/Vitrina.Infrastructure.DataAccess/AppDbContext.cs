@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Vitrina.Domain.Project;
+using Vitrina.Domain.User;
 using Vitrina.Infrastructure.Abstractions.Interfaces;
 
 namespace Vitrina.Infrastructure.DataAccess;
@@ -9,7 +11,7 @@ namespace Vitrina.Infrastructure.DataAccess;
 /// <summary>
 /// Application unit of work.
 /// </summary>
-public class AppDbContext : DbContext, IAppDbContext, IDataProtectionKeyContext
+public class AppDbContext : IdentityDbContext<User, AppIdentityRole, int>, IAppDbContext, IDataProtectionKeyContext
 {
     public DbSet<Project> Projects => Set<Project>();
 
@@ -17,13 +19,13 @@ public class AppDbContext : DbContext, IAppDbContext, IDataProtectionKeyContext
     public DbSet<DataProtectionKey> DataProtectionKeys { get; private set; }
 
     /// <inheritdoc/>
-    public DbSet<User> Users => Set<User>();
+    public DbSet<Teammate> Teammates => Set<Teammate>();
 
     /// <inheritdoc/>
     public DbSet<Tag> Tags => Set<Tag>();
 
     /// <inheritdoc/>
-    public DbSet<Role> Roles => Set<Role>();
+    public DbSet<ProjectRole> ProjectRoles => Set<ProjectRole>();
 
     /// <inheritdoc/>
     public DbSet<Content> Contents => Set<Content>();
