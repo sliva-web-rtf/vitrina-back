@@ -30,6 +30,9 @@ public class AppDbContext : IdentityDbContext<User, AppIdentityRole, int>, IAppD
     /// <inheritdoc/>
     public DbSet<Content> Contents => Set<Content>();
 
+    /// <inheritdoc/>
+    public DbSet<ConfirmationCode> Codes => Set<ConfirmationCode>();
+
     /// <summary>
     /// Constructor.
     /// </summary>

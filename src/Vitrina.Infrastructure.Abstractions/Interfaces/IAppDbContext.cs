@@ -38,4 +38,9 @@ public interface IAppDbContext : IDbContextWithSets, IDisposable
     /// Users.
     /// </summary>
     DbSet<User> Users { get; }
+
+    /// <summary>
+    /// Confirmation codes.
+    /// </summary>
+    DbSet<ConfirmationCode> Codes { get; }
 }

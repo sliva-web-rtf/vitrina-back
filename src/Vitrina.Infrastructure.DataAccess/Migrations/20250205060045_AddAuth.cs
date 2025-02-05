@@ -42,13 +42,13 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    FirstName = table.Column<string>(type: "character varying(255)", unicode: false, maxLength: 255, nullable: false),
-                    LastName = table.Column<string>(type: "character varying(255)", unicode: false, maxLength: 255, nullable: false),
                     LastLogin = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     LastTokenResetAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     RemovedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    EducationLevel = table.Column<string>(type: "text", unicode: false, nullable: false),
+                    EducationCourse = table.Column<int>(type: "integer", nullable: false),
                     UserName = table.Column<string>(type: "character varying(256)", unicode: false, maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "character varying(256)", unicode: false, maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "character varying(256)", unicode: false, maxLength: 256, nullable: true),

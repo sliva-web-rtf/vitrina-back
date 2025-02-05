@@ -12,8 +12,8 @@ using Vitrina.Infrastructure.DataAccess;
 namespace Vitrina.Infrastructure.DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250204150304_AddAuth")]
-    partial class AddAuth
+    [Migration("20250205065801_AddCodes")]
+    partial class AddCodes
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -434,6 +434,25 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                     b.ToTable("AspNetRoles", (string)null);
                 });
 
+            modelBuilder.Entity("Vitrina.Domain.User.ConfirmationCode", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Code")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Codes");
+                });
+
             modelBuilder.Entity("Vitrina.Domain.User.User", b =>
                 {
                     b.Property<int>("Id")
@@ -453,6 +472,14 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<int>("EducationCourse")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("EducationLevel")
+                        .IsRequired()
+                        .IsUnicode(false)
+                        .HasColumnType("text");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .IsUnicode(false)
@@ -461,20 +488,8 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("boolean");
 
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .IsUnicode(false)
-                        .HasColumnType("character varying(255)");
-
                     b.Property<DateTime?>("LastLogin")
                         .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .IsUnicode(false)
-                        .HasColumnType("character varying(255)");
 
                     b.Property<DateTime>("LastTokenResetAt")
                         .HasColumnType("timestamp with time zone");

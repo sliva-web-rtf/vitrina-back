@@ -44,6 +44,11 @@ internal class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, Login
         {
             throw new ArgumentException($"User with email {request.Email} not found.");
         }
+
+        if (!user.EmailConfirmed)
+        {
+            throw new ArgumentException($"User with email {request.Email} not confirmed.");
+        }
         logger.LogInformation("User with email {email} has logged in.", user.Email);
 
         // Update last login date.

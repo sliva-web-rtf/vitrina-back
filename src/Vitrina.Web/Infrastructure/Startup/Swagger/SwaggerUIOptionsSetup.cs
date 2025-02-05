@@ -18,5 +18,7 @@ internal class SwaggerUIOptionsSetup
         options.EnableValidator();
         options.EnableDeepLinking();
         options.DisplayOperationId();
+        // Preserve authorization token after browser page refresh.
+        options.ConfigObject.AdditionalItems.Add("persistAuthorization", "true");
     }
 }

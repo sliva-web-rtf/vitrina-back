@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Vitrina.UseCases.Auth;
+using Vitrina.UseCases.Auth.ConfirmEmail;
 using Vitrina.UseCases.Auth.GetUserById;
 using Vitrina.UseCases.Auth.Login;
 using Vitrina.UseCases.Auth.RefreshToken;
@@ -34,7 +35,7 @@ public class AuthController : ControllerBase
     /// </summary>
     /// <param name="command">Login command.</param>
     /// <param name="cancellationToken">Cancellation token to cancel the request.</param>
-    [HttpPost]
+    [HttpPost("log-in")]
     [ProducesResponseType(200)]
     [ProducesResponseType(400)]
     public async Task<TokenModel> Authenticate([Required] LoginUserCommand command, CancellationToken cancellationToken)
@@ -47,12 +48,36 @@ public class AuthController : ControllerBase
     /// </summary>
     /// <param name="command">Register command.</param>
     /// <param name="cancellationToken">Cancellation token to cancel the request.</param>
-    [HttpPost]
+    [HttpPost("register")]
     [ProducesResponseType(200)]
     [ProducesResponseType(400)]
-    public async Task Register([Required] RegisterCommand command, CancellationToken cancellationToken)
+    public async Task<IActionResult> Register([Required] RegisterCommand command, CancellationToken cancellationToken)
     {
-        await mediator.Send(command, cancellationToken);
+        var result = await mediator.Send(command, cancellationToken);
+        if (!result.IsSuccess)
+        {
+            return BadRequest(result.Message);
+        }
+
+        return Ok(result);
+    }
+
+    /// <summary>
+    /// Confirm email.
+    /// </summary>
+    [HttpPost("confirm")]
+    [ProducesResponseType(200)]
+    [ProducesResponseType(400)]
+    public async Task<IActionResult> ConfirmEmail([Required] ConfirmEmailCommand command,
+        CancellationToken cancellationToken)
+    {
+        var result = await mediator.Send(command, cancellationToken);
+        if (!result.IsSuccess)
+        {
+            return BadRequest(result.Message);
+        }
+
+        return Ok(result);
     }
 
     /// <summary>
@@ -61,7 +86,7 @@ public class AuthController : ControllerBase
     /// <param name="command">Refresh token command.</param>
     /// <returns>New authentication and refresh tokens.</returns>
     /// <param name="cancellationToken">Cancellation token to cancel the request.</param>
-    [HttpPut]
+    [HttpPut("refresh")]
     [ProducesResponseType(200)]
     [ProducesResponseType(400)]
     [ProducesResponseType(403)]
@@ -73,7 +98,7 @@ public class AuthController : ControllerBase
     /// </summary>
     /// <returns>Current logged user info.</returns>
     /// <param name="cancellationToken">Cancellation token to cancel the request.</param>
-    [HttpGet]
+    [HttpGet("get-me")]
     [Authorize]
     public async Task<UserDetailsDto> GetMe(CancellationToken cancellationToken)
     {

@@ -136,6 +136,8 @@ public class Startup
         app.UseCors(CorsOptionsSetup.CorsPolicyName);
         app.UseForwardedHeaders(new ForwardedHeadersOptions { ForwardedHeaders = ForwardedHeaders.All });
 
+        app.UseAuthentication();
+        app.UseAuthorization();
         app.UseEndpoints(endpoints =>
         {
             Infrastructure.Startup.HealthCheck.HealthCheckModule.Register(endpoints);

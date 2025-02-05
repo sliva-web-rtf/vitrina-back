@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Saritasa.Tools.Common.Pagination;
 using Vitrina.UseCases.Common;
@@ -28,6 +29,7 @@ namespace Vitrina.Web.Controllers;
 // For dev [Route("api-dev/project")]
 [Route("api/project")]
 [ApiExplorerSettings(GroupName = "project")]
+[Authorize]
 public class ProjectController : ControllerBase
 {
     private readonly IMediator mediator;

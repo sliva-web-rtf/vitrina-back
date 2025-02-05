@@ -6,7 +6,7 @@ namespace Vitrina.UseCases.Auth.Register;
 /// <summary>
 /// Register user command.
 /// </summary>
-public class RegisterCommand : IRequest
+public class RegisterCommand : IRequest<RegisterCommandResult>
 {
     /// <summary>
     /// User email.
