@@ -31,7 +31,7 @@ internal class SearchProjectsV2QueryHandler : IRequestHandler<SearchProjectsV2Qu
 
         if (!string.IsNullOrEmpty(request.Name))
         {
-            query = query.Where(p => p.Name.ToLower().Contains(request.Name.ToLower()));
+            query = query.Where(p => p.Name.ToLower() == request.Name.ToLower());
         }
 
         if (!string.IsNullOrEmpty(request.Customer))

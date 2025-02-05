@@ -35,7 +35,8 @@ internal sealed class ApiExceptionMiddleware
         [typeof(ForbiddenException)] = StatusCodes.Status403Forbidden,
         [typeof(UnauthorizedException)] = StatusCodes.Status401Unauthorized,
         [typeof(DomainException)] = StatusCodes.Status400BadRequest,
-        [typeof(InvalidOrderFieldException)] = StatusCodes.Status400BadRequest
+        [typeof(InvalidOrderFieldException)] = StatusCodes.Status400BadRequest,
+        [typeof(ArgumentException)] = StatusCodes.Status400BadRequest
     };
 
     /// <summary>

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Vitrina.Domain.Project;
+using Vitrina.Domain.User;
 
 namespace Vitrina.Infrastructure.Abstractions.Interfaces;
 
@@ -11,7 +12,7 @@ public interface IAppDbContext : IDbContextWithSets, IDisposable
     /// <summary>
     /// Users.
     /// </summary>
-    DbSet<User> Users { get; }
+    DbSet<Teammate> Teammates { get; }
 
     /// <summary>
     /// Projects set.
@@ -26,10 +27,20 @@ public interface IAppDbContext : IDbContextWithSets, IDisposable
     /// <summary>
     /// Roles.
     /// </summary>
-    DbSet<Role> Roles { get; }
+    DbSet<ProjectRole> ProjectRoles { get; }
 
     /// <summary>
     /// Contents.
     /// </summary>
     DbSet<Content> Contents { get; }
+
+    /// <summary>
+    /// Users.
+    /// </summary>
+    DbSet<User> Users { get; }
+
+    /// <summary>
+    /// Confirmation codes.
+    /// </summary>
+    DbSet<ConfirmationCode> Codes { get; }
 }

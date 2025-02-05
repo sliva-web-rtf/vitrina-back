@@ -20,7 +20,7 @@ internal sealed class SwaggerExampleSetterSchemaFilter : ISchemaFilter
             ["email"] = new OpenApiString("test@example.com"),
             ["firstname"] = new OpenApiString("John"),
             ["lastname"] = new OpenApiString("Doe"),
-            ["password"] = new OpenApiPassword("123"),
+            ["password"] = new OpenApiPassword("Test123"),
             ["token"] = new OpenApiString("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9eyJzdWIiOiJmd2QyaXZhbkBnbWFpbC5jb20"),
             ["accessToken"] = new OpenApiString("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9eyJzdWIiOiJmd2QyaXZhbkBnbWFpbC5jb20"),
             ["refreshToken"] = new OpenApiString("gjofdjaojoas23fweok"),

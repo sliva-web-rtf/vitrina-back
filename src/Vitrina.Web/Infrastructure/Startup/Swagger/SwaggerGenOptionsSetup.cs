@@ -28,6 +28,15 @@ internal class SwaggerGenOptionsSetup
             Description = "API documentation for the project."
         });
 
+        options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+        {
+            Description = "Insert JWT token to the field.",
+            Scheme = "bearer",
+            BearerFormat = "JWT",
+            Name = "bearer",
+            Type = SecuritySchemeType.Http
+        });
+
         // TODO: Add your assemblies here.
         options.IncludeXmlCommentsWithRemarks(GetAssemblyLocationByType(GetType()));
         options.IncludeXmlCommentsWithRemarks(GetAssemblyLocationByType(typeof(UseCases.Common.Pagination.PageQueryFilter)));
@@ -37,6 +46,7 @@ internal class SwaggerGenOptionsSetup
         options.SchemaFilter<SwaggerExampleSetterSchemaFilter>();
         options.SchemaFilter<SwaggerEnumDescriptionSchemaOperationFilter>();
         options.OperationFilter<SwaggerEnumDescriptionSchemaOperationFilter>();
+        options.OperationFilter<SwaggerSecurityRequirementsOperationFilter>();
 
         // Group by ApiExplorerSettings.GroupName name.
         options.TagActionsBy(apiDescription => new[]

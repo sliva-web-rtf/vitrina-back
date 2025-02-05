@@ -26,18 +26,18 @@ internal class UpdateProjectCommandHandler : IRequestHandler<UpdateProjectComman
                 .Projects
                 .FirstOrDefaultAsync(p => p.Id == request.ProjectId, cancellationToken)
                         ?? throw new DomainException("Project not found");
-            var users = await appDbContext.Users
+            var users = await appDbContext.Teammates
                 .Include(u => u.Roles)
                 .Where(u => u.ProjectId == project.Id)
                 .ToListAsync(cancellationToken);
-            var allRoles = await appDbContext.Roles.ToListAsync(cancellationToken);
+            var allRoles = await appDbContext.ProjectRoles.ToListAsync(cancellationToken);
             mapper.Map(request.Project, project);
-            var resultUser = new List<User>();
+            var resultUser = new List<Teammate>();
             foreach (var user in request.Project.Users)
             {
                 var userFromDb = users.FirstOrDefault(u => u.Id == user.Id);
                 mapper.Map(user, userFromDb);
-                userFromDb ??= mapper.Map<User>(user);
+                userFromDb ??= mapper.Map<Teammate>(user);
                 userFromDb.Roles.Clear();
                 foreach (var role in user.Roles)
                 {
@@ -51,7 +51,7 @@ internal class UpdateProjectCommandHandler : IRequestHandler<UpdateProjectComman
                         }
                         else
                         {
-                            var newRole = new Role { Name = role.Name };
+                            var newRole = new ProjectRole { Name = role.Name };
                             userFromDb.Roles.Add(newRole);
                         }
                     }
