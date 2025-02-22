@@ -43,4 +43,29 @@ public class User : IdentityUser<int>
     /// Education course of user.
     /// </summary>
     public int EducationCourse { get; set; }
+
+    /// <summary>
+    /// User role in team.
+    /// </summary>
+    public RoleInTeamEnum RoleInTeam { get; set; }
+
+    /// <summary>
+    /// User first name.
+    /// </summary>
+    required public string FirstName { get; set; }
+
+    /// <summary>
+    /// User last name.
+    /// </summary>
+    required public string LastName { get; set; }
+
+    /// <summary>
+    /// User surname.
+    /// </summary>
+    required public string Surname { get; set; }
+
+    /// <summary>
+    /// Full name of user.
+    /// </summary>
+    public string FullName => $"{LastName} {FirstName} {Surname}";
 }
