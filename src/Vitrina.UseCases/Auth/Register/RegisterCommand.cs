@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using MediatR;
+using Vitrina.Domain.User;
 
 namespace Vitrina.UseCases.Auth.Register;
 
@@ -13,14 +14,14 @@ public class RegisterCommand : IRequest<RegisterCommandResult>
     /// </summary>
     [Required]
     [EmailAddress]
-    public string Email { get; set; }
+    required public string Email { get; set; }
 
     /// <summary>
     /// User password.
     /// </summary>
     [Required]
     [DataType(DataType.Password)]
-    public string Password { get; set; }
+    required public string Password { get; set; }
 
     /// <summary>
     /// Confirm password.
@@ -28,7 +29,7 @@ public class RegisterCommand : IRequest<RegisterCommandResult>
     [Required]
     [Compare("Password", ErrorMessage = "Пароли не совпадают")]
     [DataType(DataType.Password)]
-    public string PasswordConfirm { get; set; }
+    required public string PasswordConfirm { get; set; }
 
     /// <summary>
     /// Education level of user.
@@ -39,4 +40,24 @@ public class RegisterCommand : IRequest<RegisterCommandResult>
     /// Education course of user.
     /// </summary>
     public int EducationCourse { get; set; }
+
+    /// <summary>
+    /// User role in team.
+    /// </summary>
+    public RoleInTeamEnum RoleInTeam { get; set; }
+
+    /// <summary>
+    /// User first name.
+    /// </summary>
+    required public string FirstName { get; set; }
+
+    /// <summary>
+    /// User last name.
+    /// </summary>
+    required public string LastName { get; set; }
+
+    /// <summary>
+    /// User surname.
+    /// </summary>
+    required public string Surname { get; set; }
 }
