@@ -26,7 +26,7 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                 table: "AspNetUsers",
                 type: "integer",
                 nullable: true);
-            migrationBuilder.Sql("UPDATE aspnetusers " +
+            migrationBuilder.Sql("UPDATE AspNetUsers " +
                                  "SET EducationLevel_Temp = " +
                                  "CASE " +
                                  "WHEN EducationLevel = 'Бакалавриат' THEN 0 " +
