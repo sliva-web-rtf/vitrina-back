@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
+using Newtonsoft.Json.Linq;
 
 namespace Vitrina.Domain.User;
 
@@ -37,7 +38,7 @@ public class User : IdentityUser<int>
     /// <summary>
     /// Education level of user.
     /// </summary>
-    required public string EducationLevel { get; set; }
+    required public EducationLevelEnum EducationLevel { get; set; }
 
     /// <summary>
     /// Education course of user.
@@ -62,10 +63,26 @@ public class User : IdentityUser<int>
     /// <summary>
     /// User surname.
     /// </summary>
-    required public string Surname { get; set; }
+    required public string Patronymic { get; set; }
 
     /// <summary>
     /// Full name of user.
     /// </summary>
-    public string FullName => $"{LastName} {FirstName} {Surname}";
+    public string FullName => $"{LastName} {FirstName} {Patronymic}";
+
+    [ProtectedPersonalData]
+    [RegularExpression("^[a-zA-Z][a-zA-Z0-9_-]{4,31}$", ErrorMessage = "This is an incorrect Telegram username.")]
+    public string? Telegram { get; set; }
+
+    public string? Resume { get; set; }
+
+    public string? Post { get; set; }
+
+    public string? Company { get; set; }
+
+    public List<Project.Project> Projects { get; init; } = [];
+
+    public JObject ProfileData { get; set; }
+
+    public string? Specialization { get; set; }
 }

@@ -5,7 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Innofactor.EfCoreJsonValueConverter" Version="6.0.0" />
     <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="7.0.9" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Saritasa.Tools.Common" Version="5.0.0" />
     <PackageReference Include="Saritasa.Tools.Domain" Version="0.8.2" />
   </ItemGroup>

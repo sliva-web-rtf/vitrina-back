@@ -29,6 +29,7 @@ internal sealed class Program
             .Conventions
             .UseConstructorInjection(scope.ServiceProvider)
             .UseDefaultConventions();
+
         return await commandLineApplication.ExecuteAsync(args);
     }
 

@@ -34,7 +34,7 @@ public class RegisterCommand : IRequest<RegisterCommandResult>
     /// <summary>
     /// Education level of user.
     /// </summary>
-    required public string EducationLevel { get; set; }
+    required public EducationLevelEnum EducationLevel { get; set; }
 
     /// <summary>
     /// Education course of user.
