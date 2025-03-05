@@ -1,8 +1,5 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json.Linq;
-using Vitrina.Domain.Project;
-using Vitrina.Domain.User;
 using Vitrina.UseCases.UserProfile.GetUserById;
 
 namespace Vitrina.Web.Controllers;
