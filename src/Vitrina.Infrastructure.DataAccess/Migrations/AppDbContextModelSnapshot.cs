@@ -546,7 +546,7 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
 
                     b.Property<string>("ProfileData")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("jsonb");
 
                     b.Property<DateTime?>("RemovedAt")
                         .HasColumnType("timestamp with time zone");

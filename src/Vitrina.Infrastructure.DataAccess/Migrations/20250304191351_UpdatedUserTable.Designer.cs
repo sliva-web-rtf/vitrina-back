@@ -12,8 +12,8 @@ using Vitrina.Infrastructure.DataAccess;
 namespace Vitrina.Infrastructure.DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250225181241_AddedNewFieldsToUser")]
-    partial class AddedNewFieldsToUser
+    [Migration("20250304191351_UpdatedUserTable")]
+    partial class UpdatedUserTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -549,7 +549,7 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
 
                     b.Property<string>("ProfileData")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("jsonb");
 
                     b.Property<DateTime?>("RemovedAt")
                         .HasColumnType("timestamp with time zone");

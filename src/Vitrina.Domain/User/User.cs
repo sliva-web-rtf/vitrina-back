@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
 using Newtonsoft.Json.Linq;
 
@@ -61,7 +62,7 @@ public class User : IdentityUser<int>
     required public string LastName { get; set; }
 
     /// <summary>
-    /// User surname.
+    /// User patronymic.
     /// </summary>
     required public string Patronymic { get; set; }
 
@@ -70,19 +71,40 @@ public class User : IdentityUser<int>
     /// </summary>
     public string FullName => $"{LastName} {FirstName} {Patronymic}";
 
+    /// <summary>
+    /// Telegram username of user.
+    /// </summary>
     [ProtectedPersonalData]
-    [RegularExpression("^[a-zA-Z][a-zA-Z0-9_-]{4,31}$", ErrorMessage = "This is an incorrect Telegram username.")]
     public string? Telegram { get; set; }
 
+    /// <summary>
+    /// Resume of user.
+    /// </summary>
     public string? Resume { get; set; }
 
+    /// <summary>
+    /// Position in the company.
+    /// </summary>
     public string? Post { get; set; }
 
+    /// <summary>
+    /// Place of work
+    /// </summary>
     public string? Company { get; set; }
 
-    public List<Project.Project> Projects { get; init; } = [];
+    /// <summary>
+    /// List of projects.
+    /// </summary>
+    public ICollection<Project.Project> Projects { get; set; }
 
+    /// <summary>
+    /// User profile data, depending on their role on the platform
+    /// </summary>
+    [Column(TypeName = "jsonb")]
     public JObject ProfileData { get; set; }
 
+    /// <summary>
+    /// User specialization.
+    /// </summary>
     public string? Specialization { get; set; }
 }

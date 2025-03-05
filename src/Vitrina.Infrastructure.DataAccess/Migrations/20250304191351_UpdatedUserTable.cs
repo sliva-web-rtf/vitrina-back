@@ -5,7 +5,7 @@
 namespace Vitrina.Infrastructure.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class AddedNewFieldsToUser : Migration
+    public partial class UpdatedUserTable : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -26,13 +26,13 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                 table: "AspNetUsers",
                 type: "integer",
                 nullable: true);
-            migrationBuilder.Sql("UPDATE AspNetUsers " +
-                                 "SET EducationLevel_Temp = " +
+            migrationBuilder.Sql("UPDATE \"AspNetUsers\" " +
+                                 "SET \"EducationLevel_Temp\" = " +
                                  "CASE " +
-                                 "WHEN EducationLevel = 'Бакалавриат' THEN 0 " +
-                                 "WHEN EducationLevel = 'Специалитет' THEN 1 " +
-                                 "WHEN EducationLevel = 'Магистратура' THEN 2 " +
-                                 "WHEN EducationLevel = 'Аспирантура' THEN 3 " +
+                                 "WHEN \"EducationLevel\" = 'Бакалавриат' THEN 0 " +
+                                 "WHEN \"EducationLevel\" = 'Специалитет' THEN 1 " +
+                                 "WHEN \"EducationLevel\" = 'Магистратура' THEN 2 " +
+                                 "WHEN \"EducationLevel\" = 'Аспирантура' THEN 3 " +
                                  "ELSE 4 " +
                                  "END");
             migrationBuilder.DropColumn(name: "EducationLevel", table: "AspNetUsers");
@@ -52,12 +52,14 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                 unicode: false,
                 nullable: true);
 
-            migrationBuilder.AddColumn<string>(
+            migrationBuilder.AlterColumn<string>(
                 name: "ProfileData",
                 table: "AspNetUsers",
-                type: "text",
-                nullable: false,
-                defaultValue: "");
+                type: "jsonb",
+                nullable: true,
+                oldClrType: typeof(string),
+                oldType: "jsonb",
+                oldNullable: false);
 
             migrationBuilder.AddColumn<string>(
                 name: "Resume",
@@ -143,13 +145,13 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                 table: "AspNetUsers",
                 type: "text",
                 nullable: true);
-            migrationBuilder.Sql("UPDATE AspNetUsers "+
-                                 "SET EducationLevel_Temp = " +
+            migrationBuilder.Sql("UPDATE \"AspNetUsers\" "+
+                                 "SET \"EducationLevel_Temp\" = " +
                                  "CASE " +
-                                 "WHEN EducationLevel = 0 THEN 'Бакалавриат' " +
-                                 "WHEN EducationLevel = 1 THEN 'Специалитет' " +
-                                 "WHEN EducationLevel = 2 THEN 'Магистратура' " +
-                                 "WHEN EducationLevel = 3 THEN 'Аспирантура' " +
+                                 "WHEN \"EducationLevel\" = 0 THEN 'Бакалавриат' " +
+                                 "WHEN \"EducationLevel\" = 1 THEN 'Специалитет' " +
+                                 "WHEN \"EducationLevel\" = 2 THEN 'Магистратура' " +
+                                 "WHEN \"EducationLevel\" = 3 THEN 'Аспирантура' " +
                                  "ELSE NULL " +
                                  "END");
             migrationBuilder.DropColumn(name: "EducationLevel", table: "AspNetUsers");
