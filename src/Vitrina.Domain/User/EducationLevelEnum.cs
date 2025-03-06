@@ -4,7 +4,7 @@ public enum EducationLevelEnum
 {
     Bachelors,
     Specialty,
-    Masters,
+    Magistracy,
     Postgraduate,
-    NotSpecified
+    NotStudent
 }

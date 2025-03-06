@@ -21,5 +21,7 @@ public class UserMappingProfile : Profile
         CreateMap<User, RegisterCommand>()
             .ForMember(u => u.PasswordConfirm, dest => dest.Ignore())
             .ForMember(u => u.Password, dest => dest.Ignore());
+        CreateMap<UpdatedUserDto, User>()
+            .ForAllMembers(opt => opt.Condition((src, dest, srcMember) => srcMember != null));
     }
 }

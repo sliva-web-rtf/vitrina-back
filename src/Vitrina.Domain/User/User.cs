@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
 using Newtonsoft.Json.Linq;
+using Vitrina.Domain.Project;
 
 namespace Vitrina.Domain.User;
 
@@ -74,11 +75,10 @@ public class User : IdentityUser<int>
     /// <summary>
     /// Telegram username of user.
     /// </summary>
-    [ProtectedPersonalData]
     public string? Telegram { get; set; }
 
     /// <summary>
-    /// Resume of user.
+    /// Link to the resume pdf file in the cloud storage.
     /// </summary>
     public string? Resume { get; set; }
 
@@ -107,4 +107,14 @@ public class User : IdentityUser<int>
     /// User specialization.
     /// </summary>
     public string? Specialization { get; set; }
+
+    /// <summary>
+    /// Link to the image in the cloud storage.
+    /// </summary>
+    public string? Avatar { get; set; }
+
+    /// <summary>
+    /// Roles in the team.
+    /// </summary>
+    public ICollection<ProjectRole>? Roles { get; init; }
 }
