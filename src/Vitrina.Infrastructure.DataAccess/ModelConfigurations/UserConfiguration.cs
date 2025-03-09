@@ -33,5 +33,8 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder
             .Property(user => user.RegistrationStatus)
             .HasDefaultValue(RegistrationStatusEnum.NotRegistered);
+        builder
+            .Property(u => u.RolesInTeam)
+            .HasColumnType("text[]");
     }
 }

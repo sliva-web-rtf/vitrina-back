@@ -41,12 +41,12 @@ public class User : IdentityUser<int>
     /// </summary>
     public DateTime? RemovedAt { get; set; }
 
-    private EducationLevelEnum educationLevel;
+    private EducationLevelEnum? educationLevel;
 
     /// <summary>
     /// Education level of user.
     /// </summary>
-    public EducationLevelEnum EducationLevel
+    public EducationLevelEnum? EducationLevel
     {
         get => educationLevel;
         set
@@ -270,12 +270,12 @@ public class User : IdentityUser<int>
     /// </summary>
     public string? Avatar { get; set; }
 
-    /*private ICollection<string>? rolesInTeam;
+    private List<string>? rolesInTeam;
 
     /// <summary>
     /// Role in the team.
     /// </summary>
-    public ICollection<string>? RolesInTeam
+    public List<string>? RolesInTeam
     {
         get => rolesInTeam;
         set
@@ -286,5 +286,5 @@ public class User : IdentityUser<int>
                 ProfileData["rolesInTeam"] = JsonConvert.SerializeObject(rolesInTeam);
             }
         }
-    }*/
+    }
 }

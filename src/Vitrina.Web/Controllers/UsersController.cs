@@ -2,15 +2,14 @@ using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 using Vitrina.Domain.User;
-using Vitrina.UseCases.Common;
+using Vitrina.UseCases.Project.GetProjectsByUserId;
 using Vitrina.UseCases.UserProfile.GetUserById;
 
 namespace Vitrina.Web.Controllers;
 
-[Authorize]
+/*[Authorize]*/
 [ApiController]
 [Route("api/users")]
 [ApiExplorerSettings(GroupName = "users")]
@@ -27,9 +26,18 @@ public class UsersController(IMediator mediator, IMapper mapper) : ControllerBas
     {
         var query = new GetUserByIdQuery { UserId = userId };
         var user = await mediator.Send(query, cancellationToken);
-        /*if (user.RoleOnPlatform == RoleOnPlatformEnum.Student)
-            user.ProfileData["projects"] =*/
-        return user is null ? NotFound("The user with the specified Id was not found") : Ok(user.ProfileData.ToString());
+
+        if (user is null)
+        {
+            return NotFound("The user with the specified Id was not found");
+        }
+
+        if (user.RoleOnPlatform == RoleOnPlatformEnum.Student)
+        {
+            user.ProfileData["projects"] = JsonConvert.SerializeObject(mediator.Send(new GetProjectsByUserIdQuery(userId), cancellationToken));
+        }
+
+        return Ok(user.ProfileData.ToString());
     }
 
     /// <summary>
@@ -59,7 +67,8 @@ public class UsersController(IMediator mediator, IMapper mapper) : ControllerBas
         {
             var educationLevel = userDto.EducationLevel ?? user.EducationLevel;
             var educationCourse = userDto.EducationCourse ?? user.EducationCourse;
-            if (CheckEducationCourse(educationCourse, educationLevel))
+
+            if (CheckEducationCourse(educationCourse, (EducationLevelEnum)educationLevel))
             {
                 return UnprocessableEntity("The education course does not correspond to the education level.");
             }
