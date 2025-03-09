@@ -42,9 +42,9 @@ public class RegisterCommand : IRequest<RegisterCommandResult>
     public int EducationCourse { get; set; }
 
     /// <summary>
-    /// User role in team.
+    /// User role on the platform.
     /// </summary>
-    public RoleInTeamEnum RoleInTeam { get; set; }
+    public RoleOnPlatformEnum RoleOnPlatform { get; set; }
 
     /// <summary>
     /// User first name.

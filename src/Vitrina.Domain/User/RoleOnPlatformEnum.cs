@@ -3,7 +3,7 @@ namespace Vitrina.Domain.User;
 /// <summary>
 /// Types of roles for user.
 /// </summary>
-public enum RoleInTeamEnum
+public enum RoleOnPlatformEnum
 {
     /// <summary>
     /// Student role.

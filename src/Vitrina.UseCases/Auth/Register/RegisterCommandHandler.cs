@@ -27,6 +27,7 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, RegisterC
     {
         var user = new User
         {
+            RoleOnPlatform = request.RoleOnPlatform,
             Email = request.Email,
             UserName = request.Email,
             EmailConfirmed = false,

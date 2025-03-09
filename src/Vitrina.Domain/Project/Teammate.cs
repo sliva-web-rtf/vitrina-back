@@ -14,34 +14,14 @@ public class Teammate
     public int Id { get; private set; }
 
     /// <summary>
-    /// User email.
+    /// User id.
     /// </summary>
-    public string? Email { get; set; }
+    public int UserId { get; init; }
 
     /// <summary>
-    /// User name.
+    /// User.
     /// </summary>
-    required public string FirstName { get; set; }
-
-    /// <summary>
-    /// User last name.
-    /// </summary>
-    required public string LastName { get; set; }
-
-    /// <summary>
-    /// User patronymic.
-    /// </summary>
-    public string? Patronymic { get; set; }
-
-    /// <summary>
-    /// User avatar.
-    /// </summary>
-    public byte[]? Avatar { get; set; }
-
-    /// <summary>
-    /// User roles.
-    /// </summary>
-    public ICollection<ProjectRole> Roles { get; private set; } = new List<ProjectRole>();
+    public User.User User { get; private set; }
 
     /// <summary>
     /// User project id.
@@ -52,4 +32,9 @@ public class Teammate
     /// User project.
     /// </summary>
     required public Project Project { get; set; }
+
+    /// <summary>
+    /// User roles.
+    /// </summary>
+    public ICollection<ProjectRole> Roles { get; private set; } = new List<ProjectRole>();
 }

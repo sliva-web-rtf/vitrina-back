@@ -12,5 +12,26 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder
             .Property(application => application.ProfileData)
             .HasJsonValueConversion();
+        builder
+            .Property(user => user.EducationCourse)
+            .IsRequired(false);
+        builder
+            .Property(u => u.EmailConfirmed)
+            .HasDefaultValue("false");
+        builder
+            .Property(u => u.PhoneNumberConfirmed)
+            .HasDefaultValue("false");
+        builder
+            .Property(u => u.TwoFactorEnabled)
+            .HasDefaultValue("false");
+        builder
+            .Property(u => u.LockoutEnabled)
+            .HasDefaultValue("false");
+        builder
+            .Property(u => u.AccessFailedCount)
+            .HasDefaultValue("5");
+        builder
+            .Property(user => user.RegistrationStatus)
+            .HasDefaultValue(RegistrationStatusEnum.NotRegistered);
     }
 }

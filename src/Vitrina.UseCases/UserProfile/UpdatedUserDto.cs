@@ -24,7 +24,7 @@ public record UpdatedUserDto
     /// User role in team.
     /// </summary>
     [JsonConverter(typeof(JsonStringEnumConverter))]
-    public RoleInTeamEnum? RoleInTeam { get; init; }
+    public RoleOnPlatformEnum? RoleOnPlatform { get; init; }
 
     /// <summary>
     /// User first name.
@@ -84,10 +84,9 @@ public record UpdatedUserDto
     public string? Company { get; init; }
 
     /// <summary>
-    /// User specialization.
+    /// User specializations.
     /// </summary>
-    [StringLength(255, ErrorMessage = "The Specialization must be no more than 255 characters long.")]
-    public string? Specialization { get; init; }
+    public ICollection<SpecializationDto>? Specializations { get; init; }
 
     /// <summary>
     /// Link to the image in the cloud storage.
@@ -97,5 +96,5 @@ public record UpdatedUserDto
     /// <summary>
     /// Roles in the team.
     /// </summary>
-    public ICollection<RoleDto>? Roles { get; init; }
+    public ICollection<string>? RolesInTeam { get; init; }
 }

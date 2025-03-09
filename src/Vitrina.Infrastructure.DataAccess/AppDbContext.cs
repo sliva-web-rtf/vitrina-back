@@ -33,6 +33,8 @@ public class AppDbContext : IdentityDbContext<User, AppIdentityRole, int>, IAppD
     /// <inheritdoc/>
     public DbSet<ConfirmationCode> Codes => Set<ConfirmationCode>();
 
+    public DbSet<Specialization> Specializations => Set<Specialization>();
+
     /// <summary>
     /// Constructor.
     /// </summary>
@@ -45,6 +47,10 @@ public class AppDbContext : IdentityDbContext<User, AppIdentityRole, int>, IAppD
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<Specialization>()
+            .HasIndex(e => e.Name)
+            .IsUnique();
 
         RestrictCascadeDelete(modelBuilder);
         ForceHavingAllStringsAsVarchars(modelBuilder);

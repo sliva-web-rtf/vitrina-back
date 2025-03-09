@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Vitrina.Infrastructure.DataAccess;
@@ -11,9 +12,11 @@ using Vitrina.Infrastructure.DataAccess;
 namespace Vitrina.Infrastructure.DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250307141318_RenamedUserClassField")]
+    partial class RenamedUserClassField
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -40,7 +43,7 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DataProtectionKeys", (string)null);
+                    b.ToTable("DataProtectionKeys");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -168,7 +171,7 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
 
                     b.HasIndex("UsersId");
 
-                    b.ToTable("ProjectRoleTeammate", (string)null);
+                    b.ToTable("ProjectRoleTeammate");
                 });
 
             modelBuilder.Entity("ProjectTag", b =>
@@ -183,7 +186,7 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
 
                     b.HasIndex("TagsId");
 
-                    b.ToTable("ProjectTag", (string)null);
+                    b.ToTable("ProjectTag");
                 });
 
             modelBuilder.Entity("Vitrina.Domain.Project.Block", b =>
@@ -211,7 +214,7 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
 
                     b.HasIndex("ProjectId");
 
-                    b.ToTable("Block", (string)null);
+                    b.ToTable("Block");
                 });
 
             modelBuilder.Entity("Vitrina.Domain.Project.Content", b =>
@@ -234,7 +237,7 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
 
                     b.HasIndex("ProjectId");
 
-                    b.ToTable("Contents", (string)null);
+                    b.ToTable("Contents");
                 });
 
             modelBuilder.Entity("Vitrina.Domain.Project.Project", b =>
@@ -320,7 +323,7 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Projects", (string)null);
+                    b.ToTable("Projects");
                 });
 
             modelBuilder.Entity("Vitrina.Domain.Project.ProjectRole", b =>
@@ -346,7 +349,7 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("ProjectRoles", (string)null);
+                    b.ToTable("ProjectRoles");
                 });
 
             modelBuilder.Entity("Vitrina.Domain.Project.Tag", b =>
@@ -367,7 +370,7 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("Tags", (string)null);
+                    b.ToTable("Tags");
                 });
 
             modelBuilder.Entity("Vitrina.Domain.Project.Teammate", b =>
@@ -406,7 +409,7 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
 
                     b.HasIndex("ProjectId");
 
-                    b.ToTable("Teammates", (string)null);
+                    b.ToTable("Teammates");
                 });
 
             modelBuilder.Entity("Vitrina.Domain.User.AppIdentityRole", b =>
@@ -457,7 +460,7 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Codes", (string)null);
+                    b.ToTable("Codes");
                 });
 
             modelBuilder.Entity("Vitrina.Domain.User.User", b =>

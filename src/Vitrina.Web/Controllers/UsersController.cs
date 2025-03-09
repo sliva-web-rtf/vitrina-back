@@ -27,6 +27,8 @@ public class UsersController(IMediator mediator, IMapper mapper) : ControllerBas
     {
         var query = new GetUserByIdQuery { UserId = userId };
         var user = await mediator.Send(query, cancellationToken);
+        /*if (user.RoleOnPlatform == RoleOnPlatformEnum.Student)
+            user.ProfileData["projects"] =*/
         return user is null ? NotFound("The user with the specified Id was not found") : Ok(user.ProfileData.ToString());
     }
 
@@ -72,7 +74,7 @@ public class UsersController(IMediator mediator, IMapper mapper) : ControllerBas
         return Ok(user.ProfileData);
     }
 
-    private bool CheckEducationCourse(int educationCourse, EducationLevelEnum educationLevel)
+    private bool CheckEducationCourse(int? educationCourse, EducationLevelEnum educationLevel)
     {
         return educationLevel switch
         {
