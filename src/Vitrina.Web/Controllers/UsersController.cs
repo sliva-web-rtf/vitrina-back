@@ -9,7 +9,7 @@ using Vitrina.UseCases.UserProfile.GetUserById;
 
 namespace Vitrina.Web.Controllers;
 
-/*[Authorize]*/
+[Authorize]
 [ApiController]
 [Route("api/users")]
 [ApiExplorerSettings(GroupName = "users")]
