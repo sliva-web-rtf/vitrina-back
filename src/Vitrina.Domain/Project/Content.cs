@@ -14,7 +14,7 @@ public class Content
     public int Id { get; private set; }
 
     /// <summary>
-    /// Bytes of image.
+    /// Image url.
     /// </summary>
     required public string ImageUrl { get; set; }
 
