@@ -1,6 +1,5 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace Vitrina.Domain.User;
@@ -200,7 +199,7 @@ public class User : IdentityUser<int>
             resume = value;
             if (RoleOnPlatform == RoleOnPlatformEnum.Student)
             {
-                ProfileData["resume"] = value;
+                ProfileData["resume"] = resume;
             }
         }
     }
@@ -218,7 +217,7 @@ public class User : IdentityUser<int>
             post = value;
             if (RoleOnPlatform != RoleOnPlatformEnum.Student)
             {
-                ProfileData["post"] = value;
+                ProfileData["post"] = post;
             }
         }
     }
@@ -260,7 +259,7 @@ public class User : IdentityUser<int>
             specializations = value;
             if (RoleOnPlatform == RoleOnPlatformEnum.Student)
             {
-                ProfileData["specializations"] = JsonConvert.SerializeObject(specializations);
+                ProfileData["specializations"] = JArray.FromObject(specializations ?? new Specialization[0]);
             }
         }
     }
@@ -270,12 +269,12 @@ public class User : IdentityUser<int>
     /// </summary>
     public string? Avatar { get; set; }
 
-    private List<string>? rolesInTeam;
+    private List<string> rolesInTeam;
 
     /// <summary>
     /// Role in the team.
     /// </summary>
-    public List<string>? RolesInTeam
+    public List<string> RolesInTeam
     {
         get => rolesInTeam;
         set
@@ -283,7 +282,7 @@ public class User : IdentityUser<int>
             rolesInTeam = value;
             if (RoleOnPlatform == RoleOnPlatformEnum.Student)
             {
-                ProfileData["rolesInTeam"] = JsonConvert.SerializeObject(rolesInTeam);
+                ProfileData["rolesInTeam"] = JArray.FromObject(rolesInTeam ?? new List<string>());
             }
         }
     }

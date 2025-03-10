@@ -2,7 +2,7 @@ using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Vitrina.Domain.User;
 using Vitrina.UseCases.Project.GetProjectsByUserId;
 using Vitrina.UseCases.UserProfile.GetUserById;
@@ -22,7 +22,7 @@ public class UsersController(IMediator mediator, IMapper mapper) : ControllerBas
     [ProducesResponseType(404)]
     [Produces("application/json")]
     [HttpGet("{userId:int}/profile")]
-    public async Task<ActionResult<JsonContent>> GetUserProfileDataById([FromRoute] int userId, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetUserProfileDataById([FromRoute] int userId, CancellationToken cancellationToken)
     {
         var query = new GetUserByIdQuery { UserId = userId };
         var user = await mediator.Send(query, cancellationToken);
@@ -34,10 +34,11 @@ public class UsersController(IMediator mediator, IMapper mapper) : ControllerBas
 
         if (user.RoleOnPlatform == RoleOnPlatformEnum.Student)
         {
-            user.ProfileData["projects"] = JsonConvert.SerializeObject(mediator.Send(new GetProjectsByUserIdQuery(userId), cancellationToken));
+            user.ProfileData["projects"] = JArray.FromObject(
+                await mediator.Send(new GetProjectsByUserIdQuery(userId), cancellationToken) ?? []);
         }
 
-        return Ok(user.ProfileData.ToString());
+        return Ok(user.ProfileData);
     }
 
     /// <summary>
