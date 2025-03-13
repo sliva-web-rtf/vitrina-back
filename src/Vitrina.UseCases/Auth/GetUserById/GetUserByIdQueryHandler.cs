@@ -14,14 +14,6 @@ internal class GetUserByIdQueryHandler : IRequestHandler<GetUserByIdQuery, UserD
     private readonly IAppDbContext dbContext;
     private readonly IMapper mapper;
 
-    internal class GetUserByIdQueryMappingProfile : Profile
-    {
-        public GetUserByIdQueryMappingProfile()
-        {
-            CreateMap<User, UserDetailsDto>();
-        }
-    }
-
     /// <summary>
     /// Constructor.
     /// </summary>

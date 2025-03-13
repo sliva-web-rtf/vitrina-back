@@ -30,6 +30,5 @@ public class UserMappingProfile : Profile
                     .ToList()));
         CreateMap<User, PartnerDto>();
         CreateMap<User, CuratorDto>();
-        CreateMap<User, UpdateUserCommand>();
     }
 }

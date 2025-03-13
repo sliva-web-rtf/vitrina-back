@@ -59,5 +59,5 @@ public class RegisterCommand : IRequest<RegisterCommandResult>
     /// <summary>
     /// User surname.
     /// </summary>
-    required public string Surname { get; set; }
+    required public string Patronymic { get; set; }
 }

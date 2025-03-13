@@ -47,7 +47,7 @@ public class User : IdentityUser<int>
     /// <summary>
     /// Education course of user.
     /// </summary>
-    public int EducationCourse { get; set; }
+    public int? EducationCourse { get; set; }
 
     /// <summary>
     /// User role on the platform.
@@ -117,7 +117,7 @@ public class User : IdentityUser<int>
     /// <summary>
     /// Role in the team.
     /// </summary>
-    public ICollection<string> RolesInTeam { get; set; } = new List<string>();
+    public List<string>? RolesInTeam { get; set; }
 
     /// <summary>
     /// Positions in teams

@@ -12,7 +12,7 @@ namespace Vitrina.Web.Controllers;
 /// <summary>
 /// A controller for working with users.
 /// </summary>
-[Authorize]
+/*[Authorize]*/
 [ApiController]
 [Route("api/users")]
 [ApiExplorerSettings(GroupName = "users")]
@@ -36,7 +36,7 @@ public class UsersController(IMediator mediator, IMapper mapper) : ControllerBas
                 RoleOnPlatformEnum.Student => mapper.Map<StudentDto>(user),
                 RoleOnPlatformEnum.Curator => mapper.Map<CuratorDto>(user),
                 RoleOnPlatformEnum.Partner => mapper.Map<PartnerDto>(user),
-                _ => new InvalidOperationException("There is no handler provided for the role.")
+                _ => throw new InvalidOperationException("There is no handler provided for the role.")
             });
     }
 

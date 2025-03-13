@@ -2,12 +2,8 @@ using Vitrina.Domain.User;
 
 namespace Vitrina.UseCases.Common;
 
-public record StudentDto
+public abstract record NotStudentDtoBase
 {
-    public EducationLevelEnum EducationLevel { get; init; }
-
-    public int EducationCourse { get; init; }
-
     public RoleOnPlatformEnum RoleOnPlatform { get; init; }
 
     public string FirstName { get; init; }
@@ -22,11 +18,7 @@ public record StudentDto
 
     public string PhoneNumber { get; init; }
 
-    public string Resume { get; init; }
+    public string Company { get; init; }
 
-    public ICollection<string> RolesInTeam { get; init; }
-
-    public ICollection<Domain.Project.Project> Projects { get; init; }
-
-    public ICollection<Specialization> Specializations { get; init; }
+    public string Post { get; init; }
 }

@@ -35,7 +35,7 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, RegisterC
             EducationCourse = request.EducationCourse,
             FirstName = request.FirstName,
             LastName = request.LastName,
-            Patronymic = request.Surname,
+            Patronymic = request.Patronymic,
         };
         var result = await userManager.CreateAsync(user, request.Password);
         if (!result.Succeeded)
