@@ -1,6 +1,5 @@
-using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
-using Newtonsoft.Json.Linq;
+using Vitrina.Domain.Project;
 
 namespace Vitrina.Domain.User;
 
@@ -12,7 +11,7 @@ public class User : IdentityUser<int>
     /// <summary>
     /// User registration status.
     /// </summary>
-    public RegistrationStatusEnum RegistrationStatus;
+    public RegistrationStatusEnum RegistrationStatus { get; set; }
 
     /// <summary>
     /// The date when user last logged in.
@@ -40,250 +39,88 @@ public class User : IdentityUser<int>
     /// </summary>
     public DateTime? RemovedAt { get; set; }
 
-    private EducationLevelEnum? educationLevel;
-
     /// <summary>
     /// Education level of user.
     /// </summary>
-    public EducationLevelEnum? EducationLevel
-    {
-        get => educationLevel;
-        set
-        {
-            educationLevel = value;
-            if (RoleOnPlatform == RoleOnPlatformEnum.Student)
-            {
-                ProfileData["educationLevel"] = $"{educationLevel}";
-            }
-        }
-    }
-
-    private int? educationCourse;
+    public EducationLevelEnum EducationLevel { get; set; }
 
     /// <summary>
     /// Education course of user.
     /// </summary>
-    public int? EducationCourse
-    {
-        get => educationCourse;
-        set
-        {
-            educationCourse = value;
-            if (RoleOnPlatform == RoleOnPlatformEnum.Student)
-            {
-                ProfileData["educationCourse"] = educationCourse;
-            }
-        }
-    }
-
-    private RoleOnPlatformEnum roleOnPlatform;
+    public int EducationCourse { get; set; }
 
     /// <summary>
     /// User role on the platform.
     /// </summary>
-    required public RoleOnPlatformEnum RoleOnPlatform
-    {
-        get => roleOnPlatform;
-        set
-        {
-            roleOnPlatform = value;
-            ProfileData["roleOnPlatform"] = $"{roleOnPlatform}";
-        }
-    }
-
-    private string firstName;
+    required public RoleOnPlatformEnum RoleOnPlatform { get; set; }
 
     /// <summary>
     /// User first name.
     /// </summary>
-    required public string FirstName
-    {
-        get => firstName;
-        set
-        {
-            firstName = value;
-            ProfileData["firstName"] = value;
-        }
-    }
-
-    private string lastName;
+    required public string FirstName { get; set; }
 
     /// <summary>
     /// User last name.
     /// </summary>
-    required public string LastName
-    {
-        get => lastName;
-        set
-        {
-            lastName = value;
-            ProfileData["lastName"] = value;
-        }
-    }
-
-    private string patronymic;
+    required public string LastName { get; set; }
 
     /// <summary>
     /// User patronymic.
     /// </summary>
-    required public string Patronymic
-    {
-        get => patronymic;
-        set
-        {
-            patronymic = value;
-            ProfileData["patronymic"] = value;
-        }
-    }
+    required public string Patronymic { get; set; }
 
     /// <summary>
     /// Full name of user.
     /// </summary>
     public string FullName => $"{LastName} {FirstName} {Patronymic}";
 
-    private string? telegram;
-
     /// <summary>
     /// Telegram username of user.
     /// </summary>
-    public string? Telegram
-    {
-        get => telegram;
-        set
-        {
-            telegram = value;
-            ProfileData["telegram"] = value;
-        }
-    }
-
-    private string? email;
+    public string Telegram { get; set; }
 
     /// <summary>
     /// User's email address.
     /// </summary>
-    public override string? Email
-    {
-        get => email;
-        set
-        {
-            email = value;
-            ProfileData["email"] = email;
-        }
-    }
-
-    private string? phoneNumber;
+    public override string Email { get; set; }
 
     /// <summary>
     /// User phone number.
     /// </summary>
-    public override string? PhoneNumber
-    {
-        get => phoneNumber;
-        set
-        {
-            phoneNumber = value;
-            ProfileData["phoneNumber"] = phoneNumber;
-        }
-    }
-
-    private string? resume;
+    public override string PhoneNumber { get; set; }
 
     /// <summary>
     /// Link to the resume pdf file in the cloud storage.
     /// </summary>
-    public string? Resume
-    {
-        get => resume;
-        set
-        {
-            resume = value;
-            if (RoleOnPlatform == RoleOnPlatformEnum.Student)
-            {
-                ProfileData["resume"] = resume;
-            }
-        }
-    }
-
-    private string? post;
+    public string? Resume { get; set; }
 
     /// <summary>
     /// Position in the company.
     /// </summary>
-    public string? Post
-    {
-        get => post;
-        set
-        {
-            post = value;
-            if (RoleOnPlatform != RoleOnPlatformEnum.Student)
-            {
-                ProfileData["post"] = post;
-            }
-        }
-    }
-
-    private string? company;
+    public string? Post { get; set; }
 
     /// <summary>
     /// Place of work
     /// </summary>
-    public string? Company
-    {
-        get => company;
-        set
-        {
-            company = value;
-            if (RoleOnPlatform != RoleOnPlatformEnum.Student)
-            {
-                ProfileData["company"] = company;
-            }
-        }
-    }
-
-    /// <summary>
-    /// User profile data, depending on their role on the platform
-    /// </summary>
-    [Column(TypeName = "jsonb")]
-    public JObject ProfileData { get; set; }
-
-    private ICollection<Specialization>? specializations;
+    public string? Company { get; set; }
 
     /// <summary>
     /// User specializations.
     /// </summary>
-    public ICollection<Specialization>? Specializations
-    {
-        get => specializations;
-        set
-        {
-            specializations = value;
-            if (RoleOnPlatform == RoleOnPlatformEnum.Student)
-            {
-                ProfileData["specializations"] = JArray.FromObject(specializations ?? new Specialization[0]);
-            }
-        }
-    }
+    public ICollection<Specialization> Specializations { get; set; } = new List<Specialization>();
 
     /// <summary>
     /// Link to the image in the cloud storage.
     /// </summary>
     public string? Avatar { get; set; }
 
-    private List<string> rolesInTeam;
-
     /// <summary>
     /// Role in the team.
     /// </summary>
-    public List<string> RolesInTeam
-    {
-        get => rolesInTeam;
-        set
-        {
-            rolesInTeam = value;
-            if (RoleOnPlatform == RoleOnPlatformEnum.Student)
-            {
-                ProfileData["rolesInTeam"] = JArray.FromObject(rolesInTeam ?? new List<string>());
-            }
-        }
-    }
+    public ICollection<string> RolesInTeam { get; set; } = new List<string>();
+
+    /// <summary>
+    /// Positions in teams
+    /// </summary>
+    public ICollection<Teammate> PositionsInTeams { get; init; } = new List<Teammate>();
 }

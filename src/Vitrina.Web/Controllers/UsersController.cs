@@ -1,14 +1,17 @@
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json.Linq;
 using Vitrina.Domain.User;
-using Vitrina.UseCases.Project.GetProjectsByUserId;
+using Vitrina.UseCases.Common;
 using Vitrina.UseCases.UserProfile.GetUserById;
 
 namespace Vitrina.Web.Controllers;
 
+/// <summary>
+/// A controller for working with users.
+/// </summary>
 [Authorize]
 [ApiController]
 [Route("api/users")]
@@ -18,82 +21,52 @@ public class UsersController(IMediator mediator, IMapper mapper) : ControllerBas
     /// <summary>
     /// Getting user profile data by Id.
     /// </summary>
-    [ProducesResponseType(200)]
-    [ProducesResponseType(404)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     [Produces("application/json")]
     [HttpGet("{userId:int}/profile")]
     public async Task<IActionResult> GetUserProfileDataById([FromRoute] int userId, CancellationToken cancellationToken)
     {
-        var query = new GetUserByIdQuery { UserId = userId };
-        var user = await mediator.Send(query, cancellationToken);
+        var user = await mediator.Send(new GetUserByIdQuery(userId), cancellationToken);
 
-        if (user is null)
-        {
-            return NotFound("The user with the specified Id was not found");
-        }
-
-        if (user.RoleOnPlatform == RoleOnPlatformEnum.Student)
-        {
-            user.ProfileData["projects"] = JArray.FromObject(
-                await mediator.Send(new GetProjectsByUserIdQuery(userId), cancellationToken) ?? []);
-        }
-
-        return Ok(user.ProfileData);
+        return user is null
+            ? NotFound("The user with the specified Id was not found")
+            : Ok(user.RoleOnPlatform switch
+            {
+                RoleOnPlatformEnum.Student => mapper.Map<StudentDto>(user),
+                RoleOnPlatformEnum.Curator => mapper.Map<CuratorDto>(user),
+                RoleOnPlatformEnum.Partner => mapper.Map<PartnerDto>(user),
+                _ => new InvalidOperationException("There is no handler provided for the role.")
+            });
     }
 
     /// <summary>
     /// Edits user profile data.
     /// </summary>
-    [ProducesResponseType(200)]
-    [ProducesResponseType(400)]
-    [ProducesResponseType(404)]
-    [ProducesResponseType(422)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
     [Produces("application/json")]
     [HttpPatch("{userId:int}/profile/edit")]
-    public async Task<ActionResult<JsonContent>> EditUserProfileById([FromRoute] int userId,
-        [FromBody] UpdatedUserDto? userDto, CancellationToken cancellationToken)
+    public async Task<ActionResult> EditUserProfileById([FromRoute] int userId,
+        [FromBody] JsonPatchDocument<UpdateUserDto>? updateCommand, CancellationToken cancellationToken)
     {
-        if (userDto is null)
+        if (updateCommand is null)
         {
             return BadRequest("Невалидный JSON");
         }
 
-        var user = await mediator.Send(new GetUserByIdQuery { UserId = userId }, cancellationToken);
+        var user = await mediator.Send(new GetUserByIdQuery(userId), cancellationToken);
         if (user is null)
         {
             return NotFound("The user with the specified Id was not found");
         }
 
-        if (userDto.EducationLevel is not null || userDto.EducationCourse is not null)
-        {
-            var educationLevel = userDto.EducationLevel ?? user.EducationLevel;
-            var educationCourse = userDto.EducationCourse ?? user.EducationCourse;
+        var updateResult = await mediator.Send(new UpdateUserCommand(updateCommand, user), cancellationToken);
 
-            if (CheckEducationCourse(educationCourse, (EducationLevelEnum)educationLevel))
-            {
-                return UnprocessableEntity("The education course does not correspond to the education level.");
-            }
-        }
-
-        if (!ModelState.IsValid)
-        {
-            return UnprocessableEntity(ModelState);
-        }
-
-        mapper.Map(userDto, user);
-        return Ok(user.ProfileData);
-    }
-
-    private bool CheckEducationCourse(int? educationCourse, EducationLevelEnum educationLevel)
-    {
-        return educationLevel switch
-        {
-            EducationLevelEnum.Bachelors => educationCourse is > 0 and < 5,
-            EducationLevelEnum.Specialty => educationCourse is > 0 and < 6,
-            EducationLevelEnum.Magistracy => educationCourse is > 0 and < 3,
-            EducationLevelEnum.Postgraduate => educationCourse is > 0 and < 5,
-            EducationLevelEnum.NotStudent => true,
-            _ => false
-        };
+        return updateResult.IsSuccess
+            ? Ok(user)
+            : UnprocessableEntity(updateResult.ErrorMessage);
     }
 }

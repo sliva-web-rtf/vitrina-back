@@ -1,4 +1,3 @@
-using Innofactor.EfCoreJsonValueConverter;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Vitrina.Domain.User;
@@ -9,9 +8,6 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
 {
     public void Configure(EntityTypeBuilder<User> builder)
     {
-        builder
-            .Property(application => application.ProfileData)
-            .HasJsonValueConversion();
         builder
             .Property(user => user.EducationCourse)
             .IsRequired(false);

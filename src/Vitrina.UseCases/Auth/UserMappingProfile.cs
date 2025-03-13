@@ -21,7 +21,15 @@ public class UserMappingProfile : Profile
         CreateMap<User, RegisterCommand>()
             .ForMember(u => u.PasswordConfirm, dest => dest.Ignore())
             .ForMember(u => u.Password, dest => dest.Ignore());
-        CreateMap<UpdatedUserDto, User>()
-            .ForAllMembers(opt => opt.Condition((src, dest, srcMember) => srcMember != null));
+        CreateMap<User, StudentDto>()
+            .ForMember(
+                dest => dest.Projects,
+                opt => opt.MapFrom(src => src.PositionsInTeams
+                    .Select(teammate => teammate.Project)
+                    .Distinct()
+                    .ToList()));
+        CreateMap<User, PartnerDto>();
+        CreateMap<User, CuratorDto>();
+        CreateMap<User, UpdateUserCommand>();
     }
 }
