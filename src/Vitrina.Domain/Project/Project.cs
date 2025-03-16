@@ -66,17 +66,17 @@ public class Project
     /// <summary>
     /// Project content.
     /// </summary>
-    public ICollection<Content> Contents { get; private set; } = new List<Content>();
+    public virtual ICollection<Content> Contents { get; private set; } = new List<Content>();
 
     /// <summary>
     /// Project tags.
     /// </summary>
-    public ICollection<Tag> Tags { get; private set; } = new List<Tag>();
+    public virtual ICollection<Tag> Tags { get; private set; } = new List<Tag>();
 
     /// <summary>
     /// Project team.
     /// </summary>
-    public ICollection<Teammate> Users { get; set; } = new List<Teammate>();
+    public virtual ICollection<Teammate> Users { get; set; } = new List<Teammate>();
 
     /// <summary>
     /// Problem of project.
@@ -96,7 +96,7 @@ public class Project
     /// <summary>
     /// List of custom blocks.
     /// </summary>
-    public ICollection<Block> CustomBlocks { get; set; } = new List<Block>();
+    public virtual ICollection<Block> CustomBlocks { get; set; } = new List<Block>();
 
     /// <summary>
     /// Project sphere.
@@ -107,4 +107,19 @@ public class Project
     /// Project type.
     /// </summary>
     public string? Type { get; set; }
+
+    /// <summary>
+    /// Project completion status.
+    /// </summary>
+    public CompletionStatusEnum CompletionStatus { get; set; }
+
+    /// <summary>
+    /// Type of initiative.
+    /// </summary>
+    public TypeInitiativeEnum TypeInitiative { get; set; }
+
+    /// <summary>
+    /// A short description of the information that will be displayed on the project card.
+    /// </summary>
+    public string? TextPreview { get; set; }
 }

@@ -10,13 +10,13 @@ namespace Vitrina.UseCases.Auth.Register;
 /// </summary>
 public class RegisterCommandHandler : IRequestHandler<RegisterCommand, RegisterCommandResult>
 {
-    private readonly UserManager<User> userManager;
+    private readonly UserManager<Domain.User.User> userManager;
     private readonly IAppDbContext appDbContext;
 
     /// <summary>
     /// Constructor.
     /// </summary>
-    public RegisterCommandHandler(UserManager<User> userManager, IAppDbContext appDbContext)
+    public RegisterCommandHandler(UserManager<Domain.User.User> userManager, IAppDbContext appDbContext)
     {
         this.userManager = userManager;
         this.appDbContext = appDbContext;
@@ -25,7 +25,7 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, RegisterC
     /// <inheritdoc />
     public async Task<RegisterCommandResult> Handle(RegisterCommand request, CancellationToken cancellationToken)
     {
-        var user = new User
+        var user = new Domain.User.User
         {
             RoleOnPlatform = request.RoleOnPlatform,
             Email = request.Email,

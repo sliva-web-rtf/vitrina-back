@@ -43,6 +43,11 @@ public class AppDbContext : IdentityDbContext<User, AppIdentityRole, int>, IAppD
     {
     }
 
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.UseLazyLoadingProxies();
+    }
+
     /// <inheritdoc />
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

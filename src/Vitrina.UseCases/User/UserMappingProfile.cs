@@ -3,6 +3,7 @@ using Vitrina.Domain.User;
 using Vitrina.UseCases.Auth.GetUserById;
 using Vitrina.UseCases.Auth.Register;
 using Vitrina.UseCases.Common;
+using Vitrina.UseCases.User.DTO.Profile;
 
 namespace Vitrina.UseCases.Auth;
 
@@ -16,19 +17,22 @@ public class UserMappingProfile : Profile
     /// </summary>
     public UserMappingProfile()
     {
-        CreateMap<User, UserDto>();
-        CreateMap<User, UserDetailsDto>();
-        CreateMap<User, RegisterCommand>()
+        CreateMap<Domain.User.User, UserDto>();
+        CreateMap<Domain.User.User, UserDetailsDto>();
+        CreateMap<Domain.User.User, RegisterCommand>()
             .ForMember(u => u.PasswordConfirm, dest => dest.Ignore())
             .ForMember(u => u.Password, dest => dest.Ignore());
-        CreateMap<User, StudentDto>()
+        CreateMap<Domain.User.User, StudentDto>()
             .ForMember(
                 dest => dest.Projects,
                 opt => opt.MapFrom(src => src.PositionsInTeams
                     .Select(teammate => teammate.Project)
                     .Distinct()
                     .ToList()));
-        CreateMap<User, PartnerDto>();
-        CreateMap<User, CuratorDto>();
+        CreateMap<UpdateStudentDto, Domain.User.User>()
+            .ForAllMembers(opt => opt.Ignore());
+        CreateMap<Domain.User.User, PartnerDto>().ReverseMap();
+        CreateMap<Domain.User.User, CuratorDto>().ReverseMap();
+        CreateMap<Specialization, SpecializationDto>();
     }
 }

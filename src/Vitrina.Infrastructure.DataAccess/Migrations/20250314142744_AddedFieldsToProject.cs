@@ -6,20 +6,31 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Vitrina.Infrastructure.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class ChangedStructureUsersTable : Migration
+    public partial class AddedFieldsToProject : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "ProfileData",
-                table: "AspNetUsers");
+            migrationBuilder.AddColumn<int>(
+                name: "CompletionStatus",
+                table: "Projects",
+                type: "integer",
+                nullable: false,
+                defaultValue: 0);
+
+            migrationBuilder.AddColumn<string>(
+                name: "TextPreview",
+                table: "Projects",
+                type: "text",
+                unicode: false,
+                nullable: true);
 
             migrationBuilder.AddColumn<int>(
-                name: "UserId1",
-                table: "Teammates",
+                name: "TypeInitiative",
+                table: "Projects",
                 type: "integer",
-                nullable: true);
+                nullable: false,
+                defaultValue: 0);
 
             migrationBuilder.AlterColumn<string>(
                 name: "Telegram",
@@ -58,44 +69,22 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                 oldUnicode: false,
                 oldMaxLength: 256,
                 oldNullable: true);
-
-            migrationBuilder.AddColumn<List<string>>(
-                name: "RolesInTeam",
-                table: "AspNetUsers",
-                type: "text[]",
-                nullable: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Teammates_UserId1",
-                table: "Teammates",
-                column: "UserId1");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Teammates_AspNetUsers_UserId1",
-                table: "Teammates",
-                column: "UserId1",
-                principalTable: "AspNetUsers",
-                principalColumn: "Id");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Teammates_AspNetUsers_UserId1",
-                table: "Teammates");
-
-            migrationBuilder.DropIndex(
-                name: "IX_Teammates_UserId1",
-                table: "Teammates");
+            migrationBuilder.DropColumn(
+                name: "CompletionStatus",
+                table: "Projects");
 
             migrationBuilder.DropColumn(
-                name: "UserId1",
-                table: "Teammates");
+                name: "TextPreview",
+                table: "Projects");
 
             migrationBuilder.DropColumn(
-                name: "RolesInTeam",
-                table: "AspNetUsers");
+                name: "TypeInitiative",
+                table: "Projects");
 
             migrationBuilder.AlterColumn<string>(
                 name: "Telegram",
@@ -128,13 +117,6 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                 oldType: "character varying(256)",
                 oldUnicode: false,
                 oldMaxLength: 256);
-
-            migrationBuilder.AddColumn<string>(
-                name: "ProfileData",
-                table: "AspNetUsers",
-                type: "jsonb",
-                nullable: false,
-                defaultValue: "");
         }
     }
 }

@@ -13,8 +13,8 @@ using Vitrina.Infrastructure.DataAccess;
 namespace Vitrina.Infrastructure.DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250313164423_ChangedStructureUsersTable")]
-    partial class ChangedStructureUsersTable
+    [Migration("20250314142744_AddedFieldsToProject")]
+    partial class AddedFieldsToProject
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -257,6 +257,9 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                         .IsUnicode(false)
                         .HasColumnType("text");
 
+                    b.Property<int>("CompletionStatus")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Description")
                         .IsUnicode(false)
                         .HasColumnType("text");
@@ -301,9 +304,16 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                         .IsUnicode(false)
                         .HasColumnType("text");
 
+                    b.Property<string>("TextPreview")
+                        .IsUnicode(false)
+                        .HasColumnType("text");
+
                     b.Property<string>("Type")
                         .IsUnicode(false)
                         .HasColumnType("text");
+
+                    b.Property<int>("TypeInitiative")
+                        .HasColumnType("integer");
 
                     b.Property<string>("VideoUrl")
                         .IsUnicode(false)
@@ -378,16 +388,11 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("UserId1")
-                        .HasColumnType("integer");
-
                     b.HasKey("Id");
 
                     b.HasIndex("ProjectId");
 
                     b.HasIndex("UserId");
-
-                    b.HasIndex("UserId1");
 
                     b.ToTable("Teammates");
                 });
@@ -729,14 +734,10 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                         .IsRequired();
 
                     b.HasOne("Vitrina.Domain.User.User", "User")
-                        .WithMany()
+                        .WithMany("PositionsInTeams")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("Vitrina.Domain.User.User", null)
-                        .WithMany("PositionsInTeams")
-                        .HasForeignKey("UserId1");
 
                     b.Navigation("Project");
 

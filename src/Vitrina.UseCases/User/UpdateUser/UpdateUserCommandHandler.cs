@@ -1,32 +1,47 @@
 using AutoMapper;
 using MediatR;
+using Saritasa.Tools.Domain.Exceptions;
 using Vitrina.Infrastructure.Abstractions.Interfaces;
+using Vitrina.UseCases.User.DTO.Profile;
 
 namespace Vitrina.Domain.User;
 
 /// <inheritdoc />
-public class UpdateUserCommandHandler(IAppDbContext appDbContext, IMapper mapper)
-    : IRequestHandler<UpdateUserCommand, UpdateUserCommandResult>
+public class UpdateUserCommandHandler<TUpdateDto, TResultDto>(
+    IMapper mapper,
+    IUserRepository userRepository)
+    : IRequestHandler<UpdateUserCommand<TUpdateDto, TResultDto>, TResultDto> where TUpdateDto : class
 {
     /// <inheritdoc />
-    public async Task<UpdateUserCommandResult> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
+    public async Task<TResultDto> Handle(UpdateUserCommand<TUpdateDto, TResultDto> request, CancellationToken cancellationToken)
     {
-        var dto = mapper.Map<UpdateUserDto>(request.User);
-        request.patchDocument.ApplyTo(dto);
-
-        if (request.User.RoleOnPlatform == RoleOnPlatformEnum.Student)
+        if (request.PatchDocument is null)
         {
-            if (!CheckEducationCourse(dto.EducationCourse, dto.EducationLevel))
-            {
-                return new UpdateUserCommandResult(
-                    false,
-                    "The education course does not correspond to the education level.");
-            }
+            throw new DomainException("Invalid JSON");
         }
 
-        mapper.Map<UpdateUserDto>(request.User);
-        await appDbContext.SaveChangesAsync(cancellationToken);
-        return new UpdateUserCommandResult();
+        var user = await userRepository.GetByIdAsync(request.UserId, cancellationToken);
+
+        if (user is null)
+        {
+            throw new NotFoundException("User not found");
+        }
+
+        var dto = mapper.Map<TUpdateDto>(user);
+        request.PatchDocument.ApplyTo(dto);
+
+        // костыль(
+        if (dto is UpdateStudentDto updateStudentDto)
+        {
+            if (!CheckEducationCourse(updateStudentDto.EducationCourse, updateStudentDto.EducationLevel))
+            {
+                throw new DomainException("The education course does not correspond to the education level.");
+            }
+        }
+        // )
+        mapper.Map(dto, user);
+        await userRepository.UpdateAsync(user, cancellationToken);
+        return mapper.Map<TResultDto>(user);
     }
 
     private bool CheckEducationCourse(int educationCourse, EducationLevelEnum educationLevel)

@@ -12,14 +12,14 @@ namespace Vitrina.UseCases.Auth.RefreshToken;
 internal class RefreshTokenCommandHandler : IRequestHandler<RefreshTokenCommand, TokenModel>
 {
     private readonly IAuthenticationTokenService tokenService;
-    private readonly SignInManager<User> signInManager;
+    private readonly SignInManager<Domain.User.User> signInManager;
 
     /// <summary>
     /// Constructor.
     /// </summary>
     public RefreshTokenCommandHandler(
         IAuthenticationTokenService tokenService,
-        SignInManager<User> signInManager)
+        SignInManager<Domain.User.User> signInManager)
     {
         this.tokenService = tokenService;
         this.signInManager = signInManager;

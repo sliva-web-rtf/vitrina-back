@@ -10,7 +10,7 @@ namespace Vitrina.UseCases.Auth.Login;
 /// </summary>
 internal class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, LoginUserCommandResult>
 {
-    private readonly SignInManager<User> signInManager;
+    private readonly SignInManager<Domain.User.User> signInManager;
     private readonly IAuthenticationTokenService tokenService;
     private readonly ILogger<LoginUserCommandHandler> logger;
 
@@ -21,7 +21,7 @@ internal class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, Login
     /// <param name="tokenService">Token service.</param>
     /// <param name="logger">Logger.</param>
     public LoginUserCommandHandler(
-        SignInManager<User> signInManager,
+        SignInManager<Domain.User.User> signInManager,
         IAuthenticationTokenService tokenService,
         ILogger<LoginUserCommandHandler> logger)
     {

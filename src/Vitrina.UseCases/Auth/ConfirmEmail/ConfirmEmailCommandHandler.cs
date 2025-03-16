@@ -12,13 +12,13 @@ namespace Vitrina.UseCases.Auth.ConfirmEmail;
 public class ConfirmEmailCommandHandler : IRequestHandler<ConfirmEmailCommand, ConfirmEmailCommandResult>
 {
     private readonly IAppDbContext appDbContext;
-    private readonly SignInManager<User> signInManager;
+    private readonly SignInManager<Domain.User.User> signInManager;
     private readonly IAuthenticationTokenService tokenService;
 
     /// <summary>
     /// Constructor.
     /// </summary>
-    public ConfirmEmailCommandHandler(IAppDbContext appDbContext, SignInManager<User> signInManager, IAuthenticationTokenService tokenService)
+    public ConfirmEmailCommandHandler(IAppDbContext appDbContext, SignInManager<Domain.User.User> signInManager, IAuthenticationTokenService tokenService)
     {
         this.appDbContext = appDbContext;
         this.signInManager = signInManager;

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Vitrina.Domain.User;
 using Vitrina.Infrastructure.DataAccess;
+using Vitrina.UseCases.Common.GettingUser;
 using Vitrina.Web.Infrastructure.DependencyInjection;
 using Vitrina.Web.Infrastructure.Middlewares;
 using Vitrina.Web.Infrastructure.Settings;
@@ -67,7 +68,12 @@ public class Startup
         // MVC.
         services
             .AddControllers()
-            .AddJsonOptions(new JsonOptionsSetup().Setup);
+            .AddJsonOptions(new JsonOptionsSetup().Setup)
+            .AddNewtonsoftJson(options =>
+            {
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+            });
+
         services.Configure<ApiBehaviorOptions>(new ApiBehaviorOptionsSetup().Setup);
 
         // We need to set the application name to data protection, since the default token

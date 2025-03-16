@@ -107,7 +107,7 @@ public class User : IdentityUser<int>
     /// <summary>
     /// User specializations.
     /// </summary>
-    public ICollection<Specialization> Specializations { get; set; } = new List<Specialization>();
+    public virtual ICollection<Specialization> Specializations { get; set; } = new List<Specialization>();
 
     /// <summary>
     /// Link to the image in the cloud storage.
@@ -122,5 +122,5 @@ public class User : IdentityUser<int>
     /// <summary>
     /// Positions in teams
     /// </summary>
-    public ICollection<Teammate> PositionsInTeams { get; init; } = new List<Teammate>();
+    public virtual ICollection<Teammate> PositionsInTeams { get; init; } = new List<Teammate>();
 }

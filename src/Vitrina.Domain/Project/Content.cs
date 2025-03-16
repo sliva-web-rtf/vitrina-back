@@ -26,5 +26,5 @@ public class Content
     /// <summary>
     /// Project.
     /// </summary>
-    required public Project Project { get; set; }
+    required public virtual Project Project { get; set; }
 }

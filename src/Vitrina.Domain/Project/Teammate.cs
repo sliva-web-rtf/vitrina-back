@@ -21,7 +21,7 @@ public class Teammate
     /// <summary>
     /// User.
     /// </summary>
-    public User.User User { get; private set; }
+    public virtual User.User User { get; private set; }
 
     /// <summary>
     /// User project id.
@@ -31,10 +31,10 @@ public class Teammate
     /// <summary>
     /// User project.
     /// </summary>
-    required public Project Project { get; set; }
+    required public virtual Project Project { get; set; }
 
     /// <summary>
     /// User roles.
     /// </summary>
-    public ICollection<ProjectRole> Roles { get; private set; } = new List<ProjectRole>();
+    public virtual ICollection<ProjectRole> Roles { get; private set; } = new List<ProjectRole>();
 }

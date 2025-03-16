@@ -37,10 +37,5 @@ public class UserDto
     /// <summary>
     /// User avatar.
     /// </summary>
-    public ICollection<byte>? Avatar { get; init; } = new List<byte>();
-
-    /// <summary>
-    /// User roles.
-    /// </summary>
-    public ICollection<RoleDto> Roles { get; init; } = new List<RoleDto>();
+    public string? Avatar { get; init; }
 }

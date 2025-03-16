@@ -10,7 +10,7 @@ public class TeammateConfiguration : IEntityTypeConfiguration<Teammate>
     {
         builder
             .HasOne(t => t.User)
-            .WithMany()
+            .WithMany(u => u.PositionsInTeams)
             .HasForeignKey(t => t.UserId)
             .OnDelete(DeleteBehavior.Cascade);
         builder

@@ -1,9 +1,12 @@
 ﻿using AutoMapper;
+using Vitrina.Domain.Project;
+using Vitrina.Domain.User;
 using Vitrina.UseCases.Common;
 using Vitrina.UseCases.Project.AddProject;
 using Vitrina.UseCases.Project.SearchProjects;
 using Vitrina.UseCases.Project.SearchProjects.V2;
 using Vitrina.UseCases.Project.UpdateProject.DTO;
+using UpdateUserDto = Vitrina.UseCases.Project.UpdateProject.DTO.UpdateUserDto;
 
 namespace Vitrina.UseCases.Project;
 
@@ -18,10 +21,10 @@ public class ProjectMappingProfile : Profile
     public ProjectMappingProfile()
     {
         CreateMap<Domain.Project.Project, AddProjectCommand>().ReverseMap();
-        CreateMap<Domain.Project.Content, ContentDto>().ReverseMap();
-        CreateMap<Domain.Project.Tag, TagDto>().ReverseMap();
-        CreateMap<Domain.Project.ProjectRole, RoleDto>().ReverseMap();
-        CreateMap<Domain.Project.Teammate, UserDto>().ReverseMap();
+        CreateMap<Content, ContentDto>().ReverseMap();
+        CreateMap<Tag, TagDto>().ReverseMap();
+        CreateMap<ProjectRole, RoleDto>().ReverseMap();
+        CreateMap<Teammate, UserDto>().ReverseMap();
         CreateMap<Domain.Project.Project, ProjectDto>().ReverseMap();
         CreateMap<Domain.Project.Project, ShortProjectDto>()
             .ForMember(p => p.ImageUrl, dest => dest.Ignore())
@@ -37,7 +40,8 @@ public class ProjectMappingProfile : Profile
         CreateMap<Domain.Project.Teammate, UpdateUserDto>()
             .ForMember(u => u.Roles, dest => dest.Ignore());
         CreateMap<Domain.Project.Project, UpdateProjectDto>().ReverseMap();
-        CreateMap<Domain.Project.ProjectRole, UpdateRoleDto>().ReverseMap();
-        CreateMap<Domain.Project.Block, BlockDto>().ReverseMap();
+        CreateMap<ProjectRole, UpdateRoleDto>().ReverseMap();
+        CreateMap<Block, BlockDto>().ReverseMap();
+        CreateMap<Domain.Project.Project, PreviewProjectDto>();
     }
 }

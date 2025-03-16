@@ -1,23 +1,10 @@
 using System.ComponentModel.DataAnnotations;
-using Vitrina.UseCases.Common;
+using Vitrina.Domain.User;
 
-namespace Vitrina.Domain.User;
+namespace Vitrina.UseCases.User.DTO.Profile;
 
-/// <summary>
-/// DTO for updating user data.
-/// </summary>
-public record UpdateUserDto
+public abstract class UserDtoBase
 {
-    /// <summary>
-    /// Education level  of user.
-    /// </summary>
-    public EducationLevelEnum EducationLevel { get; init; }
-
-    /// <summary>
-    /// Education course of user.
-    /// </summary>
-    public int EducationCourse { get; init; }
-
     /// <summary>
     /// User role in team.
     /// </summary>
@@ -62,36 +49,4 @@ public record UpdateUserDto
     /// </summary>
     [RegularExpression(@"^\+7\d{10}$", ErrorMessage = "Incorrect phone number.")]
     public string PhoneNumber { get; init; }
-
-    /// <summary>
-    /// Link to the image in the cloud storage.
-    /// </summary>
-    public string Resume { get; init; }
-
-    /// <summary>
-    /// Position in the company.
-    /// </summary>
-    [StringLength(255, ErrorMessage = "The Post must be no more than 255 characters long.")]
-    public string Post { get; init; }
-
-    /// <summary>
-    /// Place of work
-    /// </summary>
-    [StringLength(255, ErrorMessage = "The Company must be no more than 255 characters long.")]
-    public string Company { get; init; }
-
-    /// <summary>
-    /// User specializations.
-    /// </summary>
-    public ICollection<SpecializationDto> Specializations { get; init; }
-
-    /// <summary>
-    /// Link to the image in the cloud storage.
-    /// </summary>
-    public string Avatar { get; init; }
-
-    /// <summary>
-    /// Roles in the team.
-    /// </summary>
-    public ICollection<string> RolesInTeam { get; init; }
 }

@@ -21,5 +21,5 @@ public class Tag
     /// <summary>
     /// Tag projects.
     /// </summary>
-    public ICollection<Project> Projects { get; private set; } = new List<Project>();
+    public virtual ICollection<Project> Projects { get; private set; } = new List<Project>();
 }
