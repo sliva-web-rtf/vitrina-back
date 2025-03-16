@@ -368,17 +368,33 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("ProjectId")
-                        .HasColumnType("integer");
+                    b.Property<byte[]>("Avatar")
+                        .HasColumnType("bytea");
 
-                    b.Property<int>("UserId")
+                    b.Property<string>("Email")
+                        .IsUnicode(false)
+                        .HasColumnType("text");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .IsUnicode(false)
+                        .HasColumnType("text");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .IsUnicode(false)
+                        .HasColumnType("text");
+
+                    b.Property<string>("Patronymic")
+                        .IsUnicode(false)
+                        .HasColumnType("text");
+
+                    b.Property<int>("ProjectId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ProjectId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Teammates", (string)null);
                 });
@@ -434,25 +450,6 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                     b.ToTable("Codes", (string)null);
                 });
 
-            modelBuilder.Entity("Vitrina.Domain.User.Specialization", b =>
-                {
-                    b.Property<string>("Name")
-                        .IsUnicode(false)
-                        .HasColumnType("text");
-
-                    b.Property<int?>("UserId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Name");
-
-                    b.HasIndex("Name")
-                        .IsUnique();
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Specializations", (string)null);
-                });
-
             modelBuilder.Entity("Vitrina.Domain.User.User", b =>
                 {
                     b.Property<int>("Id")
@@ -462,17 +459,7 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int>("AccessFailedCount")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasDefaultValue(5);
-
-                    b.Property<string>("Avatar")
-                        .IsUnicode(false)
-                        .HasColumnType("text");
-
-                    b.Property<string>("Company")
-                        .IsUnicode(false)
-                        .HasColumnType("text");
+                        .HasColumnType("integer");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -482,11 +469,13 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int?>("EducationCourse")
+                    b.Property<int>("EducationCourse")
                         .HasColumnType("integer");
 
-                    b.Property<int>("EducationLevel")
-                        .HasColumnType("integer");
+                    b.Property<string>("EducationLevel")
+                        .IsRequired()
+                        .IsUnicode(false)
+                        .HasColumnType("text");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
@@ -494,9 +483,7 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                         .HasColumnType("character varying(256)");
 
                     b.Property<bool>("EmailConfirmed")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
-                        .HasDefaultValue(false);
+                        .HasColumnType("boolean");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -515,9 +502,7 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<bool>("LockoutEnabled")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
-                        .HasDefaultValue(false);
+                        .HasColumnType("boolean");
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("timestamp with time zone");
@@ -536,55 +521,30 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                         .IsUnicode(false)
                         .HasColumnType("text");
 
-                    b.Property<string>("Patronymic")
-                        .IsRequired()
-                        .IsUnicode(false)
-                        .HasColumnType("text");
-
                     b.Property<string>("PhoneNumber")
                         .IsUnicode(false)
                         .HasColumnType("text");
 
                     b.Property<bool>("PhoneNumberConfirmed")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
-                        .HasDefaultValue(false);
-
-                    b.Property<string>("Post")
-                        .IsUnicode(false)
-                        .HasColumnType("text");
-
-                    b.Property<string>("ProfileData")
-                        .IsRequired()
-                        .HasColumnType("jsonb");
-
-                    b.Property<int>("RegistrationStatus")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasDefaultValue(1);
+                        .HasColumnType("boolean");
 
                     b.Property<DateTime?>("RemovedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("Resume")
-                        .IsUnicode(false)
-                        .HasColumnType("text");
-
-                    b.Property<int>("RoleOnPlatform")
+                    b.Property<int>("RoleInTeam")
                         .HasColumnType("integer");
 
                     b.Property<string>("SecurityStamp")
                         .IsUnicode(false)
                         .HasColumnType("text");
 
-                    b.Property<string>("Telegram")
+                    b.Property<string>("Surname")
+                        .IsRequired()
                         .IsUnicode(false)
                         .HasColumnType("text");
 
                     b.Property<bool>("TwoFactorEnabled")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
-                        .HasDefaultValue(false);
+                        .HasColumnType("boolean");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -717,23 +677,7 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Vitrina.Domain.User.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Project");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Vitrina.Domain.User.Specialization", b =>
-                {
-                    b.HasOne("Vitrina.Domain.User.User", null)
-                        .WithMany("Specializations")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Vitrina.Domain.Project.Project", b =>
@@ -743,11 +687,6 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                     b.Navigation("CustomBlocks");
 
                     b.Navigation("Users");
-                });
-
-            modelBuilder.Entity("Vitrina.Domain.User.User", b =>
-                {
-                    b.Navigation("Specializations");
                 });
 #pragma warning restore 612, 618
         }
