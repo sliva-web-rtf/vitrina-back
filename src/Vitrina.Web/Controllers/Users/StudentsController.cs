@@ -12,7 +12,7 @@ namespace Vitrina.Web.Controllers;
 /// <summary>
 /// A controller for working with students.
 /// </summary>
-[Authorize(Roles = "Student")]
+/*[Authorize(Roles = "Student")]*/
 [Route("api/students")]
 [ApiExplorerSettings(GroupName = "students")]
 public class StudentsController(IMediator mediator) : ControllerBase
@@ -24,7 +24,7 @@ public class StudentsController(IMediator mediator) : ControllerBase
     [HttpGet("{studentId:int}/profile")]
     public async Task<StudentDto> GetStudentProfileDataById([FromRoute] int studentId, CancellationToken cancellationToken)
     {
-        var query = new GetUserByIdQuery<StudentDto>(studentId);
+        var query = new GetStudentByIdQuery(studentId);
         return await mediator.Send(query, cancellationToken);
     }
 

@@ -11,7 +11,7 @@ namespace Vitrina.Web.Controllers;
 /// A controller for working with curators.
 /// </summary>
 [ApiController]
-[Authorize(Roles = "Curator")]
+/*[Authorize(Roles = "Curator")]*/
 [Route("api/сurators")]
 [ApiExplorerSettings(GroupName = "сurators")]
 public class CuratorsController(IMediator mediator) : ControllerBase
@@ -21,10 +21,10 @@ public class CuratorsController(IMediator mediator) : ControllerBase
     /// </summary>
     [Produces("application/json")]
     [HttpGet("{curatorId:int}/profile")]
-    public async Task<CuratorDto> GetUserProfileDataById([FromRoute] int сuratorId,
+    public async Task<CuratorDto> GetUserProfileDataById([FromRoute] int curatorId,
         CancellationToken cancellationToken)
     {
-        var query = new GetUserByIdQuery<CuratorDto>(сuratorId);
+        var query = new GetUserByIdQuery<CuratorDto>(curatorId);
         return await mediator.Send(query, cancellationToken);
     }
 

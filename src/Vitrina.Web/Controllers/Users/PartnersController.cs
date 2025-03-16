@@ -11,7 +11,7 @@ namespace Vitrina.Web.Controllers;
 /// <summary>
 /// A controller for working with partners.
 /// </summary>
-[Authorize(Roles = "Partner")]
+/*[Authorize(Roles = "Partner")]*/
 [Route("api/partners")]
 [ApiExplorerSettings(GroupName = "partners")]
 public class PartnersController(IMediator mediator) : ControllerBase
