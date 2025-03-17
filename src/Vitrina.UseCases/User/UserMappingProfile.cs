@@ -2,10 +2,10 @@ using AutoMapper;
 using Vitrina.Domain.User;
 using Vitrina.UseCases.Auth.GetUserById;
 using Vitrina.UseCases.Auth.Register;
-using Vitrina.UseCases.Common;
+using Vitrina.UseCases.Common.DTO;
 using Vitrina.UseCases.User.DTO.Profile;
 
-namespace Vitrina.UseCases.Auth;
+namespace Vitrina.UseCases.User;
 
 /// <summary>
 /// User mapping profile.

@@ -2,7 +2,7 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Vitrina.Web.Infrastructure.Startup.Swagger;
+namespace Vitrina.Web.Infrastructure.Startup;
 
 /// <summary>
 /// JWT bearer options setup.

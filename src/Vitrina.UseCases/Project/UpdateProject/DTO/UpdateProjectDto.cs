@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Vitrina.Domain.Project;
 using Vitrina.UseCases.Common;
+using Vitrina.UseCases.Common.DTO;
 
 namespace Vitrina.UseCases.Project.UpdateProject.DTO;
 

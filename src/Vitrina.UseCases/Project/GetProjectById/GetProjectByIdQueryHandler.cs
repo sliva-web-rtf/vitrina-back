@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Saritasa.Tools.Domain.Exceptions;
 using Vitrina.Infrastructure.Abstractions.Interfaces;
 using Vitrina.UseCases.Common;
+using Vitrina.UseCases.Common.DTO;
 
 namespace Vitrina.UseCases.Project.GetProjectById;
 

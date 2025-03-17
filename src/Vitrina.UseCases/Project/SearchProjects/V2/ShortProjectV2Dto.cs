@@ -1,6 +1,7 @@
 ﻿using System.Text.Json.Serialization;
 using Vitrina.Domain.Project;
 using Vitrina.UseCases.Common;
+using Vitrina.UseCases.Common.DTO;
 
 namespace Vitrina.UseCases.Project.SearchProjects.V2;
 

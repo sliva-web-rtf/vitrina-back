@@ -3,15 +3,17 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Vitrina.Domain.User;
-using Vitrina.UseCases.UserProfile.GetUserById;
+using Vitrina.UseCases.User.DTO.Profile;
+using Vitrina.UseCases.User.GetUser.GetCuratorById;
+using Vitrina.UseCases.User.UpdateUser.UpdateCurator;
 
-namespace Vitrina.Web.Controllers;
+namespace Vitrina.Web.Controllers.Users;
 
 /// <summary>
 /// A controller for working with curators.
 /// </summary>
 [ApiController]
-/*[Authorize(Roles = "Curator")]*/
+[Authorize(Roles = "Curator")]
 [Route("api/сurators")]
 [ApiExplorerSettings(GroupName = "сurators")]
 public class CuratorsController(IMediator mediator) : ControllerBase
@@ -24,7 +26,7 @@ public class CuratorsController(IMediator mediator) : ControllerBase
     public async Task<CuratorDto> GetUserProfileDataById([FromRoute] int curatorId,
         CancellationToken cancellationToken)
     {
-        var query = new GetUserByIdQuery<CuratorDto>(curatorId);
+        var query = new GetCuratorByIdQuery(curatorId);
         return await mediator.Send(query, cancellationToken);
     }
 
@@ -36,7 +38,7 @@ public class CuratorsController(IMediator mediator) : ControllerBase
     public async Task<CuratorDto> EditUserProfileById([FromRoute] int curatorId,
         [FromBody] JsonPatchDocument<CuratorDto> patchDocument, CancellationToken cancellationToken)
     {
-        var command = new UpdateUserCommand<CuratorDto, CuratorDto>(curatorId, patchDocument);
+        var command = new UpdateCuratorCommand(curatorId, patchDocument);
         return await mediator.Send(command, cancellationToken);
     }
 }

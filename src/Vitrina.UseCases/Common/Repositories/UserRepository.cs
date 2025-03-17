@@ -1,9 +1,7 @@
-using Microsoft.EntityFrameworkCore;
 using Saritasa.Tools.Domain.Exceptions;
-using Vitrina.Domain.User;
 using Vitrina.Infrastructure.Abstractions.Interfaces;
 
-namespace Vitrina.UseCases.Common.GettingUser;
+namespace Vitrina.UseCases.Common.Repositories;
 
 public class UserRepository(IAppDbContext dbContext) : IUserRepository
 {

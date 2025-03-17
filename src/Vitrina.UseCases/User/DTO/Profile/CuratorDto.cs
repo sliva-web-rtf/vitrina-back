@@ -1,5 +1,5 @@
-using Vitrina.UseCases.Common;
+using Vitrina.UseCases.User.DTO.Profile.Base;
 
-namespace Vitrina.Domain.User;
+namespace Vitrina.UseCases.User.DTO.Profile;
 
 public class CuratorDto : NotStudentDtoBase;

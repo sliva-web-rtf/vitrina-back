@@ -1,4 +1,4 @@
-﻿namespace Vitrina.UseCases.Common;
+﻿namespace Vitrina.UseCases.Common.DTO;
 
 /// <summary>
 /// Content Dto.

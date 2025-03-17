@@ -1,6 +1,6 @@
 using Vitrina.Domain.Project;
 
-namespace Vitrina.Domain.User;
+namespace Vitrina.UseCases.User.DTO.Profile;
 
 public record PreviewProjectDto
 {

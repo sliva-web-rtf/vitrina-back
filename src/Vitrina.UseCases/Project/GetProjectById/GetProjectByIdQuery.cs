@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Vitrina.UseCases.Common;
+using Vitrina.UseCases.Common.DTO;
 
 namespace Vitrina.UseCases.Project.GetProjectById;
 

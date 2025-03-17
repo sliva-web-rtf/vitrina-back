@@ -1,6 +1,6 @@
 ﻿using Vitrina.Domain.Project;
 
-namespace Vitrina.UseCases.Common;
+namespace Vitrina.UseCases.Common.DTO;
 
 /// <summary>
 /// Project dto.

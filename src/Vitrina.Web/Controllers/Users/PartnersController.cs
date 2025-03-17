@@ -2,16 +2,17 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using Vitrina.Domain.User;
 using Vitrina.UseCases.Common;
-using Vitrina.UseCases.UserProfile.GetUserById;
+using Vitrina.UseCases.User.DTO.Profile;
+using Vitrina.UseCases.User.GetUser.GetPartnerById;
+using Vitrina.UseCases.User.UpdateUser.UpdatePartner;
 
-namespace Vitrina.Web.Controllers;
+namespace Vitrina.Web.Controllers.Users;
 
 /// <summary>
 /// A controller for working with partners.
 /// </summary>
-/*[Authorize(Roles = "Partner")]*/
+[Authorize(Roles = "Partner")]
 [Route("api/partners")]
 [ApiExplorerSettings(GroupName = "partners")]
 public class PartnersController(IMediator mediator) : ControllerBase
@@ -23,7 +24,7 @@ public class PartnersController(IMediator mediator) : ControllerBase
     [HttpGet("{partnerId:int}/profile")]
     public async Task<PartnerDto> GetPartnerProfileDataById([FromRoute] int partnerId, CancellationToken cancellationToken)
     {
-        var query = new GetUserByIdQuery<PartnerDto>(partnerId);
+        var query = new GetPartnerByIdQuery(partnerId);
         return await mediator.Send(query, cancellationToken);
     }
 
@@ -35,7 +36,7 @@ public class PartnersController(IMediator mediator) : ControllerBase
     public async Task<PartnerDto> EditPartnerProfileById([FromRoute] int partnerId,
         [FromBody] JsonPatchDocument<PartnerDto> patchDocument, CancellationToken cancellationToken)
     {
-        var command = new UpdateUserCommand<PartnerDto, PartnerDto>(partnerId, patchDocument);
+        var command = new UpdatePartnerCommand(partnerId, patchDocument);
         return await mediator.Send(command, cancellationToken);
     }
 }

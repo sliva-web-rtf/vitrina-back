@@ -1,7 +1,4 @@
-using Vitrina.Domain.User;
-using Vitrina.UseCases.User.DTO.Profile;
-
-namespace Vitrina.UseCases.Common;
+namespace Vitrina.UseCases.User.DTO.Profile;
 
 public class StudentDto : UpdateStudentDto
 {

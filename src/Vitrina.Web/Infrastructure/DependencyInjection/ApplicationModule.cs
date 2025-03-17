@@ -1,8 +1,3 @@
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Vitrina.Infrastructure.Abstractions.Interfaces;
-using Vitrina.UseCases.Common.GettingUser;
-
 namespace Vitrina.Web.Infrastructure.DependencyInjection;
 
 /// <summary>
@@ -19,6 +14,5 @@ internal static class ApplicationModule
     public static void Register(IServiceCollection services, IConfiguration configuration)
 #pragma warning restore CA1801 // Review unused parameters
     {
-        services.AddScoped<IUserRepository, UserRepository>();
     }
 }

@@ -2,10 +2,12 @@
 using Vitrina.Domain.Project;
 using Vitrina.Domain.User;
 using Vitrina.UseCases.Common;
+using Vitrina.UseCases.Common.DTO;
 using Vitrina.UseCases.Project.AddProject;
 using Vitrina.UseCases.Project.SearchProjects;
 using Vitrina.UseCases.Project.SearchProjects.V2;
 using Vitrina.UseCases.Project.UpdateProject.DTO;
+using Vitrina.UseCases.User.DTO.Profile;
 using UpdateUserDto = Vitrina.UseCases.Project.UpdateProject.DTO.UpdateUserDto;
 
 namespace Vitrina.UseCases.Project;

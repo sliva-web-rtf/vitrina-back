@@ -1,8 +1,6 @@
 using System.ComponentModel.DataAnnotations;
-using Vitrina.Domain.User;
-using Vitrina.UseCases.User.DTO.Profile;
 
-namespace Vitrina.UseCases.Common;
+namespace Vitrina.UseCases.User.DTO.Profile.Base;
 
 public abstract class NotStudentDtoBase : UserDtoBase
 {
