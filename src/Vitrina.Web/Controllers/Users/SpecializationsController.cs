@@ -15,7 +15,7 @@ namespace Vitrina.Web.Controllers.Users;
 public class SpecializationsController(IMediator mediator) : ControllerBase
 {
     /// <summary>
-    /// The method of obtaining various specializations.
+    /// Get all the specializations.
     /// </summary>
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
