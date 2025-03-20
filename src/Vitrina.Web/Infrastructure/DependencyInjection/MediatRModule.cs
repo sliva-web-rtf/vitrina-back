@@ -1,4 +1,5 @@
 using Vitrina.Infrastructure.Abstractions.Interfaces;
+using Vitrina.Infrastructure.Abstractions.Interfaces.Repositories;
 using Vitrina.UseCases.Common.Repositories;
 using Vitrina.UseCases.Project.AddProject;
 using Vitrina.UseCases.User;

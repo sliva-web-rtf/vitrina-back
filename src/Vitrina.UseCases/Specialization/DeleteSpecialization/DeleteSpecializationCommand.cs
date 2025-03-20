@@ -1,6 +1,6 @@
 using MediatR;
 
-namespace Vitrina.UseCases.Common.DTO.DeleteSpecialization;
+namespace Vitrina.UseCases.Specialization.DeleteSpecialization;
 
 /// <summary>
 /// Specialization removal command

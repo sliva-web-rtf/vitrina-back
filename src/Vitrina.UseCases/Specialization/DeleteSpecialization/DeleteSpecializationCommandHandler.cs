@@ -1,8 +1,8 @@
 using AutoMapper;
 using MediatR;
-using Vitrina.Infrastructure.Abstractions.Interfaces;
+using Vitrina.Infrastructure.Abstractions.Interfaces.Repositories;
 
-namespace Vitrina.UseCases.Common.DTO.DeleteSpecialization;
+namespace Vitrina.UseCases.Specialization.DeleteSpecialization;
 
 /// <inheritdoc />
 public class DeleteSpecializationCommandHandler(ISpecializationRepository repository, IMapper mapper)

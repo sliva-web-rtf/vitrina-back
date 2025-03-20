@@ -1,5 +1,6 @@
 using Saritasa.Tools.Domain.Exceptions;
 using Vitrina.Infrastructure.Abstractions.Interfaces;
+using Vitrina.Infrastructure.Abstractions.Interfaces.Repositories;
 
 namespace Vitrina.UseCases.Common.Repositories;
 

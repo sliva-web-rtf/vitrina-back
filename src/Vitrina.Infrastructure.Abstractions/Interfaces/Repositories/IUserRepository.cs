@@ -1,6 +1,6 @@
 using Vitrina.Domain.User;
 
-namespace Vitrina.Infrastructure.Abstractions.Interfaces;
+namespace Vitrina.Infrastructure.Abstractions.Interfaces.Repositories;
 
 /// <summary>
 /// Interface for working with user domain objects.

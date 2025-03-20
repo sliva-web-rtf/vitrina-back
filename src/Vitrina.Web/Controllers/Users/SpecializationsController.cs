@@ -2,9 +2,10 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Vitrina.UseCases.Common.DTO;
-using Vitrina.UseCases.Common.DTO.DeleteSpecialization;
-using Vitrina.UseCases.User.Specialization;
-using Vitrina.UseCases.User.Specialization.CreateSpecialization;
+using Vitrina.UseCases.Specialization;
+using Vitrina.UseCases.Specialization.CreateSpecialization;
+using Vitrina.UseCases.Specialization.DeleteSpecialization;
+using Vitrina.UseCases.Specialization.GetAllSpecializations;
 
 namespace Vitrina.Web.Controllers.Users;
 

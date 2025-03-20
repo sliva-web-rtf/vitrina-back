@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Saritasa.Tools.Domain.Exceptions;
 using Vitrina.Domain.User;
 using Vitrina.Infrastructure.Abstractions.Interfaces;
+using Vitrina.Infrastructure.Abstractions.Interfaces.Repositories;
 
 namespace Vitrina.UseCases.Common.Repositories;
 

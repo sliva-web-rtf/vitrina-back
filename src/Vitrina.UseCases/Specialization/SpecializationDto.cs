@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Vitrina.UseCases.Common.DTO;
+namespace Vitrina.UseCases.Specialization;
 
 /// <summary>
 /// User specialization.

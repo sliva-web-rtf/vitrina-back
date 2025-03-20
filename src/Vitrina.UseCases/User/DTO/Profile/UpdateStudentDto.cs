@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using Vitrina.Domain.User;
 using Vitrina.UseCases.Common;
 using Vitrina.UseCases.Common.DTO;
+using Vitrina.UseCases.Specialization;
 using Vitrina.UseCases.User.DTO.Profile.Base;
 
 namespace Vitrina.UseCases.User.DTO.Profile;

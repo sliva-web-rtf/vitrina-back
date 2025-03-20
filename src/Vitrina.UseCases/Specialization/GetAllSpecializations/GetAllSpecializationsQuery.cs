@@ -1,7 +1,6 @@
 using MediatR;
-using Vitrina.UseCases.Common.DTO;
 
-namespace Vitrina.UseCases.User.Specialization;
+namespace Vitrina.UseCases.Specialization.GetAllSpecializations;
 
 /// <summary>
 /// Query for all specializations

@@ -3,6 +3,7 @@ using Vitrina.Domain.User;
 using Vitrina.UseCases.Auth.GetUserById;
 using Vitrina.UseCases.Auth.Register;
 using Vitrina.UseCases.Common.DTO;
+using Vitrina.UseCases.Specialization;
 using Vitrina.UseCases.User.DTO.Profile;
 
 namespace Vitrina.UseCases.User;

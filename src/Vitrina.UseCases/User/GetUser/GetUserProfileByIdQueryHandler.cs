@@ -6,6 +6,7 @@ using Vitrina.Domain.User;
 using Vitrina.Infrastructure.Abstractions.Interfaces;
 using Vitrina.UseCases.User.DTO.Profile;
 using System.Text.Json;
+using Vitrina.Infrastructure.Abstractions.Interfaces.Repositories;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace Vitrina.UseCases.User.GetUser;
