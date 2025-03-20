@@ -43,4 +43,9 @@ public interface IAppDbContext : IDbContextWithSets, IDisposable
     /// Confirmation codes.
     /// </summary>
     DbSet<ConfirmationCode> Codes { get; }
+
+    /// <summary>
+    /// Students' specializations.
+    /// </summary>
+    public DbSet<Specialization> Specializations => Set<Specialization>();
 }

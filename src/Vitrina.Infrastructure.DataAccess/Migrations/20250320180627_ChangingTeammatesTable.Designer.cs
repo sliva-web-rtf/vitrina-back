@@ -12,7 +12,7 @@ using Vitrina.Infrastructure.DataAccess;
 namespace Vitrina.Infrastructure.DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250320132048_ChangingTeammatesTable")]
+    [Migration("20250320180627_ChangingTeammatesTable")]
     partial class ChangingTeammatesTable
     {
         /// <inheritdoc />
@@ -452,11 +452,18 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
 
             modelBuilder.Entity("Vitrina.Domain.User.Specialization", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
                     b.Property<string>("Name")
+                        .IsRequired()
                         .IsUnicode(false)
                         .HasColumnType("text");
 
-                    b.HasKey("Name");
+                    b.HasKey("Id");
 
                     b.HasIndex("Name")
                         .IsUnique();

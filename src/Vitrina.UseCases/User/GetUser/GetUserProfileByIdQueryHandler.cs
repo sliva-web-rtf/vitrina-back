@@ -10,9 +10,11 @@ using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace Vitrina.UseCases.User.GetUser;
 
+/// <inheritdoc />
 public class GetUserProfileByIdQueryHandler(IUserRepository userRepository, IMapper mapper)
     : IRequestHandler<GetUserProfileByIdQuery, JsonDocument>
 {
+    /// <inheritdoc />
     public async Task<JsonDocument> Handle(GetUserProfileByIdQuery request, CancellationToken cancellationToken)
     {
         var user = await userRepository.GetByIdAsync(request.UserId, cancellationToken) ??

@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using Vitrina.Domain.User;
 using Vitrina.UseCases.Common;
 using Vitrina.UseCases.Common.DTO;

@@ -40,6 +40,6 @@ public class UserMappingProfile : Profile
             .ForAllMembers(opt => opt.Ignore());
         CreateMap<CuratorDto, Domain.User.User>()
             .ForAllMembers(opt => opt.Ignore());
-        CreateMap<Specialization, SpecializationDto>();
+        CreateMap<Domain.User.Specialization, SpecializationDto>();
     }
 }

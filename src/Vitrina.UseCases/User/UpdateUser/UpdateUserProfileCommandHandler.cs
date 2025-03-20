@@ -11,8 +11,11 @@ using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace Vitrina.UseCases.User.UpdateUser;
 
-public class UpdateUserProfileCommandHandler(IUserRepository userRepository, IMapper mapper) : IRequestHandler<UpdateUserProfileCommand, JsonDocument>
+/// <inheritdoc />
+public class UpdateUserProfileCommandHandler(IUserRepository userRepository, IMapper mapper)
+    : IRequestHandler<UpdateUserProfileCommand, JsonDocument>
 {
+    /// <inheritdoc />
     public async Task<JsonDocument> Handle(UpdateUserProfileCommand request, CancellationToken cancellationToken)
     {
         if (request.User is null)
