@@ -30,6 +30,7 @@ public class SpecializationsController(IMediator mediator) : ControllerBase
     /// </summary>
     [HttpPost("create")]
     [Authorize(Roles = "Admin")]
+    [Produces("application/json")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<SpecializationDto> CreateSpecialization([FromBody] CreateSpecializationCommand command,
