@@ -9,9 +9,6 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
     public void Configure(EntityTypeBuilder<User> builder)
     {
         builder
-            .Property(user => user.EducationCourse)
-            .IsRequired(false);
-        builder
             .Property(u => u.EmailConfirmed)
             .HasDefaultValue("false");
         builder
@@ -29,8 +26,5 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder
             .Property(user => user.RegistrationStatus)
             .HasDefaultValue(RegistrationStatusEnum.NotRegistered);
-        builder
-            .Property(u => u.RolesInTeam)
-            .HasColumnType("text[]");
     }
 }

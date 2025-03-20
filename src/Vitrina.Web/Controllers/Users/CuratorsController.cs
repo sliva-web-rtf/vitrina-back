@@ -1,11 +1,12 @@
+using System.Text.Json;
+using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using Vitrina.Domain.User;
+using Vitrina.UseCases.User.DTO;
 using Vitrina.UseCases.User.DTO.Profile;
-using Vitrina.UseCases.User.GetUser.GetCuratorById;
-using Vitrina.UseCases.User.UpdateUser.UpdateCurator;
+using Vitrina.UseCases.User.GetUser;
+using Vitrina.UseCases.User.UpdateUser;
 
 namespace Vitrina.Web.Controllers.Users;
 
@@ -16,17 +17,19 @@ namespace Vitrina.Web.Controllers.Users;
 [Authorize(Roles = "Curator")]
 [Route("api/сurators")]
 [ApiExplorerSettings(GroupName = "сurators")]
-public class CuratorsController(IMediator mediator) : ControllerBase
+public class CuratorsController(IMediator mediator, IMapper mapper) : ControllerBase
 {
     /// <summary>
     /// Getting curator profile data by Id.
     /// </summary>
     [Produces("application/json")]
     [HttpGet("{curatorId:int}/profile")]
-    public async Task<CuratorDto> GetUserProfileDataById([FromRoute] int curatorId,
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<JsonDocument> GetUserProfileDataById([FromRoute] int curatorId,
         CancellationToken cancellationToken)
     {
-        var query = new GetCuratorByIdQuery(curatorId);
+        var query = new GetUserProfileByIdQuery(curatorId);
         return await mediator.Send(query, cancellationToken);
     }
 
@@ -35,10 +38,13 @@ public class CuratorsController(IMediator mediator) : ControllerBase
     /// </summary>
     [Produces("application/json")]
     [HttpPatch("{curatorId:int}/profile/edit")]
-    public async Task<CuratorDto> EditUserProfileById([FromRoute] int curatorId,
-        [FromBody] JsonPatchDocument<CuratorDto> patchDocument, CancellationToken cancellationToken)
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<JsonDocument> EditUserProfileById([FromRoute] int curatorId,
+        [FromBody] CuratorDto curator, CancellationToken cancellationToken)
     {
-        var command = new UpdateCuratorCommand(curatorId, patchDocument);
+        var user = mapper.Map<UpdateUserDto>(curator);
+        var command = new UpdateUserProfileCommand(curatorId, user);
         return await mediator.Send(command, cancellationToken);
     }
 }

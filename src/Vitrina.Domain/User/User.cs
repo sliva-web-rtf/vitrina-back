@@ -1,4 +1,6 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
+using Newtonsoft.Json.Linq;
 using Vitrina.Domain.Project;
 
 namespace Vitrina.Domain.User;
@@ -8,6 +10,37 @@ namespace Vitrina.Domain.User;
 /// </summary>
 public class User : IdentityUser<int>
 {
+    public static User CreteUser(
+        string lastName,
+        string firstName,
+        string patronymic,
+        RoleOnPlatformEnum roleOnPlatform,
+        string email,
+        bool emailConfirmed = false,
+        int educationCourse = -1,
+        EducationLevelEnum educationLevel = EducationLevelEnum.NotStudent)
+    {
+        var user = new User();
+        var json = new JObject();
+        user.UserName = email;
+        user.EmailConfirmed = emailConfirmed;
+
+        json["email"] = user.Email = email;
+        json["firstName"] = user.FirstName = firstName;
+        json["lastName"] = user.LastName = lastName;
+        json["patronymic"] = user.Patronymic = patronymic;
+        json["roleOnPlatform"] = (user.RoleOnPlatform = roleOnPlatform).ToString();
+
+        if (roleOnPlatform == RoleOnPlatformEnum.Student)
+        {
+            json["educationCourse"] = educationCourse;
+            json["educationLevel"] = educationLevel.ToString();
+        }
+        user.ProfileData = json.ToString();
+
+        return user;
+    }
+
     /// <summary>
     /// User registration status.
     /// </summary>
@@ -40,34 +73,24 @@ public class User : IdentityUser<int>
     public DateTime? RemovedAt { get; set; }
 
     /// <summary>
-    /// Education level of user.
-    /// </summary>
-    public EducationLevelEnum EducationLevel { get; set; }
-
-    /// <summary>
-    /// Education course of user.
-    /// </summary>
-    public int? EducationCourse { get; set; }
-
-    /// <summary>
     /// User role on the platform.
     /// </summary>
-    required public RoleOnPlatformEnum RoleOnPlatform { get; set; }
+    public RoleOnPlatformEnum RoleOnPlatform { get; set; }
 
     /// <summary>
     /// User first name.
     /// </summary>
-    required public string FirstName { get; set; }
+    public string FirstName { get; set; }
 
     /// <summary>
     /// User last name.
     /// </summary>
-    required public string LastName { get; set; }
+    public string LastName { get; set; }
 
     /// <summary>
     /// User patronymic.
     /// </summary>
-    required public string Patronymic { get; set; }
+    public string Patronymic { get; set; }
 
     /// <summary>
     /// Full name of user.
@@ -90,37 +113,18 @@ public class User : IdentityUser<int>
     public override string PhoneNumber { get; set; }
 
     /// <summary>
-    /// Link to the resume pdf file in the cloud storage.
-    /// </summary>
-    public string? Resume { get; set; }
-
-    /// <summary>
-    /// Position in the company.
-    /// </summary>
-    public string? Post { get; set; }
-
-    /// <summary>
-    /// Place of work
-    /// </summary>
-    public string? Company { get; set; }
-
-    /// <summary>
-    /// User specializations.
-    /// </summary>
-    public virtual ICollection<Specialization> Specializations { get; set; } = new List<Specialization>();
-
-    /// <summary>
     /// Link to the image in the cloud storage.
     /// </summary>
     public string? Avatar { get; set; }
 
     /// <summary>
-    /// Role in the team.
-    /// </summary>
-    public List<string>? RolesInTeam { get; set; }
-
-    /// <summary>
-    /// Positions in teams
+    /// Positions in teams.
     /// </summary>
     public virtual ICollection<Teammate> PositionsInTeams { get; init; } = new List<Teammate>();
+
+    /// <summary>
+    /// User profile information.
+    /// </summary>
+    [Column(TypeName = "jsonb")]
+    public string ProfileData { get; set; }
 }

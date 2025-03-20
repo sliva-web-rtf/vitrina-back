@@ -20,15 +20,15 @@ public class UpdateStudentDto : UserDtoBase
     /// <summary>
     /// Link to the image in the cloud storage.
     /// </summary>
-    public string Resume { get; init; }
+    public string? Resume { get; init; }
 
     /// <summary>
     /// Roles in the team.
     /// </summary>
-    public ICollection<string> RolesInTeam { get; init; }
+    public ICollection<string>? RolesInTeam { get; init; }
 
     /// <summary>
     /// Student specializations.
     /// </summary>
-    public ICollection<SpecializationDto> Specializations { get; init; }
+    public SpecializationDto? Specialization { get; init; }
 }

@@ -5,5 +5,5 @@ public class StudentDto : UpdateStudentDto
     /// <summary>
     /// Student projects.
     /// </summary>
-    public ICollection<PreviewProjectDto> Projects { get; init; }
+    public ICollection<PreviewProjectDto> Projects { get; set; }
 }

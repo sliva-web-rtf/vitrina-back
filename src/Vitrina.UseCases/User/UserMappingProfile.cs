@@ -28,11 +28,18 @@ public class UserMappingProfile : Profile
                 opt => opt.MapFrom(src => src.PositionsInTeams
                     .Select(teammate => teammate.Project)
                     .Distinct()
-                    .ToList()));
+                    .ToList()))
+            .ForAllMembers(opt => opt.Ignore());
         CreateMap<UpdateStudentDto, Domain.User.User>()
             .ForAllMembers(opt => opt.Ignore());
-        CreateMap<Domain.User.User, PartnerDto>().ReverseMap();
-        CreateMap<Domain.User.User, CuratorDto>().ReverseMap();
+        CreateMap<Domain.User.User, PartnerDto>()
+            .ForAllMembers(opt => opt.Ignore());
+        CreateMap<PartnerDto, Domain.User.User>()
+            .ForAllMembers(opt => opt.Ignore());
+        CreateMap<Domain.User.User, CuratorDto>()
+            .ForAllMembers(opt => opt.Ignore());
+        CreateMap<CuratorDto, Domain.User.User>()
+            .ForAllMembers(opt => opt.Ignore());
         CreateMap<Specialization, SpecializationDto>();
     }
 }

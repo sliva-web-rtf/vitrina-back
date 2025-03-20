@@ -1,11 +1,12 @@
+using System.Text.Json;
+using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using Vitrina.UseCases.Common;
+using Vitrina.UseCases.User.DTO;
 using Vitrina.UseCases.User.DTO.Profile;
-using Vitrina.UseCases.User.GetUser.GetStudentById;
-using Vitrina.UseCases.User.UpdateUser.UpdateStudent;
+using Vitrina.UseCases.User.GetUser;
+using Vitrina.UseCases.User.UpdateUser;
 
 namespace Vitrina.Web.Controllers.Users;
 
@@ -15,16 +16,18 @@ namespace Vitrina.Web.Controllers.Users;
 [Authorize(Roles = "Student")]
 [Route("api/students")]
 [ApiExplorerSettings(GroupName = "students")]
-public class StudentsController(IMediator mediator) : ControllerBase
+public class StudentsController(IMediator mediator, IMapper mapper) : ControllerBase
 {
     /// <summary>
     /// Getting student profile data by ID.
     /// </summary>
     [Produces("application/json")]
     [HttpGet("{studentId:int}/profile")]
-    public async Task<StudentDto> GetStudentProfileDataById([FromRoute] int studentId, CancellationToken cancellationToken)
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<JsonDocument> GetStudentProfileDataById([FromRoute] int studentId, CancellationToken cancellationToken)
     {
-        var query = new GetStudentByIdQuery(studentId);
+        var query = new GetUserProfileByIdQuery(studentId);
         return await mediator.Send(query, cancellationToken);
     }
 
@@ -33,10 +36,13 @@ public class StudentsController(IMediator mediator) : ControllerBase
     /// </summary>
     [Produces("application/json")]
     [HttpPatch("{studentId:int}/profile/edit")]
-    public async Task<StudentDto> EditStudentProfileById([FromRoute] int studentId,
-        [FromBody] JsonPatchDocument<UpdateStudentDto> patchDocument, CancellationToken cancellationToken)
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<JsonDocument> EditStudentProfileById([FromRoute] int studentId,
+        [FromBody] UpdateStudentDto student, CancellationToken cancellationToken)
     {
-        var command = new UpdateStudentCommand(studentId, patchDocument);
+        var user = mapper.Map<UpdateUserDto>(student);
+        var command = new UpdateUserProfileCommand(studentId, user);
         return await mediator.Send(command, cancellationToken);
     }
 }

@@ -25,18 +25,12 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, RegisterC
     /// <inheritdoc />
     public async Task<RegisterCommandResult> Handle(RegisterCommand request, CancellationToken cancellationToken)
     {
-        var user = new Domain.User.User
-        {
-            RoleOnPlatform = request.RoleOnPlatform,
-            Email = request.Email,
-            UserName = request.Email,
-            EmailConfirmed = false,
-            EducationLevel = request.EducationLevel,
-            EducationCourse = request.EducationCourse,
-            FirstName = request.FirstName,
-            LastName = request.LastName,
-            Patronymic = request.Patronymic,
-        };
+        var user = Domain.User.User.CreteUser(
+            request.LastName,
+            request.FirstName,
+            request.Patronymic,
+            request.RoleOnPlatform,
+            request.Email);
         var result = await userManager.CreateAsync(user, request.Password);
         if (!result.Succeeded)
         {
@@ -61,7 +55,6 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, RegisterC
                 IsSuccess = false, Message = "failed to save confirmation code."
             };
         }
-
 
         return new RegisterCommandResult
         {

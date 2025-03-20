@@ -1,11 +1,12 @@
+using System.Text.Json;
+using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using Vitrina.UseCases.Common;
+using Vitrina.UseCases.User.DTO;
 using Vitrina.UseCases.User.DTO.Profile;
-using Vitrina.UseCases.User.GetUser.GetPartnerById;
-using Vitrina.UseCases.User.UpdateUser.UpdatePartner;
+using Vitrina.UseCases.User.GetUser;
+using Vitrina.UseCases.User.UpdateUser;
 
 namespace Vitrina.Web.Controllers.Users;
 
@@ -15,16 +16,18 @@ namespace Vitrina.Web.Controllers.Users;
 [Authorize(Roles = "Partner")]
 [Route("api/partners")]
 [ApiExplorerSettings(GroupName = "partners")]
-public class PartnersController(IMediator mediator) : ControllerBase
+public class PartnersController(IMediator mediator, IMapper mapper) : ControllerBase
 {
     /// <summary>
     /// Getting partner profile data by ID.
     /// </summary>
     [Produces("application/json")]
     [HttpGet("{partnerId:int}/profile")]
-    public async Task<PartnerDto> GetPartnerProfileDataById([FromRoute] int partnerId, CancellationToken cancellationToken)
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<JsonDocument> GetPartnerProfileDataById([FromRoute] int partnerId, CancellationToken cancellationToken)
     {
-        var query = new GetPartnerByIdQuery(partnerId);
+        var query = new GetUserProfileByIdQuery(partnerId);
         return await mediator.Send(query, cancellationToken);
     }
 
@@ -33,10 +36,13 @@ public class PartnersController(IMediator mediator) : ControllerBase
     /// </summary>
     [Produces("application/json")]
     [HttpPatch("{partnerId:int}/profile/edit")]
-    public async Task<PartnerDto> EditPartnerProfileById([FromRoute] int partnerId,
-        [FromBody] JsonPatchDocument<PartnerDto> patchDocument, CancellationToken cancellationToken)
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<JsonDocument> EditPartnerProfileById([FromRoute] int partnerId,
+        [FromBody] PartnerDto partner, CancellationToken cancellationToken)
     {
-        var command = new UpdatePartnerCommand(partnerId, patchDocument);
+        var user = mapper.Map<UpdateUserDto>(partner);
+        var command = new UpdateUserProfileCommand(partnerId, user);
         return await mediator.Send(command, cancellationToken);
     }
 }
