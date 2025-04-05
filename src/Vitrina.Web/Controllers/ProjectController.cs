@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Saritasa.Tools.Common.Pagination;
-using Vitrina.UseCases.Common;
 using Vitrina.UseCases.Common.DTO;
 using Vitrina.UseCases.Project.AddProject;
 using Vitrina.UseCases.Project.DeleteProject;
@@ -31,20 +30,8 @@ namespace Vitrina.Web.Controllers;
 [Route("api/project")]
 [ApiExplorerSettings(GroupName = "project")]
 [Authorize]
-public class ProjectController : ControllerBase
+public class ProjectController(IMediator mediator, Microsoft.AspNetCore.Hosting.IHostingEnvironment hostingEnvironment) : ControllerBase
 {
-    private readonly IMediator mediator;
-    private readonly Microsoft.AspNetCore.Hosting.IHostingEnvironment hostingEnvironment;
-
-    /// <summary>
-    /// Constructor.
-    /// </summary>
-    public ProjectController(IMediator mediator, Microsoft.AspNetCore.Hosting.IHostingEnvironment hostingEnvironment)
-    {
-        this.mediator = mediator;
-        this.hostingEnvironment = hostingEnvironment;
-    }
-
     /// <summary>
     /// Add project.
     /// </summary>
