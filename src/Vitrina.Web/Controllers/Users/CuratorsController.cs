@@ -41,7 +41,7 @@ public class CuratorsController(IMediator mediator, IMapper mapper) : Controller
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<JsonDocument> EditUserProfileById([FromRoute] int curatorId,
-        [FromBody] CuratorDto curator, CancellationToken cancellationToken)
+        [FromBody] UpdateCuratorDto curator, CancellationToken cancellationToken)
     {
         var user = mapper.Map<UpdateUserDto>(curator);
         var command = new UpdateUserProfileCommand(curatorId, user);

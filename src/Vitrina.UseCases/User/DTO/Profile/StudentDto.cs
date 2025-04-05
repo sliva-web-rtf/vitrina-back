@@ -1,6 +1,6 @@
 namespace Vitrina.UseCases.User.DTO.Profile;
 
-public class StudentDto : UpdateStudentDto
+public class StudentDto : UpdateStudentDto, IHavingProjects
 {
     /// <summary>
     /// Student projects.

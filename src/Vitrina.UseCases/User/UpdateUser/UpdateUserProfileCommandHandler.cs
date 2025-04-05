@@ -4,7 +4,6 @@ using MediatR;
 using Newtonsoft.Json;
 using Saritasa.Tools.Domain.Exceptions;
 using Vitrina.Domain.User;
-using Vitrina.Infrastructure.Abstractions.Interfaces;
 using Vitrina.Infrastructure.Abstractions.Interfaces.Repositories;
 using Vitrina.UseCases.User.DTO;
 using Vitrina.UseCases.User.DTO.Profile;
