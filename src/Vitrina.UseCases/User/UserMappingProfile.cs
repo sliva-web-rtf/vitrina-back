@@ -23,7 +23,7 @@ public class UserMappingProfile : Profile
         CreateMap<Domain.User.User, RegisterCommand>()
             .ForMember(u => u.PasswordConfirm, dest => dest.Ignore())
             .ForMember(u => u.Password, dest => dest.Ignore());
-        CreateMap<Domain.User.User, StudentDto>()
+        CreateMap<Domain.User.User, IHavingProjects>()
             .ForMember(
                 dest => dest.Projects,
                 opt => opt.MapFrom(src => src.PositionsInTeams
