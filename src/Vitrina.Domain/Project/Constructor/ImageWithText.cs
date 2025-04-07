@@ -1,4 +1,4 @@
-namespace Vitrina.Domain.Project;
+namespace Vitrina.Domain.Project.Constructor;
 
 /// <summary>
 /// A block of content, an image with text.

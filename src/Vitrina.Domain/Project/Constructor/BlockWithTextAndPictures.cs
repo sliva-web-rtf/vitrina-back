@@ -1,6 +1,6 @@
-namespace Vitrina.Domain.Project;
+namespace Vitrina.Domain.Project.Constructor;
 
 public class BlockWithTextAndPictures
 {
-    
+
 }

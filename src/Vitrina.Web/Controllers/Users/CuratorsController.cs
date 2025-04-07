@@ -15,8 +15,8 @@ namespace Vitrina.Web.Controllers.Users;
 /// </summary>
 [ApiController]
 [Authorize(Roles = "Curator")]
-[Route("api/сurators")]
-[ApiExplorerSettings(GroupName = "сurators")]
+[Route("api/curators")]
+[ApiExplorerSettings(GroupName = "curators")]
 public class CuratorsController(IMediator mediator, IMapper mapper) : ControllerBase
 {
     /// <summary>
