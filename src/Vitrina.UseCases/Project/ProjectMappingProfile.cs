@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Vitrina.Domain.Project;
+using Vitrina.Domain.Project.Constructor;
 using Vitrina.Domain.User;
 using Vitrina.UseCases.Common;
 using Vitrina.UseCases.Common.DTO;

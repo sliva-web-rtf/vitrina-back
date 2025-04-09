@@ -1,7 +1,7 @@
 ﻿namespace Vitrina.UseCases.Common.DTO;
 
 /// <summary>
-/// Content Dto.
+/// ImageBlock Dto.
 /// </summary>
 public class ContentDto
 {

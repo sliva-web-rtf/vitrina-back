@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Vitrina.Domain.Project;
+using Vitrina.Domain.Project.Constructor;
 using Vitrina.Domain.User;
 
 namespace Vitrina.Infrastructure.Abstractions.Interfaces;

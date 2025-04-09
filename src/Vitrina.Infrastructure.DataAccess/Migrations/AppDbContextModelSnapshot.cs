@@ -217,7 +217,7 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                     b.ToTable("Block");
                 });
 
-            modelBuilder.Entity("Vitrina.Domain.Project.Content", b =>
+            modelBuilder.Entity("Vitrina.Domain.Project.ImageBlock", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -699,7 +699,7 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                     b.Navigation("Project");
                 });
 
-            modelBuilder.Entity("Vitrina.Domain.Project.Content", b =>
+            modelBuilder.Entity("Vitrina.Domain.Project.ImageBlock", b =>
                 {
                     b.HasOne("Vitrina.Domain.Project.Project", "Project")
                         .WithMany("Contents")

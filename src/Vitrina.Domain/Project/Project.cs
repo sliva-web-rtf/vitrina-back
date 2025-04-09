@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Vitrina.Domain.Project.Constructor;
 
 namespace Vitrina.Domain.Project;
 
