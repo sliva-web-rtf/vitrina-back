@@ -65,5 +65,5 @@ public class ProjectPage : BaseEntity<Guid>
     /// <summary>
     ///     Project.
     /// </summary>
-    required public Project Project { get; init; }
+    public Project? Project { get; init; }
 }

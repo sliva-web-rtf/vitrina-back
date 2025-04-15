@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
 using Newtonsoft.Json.Linq;
+using Vitrina.Domain.Project.Page;
 using Vitrina.Domain.Project.Teammate;
 
 namespace Vitrina.Domain.User;
@@ -90,6 +91,11 @@ public class User : IdentityUser<int>
     ///     Positions in teams.
     /// </summary>
     public virtual ICollection<Teammate> PositionsInTeams { get; init; } = new List<Teammate>();
+
+    /// <summary>
+    /// The list of project pages available for editing.
+    /// </summary>
+    public virtual ICollection<ProjectPage> ProjectPages { get; init; } = new List<ProjectPage>();
 
     /// <summary>
     ///     User profile information.

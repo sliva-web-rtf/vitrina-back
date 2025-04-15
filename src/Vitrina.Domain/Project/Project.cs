@@ -33,6 +33,11 @@ public class Project : BaseEntity<int>
     public string? PreviewImagePath { get; set; }
 
     /// <summary>
+    ///     Project page id.
+    /// </summary>
+    public Guid PageId { get; set; }
+
+    /// <summary>
     ///     Project page content.
     /// </summary>
     public virtual ProjectPage Page { get; set; }
