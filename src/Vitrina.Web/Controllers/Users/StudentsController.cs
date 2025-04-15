@@ -14,7 +14,7 @@ namespace Vitrina.Web.Controllers.Users;
 /// A controller for working with students.
 /// </summary>
 [Authorize(Roles = "Student")]
-[Route("api/students")]
+[Route("api/students/{id:int}/profile")]
 [ApiExplorerSettings(GroupName = "students")]
 public class StudentsController(IMediator mediator, IMapper mapper) : ControllerBase
 {
@@ -22,12 +22,12 @@ public class StudentsController(IMediator mediator, IMapper mapper) : Controller
     /// Getting student profile data by ID.
     /// </summary>
     [Produces("application/json")]
-    [HttpGet("{studentId:int}/profile")]
+    [HttpGet("")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<JsonDocument> GetStudentProfileDataById([FromRoute] int studentId, CancellationToken cancellationToken)
+    public async Task<JsonDocument> GetStudentProfileDataById([FromRoute] int id, CancellationToken cancellationToken)
     {
-        var query = new GetUserProfileByIdQuery(studentId);
+        var query = new GetUserProfileByIdQuery(id);
         return await mediator.Send(query, cancellationToken);
     }
 
@@ -35,14 +35,14 @@ public class StudentsController(IMediator mediator, IMapper mapper) : Controller
     /// Edits student profile data.
     /// </summary>
     [Produces("application/json")]
-    [HttpPatch("{studentId:int}/profile/edit")]
+    [HttpPatch("")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<JsonDocument> EditStudentProfileById([FromRoute] int studentId,
+    public async Task<JsonDocument> EditStudentProfileById([FromRoute] int id,
         [FromBody] UpdateStudentDto student, CancellationToken cancellationToken)
     {
         var user = mapper.Map<UpdateUserDto>(student);
-        var command = new UpdateUserProfileCommand(studentId, user);
+        var command = new UpdateUserProfileCommand(id, user);
         return await mediator.Send(command, cancellationToken);
     }
 }

@@ -15,21 +15,21 @@ namespace Vitrina.Web.Controllers.Users;
 /// </summary>
 [ApiController]
 [Authorize(Roles = "Curator")]
-[Route("api/сurators")]
-[ApiExplorerSettings(GroupName = "сurators")]
+[Route("api/curators/{id:int}/profile")]
+[ApiExplorerSettings(GroupName = "curators")]
 public class CuratorsController(IMediator mediator, IMapper mapper) : ControllerBase
 {
     /// <summary>
     /// Getting curator profile data by Id.
     /// </summary>
     [Produces("application/json")]
-    [HttpGet("{curatorId:int}/profile")]
+    [HttpGet("")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<JsonDocument> GetUserProfileDataById([FromRoute] int curatorId,
+    public async Task<JsonDocument> GetUserProfileDataById([FromRoute] int id,
         CancellationToken cancellationToken)
     {
-        var query = new GetUserProfileByIdQuery(curatorId);
+        var query = new GetUserProfileByIdQuery(id);
         return await mediator.Send(query, cancellationToken);
     }
 
@@ -37,14 +37,14 @@ public class CuratorsController(IMediator mediator, IMapper mapper) : Controller
     /// Edits curator profile data.
     /// </summary>
     [Produces("application/json")]
-    [HttpPatch("{curatorId:int}/profile/edit")]
+    [HttpPatch("")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<JsonDocument> EditUserProfileById([FromRoute] int curatorId,
+    public async Task<JsonDocument> EditUserProfileById([FromRoute] int id,
         [FromBody] UpdateCuratorDto curator, CancellationToken cancellationToken)
     {
         var user = mapper.Map<UpdateUserDto>(curator);
-        var command = new UpdateUserProfileCommand(curatorId, user);
+        var command = new UpdateUserProfileCommand(id, user);
         return await mediator.Send(command, cancellationToken);
     }
 }
