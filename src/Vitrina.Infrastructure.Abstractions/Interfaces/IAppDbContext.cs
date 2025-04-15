@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Vitrina.Domain.Project;
-using Vitrina.Domain.Project.Constructor;
+using Vitrina.Domain.Project.Page;
+using Vitrina.Domain.Project.Teammate;
 using Vitrina.Domain.User;
 
 namespace Vitrina.Infrastructure.Abstractions.Interfaces;
@@ -31,9 +32,9 @@ public interface IAppDbContext : IDbContextWithSets, IDisposable
     DbSet<ProjectRole> ProjectRoles { get; }
 
     /// <summary>
-    /// Contents.
+    /// Pages.
     /// </summary>
-    DbSet<Content> Contents { get; }
+    DbSet<ProjectPage> Contents { get; }
 
     /// <summary>
     /// Users.

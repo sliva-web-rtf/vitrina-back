@@ -217,7 +217,7 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                     b.ToTable("Block");
                 });
 
-            modelBuilder.Entity("Vitrina.Domain.Project.ImageBlock", b =>
+            modelBuilder.Entity("Vitrina.Domain.Project.ImageUnit", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -237,7 +237,7 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
 
                     b.HasIndex("ProjectId");
 
-                    b.ToTable("Contents");
+                    b.ToTable("Pages");
                 });
 
             modelBuilder.Entity("Vitrina.Domain.Project.Project", b =>
@@ -699,10 +699,10 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                     b.Navigation("Project");
                 });
 
-            modelBuilder.Entity("Vitrina.Domain.Project.ImageBlock", b =>
+            modelBuilder.Entity("Vitrina.Domain.Project.ImageUnit", b =>
                 {
                     b.HasOne("Vitrina.Domain.Project.Project", "Project")
-                        .WithMany("Contents")
+                        .WithMany("Pages")
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -731,7 +731,7 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
 
             modelBuilder.Entity("Vitrina.Domain.Project.Project", b =>
                 {
-                    b.Navigation("Contents");
+                    b.Navigation("Pages");
 
                     b.Navigation("CustomBlocks");
 

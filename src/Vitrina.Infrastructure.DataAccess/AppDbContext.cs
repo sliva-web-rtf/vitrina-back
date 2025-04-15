@@ -3,7 +3,8 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Vitrina.Domain.Project;
-using Vitrina.Domain.Project.Constructor;
+using Vitrina.Domain.Project.Page;
+using Vitrina.Domain.Project.Teammate;
 using Vitrina.Domain.User;
 using Vitrina.Infrastructure.Abstractions.Interfaces;
 
@@ -29,7 +30,7 @@ public class AppDbContext : IdentityDbContext<User, AppIdentityRole, int>, IAppD
     public DbSet<ProjectRole> ProjectRoles => Set<ProjectRole>();
 
     /// <inheritdoc/>
-    public DbSet<Content> Contents => Set<Content>();
+    public DbSet<ProjectPage> Contents => Set<ProjectPage>();
 
     /// <inheritdoc/>
     public DbSet<ConfirmationCode> Codes => Set<ConfirmationCode>();

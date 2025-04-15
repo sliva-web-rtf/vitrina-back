@@ -1,22 +1,22 @@
 namespace Vitrina.Domain.User;
 
 /// <summary>
-/// Types of roles for user.
+///     Types of roles for user.
 /// </summary>
 public enum RoleOnPlatformEnum
 {
     /// <summary>
-    /// Student role.
+    ///     Student role.
     /// </summary>
     Student = 1,
 
     /// <summary>
-    /// Curator role.
+    ///     Curator role.
     /// </summary>
     Curator,
 
     /// <summary>
-    /// Partner role.
+    ///     Partner role.
     /// </summary>
     Partner
 }

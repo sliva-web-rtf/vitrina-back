@@ -1,0 +1,9 @@
+namespace Vitrina.Domain.Project.Page.Blocks;
+
+public class HorizontalDivider : NumberedBlockBase
+{
+    /// <summary>
+    ///     Size in pixels.
+    /// </summary>
+    public int SizeInPixels { get; init; }
+}

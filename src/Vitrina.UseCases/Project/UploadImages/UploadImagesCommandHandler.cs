@@ -6,7 +6,7 @@ using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats;
 using SixLabors.ImageSharp.Formats.Webp;
 using Vitrina.Domain.Project;
-using Vitrina.Domain.Project.Constructor;
+using Vitrina.Domain.Project.Page;
 using Vitrina.Infrastructure.Abstractions.Interfaces;
 
 namespace Vitrina.UseCases.Project.UploadImages;
@@ -73,8 +73,8 @@ internal class UploadImagesCommandHandler : IRequestHandler<UploadImagesCommand>
 
             if (request.IsAvatar)
             {
-                var content = new Content() { ImageUrl = webpFilePath, Project = project };
-                project.Contents.Add(content);
+                var content = new ProjectPage() { ImageUrl = webpFilePath, Project = project };
+                project.Page.Add(content);
             }
             else
             {

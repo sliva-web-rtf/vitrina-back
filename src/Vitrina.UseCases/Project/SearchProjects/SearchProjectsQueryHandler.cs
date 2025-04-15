@@ -26,7 +26,7 @@ internal class SearchProjectsQueryHandler : IRequestHandler<SearchProjectsQuery,
     {
         var query = dbContext.Projects
             .OrderByDescending(p => p.Priority)
-            .Include(p => p.Contents)
+            .Include(p => p.Pages)
             .AsQueryable();
 
         if (!string.IsNullOrEmpty(request.Name))
@@ -59,7 +59,7 @@ internal class SearchProjectsQueryHandler : IRequestHandler<SearchProjectsQuery,
                 dto.PreviewImagePath = item.PreviewImagePath.Split("/").Last();
             }
 
-            var content = item.Contents.FirstOrDefault();
+            var content = item.Pages.FirstOrDefault();
             if (content != null)
             {
                 dto.ImageUrl = content.ImageUrl.Split("/").Last();

@@ -1,25 +1,25 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Vitrina.Domain.Project;
+namespace Vitrina.Domain.Project.Teammate;
 
 /// <summary>
-/// Role of user in team.
+///     Role of user in team.
 /// </summary>
 public class ProjectRole
 {
     /// <summary>
-    /// Id.
+    ///     Id.
     /// </summary>
     [Key]
     public int Id { get; set; }
 
     /// <summary>
-    /// Name.
+    ///     Name.
     /// </summary>
     required public string Name { get; set; }
 
     /// <summary>
-    /// Role users.
+    ///     Role users.
     /// </summary>
     public virtual ICollection<Teammate> Users { get; private set; } = new List<Teammate>();
 }

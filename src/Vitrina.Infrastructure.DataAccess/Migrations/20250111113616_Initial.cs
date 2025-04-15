@@ -100,7 +100,7 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Contents",
+                name: "Pages",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -198,7 +198,7 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_Contents_ProjectId",
-                table: "Contents",
+                table: "Pages",
                 column: "ProjectId");
 
             migrationBuilder.CreateIndex(
@@ -256,7 +256,7 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                 name: "Block");
 
             migrationBuilder.DropTable(
-                name: "Contents");
+                name: "Pages");
 
             migrationBuilder.DropTable(
                 name: "DataProtectionKeys");

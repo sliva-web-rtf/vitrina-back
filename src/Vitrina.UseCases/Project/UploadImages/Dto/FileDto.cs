@@ -16,7 +16,7 @@ public class FileDto
     public string FileName { get; init; }
 
     /// <summary>
-    /// ImageBlock type.
+    /// ImageUnit type.
     /// </summary>
     public string ContentType { get; init; }
 
