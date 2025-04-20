@@ -29,13 +29,25 @@ namespace Vitrina.Web.Controllers;
 // For dev [Route("api-dev/project")]
 [Route("api/project")]
 [ApiExplorerSettings(GroupName = "project")]
-[Authorize]
-public class ProjectController(IMediator mediator, Microsoft.AspNetCore.Hosting.IHostingEnvironment hostingEnvironment) : ControllerBase
+public class ProjectController : ControllerBase
 {
+    private readonly IMediator mediator;
+    private readonly Microsoft.AspNetCore.Hosting.IHostingEnvironment hostingEnvironment;
+
+    /// <summary>
+    /// Constructor.
+    /// </summary>
+    public ProjectController(IMediator mediator, Microsoft.AspNetCore.Hosting.IHostingEnvironment hostingEnvironment)
+    {
+        this.mediator = mediator;
+        this.hostingEnvironment = hostingEnvironment;
+    }
+
     /// <summary>
     /// Add project.
     /// </summary>
     /// <returns>Project id.</returns>
+    [Authorize]
     [HttpPost("create")]
     public async Task<int> CreateProject(AddProjectCommand command, CancellationToken cancellationToken)
         => await mediator.Send(command, cancellationToken);
@@ -74,6 +86,7 @@ public class ProjectController(IMediator mediator, Microsoft.AspNetCore.Hosting.
     /// <summary>
     /// Upload images to project.
     /// </summary>
+    [Authorize]
     [HttpPost("{id}/upload-images")]
     public async Task<IActionResult> UploadImagesToProject([FromRoute] int id, IFormFile[] files, CancellationToken cancellationToken)
     {
@@ -91,6 +104,7 @@ public class ProjectController(IMediator mediator, Microsoft.AspNetCore.Hosting.
     /// <summary>
     /// Upload images to project.
     /// </summary>
+    [Authorize]
     [HttpPost("{id}/upload-preview-images")]
     public async Task<IActionResult> UploadPreviewImagesToProject([FromRoute] int id, IFormFile file, CancellationToken cancellationToken)
     {
@@ -131,6 +145,7 @@ public class ProjectController(IMediator mediator, Microsoft.AspNetCore.Hosting.
     /// <summary>
     /// Delete project.
     /// </summary>
+    [Authorize]
     [HttpDelete("{id}")]
     public async Task DeleteProject(int id, CancellationToken cancellationToken)
     {
@@ -140,6 +155,7 @@ public class ProjectController(IMediator mediator, Microsoft.AspNetCore.Hosting.
     /// <summary>
     /// Update project.
     /// </summary>
+    [Authorize]
     [HttpPut("{id}")]
     public async Task UpdateProject([FromRoute] int id, [FromBody] UpdateProjectDto projectDto, CancellationToken cancellationToken)
     {
@@ -152,6 +168,7 @@ public class ProjectController(IMediator mediator, Microsoft.AspNetCore.Hosting.
     /// <param name="id"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
+    [Authorize]
     [HttpDelete("{id}/images")]
     public async Task DeleteProjectImages(int id, CancellationToken cancellationToken)
     {
