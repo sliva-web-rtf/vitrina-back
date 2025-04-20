@@ -29,20 +29,8 @@ namespace Vitrina.Web.Controllers;
 // For dev [Route("api-dev/project")]
 [Route("api/project")]
 [ApiExplorerSettings(GroupName = "project")]
-public class ProjectController : ControllerBase
+public class ProjectController(IMediator mediator, Microsoft.AspNetCore.Hosting.IHostingEnvironment hostingEnvironment) : ControllerBase
 {
-    private readonly IMediator mediator;
-    private readonly Microsoft.AspNetCore.Hosting.IHostingEnvironment hostingEnvironment;
-
-    /// <summary>
-    /// Constructor.
-    /// </summary>
-    public ProjectController(IMediator mediator, Microsoft.AspNetCore.Hosting.IHostingEnvironment hostingEnvironment)
-    {
-        this.mediator = mediator;
-        this.hostingEnvironment = hostingEnvironment;
-    }
-
     /// <summary>
     /// Add project.
     /// </summary>
