@@ -14,7 +14,7 @@ namespace Vitrina.Web.Controllers.Users;
 /// A controller for working with partners.
 /// </summary>
 [Authorize(Roles = "Partner")]
-[Route("api/partners")]
+[Route("api/partners/{id:int}/profile")]
 [ApiExplorerSettings(GroupName = "partners")]
 public class PartnersController(IMediator mediator, IMapper mapper) : ControllerBase
 {
@@ -22,12 +22,12 @@ public class PartnersController(IMediator mediator, IMapper mapper) : Controller
     /// Getting partner profile data by ID.
     /// </summary>
     [Produces("application/json")]
-    [HttpGet("{partnerId:int}/profile")]
+    [HttpGet("")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<JsonDocument> GetPartnerProfileDataById([FromRoute] int partnerId, CancellationToken cancellationToken)
+    public async Task<JsonDocument> GetPartnerProfileDataById([FromRoute] int id, CancellationToken cancellationToken)
     {
-        var query = new GetUserProfileByIdQuery(partnerId);
+        var query = new GetUserProfileByIdQuery(id);
         return await mediator.Send(query, cancellationToken);
     }
 
@@ -35,14 +35,14 @@ public class PartnersController(IMediator mediator, IMapper mapper) : Controller
     /// Edits partner profile data.
     /// </summary>
     [Produces("application/json")]
-    [HttpPatch("{partnerId:int}/profile/edit")]
+    [HttpPatch("")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<JsonDocument> EditPartnerProfileById([FromRoute] int partnerId,
+    public async Task<JsonDocument> EditPartnerProfileById([FromRoute] int id,
         [FromBody] PartnerDto partner, CancellationToken cancellationToken)
     {
         var user = mapper.Map<UpdateUserDto>(partner);
-        var command = new UpdateUserProfileCommand(partnerId, user);
+        var command = new UpdateUserProfileCommand(id, user);
         return await mediator.Send(command, cancellationToken);
     }
 }
