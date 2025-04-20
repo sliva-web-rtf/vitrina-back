@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Vitrina.UseCases.Common.DTO;
+using Vitrina.UseCases.ProjectPages;
 using Vitrina.UseCases.User.DTO;
 using Vitrina.UseCases.User.DTO.Profile;
 using Vitrina.UseCases.User.GetUser;
@@ -16,7 +17,7 @@ namespace Vitrina.Web.Controllers.Users;
 /// </summary>
 [ApiController]
 [Authorize(Roles = "Curator")]
-[Route("api/curators/{id:int}/profile")]
+[Route("api/curators/{id:int}")]
 [ApiExplorerSettings(GroupName = "curators")]
 public class CuratorsController(IMediator mediator, IMapper mapper) : ControllerBase
 {
@@ -24,7 +25,7 @@ public class CuratorsController(IMediator mediator, IMapper mapper) : Controller
     /// Getting curator profile data by Id.
     /// </summary>
     [Produces("application/json")]
-    [HttpGet("")]
+    [HttpGet("profile")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<JsonDocument> GetUserProfileDataById([FromRoute] int id,
@@ -38,7 +39,7 @@ public class CuratorsController(IMediator mediator, IMapper mapper) : Controller
     /// Edits curator profile data.
     /// </summary>
     [Produces("application/json")]
-    [HttpPatch("")]
+    [HttpPatch("profile")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<JsonDocument> EditUserProfileById([FromRoute] int id,
@@ -49,9 +50,22 @@ public class CuratorsController(IMediator mediator, IMapper mapper) : Controller
         return await mediator.Send(command, cancellationToken);
     }
 
-    [HttpGet("id/projects")]
+    /// <summary>
+    /// Retrieves the list of projects of the user with the specified id.
+    /// </summary>
+    [HttpGet("projects")]
     [Produces("application/json")]
-    public virtual ICollection<ProjectDto> GetProjects([FromRoute] int id)
+    public async Task<ICollection<ProjectDto>> GetProjects([FromRoute] int id, CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
+    }
+
+    /// <summary>
+    /// Retrieves the list of project pages of the user with the specified id.
+    /// </summary>
+    [HttpGet("pages")]
+    [Produces("application/json")]
+    public async Task<ICollection<ProjectPageDto>> GetProjectPages([FromRoute] int id, CancellationToken cancellationToken)
     {
         throw new NotImplementedException();
     }

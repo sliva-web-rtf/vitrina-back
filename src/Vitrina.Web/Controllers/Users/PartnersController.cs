@@ -21,8 +21,8 @@ public class PartnersController(IMediator mediator, IMapper mapper) : Controller
     /// <summary>
     /// Getting partner profile data by ID.
     /// </summary>
+    [HttpGet]
     [Produces("application/json")]
-    [HttpGet("")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<JsonDocument> GetPartnerProfileDataById([FromRoute] int id, CancellationToken cancellationToken)
@@ -34,8 +34,8 @@ public class PartnersController(IMediator mediator, IMapper mapper) : Controller
     /// <summary>
     /// Edits partner profile data.
     /// </summary>
+    [HttpPatch]
     [Produces("application/json")]
-    [HttpPatch("")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<JsonDocument> EditPartnerProfileById([FromRoute] int id,

@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Vitrina.UseCases.Common.DTO;
 using Vitrina.UseCases.ProjectPages;
 
 namespace Vitrina.Web.Controllers;
@@ -11,7 +12,7 @@ public class ProjectPageController : ControllerBase
     /// <summary>
     /// Creates a project page.
     /// </summary>
-    [HttpPost("")]
+    [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<Guid> Сreate([FromBody] ProjectPageDto page, CancellationToken cancellationToken)
@@ -22,6 +23,7 @@ public class ProjectPageController : ControllerBase
     /// <summary>
     /// Deletes the project page.
     /// </summary>
+    /// <param name="id">Page identifier.</param>
     [HttpDelete("{id:guid}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -33,6 +35,7 @@ public class ProjectPageController : ControllerBase
     /// <summary>
     /// Refreshes the project page.
     /// </summary>
+    /// <param name="id">Page identifier.</param>
     [HttpPatch("{id:guid}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -45,10 +48,46 @@ public class ProjectPageController : ControllerBase
     /// <summary>
     /// Gets the project page by id.
     /// </summary>
+    /// <param name="id">Page identifier.</param>
     [HttpGet("{id:guid}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ProjectPageDto> Get([FromRoute] Guid id, CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
+    }
+
+    /// <summary>
+    /// Allows you to get a list of users who have rights to edit the page.
+    /// </summary>
+    /// <param name="id">Page identifier.</param>
+    [HttpGet("{id:guid}/editors")]
+    [Produces("application/json")]
+    public async Task<ICollection<UserDto>> GetEditors([FromRoute] Guid id, CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
+    }
+
+    /// <summary>
+    /// Adds users to the list of page editors by email addresses.
+    /// </summary>
+    /// <param name="id">Page identifier.</param>
+    /// <param name="emailAddresses">Email addresses of the users added to the list of editors.</param>
+    [HttpPost("{id:guid}/editors")]
+    public async Task AddEditors([FromRoute] Guid id, [FromBody] ICollection<EmailDto> emailAddresses,
+        CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
+    }
+
+    /// <summary>
+    /// Removes users from the list of page editors by email addresses.
+    /// </summary>
+    /// <param name="id">Page identifier.</param>
+    /// <param name="emailAddresses">Email addresses of users who need to be removed from the list of editors.</param>
+    [HttpDelete("{id:guid}/editors")]
+    public async Task DeleteEditors([FromRoute] Guid id, [FromBody] ICollection<EmailDto> emailAddresses,
+        CancellationToken cancellationToken)
     {
         throw new NotImplementedException();
     }
