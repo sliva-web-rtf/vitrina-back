@@ -3,6 +3,7 @@ using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Vitrina.UseCases.Common.DTO;
 using Vitrina.UseCases.User.DTO;
 using Vitrina.UseCases.User.DTO.Profile;
 using Vitrina.UseCases.User.GetUser;
@@ -46,5 +47,12 @@ public class CuratorsController(IMediator mediator, IMapper mapper) : Controller
         var user = mapper.Map<UpdateUserDto>(curator);
         var command = new UpdateUserProfileCommand(curatorId, user);
         return await mediator.Send(command, cancellationToken);
+    }
+
+    [HttpGet("id/projects")]
+    [Produces("application/json")]
+    public virtual ICollection<ProjectDto> GetProjects([FromRoute] int id)
+    {
+        throw new NotImplementedException();
     }
 }
