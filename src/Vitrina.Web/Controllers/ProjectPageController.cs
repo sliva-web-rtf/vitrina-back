@@ -1,9 +1,11 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Vitrina.UseCases.Common.DTO;
 using Vitrina.UseCases.ProjectPages;
 
 namespace Vitrina.Web.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("api/pages")]
 [ApiExplorerSettings(GroupName = "pages")]

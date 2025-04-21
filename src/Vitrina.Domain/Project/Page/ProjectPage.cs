@@ -8,7 +8,7 @@ public class ProjectPage : BaseEntity<Guid>
     /// <summary>
     ///     Users who can edit the page.
     /// </summary>
-    public virtual ICollection<User.User> Editors { get; init; } = new List<User.User>();
+    public virtual ICollection<PageEditor> Editors { get; init; } = new List<PageEditor>();
 
     /// <summary>
     ///     Page status.

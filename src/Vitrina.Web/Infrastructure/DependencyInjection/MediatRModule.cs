@@ -17,7 +17,7 @@ internal static class MediatRModule
     /// <param name="services">Services.</param>
     public static void Register(IServiceCollection services)
     {
-        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<UserRepository>();
         services.AddScoped<ISpecializationRepository, SpecializationRepository>();
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(AddProjectCommand).Assembly));
     }

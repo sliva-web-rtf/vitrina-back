@@ -6,7 +6,7 @@ using Vitrina.UseCases.ProjectPages;
 
 namespace Vitrina.UseCases.User.GetUserProjectsPages;
 
-public class GetUserProjectPagesByUserIdQueyHandler(IUserRepository repository, IMapper mapper)
+public class GetUserProjectPagesByUserIdQueyHandler(IRepository<Domain.User.User> repository, IMapper mapper)
     : IRequestHandler<GetUserProjectPagesByUserIdQuey, ICollection<ProjectPageDto>>
 {
     public async Task<ICollection<ProjectPageDto>> Handle(GetUserProjectPagesByUserIdQuey request, CancellationToken cancellationToken)
@@ -14,6 +14,6 @@ public class GetUserProjectPagesByUserIdQueyHandler(IUserRepository repository, 
         var user = await repository.GetByIdAsync(request.UserId, cancellationToken) ??
                    throw new NotFoundException("The user with the specified Id was not found");
 
-        return mapper.Map<ICollection<ProjectPageDto>>(user.ProjectPages);
+        return mapper.Map<ICollection<ProjectPageDto>>(user.EditingRights.Select(editor => editor.Page));
     }
 }

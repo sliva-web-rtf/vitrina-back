@@ -49,5 +49,5 @@ public interface IAppDbContext : IDbContextWithSets, IDisposable
     /// <summary>
     /// Students' specializations.
     /// </summary>
-    public DbSet<Specialization> Specializations => Set<Specialization>();
+    public DbSet<Specialization> Specializations { get; }
 }

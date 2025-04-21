@@ -38,4 +38,9 @@ public record PreviewProjectDto
     /// A short description of the information that will be displayed on the project card.
     /// </summary>
     public string? TextPreview { get; init; }
+
+    /// <summary>
+    /// Project page ID.
+    /// </summary>
+    public Guid PageId { get; init; }
 }

@@ -7,7 +7,7 @@ using Vitrina.UseCases.User.DTO.Profile;
 
 namespace Vitrina.UseCases.User.GetUserProjects;
 
-public class GetUserProjectsByUserIdQueryHandler(IUserRepository repository, IMapper mapper)
+public class GetUserProjectsByUserIdQueryHandler(IRepository<Domain.User.User> repository, IMapper mapper)
     : IRequestHandler<GetUserProjectsByUserIdQuery, ICollection<PreviewProjectDto>>
 {
     public async Task<ICollection<PreviewProjectDto>> Handle(GetUserProjectsByUserIdQuery request, CancellationToken cancellationToken)

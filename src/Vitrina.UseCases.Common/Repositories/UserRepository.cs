@@ -1,10 +1,11 @@
 using Saritasa.Tools.Domain.Exceptions;
+using Vitrina.Domain.User;
 using Vitrina.Infrastructure.Abstractions.Interfaces;
 using Vitrina.Infrastructure.Abstractions.Interfaces.Repositories;
 
 namespace Vitrina.UseCases.Common.Repositories;
 
-public class UserRepository(IAppDbContext dbContext) : IUserRepository
+public class UserRepository(IAppDbContext dbContext) : IRepository<User>
 {
     public async Task<Domain.User.User?> GetByIdAsync(int id, CancellationToken cancellationToken)
     {

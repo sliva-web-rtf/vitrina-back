@@ -12,7 +12,7 @@ using JsonSerializer = System.Text.Json.JsonSerializer;
 namespace Vitrina.UseCases.User.UpdateUser;
 
 /// <inheritdoc />
-public class UpdateUserProfileCommandHandler(IUserRepository userRepository, IMapper mapper)
+public class UpdateUserProfileCommandHandler(IRepository<Domain.User.User> repository, IMapper mapper)
     : IRequestHandler<UpdateUserProfileCommand, JsonDocument>
 {
     /// <inheritdoc />
@@ -23,7 +23,7 @@ public class UpdateUserProfileCommandHandler(IUserRepository userRepository, IMa
             throw new DomainException("Invalid JSON");
         }
 
-        var user = await userRepository.GetByIdAsync(request.UserId, cancellationToken);
+        var user = await repository.GetByIdAsync(request.UserId, cancellationToken);
 
         if (user is null)
         {
@@ -70,7 +70,7 @@ public class UpdateUserProfileCommandHandler(IUserRepository userRepository, IMa
     {
         mapper.Map(dto, user);
         user.ProfileData = JsonSerializer.Serialize(dto);
-        await userRepository.UpdateAsync(user, cancellationToken);
+        await repository.UpdateAsync(user, cancellationToken);
     }
 
     private void PerformEducationValidation(int educationCourse, EducationLevelEnum educationLevel)

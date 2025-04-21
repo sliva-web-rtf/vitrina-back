@@ -95,7 +95,7 @@ public class User : IdentityUser<int>
     /// <summary>
     /// The list of project pages available for editing.
     /// </summary>
-    public virtual ICollection<ProjectPage> ProjectPages { get; init; } = new List<ProjectPage>();
+    public virtual ICollection<PageEditor> EditingRights { get; init; } = new List<PageEditor>();
 
     /// <summary>
     ///     User profile information.
