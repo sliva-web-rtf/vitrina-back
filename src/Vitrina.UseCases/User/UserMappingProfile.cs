@@ -1,5 +1,4 @@
 using AutoMapper;
-using Vitrina.Domain.User;
 using Vitrina.UseCases.Auth.GetUserById;
 using Vitrina.UseCases.Auth.Register;
 using Vitrina.UseCases.Common.DTO;
@@ -23,15 +22,7 @@ public class UserMappingProfile : Profile
         CreateMap<Domain.User.User, RegisterCommand>()
             .ForMember(u => u.PasswordConfirm, dest => dest.Ignore())
             .ForMember(u => u.Password, dest => dest.Ignore());
-        CreateMap<Domain.User.User, IHavingProjects>()
-            .ForMember(
-                dest => dest.Projects,
-                opt => opt.MapFrom(src => src.PositionsInTeams
-                    .Select(teammate => teammate.Project)
-                    .Distinct()
-                    .ToList()))
-            .ForAllMembers(opt => opt.Ignore());
-        CreateMap<UpdateStudentDto, Domain.User.User>()
+        CreateMap<StudentDto, Domain.User.User>()
             .ForAllMembers(opt => opt.Ignore());
         CreateMap<Domain.User.User, PartnerDto>()
             .ForAllMembers(opt => opt.Ignore());
@@ -42,5 +33,6 @@ public class UserMappingProfile : Profile
         CreateMap<CuratorDto, Domain.User.User>()
             .ForAllMembers(opt => opt.Ignore());
         CreateMap<Domain.User.Specialization, SpecializationDto>();
+        CreateMap<CuratorDto, UserDto>();
     }
 }

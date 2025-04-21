@@ -39,7 +39,7 @@ public class UpdateUserProfileCommandHandler(IUserRepository userRepository, IMa
         return JsonDocument.Parse(user.ProfileData);
     }
 
-    private async Task UpdateUser(Domain.User.User user, UpdateUserDto userDto, CancellationToken cancellationToken)
+    private async Task UpdateUser(Domain.User.User user, UserDto userDto, CancellationToken cancellationToken)
     {
         switch (user.RoleOnPlatform)
         {
@@ -60,11 +60,10 @@ public class UpdateUserProfileCommandHandler(IUserRepository userRepository, IMa
         }
     }
 
-    private TDtoRoles GetDtoRole<TDtoRoles>(Domain.User.User user, UpdateUserDto userDto)
+    private TDtoRoles GetDtoRole<TDtoRoles>(Domain.User.User user, UserDto userDto)
     {
         var dtoRoles = JsonConvert.DeserializeObject<TDtoRoles>(user.ProfileData);
-        mapper.Map(userDto, dtoRoles);
-        return dtoRoles;
+        return mapper.Map(userDto, dtoRoles);
     }
 
     private async Task ApplyChanges<TDto>(TDto dto, Domain.User.User user, CancellationToken cancellationToken)

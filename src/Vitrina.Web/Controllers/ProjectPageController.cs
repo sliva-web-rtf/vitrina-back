@@ -63,6 +63,8 @@ public class ProjectPageController : ControllerBase
     /// <param name="id">Page identifier.</param>
     [HttpGet("{id:guid}/editors")]
     [Produces("application/json")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ICollection<UserDto>> GetEditors([FromRoute] Guid id, CancellationToken cancellationToken)
     {
         throw new NotImplementedException();
@@ -74,6 +76,8 @@ public class ProjectPageController : ControllerBase
     /// <param name="id">Page identifier.</param>
     /// <param name="emailAddresses">Email addresses of the users added to the list of editors.</param>
     [HttpPost("{id:guid}/editors")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task AddEditors([FromRoute] Guid id, [FromBody] ICollection<EmailDto> emailAddresses,
         CancellationToken cancellationToken)
     {
@@ -86,6 +90,8 @@ public class ProjectPageController : ControllerBase
     /// <param name="id">Page identifier.</param>
     /// <param name="emailAddresses">Email addresses of users who need to be removed from the list of editors.</param>
     [HttpDelete("{id:guid}/editors")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task DeleteEditors([FromRoute] Guid id, [FromBody] ICollection<EmailDto> emailAddresses,
         CancellationToken cancellationToken)
     {

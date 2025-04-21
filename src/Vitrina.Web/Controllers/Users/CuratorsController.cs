@@ -3,12 +3,11 @@ using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Vitrina.UseCases.Common.DTO;
 using Vitrina.UseCases.ProjectPages;
-using Vitrina.UseCases.User.DTO;
 using Vitrina.UseCases.User.DTO.Profile;
 using Vitrina.UseCases.User.GetUser;
 using Vitrina.UseCases.User.UpdateUser;
+using UserDto = Vitrina.UseCases.User.DTO.UserDto;
 
 namespace Vitrina.Web.Controllers.Users;
 
@@ -19,13 +18,13 @@ namespace Vitrina.Web.Controllers.Users;
 [Authorize(Roles = "Curator")]
 [Route("api/curators/{id:int}")]
 [ApiExplorerSettings(GroupName = "curators")]
-public class CuratorsController(IMediator mediator, IMapper mapper) : ControllerBase
+public class CuratorsController(IMediator mediator, IMapper mapper) : ObtainingProjectInformationBase(mediator)
 {
     /// <summary>
     /// Getting curator profile data by Id.
     /// </summary>
-    [Produces("application/json")]
     [HttpGet("profile")]
+    [Produces("application/json")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<JsonDocument> GetUserProfileDataById([FromRoute] int id,
@@ -38,35 +37,31 @@ public class CuratorsController(IMediator mediator, IMapper mapper) : Controller
     /// <summary>
     /// Edits curator profile data.
     /// </summary>
-    [Produces("application/json")]
     [HttpPatch("profile")]
+    [Produces("application/json")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<JsonDocument> EditUserProfileById([FromRoute] int id,
-        [FromBody] UpdateCuratorDto curator, CancellationToken cancellationToken)
+        [FromBody] CuratorDto curator, CancellationToken cancellationToken)
     {
-        var user = mapper.Map<UpdateUserDto>(curator);
+        var user = mapper.Map<UserDto>(curator);
         var command = new UpdateUserProfileCommand(id, user);
         return await mediator.Send(command, cancellationToken);
     }
 
-    /// <summary>
-    /// Retrieves the list of projects of the user with the specified id.
-    /// </summary>
+    /// <inheritdoc />
     [HttpGet("projects")]
     [Produces("application/json")]
-    public async Task<ICollection<ProjectDto>> GetProjects([FromRoute] int id, CancellationToken cancellationToken)
+    public override async Task<ICollection<PreviewProjectDto>> GetProjects([FromRoute] int id, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        return await base.GetProjects(id, cancellationToken);
     }
 
-    /// <summary>
-    /// Retrieves the list of project pages of the user with the specified id.
-    /// </summary>
+    /// <inheritdoc />
     [HttpGet("pages")]
     [Produces("application/json")]
-    public async Task<ICollection<ProjectPageDto>> GetProjectPages([FromRoute] int id, CancellationToken cancellationToken)
+    public override async Task<ICollection<ProjectPageDto>> GetProjectPages([FromRoute] int id, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        return await base.GetProjectPages(id, cancellationToken);
     }
 }

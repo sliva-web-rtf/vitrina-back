@@ -9,6 +9,7 @@ using Vitrina.UseCases.User.DTO;
 using Vitrina.UseCases.User.DTO.Profile;
 using Vitrina.UseCases.User.GetUser;
 using Vitrina.UseCases.User.UpdateUser;
+using UserDto = Vitrina.UseCases.User.DTO.UserDto;
 
 namespace Vitrina.Web.Controllers.Users;
 
@@ -18,7 +19,7 @@ namespace Vitrina.Web.Controllers.Users;
 [Authorize(Roles = "Student")]
 [Route("api/students/{id:int}")]
 [ApiExplorerSettings(GroupName = "students")]
-public class StudentsController(IMediator mediator, IMapper mapper) : ControllerBase
+public class StudentsController(IMediator mediator, IMapper mapper) : ObtainingProjectInformationBase(mediator)
 {
     /// <summary>
     /// Getting student profile data by ID.
@@ -41,30 +42,26 @@ public class StudentsController(IMediator mediator, IMapper mapper) : Controller
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<JsonDocument> EditStudentProfileById([FromRoute] int id,
-        [FromBody] UpdateStudentDto student, CancellationToken cancellationToken)
+        [FromBody] StudentDto student, CancellationToken cancellationToken)
     {
-        var user = mapper.Map<UpdateUserDto>(student);
+        var user = mapper.Map<UserDto>(student);
         var command = new UpdateUserProfileCommand(id, user);
         return await mediator.Send(command, cancellationToken);
     }
 
-    /// <summary>
-    /// Retrieves the list of projects of the user with the specified id.
-    /// </summary>
+    /// <inheritdoc />
     [HttpGet("projects")]
     [Produces("application/json")]
-    public async Task<ICollection<ProjectDto>> GetProjects([FromRoute] int id, CancellationToken cancellationToken)
+    public override async Task<ICollection<PreviewProjectDto>> GetProjects([FromRoute] int id, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        return await base.GetProjects(id, cancellationToken);
     }
 
-    /// <summary>
-    /// Retrieves the list of project pages of the user with the specified id.
-    /// </summary>
+    /// <inheritdoc />
     [HttpGet("pages")]
     [Produces("application/json")]
-    public async Task<ICollection<ProjectPageDto>> GetProjectPages([FromRoute] int id, CancellationToken cancellationToken)
+    public override async Task<ICollection<ProjectPageDto>> GetProjectPages([FromRoute] int id, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        return await base.GetProjectPages(id, cancellationToken);
     }
 }

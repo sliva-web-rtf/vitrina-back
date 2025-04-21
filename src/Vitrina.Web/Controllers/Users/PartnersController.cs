@@ -21,7 +21,7 @@ public class PartnersController(IMediator mediator, IMapper mapper) : Controller
     /// <summary>
     /// Getting partner profile data by ID.
     /// </summary>
-    [HttpGet]
+    [HttpGet("")]
     [Produces("application/json")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -34,14 +34,14 @@ public class PartnersController(IMediator mediator, IMapper mapper) : Controller
     /// <summary>
     /// Edits partner profile data.
     /// </summary>
-    [HttpPatch]
+    [HttpPatch("")]
     [Produces("application/json")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<JsonDocument> EditPartnerProfileById([FromRoute] int id,
         [FromBody] PartnerDto partner, CancellationToken cancellationToken)
     {
-        var user = mapper.Map<UpdateUserDto>(partner);
+        var user = mapper.Map<UserDto>(partner);
         var command = new UpdateUserProfileCommand(id, user);
         return await mediator.Send(command, cancellationToken);
     }

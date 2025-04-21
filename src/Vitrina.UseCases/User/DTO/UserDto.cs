@@ -6,7 +6,7 @@ namespace Vitrina.UseCases.User.DTO;
 /// <summary>
 /// Dto for updating user data.
 /// </summary>
-public class UpdateUserDto : UpdateStudentDto
+public class UserDto : StudentDto
 {
     /// <summary>
     /// Place of work

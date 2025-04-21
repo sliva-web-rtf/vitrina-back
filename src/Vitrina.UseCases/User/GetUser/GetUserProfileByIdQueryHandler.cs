@@ -20,25 +20,6 @@ public class GetUserProfileByIdQueryHandler(IUserRepository userRepository, IMap
         var user = await userRepository.GetByIdAsync(request.UserId, cancellationToken) ??
                                       throw new NotFoundException("The user with the specified Id was not found");
 
-        switch (user.RoleOnPlatform)
-        {
-            case RoleOnPlatformEnum.Student:
-                UpdateUsersProjectList<StudentDto>(user);
-                break;
-            case RoleOnPlatformEnum.Curator:
-                UpdateUsersProjectList<CuratorDto>(user);
-                break;
-        }
-
         return JsonDocument.Parse(user.ProfileData);
-    }
-
-    private void UpdateUsersProjectList<TUserDto>(Domain.User.User user) where TUserDto : IHavingProjects
-    {
-        var userDto = JsonConvert.DeserializeObject<TUserDto>(user.ProfileData);
-        userDto.Projects = mapper.Map<ICollection<PreviewProjectDto>>(
-            user.PositionsInTeams.Select(t => t.Project));
-
-        user.ProfileData = JsonSerializer.Serialize(userDto);
     }
 }
