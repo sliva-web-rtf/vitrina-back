@@ -6,6 +6,7 @@ using Vitrina.UseCases.ProjectPage.Dto.BasicContentUnits;
 using Vitrina.UseCases.ProjectPage.Dto.Blocks;
 using Vitrina.UseCases.ProjectPages.BasicContentUnits;
 using Vitrina.UseCases.ProjectPages.Blocks;
+using Vitrina.UseCases.ProjectPages.CreateProjectPage;
 
 namespace Vitrina.UseCases.ProjectPages;
 
@@ -16,6 +17,8 @@ public class ProjectPageMappingProfile : Profile
         ConfigureMapping<Domain.Project.Page.ProjectPage, ProjectPageDto>();
         ConfigureMapping<TextUnit, TextUnitDto>();
         ConfigureMapping<PageEditor, PageEditorDto>();
+        CreateMap<CreateProjectPageCommand, Domain.Project.Page.ProjectPage>()
+            .ForAllMembers(member => member.Ignore());
         ConfigureContentBlockMapping();
         ConfigureMappingBasicContentUnits();
     }

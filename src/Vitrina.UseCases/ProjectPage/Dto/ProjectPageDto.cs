@@ -3,7 +3,7 @@ using Vitrina.UseCases.ProjectPages.Blocks;
 
 namespace Vitrina.UseCases.ProjectPages;
 
-public record ProjectPageDto
+public record ProjectPageDto : BaseEntityDto<Guid>
 {
     /// <summary>
     ///     Page status.

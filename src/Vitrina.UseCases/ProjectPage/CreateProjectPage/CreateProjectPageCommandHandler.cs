@@ -10,7 +10,7 @@ public class CreateProjectPageCommandHandler(IMapper mapper, IProjectPageReposit
 {
     public async Task<Guid> Handle(CreateProjectPageCommand request, CancellationToken cancellationToken)
     {
-        var page = mapper.Map<ProjectPage>(request.PageDto);
+        var page = mapper.Map<Domain.Project.Page.ProjectPage>(request);
         await repository.AddAsync(page, cancellationToken);
         return page.Id;
     }

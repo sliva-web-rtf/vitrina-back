@@ -1,7 +1,9 @@
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Vitrina.UseCases.Common.DTO;
 using Vitrina.UseCases.ProjectPages;
+using Vitrina.UseCases.ProjectPages.CreateProjectPage;
 
 namespace Vitrina.Web.Controllers;
 
@@ -9,7 +11,7 @@ namespace Vitrina.Web.Controllers;
 [ApiController]
 [Route("api/pages")]
 [ApiExplorerSettings(GroupName = "pages")]
-public class ProjectPageController : ControllerBase
+public class ProjectPageController(IMediator mediator) : ControllerBase
 {
     /// <summary>
     /// Creates a project page.
@@ -17,9 +19,10 @@ public class ProjectPageController : ControllerBase
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<Guid> Сreate([FromBody] ProjectPageDto page, CancellationToken cancellationToken)
+    public async Task<Guid> Create([FromBody] CreateProjectPageCommand page, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var command = new CreateProjectPageCommand();
+        return await mediator.Send(command, cancellationToken);
     }
 
     /// <summary>
