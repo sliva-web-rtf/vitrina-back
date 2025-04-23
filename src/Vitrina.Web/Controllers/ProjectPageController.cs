@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using Vitrina.UseCases.Common.DTO;
 using Vitrina.UseCases.ProjectPages;
 using Vitrina.UseCases.ProjectPages.CreateProjectPage;
+using Vitrina.UseCases.ProjectPages.DeleteProjectPage;
+using Vitrina.UseCases.ProjectPages.GetProjectPage;
 
 namespace Vitrina.Web.Controllers;
 
@@ -32,9 +34,11 @@ public class ProjectPageController(IMediator mediator) : ControllerBase
     [HttpDelete("{id:guid}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<Guid> Delete([FromRoute] Guid id, CancellationToken cancellationToken)
+    public async Task<IActionResult> Delete([FromRoute] Guid id, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var command = new DeleteProjectPageCommand(id);
+        await mediator.Send(command, cancellationToken);
+        return Ok();
     }
 
     /// <summary>
@@ -59,7 +63,8 @@ public class ProjectPageController(IMediator mediator) : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ProjectPageDto> Get([FromRoute] Guid id, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var query = new GetProjectPageByIdQuery(id);
+        return await mediator.Send(query, cancellationToken);
     }
 
     /// <summary>

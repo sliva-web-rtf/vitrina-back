@@ -24,9 +24,9 @@ public class ProjectPageRepository : IProjectPageRepository
         return page ?? throw new NotFoundException($"Page with id = {id} not found");
     }
 
-    public void Update(ProjectPage page, CancellationToken cancellationToken)
+    public async Task Update(ProjectPage page, CancellationToken cancellationToken)
     {
-        if (pages.Find(page.Id) != null)
+        if (await pages.FindAsync(page.Id, cancellationToken) != null)
         {
             pages.Update(page);
         }
@@ -39,9 +39,15 @@ public class ProjectPageRepository : IProjectPageRepository
         await pages.AddAsync(page, cancellationToken);
     }
 
-    public void Delete(ProjectPage page, CancellationToken cancellationToken)
+    public async Task Delete(Guid id, CancellationToken cancellationToken)
     {
-        pages.Remove(page);
+        ProjectPage? page;
+        if ((page = await pages.FindAsync(id, cancellationToken)) != null)
+        {
+            pages.Remove(page);
+        }
+
+        throw new NotFoundException("Project page not found");
     }
 
     public async Task SaveChangesAsync(CancellationToken cancellationToken)
