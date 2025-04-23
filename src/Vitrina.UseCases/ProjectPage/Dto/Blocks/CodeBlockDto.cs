@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using Vitrina.UseCases.Common.DTO;
 
 namespace Vitrina.UseCases.ProjectPages.Blocks;
@@ -12,5 +13,6 @@ public record CodeBlockDto : NumberedBlockBaseDto
     /// <summary>
     ///     Programming language
     /// </summary>
+    [StringLength(255, ErrorMessage = $"Too long {nameof(ProgrammingLanguage)}")]
     required public string ProgrammingLanguage { get; init; }
 }
