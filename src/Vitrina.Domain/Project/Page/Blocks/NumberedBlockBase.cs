@@ -8,12 +8,12 @@ public abstract class NumberedBlockBase : BaseEntity<Guid>
     /// <summary>
     ///     The element that the content block belongs to.
     /// </summary>
-    public ProjectPage ProjectPage;
+    public ProjectPage ProjectPage { get; set; }
 
     /// <summary>
     ///     A foreign key for the content that this block belongs to.
     /// </summary>
-    public Guid ProjectPageId;
+    public Guid ProjectPageId { get; set; }
 
     /// <summary>
     ///     Serial number on the design canvas.

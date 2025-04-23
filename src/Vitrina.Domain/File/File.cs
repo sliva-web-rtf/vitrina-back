@@ -4,7 +4,7 @@ namespace Vitrina.Domain.File;
 
 /// <inheritdoc />
 [Index(nameof(Link), IsUnique = true)]
-public class CloudFile : BaseEntity<Guid>
+public class File : BaseEntity<Guid>
 {
     /// <summary>
     ///     The link to the cloud storage.

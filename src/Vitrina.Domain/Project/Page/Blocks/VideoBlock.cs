@@ -7,5 +7,5 @@ public class VideoBlock : NumberedBlockBase
     /// <summary>
     ///     Link to the video.
     /// </summary>
-    required public CloudFile LinkVideo { get; set; }
+    required public File.File Video { get; set; }
 }

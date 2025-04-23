@@ -1,13 +1,11 @@
-using Vitrina.Domain.File;
-
 namespace Vitrina.Domain.Project.Page.Blocks;
 
-public class СodeBlock : NumberedBlockBase
+public class CodeBlock : NumberedBlockBase
 {
     /// <summary>
     ///     The file with the code
     /// </summary>
-    required public CloudFile File { get; init; }
+    required public File.File File { get; init; }
 
     /// <summary>
     ///     Programming language

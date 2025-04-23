@@ -34,7 +34,7 @@ public interface IAppDbContext : IDbContextWithSets, IDisposable
     /// <summary>
     /// Pages.
     /// </summary>
-    DbSet<ProjectPage> Contents { get; }
+    DbSet<ProjectPage> ProjectPages { get; }
 
     /// <summary>
     /// Users.

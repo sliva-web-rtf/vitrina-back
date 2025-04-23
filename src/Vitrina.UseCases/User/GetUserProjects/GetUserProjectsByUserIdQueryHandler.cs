@@ -7,12 +7,12 @@ using Vitrina.UseCases.User.DTO.Profile;
 
 namespace Vitrina.UseCases.User.GetUserProjects;
 
-public class GetUserProjectsByUserIdQueryHandler(IRepository<Domain.User.User> repository, IMapper mapper)
+public class GetUserProjectsByUserIdQueryHandler(IUserRepository userRepository, IMapper mapper)
     : IRequestHandler<GetUserProjectsByUserIdQuery, ICollection<PreviewProjectDto>>
 {
     public async Task<ICollection<PreviewProjectDto>> Handle(GetUserProjectsByUserIdQuery request, CancellationToken cancellationToken)
     {
-        var user = await repository.GetByIdAsync(request.UserId, cancellationToken) ??
+        var user = await userRepository.GetByIdAsync(request.UserId, cancellationToken) ??
                    throw new NotFoundException("The user with the specified Id was not found");
 
         return mapper.Map<ICollection<PreviewProjectDto>>(

@@ -5,5 +5,5 @@ public class HorizontalDivider : NumberedBlockBase
     /// <summary>
     ///     Size in pixels.
     /// </summary>
-    public int SizeInPixels { get; init; }
+    required public int SizeInPixels { get; set; }
 }

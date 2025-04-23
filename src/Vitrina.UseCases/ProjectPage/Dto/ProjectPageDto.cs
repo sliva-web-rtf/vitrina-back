@@ -1,5 +1,6 @@
 using Vitrina.Domain.Project.Page;
 using Vitrina.Domain.Project.Page.Blocks;
+using Vitrina.UseCases.ProjectPages.Blocks;
 
 namespace Vitrina.UseCases.ProjectPages;
 
@@ -13,44 +14,44 @@ public record ProjectPageDto
     /// <summary>
     ///     Collection of text content blocks.
     /// </summary>
-    public virtual ICollection<TextBlock> TextBlocks { get; init; } = new List<TextBlock>();
+    public ICollection<TextBlockDto> TextBlocks { get; init; } = new List<TextBlockDto>();
 
     /// <summary>
     ///     Collection of blocks with information about the team.
     /// </summary>
-    public virtual ICollection<CommandBlock> CommandBlocks { get; init; } = new List<CommandBlock>();
+    public ICollection<CommandBlockDto> CommandBlocks { get; init; } = new List<CommandBlockDto>();
 
     /// <summary>
     ///     Collection of blocks with image and text.
     /// </summary>
-    public virtual ICollection<BlockWithTextsAndPictures> BlocksWithTextsAndPictures { get; init; } =
-        new List<BlockWithTextsAndPictures>();
+    public ICollection<BlockWithTextsAndPicturesDto> BlocksWithTextsAndPictures { get; init; } =
+        new List<BlockWithTextsAndPicturesDto>();
 
     /// <summary>
     ///     Collection of blocks with images.
     /// </summary>
-    public virtual ICollection<ImageBlock> ImageBlocks { get; init; } = new List<ImageBlock>();
+    public ICollection<ImageBlockDto> ImageBlocks { get; init; } = new List<ImageBlockDto>();
 
     /// <summary>
     ///     A collection of image carousel blocks.
     /// </summary>
-    public virtual ICollection<CarouselImages> ImageCarouselBlocks { get; init; } = new List<CarouselImages>();
+    public ICollection<CarouselImagesDto> ImageCarouselBlocks { get; init; } = new List<CarouselImagesDto>();
 
     /// <summary>
     ///     Collection of horizontal divider blocks.
     /// </summary>
-    public virtual ICollection<HorizontalDivider> HorizontalDividerBlocks { get; init; } =
-        new List<HorizontalDivider>();
+    public ICollection<HorizontalDividerDto> HorizontalDividerBlocks { get; init; } =
+        new List<HorizontalDividerDto>();
 
     /// <summary>
     ///     Collection of code blocks.
     /// </summary>
-    public virtual ICollection<СodeBlock> CodeBlocks { get; init; } = new List<СodeBlock>();
+    public ICollection<CodeBlockDto> CodeBlocks { get; init; } = new List<CodeBlockDto>();
 
     /// <summary>
     ///     A collection of video content blocks.
     /// </summary>
-    public virtual ICollection<VideoBlock> VideoBlocks { get; init; } = new List<VideoBlock>();
+    public ICollection<VideoBlockDto> VideoBlocks { get; init; } = new List<VideoBlockDto>();
 
     /// <summary>
     ///     Project id.

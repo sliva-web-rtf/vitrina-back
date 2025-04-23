@@ -28,7 +28,7 @@ internal class DeleteProjectImagesCommandHandler : IRequestHandler<DeleteProject
             var pathToFile = webRootDirectory + path;
             File.Delete(pathToFile);
         }
-        await appDbContext.Contents
+        await appDbContext.ProjectPages
             .Where(c => c.ProjectId == request.ProjectId)
             .ExecuteDeleteAsync(cancellationToken);
     }

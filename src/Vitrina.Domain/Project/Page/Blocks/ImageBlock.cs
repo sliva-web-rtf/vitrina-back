@@ -6,7 +6,7 @@ namespace Vitrina.Domain.Project.Page.Blocks;
 public class ImageBlock : NumberedBlockBase
 {
     /// <summary>
-    ///     Content.
+    ///     Image.
     /// </summary>
     required public ImageUnit Image { get; set; }
 }

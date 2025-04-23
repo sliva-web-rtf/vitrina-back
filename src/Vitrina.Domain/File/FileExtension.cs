@@ -1,13 +1,13 @@
-using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace Vitrina.Domain.File;
 
 /// <inheritdoc />
-[Index(nameof(Extension), IsUnique = true)]
-public class FileExtension : BaseEntity<Guid>
+public class FileExtension
 {
     /// <summary>
     ///     Extension name.
     /// </summary>
+    [Key]
     required public string Extension { get; init; }
 }

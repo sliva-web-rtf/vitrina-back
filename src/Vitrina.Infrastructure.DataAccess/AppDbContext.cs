@@ -30,7 +30,7 @@ public class AppDbContext : IdentityDbContext<User, AppIdentityRole, int>, IAppD
     public DbSet<ProjectRole> ProjectRoles => Set<ProjectRole>();
 
     /// <inheritdoc/>
-    public DbSet<ProjectPage> Contents => Set<ProjectPage>();
+    public DbSet<ProjectPage> ProjectPages => Set<ProjectPage>();
 
     /// <inheritdoc/>
     public DbSet<ConfirmationCode> Codes => Set<ConfirmationCode>();

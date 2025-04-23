@@ -17,6 +17,7 @@ using Vitrina.UseCases.Project.UpdateProject;
 using Vitrina.UseCases.Project.UpdateProject.DTO;
 using Vitrina.UseCases.Project.UploadImages;
 using Vitrina.UseCases.Project.UploadImages.Dto;
+using FileDto = Vitrina.UseCases.Project.UploadImages.Dto.FileDto;
 using SearchProjectsQuery = Vitrina.UseCases.Project.SearchProjects.SearchProjectsQuery;
 using V2 = Vitrina.UseCases.Project.SearchProjects.V2;
 

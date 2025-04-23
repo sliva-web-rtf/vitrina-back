@@ -10,5 +10,5 @@ public class CarouselImages : NumberedBlockBase
     /// <summary>
     ///     Images.
     /// </summary>
-    public ICollection<ImageUnit> Images { get; set; }
+    public ICollection<ImageUnit> Images { get; init; } = new List<ImageUnit>();
 }

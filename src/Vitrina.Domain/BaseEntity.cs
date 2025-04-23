@@ -8,5 +8,5 @@ public class BaseEntity<TId>
     ///     ID.
     /// </summary>
     [Key]
-    public TId Id { get; init; }
+    required public TId Id { get; init; }
 }

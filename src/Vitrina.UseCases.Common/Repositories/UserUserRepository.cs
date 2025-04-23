@@ -5,9 +5,9 @@ using Vitrina.Infrastructure.Abstractions.Interfaces.Repositories;
 
 namespace Vitrina.UseCases.Common.Repositories;
 
-public class UserRepository(IAppDbContext dbContext) : IRepository<User>
+public class UserUserRepository(IAppDbContext dbContext) : IUserRepository
 {
-    public async Task<Domain.User.User?> GetByIdAsync(int id, CancellationToken cancellationToken)
+    public async Task<User?> GetByIdAsync(int id, CancellationToken cancellationToken)
     {
         return await dbContext.Users.FindAsync(id, cancellationToken);
     }

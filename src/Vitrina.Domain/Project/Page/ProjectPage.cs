@@ -50,7 +50,7 @@ public class ProjectPage : BaseEntity<Guid>
     /// <summary>
     ///     Collection of code blocks.
     /// </summary>
-    public virtual ICollection<СodeBlock> CodeBlocks { get; init; } = new List<СodeBlock>();
+    public virtual ICollection<CodeBlock> CodeBlocks { get; init; } = new List<CodeBlock>();
 
     /// <summary>
     ///     A collection of video content blocks.

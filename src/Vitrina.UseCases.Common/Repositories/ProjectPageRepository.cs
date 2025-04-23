@@ -1,15 +1,51 @@
+using System.Xml.Linq;
+using Microsoft.EntityFrameworkCore;
+using Saritasa.Tools.Domain.Exceptions;
 using Vitrina.Domain.Project.Page;
 using Vitrina.Infrastructure.Abstractions.Interfaces;
 using Vitrina.Infrastructure.Abstractions.Interfaces.Repositories;
 
 namespace Vitrina.UseCases.Common.Repositories;
 
-public class ProjectPageRepository(IAppDbContext dbContext) : IRepository<ProjectPage>
+public class ProjectPageRepository : IProjectPageRepository
 {
-    public async Task<ProjectPage> GetByIdAsync(int id, CancellationToken cancellationToken)
+    private readonly IAppDbContext dbContext;
+    private readonly DbSet<ProjectPage> pages;
+
+    public ProjectPageRepository(IAppDbContext dbContext)
     {
-        return await dbContext.Contents.FindAsync(id, cancellationToken);
+        this.dbContext = dbContext;
+        pages = this.dbContext.ProjectPages;
     }
 
-    public Task UpdateAsync(ProjectPage entity, CancellationToken cancellationToken) => throw new NotImplementedException();
+    public async Task<ProjectPage> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+    {
+        var page = await pages.FindAsync(id, cancellationToken);
+        return page ?? throw new NotFoundException($"Page with id = {id} not found");
+    }
+
+    public void Update(ProjectPage page, CancellationToken cancellationToken)
+    {
+        if (pages.Find(page.Id) != null)
+        {
+            pages.Update(page);
+        }
+
+        throw new NotFoundException("Project page not found");
+    }
+
+    public async Task AddAsync(ProjectPage page, CancellationToken cancellationToken)
+    {
+        await pages.AddAsync(page, cancellationToken);
+    }
+
+    public void Delete(ProjectPage page, CancellationToken cancellationToken)
+    {
+        pages.Remove(page);
+    }
+
+    public async Task SaveChangesAsync(CancellationToken cancellationToken)
+    {
+        await dbContext.SaveChangesAsync(cancellationToken);
+    }
 }
