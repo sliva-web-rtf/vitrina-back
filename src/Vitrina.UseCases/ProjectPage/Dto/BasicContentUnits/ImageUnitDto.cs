@@ -1,18 +1,5 @@
-using System.ComponentModel.DataAnnotations;
-using Vitrina.UseCases.Common.DTO;
+using Vitrina.UseCases.ProjectPage.Dto.BasicContentUnits;
 
 namespace Vitrina.UseCases.ProjectPages.BasicContentUnits;
 
-public record ImageUnitDto
-{
-    /// <summary>
-    ///     A row with styles for an image.
-    /// </summary>
-    [StringLength(1_000_000, ErrorMessage = "The line of styles is too big")]
-    public string? Css { get; init; }
-
-    /// <summary>
-    ///     Image url.
-    /// </summary>
-    required public FileDto Image { get; init; }
-}
+public record ImageUnitDto : UnitWithImageBaseDto;

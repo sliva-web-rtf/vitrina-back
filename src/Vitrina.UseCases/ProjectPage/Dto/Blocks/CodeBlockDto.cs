@@ -1,14 +1,14 @@
 using System.ComponentModel.DataAnnotations;
-using Vitrina.UseCases.Common.DTO;
 
 namespace Vitrina.UseCases.ProjectPages.Blocks;
 
-public record CodeBlockDto : NumberedBlockBaseDto
+public record CodeBlockDto
 {
     /// <summary>
     ///     The file with the code
     /// </summary>
-    required public FileDto File { get; init; }
+    [StringLength(1_000_000, ErrorMessage = "Too voluminous code")]
+    required public string? Code { get; init; }
 
     /// <summary>
     ///     Programming language

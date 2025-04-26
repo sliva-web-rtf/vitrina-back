@@ -2,7 +2,7 @@ using Vitrina.UseCases.ProjectPages.BasicContentUnits;
 
 namespace Vitrina.UseCases.ProjectPages.Blocks;
 
-public record ImageBlockDto : NumberedBlockBaseDto
+public record ImageBlockDto
 {
     /// <summary>
     ///     Image.

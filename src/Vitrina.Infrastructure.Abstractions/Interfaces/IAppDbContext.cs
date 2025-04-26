@@ -1,12 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Vitrina.Domain.File;
 using Vitrina.Domain.Project;
 using Vitrina.Domain.Project.Page;
-using Vitrina.Domain.Project.Page.BasicContentUnits;
-using Vitrina.Domain.Project.Page.Blocks;
 using Vitrina.Domain.Project.Teammate;
 using Vitrina.Domain.User;
-using File = Vitrina.Domain.File.File;
 
 namespace Vitrina.Infrastructure.Abstractions.Interfaces;
 
@@ -61,36 +57,7 @@ public interface IAppDbContext : IDbContextWithSets, IDisposable
     DbSet<PageEditor> PageEditors { get; }
 
     /// <summary>
-    /// Service files.
+    /// Page content blocks.
     /// </summary>
-    DbSet<File> Files { get; }
-
-    /// <summary>
-    /// Available file extension.
-    /// </summary>
-    DbSet<FileExtension> FileExtensions { get; }
-
-    DbSet<ImageUnit> ImageUnits { get; }
-
-    DbSet<TextUnit> TextUnits { get; }
-
-    DbSet<UnitWithImageAndText> UnitsWithImageAndText { get; }
-
-    DbSet<BlockWithTextsAndImages> BlocksWithTextsAndPictures { get; }
-
-    DbSet<ImageCarouselBlock> ImageCarouselBlocks { get; }
-
-    DbSet<CodeBlock> CodeBlocks { get; }
-
-    DbSet<CommandBlock> CommandBlocks { get; }
-
-    DbSet<HorizontalDividerBlock> HorizontalDividerBlocks { get; }
-
-    DbSet<BlockWithTextAndImage> BlocksWithTextAndImage { get; }
-
-    DbSet<ImageBlock> ImageBlocks { get; }
-
-    DbSet<TextBlock> TextBlocks { get; }
-
-    DbSet<VideoBlock> VideoBlocks { get; }
+    DbSet<ContentBlock> ContentBlocks { get; }
 }

@@ -2,7 +2,6 @@ using System.Security.Claims;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Saritasa.Tools.Domain.Exceptions;
-using Vitrina.Domain.User;
 
 namespace Vitrina.UseCases.Auth.RefreshToken;
 

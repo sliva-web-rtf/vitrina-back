@@ -1,6 +1,6 @@
 namespace Vitrina.UseCases.ProjectPages.Blocks;
 
-public record CommandBlockDto : NumberedBlockBaseDto
+public record CommandBlockDto
 {
     public CommandBlockDto()
     {

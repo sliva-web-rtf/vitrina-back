@@ -2,7 +2,7 @@ using Vitrina.UseCases.ProjectPages.BasicContentUnits;
 
 namespace Vitrina.UseCases.ProjectPages.Blocks;
 
-public class CarouselImagesDto
+public record CarouselImagesDto
 {
     /// <summary>
     ///     Images.

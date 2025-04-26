@@ -17,25 +17,23 @@ public class AppDbContext : IdentityDbContext<User, AppIdentityRole, int>, IAppD
 {
     public DbSet<Project> Projects => Set<Project>();
 
-    /// <inheritdoc/>
     public DbSet<DataProtectionKey> DataProtectionKeys { get; private set; }
 
-    /// <inheritdoc/>
     public DbSet<Teammate> Teammates => Set<Teammate>();
 
-    /// <inheritdoc/>
     public DbSet<Tag> Tags => Set<Tag>();
 
-    /// <inheritdoc/>
     public DbSet<ProjectRole> ProjectRoles => Set<ProjectRole>();
 
-    /// <inheritdoc/>
     public DbSet<ProjectPage> ProjectPages => Set<ProjectPage>();
 
-    /// <inheritdoc/>
     public DbSet<ConfirmationCode> Codes => Set<ConfirmationCode>();
 
     public DbSet<Specialization> Specializations => Set<Specialization>();
+
+    public DbSet<PageEditor> PageEditors => Set<PageEditor>();
+
+    public DbSet<ContentBlock> ContentBlocks => Set<ContentBlock>();
 
     /// <summary>
     /// Constructor.

@@ -1,6 +1,7 @@
 using MediatR;
 using Vitrina.Domain.Project.Page;
 using Vitrina.UseCases.ProjectPage.Dto.Blocks;
+using Vitrina.UseCases.ProjectPages;
 using Vitrina.UseCases.ProjectPages.Blocks;
 
 namespace Vitrina.UseCases.ProjectPage.CreateProjectPage;
@@ -14,46 +15,9 @@ public record CreateProjectPageCommand : IRequest<Guid>
     public PageReadyStatusEnum ReadyStatus { get; init; }
 
     /// <summary>
-    ///     Collection of text content blocks.
+    /// Page content blocks.
     /// </summary>
-    public ICollection<TextBlockDto> TextBlocks { get; init; } = new List<TextBlockDto>();
-
-    /// <summary>
-    ///     Collection of blocks with information about the team.
-    /// </summary>
-    public ICollection<CommandBlockDto> CommandBlocks { get; init; } = new List<CommandBlockDto>();
-
-    /// <summary>
-    ///     Collection of blocks with image and text.
-    /// </summary>
-    public ICollection<BlockWithTextsAndPicturesDto> BlocksWithTextsAndPictures { get; init; } =
-        new List<BlockWithTextsAndPicturesDto>();
-
-    /// <summary>
-    ///     Collection of blocks with images.
-    /// </summary>
-    public ICollection<ImageBlockDto> ImageBlocks { get; init; } = new List<ImageBlockDto>();
-
-    /// <summary>
-    ///     A collection of image carousel blocks.
-    /// </summary>
-    public ICollection<CarouselImagesDto> ImageCarouselBlocks { get; init; } = new List<CarouselImagesDto>();
-
-    /// <summary>
-    ///     Collection of horizontal divider blocks.
-    /// </summary>
-    public ICollection<HorizontalDividerDto> HorizontalDividerBlocks { get; init; } =
-        new List<HorizontalDividerDto>();
-
-    /// <summary>
-    ///     Collection of code blocks.
-    /// </summary>
-    public ICollection<CodeBlockDto> CodeBlocks { get; init; } = new List<CodeBlockDto>();
-
-    /// <summary>
-    ///     A collection of video content blocks.
-    /// </summary>
-    public ICollection<VideoBlockDto> VideoBlocks { get; init; } = new List<VideoBlockDto>();
+    public ICollection<ContentBlockDto> ContentBlocks { get; init; } = new List<ContentBlockDto>();
 
     /// <summary>
     ///     Project id.
@@ -63,5 +27,5 @@ public record CreateProjectPageCommand : IRequest<Guid>
     /// <summary>
     ///     User ID who created the project page.
     /// </summary>
-    required public int CreatorId { get; init; }
+    public int CreatorId { get; init; }
 }

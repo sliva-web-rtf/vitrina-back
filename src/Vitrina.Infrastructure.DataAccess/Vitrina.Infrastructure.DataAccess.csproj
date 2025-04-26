@@ -18,7 +18,6 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
-    <Folder Include="ModelConfigurations\PageConfiguration\BlocksConfiguration\" />
   </ItemGroup>
 
 </Project>

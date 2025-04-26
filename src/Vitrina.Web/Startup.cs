@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -6,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Vitrina.Domain.User;
 using Vitrina.Infrastructure.DataAccess;
+using Vitrina.UseCases.ProjectPages;
 using Vitrina.Web.Infrastructure.DependencyInjection;
 using Vitrina.Web.Infrastructure.Middlewares;
 using Vitrina.Web.Infrastructure.Settings;
@@ -67,11 +69,7 @@ public class Startup
         // MVC.
         services
             .AddControllers()
-            .AddJsonOptions(new JsonOptionsSetup().Setup)
-            .AddNewtonsoftJson(options =>
-            {
-                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
-            });
+            .AddJsonOptions(new JsonOptionsSetup().Setup);
 
         services.Configure<ApiBehaviorOptions>(new ApiBehaviorOptionsSetup().Setup);
 

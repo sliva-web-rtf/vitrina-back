@@ -1,10 +1,9 @@
 using System.ComponentModel.DataAnnotations;
 using Vitrina.UseCases.Common.DTO;
-using Vitrina.UseCases.ProjectPages.Blocks;
 
 namespace Vitrina.UseCases.ProjectPage.Dto.Blocks;
 
-public record VideoBlockDto : NumberedBlockBaseDto
+public record VideoBlockDto
 {
     /// <summary>
     ///     Link to the video.

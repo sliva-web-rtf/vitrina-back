@@ -8,6 +8,7 @@ using Vitrina.UseCases.ProjectPages;
 using Vitrina.UseCases.ProjectPages.CreateProjectPage;
 using Vitrina.UseCases.ProjectPages.DeleteProjectPage;
 using Vitrina.UseCases.ProjectPages.GetProjectPage;
+using Vitrina.UseCases.ProjectPages.GetProjectPageEditor;
 using Vitrina.UseCases.ProjectPages.UpdateProjectPage;
 
 namespace Vitrina.Web.Controllers;
@@ -81,7 +82,8 @@ public class ProjectPageController(IMediator mediator) : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ICollection<PageEditorDto>> GetEditors([FromRoute] Guid id, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var query = new GetProjectPageEditorsQuery(id);
+        return await mediator.Send(query, cancellationToken);
     }
 
     /// <summary>
