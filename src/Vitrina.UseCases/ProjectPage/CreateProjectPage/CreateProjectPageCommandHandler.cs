@@ -2,6 +2,7 @@ using AutoMapper;
 using MediatR;
 using Vitrina.Domain.Project.Page;
 using Vitrina.Infrastructure.Abstractions.Interfaces.Repositories;
+using Vitrina.UseCases.ProjectPage.CreateProjectPage;
 
 namespace Vitrina.UseCases.ProjectPages.CreateProjectPage;
 

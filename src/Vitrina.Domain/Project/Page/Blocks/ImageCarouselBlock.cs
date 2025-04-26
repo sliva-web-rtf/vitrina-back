@@ -5,7 +5,7 @@ namespace Vitrina.Domain.Project.Page.Blocks;
 /// <summary>
 ///     Carousel of images.
 /// </summary>
-public class CarouselImages : NumberedBlockBase
+public class ImageCarouselBlock : NumberedBlockBase
 {
     /// <summary>
     ///     Images.

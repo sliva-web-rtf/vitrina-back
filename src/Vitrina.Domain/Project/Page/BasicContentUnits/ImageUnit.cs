@@ -1,14 +1,3 @@
 namespace Vitrina.Domain.Project.Page.BasicContentUnits;
 
-public class ImageUnit : BaseEntity<Guid>
-{
-    /// <summary>
-    ///     A row with styles for an image.
-    /// </summary>
-    public File.File? Css { get; set; }
-
-    /// <summary>
-    ///     Image url.
-    /// </summary>
-    required public File.File Image { get; set; }
-}
+public class ImageUnit : UnitWithImageBase;

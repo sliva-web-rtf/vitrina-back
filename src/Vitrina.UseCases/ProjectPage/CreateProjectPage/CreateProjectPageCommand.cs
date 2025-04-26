@@ -1,8 +1,9 @@
 using MediatR;
 using Vitrina.Domain.Project.Page;
+using Vitrina.UseCases.ProjectPage.Dto.Blocks;
 using Vitrina.UseCases.ProjectPages.Blocks;
 
-namespace Vitrina.UseCases.ProjectPages.CreateProjectPage;
+namespace Vitrina.UseCases.ProjectPage.CreateProjectPage;
 
 /// <inheritdoc />
 public record CreateProjectPageCommand : IRequest<Guid>
@@ -62,5 +63,5 @@ public record CreateProjectPageCommand : IRequest<Guid>
     /// <summary>
     ///     User ID who created the project page.
     /// </summary>
-    public int CreatorId { get; init; }
+    required public int CreatorId { get; init; }
 }

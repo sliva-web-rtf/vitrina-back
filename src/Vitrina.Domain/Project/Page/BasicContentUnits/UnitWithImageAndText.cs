@@ -3,20 +3,10 @@ namespace Vitrina.Domain.Project.Page.BasicContentUnits;
 /// <summary>
 /// Content unit consisting of an image and text.
 /// </summary>
-public class UnitWithImageAndText
+public class UnitWithImageAndText : UnitWithImageBase
 {
     /// <summary>
-    ///     A row with styles for an image.
+    ///     HTML block marking..
     /// </summary>
-    public File.File? Css { get; set; }
-
-    /// <summary>
-    ///     Image url.
-    /// </summary>
-    required public File.File Image { get; set; }
-
-    /// <summary>
-    ///     Link to an html document in the cloud.
-    /// </summary>
-    required public File.File Html { get; set; }
+    required public string Html { get; set; }
 }

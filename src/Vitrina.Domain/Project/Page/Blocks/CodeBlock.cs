@@ -3,9 +3,9 @@ namespace Vitrina.Domain.Project.Page.Blocks;
 public class CodeBlock : NumberedBlockBase
 {
     /// <summary>
-    ///     The file with the code
+    ///     A line with a code.
     /// </summary>
-    required public File.File File { get; init; }
+    required public string Code { get; set; }
 
     /// <summary>
     ///     Programming language

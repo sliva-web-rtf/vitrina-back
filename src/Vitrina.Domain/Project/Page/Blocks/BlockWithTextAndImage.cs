@@ -5,7 +5,7 @@ namespace Vitrina.Domain.Project.Page.Blocks;
 /// <summary>
 ///     A block of content consisting of an image and text.
 /// </summary>
-public class ImageAndText : NumberedBlockBase
+public class BlockWithTextAndImage : NumberedBlockBase
 {
     /// <summary>
     ///     Image with the text.

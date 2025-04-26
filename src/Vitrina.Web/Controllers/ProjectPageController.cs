@@ -1,11 +1,14 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Vitrina.UseCases.Common.DTO;
+using Vitrina.UseCases.ProjectPage.CreateProjectPage;
 using Vitrina.UseCases.ProjectPages;
 using Vitrina.UseCases.ProjectPages.CreateProjectPage;
 using Vitrina.UseCases.ProjectPages.DeleteProjectPage;
 using Vitrina.UseCases.ProjectPages.GetProjectPage;
+using Vitrina.UseCases.ProjectPages.UpdateProjectPage;
 
 namespace Vitrina.Web.Controllers;
 
@@ -21,9 +24,8 @@ public class ProjectPageController(IMediator mediator) : ControllerBase
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<Guid> Create([FromBody] CreateProjectPageCommand page, CancellationToken cancellationToken)
+    public async Task<Guid> Create([FromBody] CreateProjectPageCommand command, CancellationToken cancellationToken)
     {
-        var command = new CreateProjectPageCommand();
         return await mediator.Send(command, cancellationToken);
     }
 
@@ -49,9 +51,11 @@ public class ProjectPageController(IMediator mediator) : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task Update([FromRoute] Guid id, [FromBody] ProjectPageDto page, CancellationToken cancellationToken)
+    public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] JsonPatchDocument<ProjectPageDto> page, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var command = new UpdateProjectPageCommand(id, page);
+        await mediator.Send(command, cancellationToken);
+        return Ok();
     }
 
     /// <summary>
@@ -75,7 +79,7 @@ public class ProjectPageController(IMediator mediator) : ControllerBase
     [Produces("application/json")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ICollection<UserDto>> GetEditors([FromRoute] Guid id, CancellationToken cancellationToken)
+    public async Task<ICollection<PageEditorDto>> GetEditors([FromRoute] Guid id, CancellationToken cancellationToken)
     {
         throw new NotImplementedException();
     }

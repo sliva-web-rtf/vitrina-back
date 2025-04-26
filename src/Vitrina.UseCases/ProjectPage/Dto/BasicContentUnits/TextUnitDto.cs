@@ -1,16 +1,18 @@
-using Vitrina.UseCases.Common.DTO;
+using System.ComponentModel.DataAnnotations;
 
 namespace Vitrina.UseCases.ProjectPages.BasicContentUnits;
 
 public record TextUnitDto
 {
     /// <summary>
-    ///     Link to an css document in the cloud.
+    ///     Block styles.
     /// </summary>
-    public FileDto? Css { get; init; }
+    [StringLength(1_000_000, ErrorMessage = "The line of styles is too big")]
+    public string? Css { get; init; }
 
     /// <summary>
-    ///     Link to an html document in the cloud.
+    ///     HTML block marking.
     /// </summary>
-    required public FileDto Html { get; init; }
+    [StringLength(1_000_000, ErrorMessage = "The markup is too voluminous")]
+    required public string Html { get; init; }
 }

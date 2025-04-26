@@ -1,5 +1,3 @@
-using Vitrina.Domain.File;
-
 namespace Vitrina.Domain.Project.Page.Blocks;
 
 public class VideoBlock : NumberedBlockBase
@@ -8,4 +6,9 @@ public class VideoBlock : NumberedBlockBase
     ///     Link to the video.
     /// </summary>
     required public File.File Video { get; set; }
+
+    /// <summary>
+    ///     Block styles.
+    /// </summary>
+    public string? Css { get; set; }
 }

@@ -28,8 +28,10 @@ public class ProjectPage : BaseEntity<Guid>
     /// <summary>
     ///     Collection of blocks with image and text.
     /// </summary>
-    public virtual ICollection<BlockWithTextsAndPictures> BlocksWithTextsAndPictures { get; init; } =
-        new List<BlockWithTextsAndPictures>();
+    public virtual ICollection<BlockWithTextsAndImages> BlocksWithTextsAndImages { get; init; } =
+        new List<BlockWithTextsAndImages>();
+
+    public virtual ICollection<BlockWithTextAndImage> BlocksWithTextAndImages { get; init; } = new List<BlockWithTextAndImage>();
 
     /// <summary>
     ///     Collection of blocks with images.
@@ -39,13 +41,13 @@ public class ProjectPage : BaseEntity<Guid>
     /// <summary>
     ///     A collection of image carousel blocks.
     /// </summary>
-    public virtual ICollection<CarouselImages> ImageCarouselBlocks { get; init; } = new List<CarouselImages>();
+    public virtual ICollection<ImageCarouselBlock> ImageCarouselBlocks { get; init; } = new List<ImageCarouselBlock>();
 
     /// <summary>
     ///     Collection of horizontal divider blocks.
     /// </summary>
-    public virtual ICollection<HorizontalDivider> HorizontalDividerBlocks { get; init; } =
-        new List<HorizontalDivider>();
+    public virtual ICollection<HorizontalDividerBlock> HorizontalDividerBlocks { get; init; } =
+        new List<HorizontalDividerBlock>();
 
     /// <summary>
     ///     Collection of code blocks.

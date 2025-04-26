@@ -1,4 +1,5 @@
 using Vitrina.Domain.Project.Page;
+using Vitrina.UseCases.ProjectPage.Dto.Blocks;
 using Vitrina.UseCases.ProjectPages.Blocks;
 
 namespace Vitrina.UseCases.ProjectPages;

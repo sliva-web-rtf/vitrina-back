@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using Vitrina.UseCases.Common.DTO;
 
 namespace Vitrina.UseCases.ProjectPage.Dto.BasicContentUnits;
@@ -10,7 +11,8 @@ public class UnitWithImageAndTextDto
     /// <summary>
     ///     A row with styles for an image.
     /// </summary>
-    public FileDto? Css { get; init; }
+    [StringLength(1_000_000, ErrorMessage = "The line of styles is too big")]
+    public string? Css { get; init; }
 
     /// <summary>
     ///     Image url.
@@ -18,7 +20,8 @@ public class UnitWithImageAndTextDto
     required public FileDto Image { get; init; }
 
     /// <summary>
-    ///     Link to an html document in the cloud.
+    ///     HTML block marking.
     /// </summary>
-    required public FileDto Html { get; init; }
+    [StringLength(1_000_000, ErrorMessage = "The markup is too voluminous")]
+    required public string Html { get; init; }
 }

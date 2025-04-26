@@ -26,5 +26,10 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder
             .Property(user => user.RegistrationStatus)
             .HasDefaultValue(RegistrationStatusEnum.NotRegistered);
+        builder
+            .HasMany(user => user.EditingRights)
+            .WithOne(editor => editor.User)
+            .HasForeignKey(editor => editor.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

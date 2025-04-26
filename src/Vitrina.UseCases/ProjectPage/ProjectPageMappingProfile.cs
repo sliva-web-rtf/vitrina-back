@@ -2,6 +2,7 @@ using AutoMapper;
 using Vitrina.Domain.Project.Page;
 using Vitrina.Domain.Project.Page.BasicContentUnits;
 using Vitrina.Domain.Project.Page.Blocks;
+using Vitrina.UseCases.ProjectPage.CreateProjectPage;
 using Vitrina.UseCases.ProjectPage.Dto.BasicContentUnits;
 using Vitrina.UseCases.ProjectPage.Dto.Blocks;
 using Vitrina.UseCases.ProjectPages.BasicContentUnits;
@@ -32,7 +33,7 @@ public class ProjectPageMappingProfile : Profile
 
     public void ConfigureContentBlockMapping()
     {
-        ConfigureMapping<ImageAndText, ImageAndTextDto>();
+        ConfigureMapping<BlockWithTextAndImage, ImageAndTextDto>();
         CreateMap<CodeBlock, CodeBlockDto>()
             .ForMember(
                 codeBlockDto => codeBlockDto.ProgrammingLanguage,
@@ -42,9 +43,9 @@ public class ProjectPageMappingProfile : Profile
         ConfigureMapping<VideoBlock, VideoBlockDto>();
         ConfigureMapping<TextBlock, TextBlockDto>();
         ConfigureMapping<ImageBlock, ImageBlockDto>();
-        ConfigureMapping<HorizontalDivider, HorizontalDividerDto>();
+        ConfigureMapping<HorizontalDividerBlock, HorizontalDividerDto>();
         ConfigureMapping<CommandBlock, CommandBlockDto>();
-        ConfigureMapping<CarouselImages, CarouselImagesDto>();
+        ConfigureMapping<ImageCarouselBlock, CarouselImagesDto>();
     }
 
     public void ConfigureMapping<TFirst, TSecond>()

@@ -2,7 +2,7 @@ using Vitrina.Domain.Project.Page.BasicContentUnits;
 
 namespace Vitrina.Domain.Project.Page.Blocks;
 
-public class BlockWithTextsAndPictures : NumberedBlockBase
+public class BlockWithTextsAndImages : NumberedBlockBase
 {
     /// <summary>
     ///     Collection of images with text.

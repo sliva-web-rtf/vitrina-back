@@ -1,4 +1,4 @@
-using Vitrina.Domain.File;
+using System.ComponentModel.DataAnnotations;
 
 namespace Vitrina.Domain.Project.Page.BasicContentUnits;
 
@@ -8,12 +8,12 @@ namespace Vitrina.Domain.Project.Page.BasicContentUnits;
 public class TextUnit : BaseEntity<Guid>
 {
     /// <summary>
-    ///     Link to an html document in the cloud.
+    ///     HTML block marking.
     /// </summary>
-    required public File.File Html { get; set; }
+    required public string Html { get; set; }
 
     /// <summary>
-    ///     Link to an css document in the cloud.
+    ///     Block styles.
     /// </summary>
-    public File.File? Css { get; set; }
+    public string? Css { get; set; }
 }
