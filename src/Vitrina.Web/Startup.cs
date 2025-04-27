@@ -67,11 +67,7 @@ public class Startup
         // MVC.
         services
             .AddControllers()
-            .AddJsonOptions(new JsonOptionsSetup().Setup)
-            .AddNewtonsoftJson(options =>
-            {
-                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
-            });
+            .AddJsonOptions(new JsonOptionsSetup().Setup);
 
         services.Configure<ApiBehaviorOptions>(new ApiBehaviorOptionsSetup().Setup);
 

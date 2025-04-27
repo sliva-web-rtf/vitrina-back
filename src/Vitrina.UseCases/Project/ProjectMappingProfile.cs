@@ -26,7 +26,8 @@ public class ProjectMappingProfile : Profile
         CreateMap<Content, ContentDto>().ReverseMap();
         CreateMap<Tag, TagDto>().ReverseMap();
         CreateMap<ProjectRole, RoleDto>().ReverseMap();
-        CreateMap<Teammate, UserDto>().ReverseMap();
+        CreateMap<Teammate, UserDto>()
+            .IncludeMembers(teammate => teammate.User);
         CreateMap<Domain.Project.Project, ProjectDto>().ReverseMap();
         CreateMap<Domain.Project.Project, ShortProjectDto>()
             .ForMember(p => p.ImageUrl, dest => dest.Ignore())
@@ -34,13 +35,11 @@ public class ProjectMappingProfile : Profile
         CreateMap<Domain.Project.Project, ShortProjectV2Dto>()
             .ForMember(p => p.ImageUrl, dest => dest.Ignore())
             .ReverseMap();
-
-        CreateMap<UpdateUserDto, Domain.Project.Teammate>()
-            .ForMember(u => u.ProjectId, dest => dest.Ignore())
-            .ForMember(u => u.Roles, dest => dest.Ignore())
-            .ForMember(u => u.Project, dest => dest.Ignore());
-        CreateMap<Domain.Project.Teammate, UpdateUserDto>()
-            .ForMember(u => u.Roles, dest => dest.Ignore());
+        CreateMap<Teammate, UpdateUserDto>()
+            .IncludeMembers(teammate => teammate.User)
+            .ForMember(
+                updateUserDto => updateUserDto.Roles,
+                memberConfiguration => memberConfiguration.MapFrom(teammate => teammate.Roles));
         CreateMap<Domain.Project.Project, UpdateProjectDto>().ReverseMap();
         CreateMap<ProjectRole, UpdateRoleDto>().ReverseMap();
         CreateMap<Block, BlockDto>().ReverseMap();

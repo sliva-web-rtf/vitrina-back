@@ -16,9 +16,9 @@ public class User : IdentityUser<int>
         string patronymic,
         RoleOnPlatformEnum roleOnPlatform,
         string email,
-        bool emailConfirmed = false,
         int educationCourse = -1,
-        EducationLevelEnum educationLevel = EducationLevelEnum.NotStudent)
+        EducationLevelEnum educationLevel = EducationLevelEnum.NotStudent,
+        bool emailConfirmed = false)
     {
         var user = new User();
         var json = new JObject();
@@ -29,7 +29,7 @@ public class User : IdentityUser<int>
         json["firstName"] = user.FirstName = firstName;
         json["lastName"] = user.LastName = lastName;
         json["patronymic"] = user.Patronymic = patronymic;
-        json["roleOnPlatform"] = (user.RoleOnPlatform = roleOnPlatform).ToString();
+        json["roleOnPlatform"] = $"{user.RoleOnPlatform = roleOnPlatform}";
 
         if (roleOnPlatform == RoleOnPlatformEnum.Student)
         {
@@ -100,7 +100,7 @@ public class User : IdentityUser<int>
     /// <summary>
     /// Telegram username of user.
     /// </summary>
-    public string Telegram { get; set; }
+    public string? Telegram { get; set; }
 
     /// <summary>
     /// User's email address.
@@ -110,7 +110,7 @@ public class User : IdentityUser<int>
     /// <summary>
     /// User phone number.
     /// </summary>
-    public override string PhoneNumber { get; set; }
+    public override string? PhoneNumber { get; set; }
 
     /// <summary>
     /// Link to the image in the cloud storage.
@@ -126,5 +126,5 @@ public class User : IdentityUser<int>
     /// User profile information.
     /// </summary>
     [Column(TypeName = "jsonb")]
-    public string ProfileData { get; set; }
+    public string? ProfileData { get; set; }
 }

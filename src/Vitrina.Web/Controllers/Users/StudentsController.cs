@@ -13,7 +13,7 @@ namespace Vitrina.Web.Controllers.Users;
 /// <summary>
 /// A controller for working with students.
 /// </summary>
-[Authorize(Roles = "Student")]
+/*[Authorize(Roles = "Student")]*/
 [Route("api/students/{id:int}/profile")]
 [ApiExplorerSettings(GroupName = "students")]
 public class StudentsController(IMediator mediator, IMapper mapper) : ControllerBase
@@ -21,14 +21,15 @@ public class StudentsController(IMediator mediator, IMapper mapper) : Controller
     /// <summary>
     /// Getting student profile data by ID.
     /// </summary>
-    [Produces("application/json")]
     [HttpGet("")]
+    [Produces("application/json")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<JsonDocument> GetStudentProfileDataById([FromRoute] int id, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetStudentProfileDataById([FromRoute] int id, CancellationToken cancellationToken)
     {
         var query = new GetUserProfileByIdQuery(id);
-        return await mediator.Send(query, cancellationToken);
+        var result = await mediator.Send(query, cancellationToken);
+        return Ok(result.RootElement);
     }
 
     /// <summary>

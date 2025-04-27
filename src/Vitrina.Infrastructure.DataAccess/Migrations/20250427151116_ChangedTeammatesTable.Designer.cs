@@ -12,8 +12,8 @@ using Vitrina.Infrastructure.DataAccess;
 namespace Vitrina.Infrastructure.DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250320180627_ChangingTeammatesTable")]
-    partial class ChangingTeammatesTable
+    [Migration("20250427151116_ChangedTeammatesTable")]
+    partial class ChangedTeammatesTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -551,7 +551,6 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("PhoneNumber")
-                        .IsRequired()
                         .IsUnicode(false)
                         .HasColumnType("text");
 
@@ -561,7 +560,6 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                         .HasDefaultValue(false);
 
                     b.Property<string>("ProfileData")
-                        .IsRequired()
                         .IsUnicode(false)
                         .HasColumnType("jsonb");
 
@@ -581,7 +579,6 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Telegram")
-                        .IsRequired()
                         .IsUnicode(false)
                         .HasColumnType("text");
 

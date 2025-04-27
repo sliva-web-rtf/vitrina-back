@@ -548,7 +548,6 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("PhoneNumber")
-                        .IsRequired()
                         .IsUnicode(false)
                         .HasColumnType("text");
 
@@ -558,7 +557,6 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                         .HasDefaultValue(false);
 
                     b.Property<string>("ProfileData")
-                        .IsRequired()
                         .IsUnicode(false)
                         .HasColumnType("jsonb");
 
@@ -578,7 +576,6 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Telegram")
-                        .IsRequired()
                         .IsUnicode(false)
                         .HasColumnType("text");
 
