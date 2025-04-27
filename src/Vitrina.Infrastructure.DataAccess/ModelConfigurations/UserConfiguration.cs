@@ -31,5 +31,8 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             .WithOne(editor => editor.User)
             .HasForeignKey(editor => editor.UserId)
             .OnDelete(DeleteBehavior.Cascade);
+        builder
+            .HasIndex(user => user.Email)
+            .IsUnique();
     }
 }

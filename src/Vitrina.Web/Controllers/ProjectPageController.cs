@@ -5,7 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 using Vitrina.UseCases.Common.DTO;
 using Vitrina.UseCases.ProjectPage.CreateProjectPage;
 using Vitrina.UseCases.ProjectPages;
+using Vitrina.UseCases.ProjectPages.AddEditorByUserEmail;
 using Vitrina.UseCases.ProjectPages.CreateProjectPage;
+using Vitrina.UseCases.ProjectPages.DeleteEditorByPageEditorld;
 using Vitrina.UseCases.ProjectPages.DeleteProjectPage;
 using Vitrina.UseCases.ProjectPages.GetProjectPage;
 using Vitrina.UseCases.ProjectPages.GetProjectPageEditor;
@@ -87,30 +89,32 @@ public class ProjectPageController(IMediator mediator) : ControllerBase
     }
 
     /// <summary>
-    /// Adds users to the list of page editors by email addresses.
+    /// Adds the user by email address to the list of page editors.
     /// </summary>
     /// <param name="id">Page identifier.</param>
-    /// <param name="emailAddresses">Email addresses of the users added to the list of editors.</param>
+    /// <param name="userEmail">Email user address.</param>
     [HttpPost("{id:guid}/editors")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task AddEditors([FromRoute] Guid id, [FromBody] ICollection<EmailDto> emailAddresses,
+    public async Task<PageEditorDto> AddEditors([FromRoute] Guid id, [FromBody] EmailDto userEmail,
         CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var command = new AddEditorByUserEmailCommand(id, userEmail);
+        return await mediator.Send(command, cancellationToken);
     }
 
     /// <summary>
-    /// Removes users from the list of page editors by email addresses.
+    /// Deleys the editor by ID.
     /// </summary>
     /// <param name="id">Page identifier.</param>
-    /// <param name="emailAddresses">Email addresses of users who need to be removed from the list of editors.</param>
-    [HttpDelete("{id:guid}/editors")]
+    /// <param name="editorId">Editor identifier.</param>
+    [HttpDelete("{id:guid}/editors/{editorId:guid}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task DeleteEditors([FromRoute] Guid id, [FromBody] ICollection<EmailDto> emailAddresses,
+    public async Task DeleteEditors([FromRoute] Guid id, [FromRoute] Guid editorId,
         CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var command = new DeleteEditorByPageEditorIdCommand(id, editorId);
+        await mediator.Send(command, cancellationToken);
     }
 }

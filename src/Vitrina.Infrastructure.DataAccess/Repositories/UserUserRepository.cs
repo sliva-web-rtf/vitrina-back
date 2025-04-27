@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using Saritasa.Tools.Domain.Exceptions;
 using Vitrina.Domain.User;
 using Vitrina.Infrastructure.Abstractions.Interfaces;
@@ -12,14 +13,14 @@ public class UserUserRepository(IAppDbContext dbContext) : IUserRepository
         return await dbContext.Users.FindAsync(id, cancellationToken);
     }
 
-    public async Task UpdateAsync(Domain.User.User user, CancellationToken cancellationToken)
+    public async Task UpdateAsync(User user, CancellationToken cancellationToken)
     {
         if (user is null)
         {
             throw new ArgumentNullException(nameof(user));
         }
 
-        var existingUser = await dbContext.Users.FindAsync(user.Id, cancellationToken);
+        var existingUser = await dbContext.Users.FirstOrDefaultAsync(currentUser => currentUser.Id == user.Id, cancellationToken);
         if (existingUser is null)
         {
             throw new NotFoundException("User not found");
@@ -28,5 +29,16 @@ public class UserUserRepository(IAppDbContext dbContext) : IUserRepository
         dbContext.Users.Entry(existingUser).CurrentValues.SetValues(user);
 
         await dbContext.SaveChangesAsync(cancellationToken);
+    }
+
+    public async Task<User> FindByEmailAsync(string email, CancellationToken cancellationToken)
+    {
+        var result = await dbContext.Users.FirstOrDefaultAsync(user => user.Email == email, cancellationToken);
+        if (result == null)
+        {
+            throw new NotFoundException($"User with email = {email} data was not found");
+        }
+
+        return result;
     }
 }

@@ -10,4 +10,6 @@ public interface IUserRepository
     public Task<User> GetByIdAsync(int id, CancellationToken cancellationToken);
 
     public Task UpdateAsync(User entity, CancellationToken cancellationToken);
+
+    public Task<User> FindByEmailAsync(string email, CancellationToken cancellationToken);
 }

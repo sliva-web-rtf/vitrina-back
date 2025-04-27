@@ -26,8 +26,4 @@
     <ProjectReference Include="..\Vitrina.UseCases.Common\Vitrina.UseCases.Common.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="File\" />
-  </ItemGroup>
-
 </Project>
