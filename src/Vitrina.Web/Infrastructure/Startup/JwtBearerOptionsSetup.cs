@@ -47,7 +47,7 @@ internal class JwtBearerOptionsSetup
         clonedParameters.LifetimeValidator = null;
         try
         {
-            Validators.ValidateLifetime(notBefore, expires, securityToken, clonedParameters);
+            Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(notBefore, expires, securityToken, clonedParameters);
         }
         catch (Exception)
         {
