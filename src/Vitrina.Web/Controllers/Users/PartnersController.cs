@@ -34,6 +34,7 @@ public class PartnersController(IMediator mediator, IMapper mapper) : Controller
     /// <summary>
     /// Edits partner profile data.
     /// </summary>
+    [ValidateUserId]
     [HttpPatch("")]
     [Authorize(Roles = "Partner")]
     [Produces("application/json")]

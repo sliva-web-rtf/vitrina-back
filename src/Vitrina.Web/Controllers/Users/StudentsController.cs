@@ -34,6 +34,7 @@ public class StudentsController(IMediator mediator, IMapper mapper) : Controller
     /// <summary>
     /// Edits student profile data.
     /// </summary>
+    [ValidateUserId]
     [Authorize(Roles = "Student")]
     [Produces("application/json")]
     [HttpPatch("")]

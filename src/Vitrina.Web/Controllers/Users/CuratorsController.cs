@@ -35,6 +35,7 @@ public class CuratorsController(IMediator mediator, IMapper mapper) : Controller
     /// <summary>
     /// Edits curator profile data.
     /// </summary>
+    [ValidateUserId]
     [HttpPatch("")]
     [Authorize(Roles = "Curator")]
     [Produces("application/json")]
