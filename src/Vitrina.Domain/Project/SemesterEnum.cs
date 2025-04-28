@@ -1,22 +1,22 @@
 ﻿namespace Vitrina.Domain.Project;
 
 /// <summary>
-/// Semester enum.
+///     Semester enum.
 /// </summary>
 public enum SemesterEnum
 {
     /// <summary>
-    /// None.
+    ///     None.
     /// </summary>
     None = 0,
 
     /// <summary>
-    /// Spring.
+    ///     Spring.
     /// </summary>
     Spring,
 
     /// <summary>
-    /// Autumn.
+    ///     Autumn.
     /// </summary>
     Autumn
 }

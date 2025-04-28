@@ -4,13 +4,12 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Saritasa.Tools.Domain.Exceptions;
 using Vitrina.Infrastructure.Abstractions.Interfaces;
-using Vitrina.UseCases.Common;
 using Vitrina.UseCases.Common.DTO;
 
 namespace Vitrina.UseCases.Project.GetProjectById;
 
 /// <summary>
-/// Handler.
+///     Handler.
 /// </summary>
 internal class GetProjectByIdQueryHandler : IRequestHandler<GetProjectByIdQuery, ProjectDto>
 {
@@ -26,13 +25,14 @@ internal class GetProjectByIdQueryHandler : IRequestHandler<GetProjectByIdQuery,
     public async Task<ProjectDto> Handle(GetProjectByIdQuery request, CancellationToken cancellationToken)
     {
         var project = await dbContext.Projects
-            .ProjectTo<ProjectDto>(mapper.ConfigurationProvider)
-            .FirstOrDefaultAsync(p => p.Id == request.Id, cancellationToken)
-            ?? throw new NotFoundException($"Project with id {request.Id} not found.");
+                          .ProjectTo<ProjectDto>(mapper.ConfigurationProvider)
+                          .FirstOrDefaultAsync(p => p.Id == request.Id, cancellationToken)
+                      ?? throw new NotFoundException($"Project with id {request.Id} not found.");
         foreach (var content in project.Contents)
         {
             content.ImageUrl = content.ImageUrl.Split("/").Last();
         }
+
         return project;
     }
 }

@@ -1,18 +1,17 @@
 ﻿using McMaster.Extensions.CommandLineUtils;
-using Microsoft.AspNetCore.Identity;
 using Vitrina.Web.Infrastructure.Settings;
 
 namespace Vitrina.Web;
 
 /// <summary>
-/// Entry point class.
+///     Entry point class.
 /// </summary>
 internal sealed class Program
 {
     private static WebApplication? app;
 
     /// <summary>
-    /// Entry point method.
+    ///     Entry point method.
     /// </summary>
     /// <param name="args">Program arguments.</param>
     public static async Task<int> Main(string[] args)
@@ -38,7 +37,7 @@ internal sealed class Program
     }
 
     /// <summary>
-    /// Command line application execution callback.
+    ///     Command line application execution callback.
     /// </summary>
     /// <returns>Exit code.</returns>
     public async Task<int> OnExecuteAsync()

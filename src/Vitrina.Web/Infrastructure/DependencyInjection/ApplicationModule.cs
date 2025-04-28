@@ -1,12 +1,12 @@
 namespace Vitrina.Web.Infrastructure.DependencyInjection;
 
 /// <summary>
-/// Application specific dependencies.
+///     Application specific dependencies.
 /// </summary>
 internal static class ApplicationModule
 {
     /// <summary>
-    /// Register dependencies.
+    ///     Register dependencies.
     /// </summary>
     /// <param name="services">Services.</param>
     /// <param name="configuration">Configuration.</param>

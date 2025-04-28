@@ -5,7 +5,7 @@ using Vitrina.Domain.Project;
 namespace Vitrina.Infrastructure.DataAccess.ModelConfigurations;
 
 /// <summary>
-/// Role configuration.
+///     Role configuration.
 /// </summary>
 internal class RoleConfiguration : IEntityTypeConfiguration<ProjectRole>
 {

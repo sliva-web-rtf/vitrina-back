@@ -1,4 +1,3 @@
-using System.Text.Json;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -11,14 +10,14 @@ using Vitrina.UseCases.User.UpdateUser;
 namespace Vitrina.Web.Controllers.Users;
 
 /// <summary>
-/// A controller for working with partners.
+///     A controller for working with partners.
 /// </summary>
 [Route("api/partners/{id:int}/profile")]
 [ApiExplorerSettings(GroupName = "partners")]
 public class PartnersController(IMediator mediator, IMapper mapper) : ControllerBase
 {
     /// <summary>
-    /// Getting partner profile data by ID.
+    ///     Getting partner profile data by ID.
     /// </summary>
     [Produces("application/json")]
     [HttpGet("")]
@@ -32,7 +31,7 @@ public class PartnersController(IMediator mediator, IMapper mapper) : Controller
     }
 
     /// <summary>
-    /// Edits partner profile data.
+    ///     Edits partner profile data.
     /// </summary>
     [ValidateUserId]
     [HttpPatch("")]

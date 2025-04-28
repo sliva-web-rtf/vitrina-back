@@ -3,17 +3,17 @@ using Microsoft.AspNetCore.Cors.Infrastructure;
 namespace Vitrina.Web.Infrastructure.Startup;
 
 /// <summary>
-/// CORS options setup.
+///     CORS options setup.
 /// </summary>
 internal class CorsOptionsSetup
 {
     public const string CorsPolicyName = "AllowFrontend";
-
-    private readonly bool isDevelopment;
     private readonly string[] frontendOrigins;
 
+    private readonly bool isDevelopment;
+
     /// <summary>
-    /// Constructor.
+    ///     Constructor.
     /// </summary>
     /// <param name="isDevelopment">Is development mode enabled.</param>
     /// <param name="frontendOrigins">Frontend origins.</param>
@@ -24,11 +24,10 @@ internal class CorsOptionsSetup
     }
 
     /// <summary>
-    /// Setup CORS method.
+    ///     Setup CORS method.
     /// </summary>
     /// <param name="options">CORS options.</param>
-    public void Setup(CorsOptions options)
-    {
+    public void Setup(CorsOptions options) =>
         options.AddPolicy(CorsPolicyName,
             builder =>
             {
@@ -38,5 +37,4 @@ internal class CorsOptionsSetup
                     .AllowAnyMethod()
                     .SetPreflightMaxAge(TimeSpan.FromDays(1));
             });
-    }
 }

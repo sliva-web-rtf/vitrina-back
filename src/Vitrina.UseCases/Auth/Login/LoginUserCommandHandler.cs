@@ -1,21 +1,20 @@
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
-using Vitrina.Domain.User;
 
 namespace Vitrina.UseCases.Auth.Login;
 
 /// <summary>
-/// Handler for <see cref="LoginUserCommand"/>.
+///     Handler for <see cref="LoginUserCommand" />.
 /// </summary>
 internal class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, LoginUserCommandResult>
 {
+    private readonly ILogger<LoginUserCommandHandler> logger;
     private readonly SignInManager<Domain.User.User> signInManager;
     private readonly IAuthenticationTokenService tokenService;
-    private readonly ILogger<LoginUserCommandHandler> logger;
 
     /// <summary>
-    /// Constructor.
+    ///     Constructor.
     /// </summary>
     /// <param name="signInManager">Sign in manager.</param>
     /// <param name="tokenService">Token service.</param>
@@ -49,6 +48,7 @@ internal class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, Login
         {
             throw new ArgumentException($"User with email {request.Email} not confirmed.");
         }
+
         logger.LogInformation("User with email {email} has logged in.", user.Email);
 
         // Update last login date.
@@ -61,8 +61,7 @@ internal class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, Login
         // Give token.
         return new LoginUserCommandResult
         {
-            UserId = user.Id,
-            TokenModel = TokenModelGenerator.Generate(tokenService, principal.Claims)
+            UserId = user.Id, TokenModel = TokenModelGenerator.Generate(tokenService, principal.Claims)
         };
     }
 
@@ -74,10 +73,12 @@ internal class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, Login
             {
                 throw new ArgumentException($"User {email} is not allowed to Sign In.");
             }
+
             if (signInResult.IsLockedOut)
             {
                 throw new ArgumentException($"User {email} is locked out.");
             }
+
             throw new ArgumentException("Email or password is incorrect.");
         }
     }

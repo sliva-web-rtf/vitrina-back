@@ -3,12 +3,12 @@ using Swashbuckle.AspNetCore.SwaggerUI;
 namespace Vitrina.Web.Infrastructure.Startup.Swagger;
 
 /// <summary>
-/// Swagger UI options.
+///     Swagger UI options.
 /// </summary>
 internal class SwaggerUIOptionsSetup
 {
     /// <summary>
-    /// Setup.
+    ///     Setup.
     /// </summary>
     /// <param name="options">Swagger generation options.</param>
     public void Setup(SwaggerUIOptions options)

@@ -5,13 +5,13 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 namespace Vitrina.Web.Infrastructure.Startup.Swagger;
 
 /// <summary>
-/// Generates standard example for Swagger document properties. For example it puts
-/// correct values for "address1", "state", "email" fields.
+///     Generates standard example for Swagger document properties. For example it puts
+///     correct values for "address1", "state", "email" fields.
 /// </summary>
 internal sealed class SwaggerExampleSetterSchemaFilter : ISchemaFilter
 {
     /// <summary>
-    /// Maps property name to example value.
+    ///     Maps property name to example value.
     /// </summary>
     private static readonly IDictionary<string, IOpenApiPrimitive> propertyNameExampleMap =
         new Dictionary<string, IOpenApiPrimitive>
@@ -22,7 +22,8 @@ internal sealed class SwaggerExampleSetterSchemaFilter : ISchemaFilter
             ["lastname"] = new OpenApiString("Doe"),
             ["password"] = new OpenApiPassword("Test123"),
             ["token"] = new OpenApiString("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9eyJzdWIiOiJmd2QyaXZhbkBnbWFpbC5jb20"),
-            ["accessToken"] = new OpenApiString("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9eyJzdWIiOiJmd2QyaXZhbkBnbWFpbC5jb20"),
+            ["accessToken"] =
+                new OpenApiString("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9eyJzdWIiOiJmd2QyaXZhbkBnbWFpbC5jb20"),
             ["refreshToken"] = new OpenApiString("gjofdjaojoas23fweok"),
             ["expires"] = new OpenApiInteger(3600),
             ["color"] = new OpenApiString("#00ff00"),

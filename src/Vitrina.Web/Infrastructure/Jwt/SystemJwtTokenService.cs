@@ -8,14 +8,14 @@ using Vitrina.UseCases.Auth;
 namespace Vitrina.Web.Infrastructure.Jwt;
 
 /// <summary>
-/// The authenticate tokens implementation uses ASP.NET Core Identity.
+///     The authenticate tokens implementation uses ASP.NET Core Identity.
 /// </summary>
 internal class SystemJwtTokenService : IAuthenticationTokenService
 {
     private readonly TokenValidationParameters tokenValidationParameters;
 
     /// <summary>
-    /// Constructor.
+    ///     Constructor.
     /// </summary>
     /// <param name="jwtOptionsMonitor">JWT options.</param>
     public SystemJwtTokenService(IOptionsMonitor<JwtBearerOptions> jwtOptionsMonitor)
@@ -44,7 +44,7 @@ internal class SystemJwtTokenService : IAuthenticationTokenService
     public IEnumerable<Claim> GetTokenClaims(string token)
     {
         var principal = new JwtSecurityTokenHandler()
-            .ValidateToken(token, tokenValidationParameters, out SecurityToken _);
+            .ValidateToken(token, tokenValidationParameters, out var _);
         return principal.Claims;
     }
 }

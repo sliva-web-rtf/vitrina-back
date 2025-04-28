@@ -9,7 +9,8 @@ public class GetAllSpecializationsQueryHandler(ISpecializationRepository reposit
     : IRequestHandler<GetAllSpecializationsQuery, SpecializationDto[]>
 {
     /// <inheritdoc />
-    public async Task<SpecializationDto[]> Handle(GetAllSpecializationsQuery request, CancellationToken cancellationToken)
+    public async Task<SpecializationDto[]> Handle(GetAllSpecializationsQuery request,
+        CancellationToken cancellationToken)
     {
         var specializations = await repository.GetAll(cancellationToken);
         return mapper.Map<IEnumerable<SpecializationDto>>(specializations).ToArray();

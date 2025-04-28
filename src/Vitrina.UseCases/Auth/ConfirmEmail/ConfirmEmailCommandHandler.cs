@@ -1,13 +1,12 @@
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Vitrina.Domain.User;
 using Vitrina.Infrastructure.Abstractions.Interfaces;
 
 namespace Vitrina.UseCases.Auth.ConfirmEmail;
 
 /// <summary>
-/// Handler for <see cref="ConfirmEmailCommand"/>
+///     Handler for <see cref="ConfirmEmailCommand" />
 /// </summary>
 public class ConfirmEmailCommandHandler : IRequestHandler<ConfirmEmailCommand, ConfirmEmailCommandResult>
 {
@@ -16,9 +15,10 @@ public class ConfirmEmailCommandHandler : IRequestHandler<ConfirmEmailCommand, C
     private readonly IAuthenticationTokenService tokenService;
 
     /// <summary>
-    /// Constructor.
+    ///     Constructor.
     /// </summary>
-    public ConfirmEmailCommandHandler(IAppDbContext appDbContext, SignInManager<Domain.User.User> signInManager, IAuthenticationTokenService tokenService)
+    public ConfirmEmailCommandHandler(IAppDbContext appDbContext, SignInManager<Domain.User.User> signInManager,
+        IAuthenticationTokenService tokenService)
     {
         this.appDbContext = appDbContext;
         this.signInManager = signInManager;
@@ -26,7 +26,8 @@ public class ConfirmEmailCommandHandler : IRequestHandler<ConfirmEmailCommand, C
     }
 
     /// <inheritdoc />
-    public async Task<ConfirmEmailCommandResult> Handle(ConfirmEmailCommand request, CancellationToken cancellationToken)
+    public async Task<ConfirmEmailCommandResult> Handle(ConfirmEmailCommand request,
+        CancellationToken cancellationToken)
     {
         var exist = await appDbContext.Codes
             .AnyAsync(c => c.Code == request.ConfirmationCode && c.UserId == request.UserId,
@@ -40,7 +41,7 @@ public class ConfirmEmailCommandHandler : IRequestHandler<ConfirmEmailCommand, C
         user.EmailConfirmed = true;
         var principal = await signInManager.CreateUserPrincipalAsync(user);
         await appDbContext.SaveChangesAsync(cancellationToken);
-        return new ConfirmEmailCommandResult()
+        return new ConfirmEmailCommandResult
         {
             IsSuccess = true, UserId = user.Id, Token = TokenModelGenerator.Generate(tokenService, principal.Claims)
         };

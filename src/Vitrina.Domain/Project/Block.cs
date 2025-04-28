@@ -3,27 +3,27 @@ namespace Vitrina.Domain.Project;
 public class Block
 {
     /// <summary>
-    /// Id of block.
+    ///     Id of block.
     /// </summary>
     public int Id { get; set; }
 
     /// <summary>
-    /// Title of block.
+    ///     Title of block.
     /// </summary>
     required public string Title { get; set; }
 
     /// <summary>
-    /// Text of block.
+    ///     Text of block.
     /// </summary>
     required public string Text { get; set; }
 
     /// <summary>
-    /// Id og project.
+    ///     Id og project.
     /// </summary>
     public int ProjectId { get; set; }
 
     /// <summary>
-    /// Project.
+    ///     Project.
     /// </summary>
     public virtual Project? Project { get; set; }
 }

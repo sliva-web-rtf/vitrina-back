@@ -9,7 +9,8 @@ public class CreateSpecializationCommandHandler(ISpecializationRepository reposi
     : IRequestHandler<CreateSpecializationCommand, SpecializationDto>
 {
     /// <inheritdoc />
-    public async Task<SpecializationDto> Handle(CreateSpecializationCommand request, CancellationToken cancellationToken)
+    public async Task<SpecializationDto> Handle(CreateSpecializationCommand request,
+        CancellationToken cancellationToken)
     {
         var specialization = await repository.Create(request.Name, cancellationToken);
         return mapper.Map<SpecializationDto>(specialization);

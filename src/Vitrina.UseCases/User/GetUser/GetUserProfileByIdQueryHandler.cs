@@ -1,11 +1,11 @@
+using System.Text.Json;
 using AutoMapper;
 using MediatR;
 using Newtonsoft.Json;
 using Saritasa.Tools.Domain.Exceptions;
 using Vitrina.Domain.User;
-using Vitrina.UseCases.User.DTO.Profile;
-using System.Text.Json;
 using Vitrina.Infrastructure.Abstractions.Interfaces.Repositories;
+using Vitrina.UseCases.User.DTO.Profile;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace Vitrina.UseCases.User.GetUser;
@@ -18,7 +18,7 @@ public class GetUserProfileByIdQueryHandler(IUserRepository userRepository, IMap
     public async Task<JsonDocument> Handle(GetUserProfileByIdQuery request, CancellationToken cancellationToken)
     {
         var user = await userRepository.GetByIdAsync(request.UserId, cancellationToken) ??
-                                      throw new NotFoundException("The user with the specified Id was not found");
+                   throw new NotFoundException("The user with the specified Id was not found");
 
         switch (user.RoleOnPlatform)
         {

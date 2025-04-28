@@ -8,12 +8,12 @@ using Vitrina.Web.Infrastructure.Web;
 namespace Vitrina.Web.Infrastructure.DependencyInjection;
 
 /// <summary>
-/// System specific dependencies.
+///     System specific dependencies.
 /// </summary>
 internal static class SystemModule
 {
     /// <summary>
-    /// Register dependencies.
+    ///     Register dependencies.
     /// </summary>
     /// <param name="services">Services.</param>
     public static void Register(IServiceCollection services)
@@ -24,4 +24,3 @@ internal static class SystemModule
         services.AddScoped<ILoggedUserAccessor, LoggedUserAccessor>();
     }
 }
-

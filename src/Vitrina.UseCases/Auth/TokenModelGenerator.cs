@@ -3,12 +3,12 @@ using System.Security.Claims;
 namespace Vitrina.UseCases.Auth;
 
 /// <summary>
-/// Helper to generate <see cref="TokenModel" />.
+///     Helper to generate <see cref="TokenModel" />.
 /// </summary>
 internal static class TokenModelGenerator
 {
     /// <summary>
-    /// Common code to generate token and fill with claims.
+    ///     Common code to generate token and fill with claims.
     /// </summary>
     /// <param name="authenticationTokenService">Authentication token service.</param>
     /// <param name="claims">User claims.</param>

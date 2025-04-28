@@ -4,7 +4,7 @@ using MediatR;
 namespace Vitrina.UseCases.Specialization.CreateSpecialization;
 
 /// <summary>
-/// The specialization creation command.
+///     The specialization creation command.
 /// </summary>
 public record CreateSpecializationCommand : IRequest<SpecializationDto>
 {

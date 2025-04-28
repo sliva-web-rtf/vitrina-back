@@ -1,7 +1,6 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Vitrina.UseCases.Common.DTO;
 using Vitrina.UseCases.Specialization;
 using Vitrina.UseCases.Specialization.CreateSpecialization;
 using Vitrina.UseCases.Specialization.DeleteSpecialization;
@@ -15,18 +14,16 @@ namespace Vitrina.Web.Controllers.Users;
 public class SpecializationsController(IMediator mediator) : ControllerBase
 {
     /// <summary>
-    /// Get all the specializations.
+    ///     Get all the specializations.
     /// </summary>
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<SpecializationDto[]> GetAllSpecializations(CancellationToken cancellationToken)
-    {
-        return await mediator.Send(new GetAllSpecializationsQuery(), cancellationToken);
-    }
+    public async Task<SpecializationDto[]> GetAllSpecializations(CancellationToken cancellationToken) =>
+        await mediator.Send(new GetAllSpecializationsQuery(), cancellationToken);
 
     /// <summary>
-    /// Adding a specialization.
+    ///     Adding a specialization.
     /// </summary>
     [HttpPost("create")]
     [Authorize(Roles = "Admin")]
@@ -34,13 +31,11 @@ public class SpecializationsController(IMediator mediator) : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<SpecializationDto> CreateSpecialization([FromBody] CreateSpecializationCommand command,
-        CancellationToken cancellationToken)
-    {
-        return await mediator.Send(command, cancellationToken);
-    }
+        CancellationToken cancellationToken) =>
+        await mediator.Send(command, cancellationToken);
 
     /// <summary>
-    /// Removing a specialization.
+    ///     Removing a specialization.
     /// </summary>
     [Authorize(Roles = "Admin")]
     [Produces("application/json")]

@@ -1,27 +1,12 @@
 ﻿namespace Vitrina.UseCases.Project.UploadImages.Dto;
 
 /// <summary>
-/// File dto.
+///     File dto.
 /// </summary>
 public class FileDto
 {
     /// <summary>
-    /// Data.
-    /// </summary>
-    public Stream Data { get; init; }
-
-    /// <summary>
-    /// Name.
-    /// </summary>
-    public string FileName { get; init; }
-
-    /// <summary>
-    /// Content type.
-    /// </summary>
-    public string ContentType { get; init; }
-
-    /// <summary>
-    /// Constructor.
+    ///     Constructor.
     /// </summary>
     public FileDto(Stream data, string fileName, string contentType)
     {
@@ -29,4 +14,19 @@ public class FileDto
         FileName = fileName;
         ContentType = contentType;
     }
+
+    /// <summary>
+    ///     Data.
+    /// </summary>
+    public Stream Data { get; init; }
+
+    /// <summary>
+    ///     Name.
+    /// </summary>
+    public string FileName { get; init; }
+
+    /// <summary>
+    ///     Content type.
+    /// </summary>
+    public string ContentType { get; init; }
 }

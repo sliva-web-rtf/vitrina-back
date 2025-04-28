@@ -5,26 +5,26 @@ using Vitrina.Domain.User;
 namespace Vitrina.UseCases.Auth.Register;
 
 /// <summary>
-/// Register user command.
+///     Register user command.
 /// </summary>
 public class RegisterCommand : IRequest<RegisterCommandResult>
 {
     /// <summary>
-    /// User email.
+    ///     User email.
     /// </summary>
     [Required]
     [EmailAddress]
     required public string Email { get; set; }
 
     /// <summary>
-    /// User password.
+    ///     User password.
     /// </summary>
     [Required]
     [DataType(DataType.Password)]
     required public string Password { get; set; }
 
     /// <summary>
-    /// Confirm password.
+    ///     Confirm password.
     /// </summary>
     [Required]
     [Compare("Password", ErrorMessage = "Пароли не совпадают")]
@@ -32,32 +32,32 @@ public class RegisterCommand : IRequest<RegisterCommandResult>
     required public string PasswordConfirm { get; set; }
 
     /// <summary>
-    /// Education level of user.
+    ///     Education level of user.
     /// </summary>
     required public EducationLevelEnum EducationLevel { get; set; }
 
     /// <summary>
-    /// Education course of user.
+    ///     Education course of user.
     /// </summary>
     public int EducationCourse { get; set; }
 
     /// <summary>
-    /// User role on the platform.
+    ///     User role on the platform.
     /// </summary>
     public RoleOnPlatformEnum RoleOnPlatform { get; set; }
 
     /// <summary>
-    /// User first name.
+    ///     User first name.
     /// </summary>
     required public string FirstName { get; set; }
 
     /// <summary>
-    /// User last name.
+    ///     User last name.
     /// </summary>
     required public string LastName { get; set; }
 
     /// <summary>
-    /// User surname.
+    ///     User surname.
     /// </summary>
     required public string Patronymic { get; set; }
 }

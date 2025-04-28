@@ -3,23 +3,23 @@
 namespace Vitrina.Domain.Project;
 
 /// <summary>
-/// Project tag.
+///     Project tag.
 /// </summary>
 public class Tag
 {
     /// <summary>
-    /// Tag id.
+    ///     Tag id.
     /// </summary>
     [Key]
     public int Id { get; private set; }
 
     /// <summary>
-    /// Tag name.
+    ///     Tag name.
     /// </summary>
     required public string Name { get; set; }
 
     /// <summary>
-    /// Tag projects.
+    ///     Tag projects.
     /// </summary>
     public virtual ICollection<Project> Projects { get; private set; } = new List<Project>();
 }

@@ -9,10 +9,8 @@ namespace Vitrina.UseCases.Common.Repositories;
 public class SpecializationRepository(IAppDbContext dbContext) : ISpecializationRepository
 {
     /// <inheritdoc />
-    public async Task<ICollection<Specialization>> GetAll(CancellationToken cancellationToken)
-    {
-        return await dbContext.Specializations.ToArrayAsync(cancellationToken);
-    }
+    public async Task<ICollection<Specialization>> GetAll(CancellationToken cancellationToken) =>
+        await dbContext.Specializations.ToArrayAsync(cancellationToken);
 
     /// <inheritdoc />
     public async Task<Specialization> Delete(int id, CancellationToken cancellationToken)

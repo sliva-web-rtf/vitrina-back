@@ -10,7 +10,7 @@ using Vitrina.UseCases.User.UpdateUser;
 namespace Vitrina.Web.Controllers.Users;
 
 /// <summary>
-/// A controller for working with curators.
+///     A controller for working with curators.
 /// </summary>
 [ApiController]
 [Route("api/curators/{id:int}/profile")]
@@ -18,7 +18,7 @@ namespace Vitrina.Web.Controllers.Users;
 public class CuratorsController(IMediator mediator, IMapper mapper) : ControllerBase
 {
     /// <summary>
-    /// Getting curator profile data by Id.
+    ///     Getting curator profile data by Id.
     /// </summary>
     [Produces("application/json")]
     [HttpGet("")]
@@ -33,7 +33,7 @@ public class CuratorsController(IMediator mediator, IMapper mapper) : Controller
     }
 
     /// <summary>
-    /// Edits curator profile data.
+    ///     Edits curator profile data.
     /// </summary>
     [ValidateUserId]
     [HttpPatch("")]

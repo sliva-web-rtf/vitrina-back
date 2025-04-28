@@ -9,7 +9,8 @@ public class DeleteSpecializationCommandHandler(ISpecializationRepository reposi
     : IRequestHandler<DeleteSpecializationCommand, SpecializationDto>
 {
     /// <inheritdoc />
-    public async Task<SpecializationDto> Handle(DeleteSpecializationCommand request, CancellationToken cancellationToken)
+    public async Task<SpecializationDto> Handle(DeleteSpecializationCommand request,
+        CancellationToken cancellationToken)
     {
         var specialization = await repository.Delete(request.Id, cancellationToken);
         return mapper.Map<SpecializationDto>(specialization);

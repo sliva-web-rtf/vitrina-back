@@ -9,12 +9,9 @@ internal class GetTypesQueryHandler : IRequestHandler<GetTypesQuery, ICollection
     private readonly IAppDbContext dbContext;
 
     /// <summary>
-    /// Constructor.
+    ///     Constructor.
     /// </summary>
-    public GetTypesQueryHandler(IAppDbContext dbContext)
-    {
-        this.dbContext = dbContext;
-    }
+    public GetTypesQueryHandler(IAppDbContext dbContext) => this.dbContext = dbContext;
 
     public async Task<ICollection<string>> Handle(GetTypesQuery request, CancellationToken cancellationToken)
         => await dbContext.Projects.Select(p => p.Type).Distinct().ToListAsync(cancellationToken);

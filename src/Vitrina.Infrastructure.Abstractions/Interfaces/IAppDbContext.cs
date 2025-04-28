@@ -5,47 +5,47 @@ using Vitrina.Domain.User;
 namespace Vitrina.Infrastructure.Abstractions.Interfaces;
 
 /// <summary>
-/// Application abstraction for unit of work.
+///     Application abstraction for unit of work.
 /// </summary>
 public interface IAppDbContext : IDbContextWithSets, IDisposable
 {
     /// <summary>
-    /// Users.
+    ///     Users.
     /// </summary>
     DbSet<Teammate> Teammates { get; }
 
     /// <summary>
-    /// Projects set.
+    ///     Projects set.
     /// </summary>
     DbSet<Project> Projects { get; }
 
     /// <summary>
-    /// Tags.
+    ///     Tags.
     /// </summary>
     DbSet<Tag> Tags { get; }
 
     /// <summary>
-    /// Roles.
+    ///     Roles.
     /// </summary>
     DbSet<ProjectRole> ProjectRoles { get; }
 
     /// <summary>
-    /// Contents.
+    ///     Contents.
     /// </summary>
     DbSet<Content> Contents { get; }
 
     /// <summary>
-    /// Users.
+    ///     Users.
     /// </summary>
     DbSet<User> Users { get; }
 
     /// <summary>
-    /// Confirmation codes.
+    ///     Confirmation codes.
     /// </summary>
     DbSet<ConfirmationCode> Codes { get; }
 
     /// <summary>
-    /// Students' specializations.
+    ///     Students' specializations.
     /// </summary>
     public DbSet<Specialization> Specializations => Set<Specialization>();
 }

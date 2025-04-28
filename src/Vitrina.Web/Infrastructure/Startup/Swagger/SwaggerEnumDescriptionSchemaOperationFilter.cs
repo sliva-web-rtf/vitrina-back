@@ -5,23 +5,20 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 namespace Vitrina.Web.Infrastructure.Startup.Swagger;
 
 /// <summary>
-/// A filter that adds descriptions of enums depending on their name.
-/// It also adds additional descriptions if the enum elements have the attribute
-/// <see cref="DescriptionAttribute" />.
+///     A filter that adds descriptions of enums depending on their name.
+///     It also adds additional descriptions if the enum elements have the attribute
+///     <see cref="DescriptionAttribute" />.
 /// </summary>
 internal class SwaggerEnumDescriptionSchemaOperationFilter : ISchemaFilter, IOperationFilter
 {
     private const string LineBreakSeparator = "<br />";
 
-    /// <inheritdoc/>
-    public void Apply(OpenApiSchema schema, SchemaFilterContext context)
-    {
-        ApplyEnumCommentsForModel(schema, context);
-    }
-
     public void Apply(OpenApiOperation operation, OperationFilterContext context)
     {
     }
+
+    /// <inheritdoc />
+    public void Apply(OpenApiSchema schema, SchemaFilterContext context) => ApplyEnumCommentsForModel(schema, context);
 
     private static void ApplyEnumCommentsForModel(OpenApiSchema schema, SchemaFilterContext context)
     {
@@ -30,10 +27,12 @@ internal class SwaggerEnumDescriptionSchemaOperationFilter : ISchemaFilter, IOpe
         {
             return;
         }
+
         if (!string.IsNullOrWhiteSpace(schema.Description))
         {
             schema.Description += LineBreakSeparator;
         }
+
         var enumDescriptions = GetEnumDescriptionByType(type);
         schema.Description += string.Join(LineBreakSeparator, enumDescriptions);
     }
@@ -55,6 +54,7 @@ internal class SwaggerEnumDescriptionSchemaOperationFilter : ISchemaFilter, IOpe
 
             enumDescriptions.Add(enumDescription);
         }
+
         return enumDescriptions;
     }
 

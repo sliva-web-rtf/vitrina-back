@@ -3,7 +3,7 @@
 namespace Vitrina.UseCases.Project.GetPeriods;
 
 /// <summary>
-/// Get periods.
+///     Get periods.
 /// </summary>
 public class GetPeriodsQuery : IRequest<ICollection<string>>
 {

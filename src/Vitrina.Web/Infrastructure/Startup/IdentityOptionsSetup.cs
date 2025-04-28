@@ -3,12 +3,12 @@ using Microsoft.AspNetCore.Identity;
 namespace Vitrina.Web.Infrastructure.Startup;
 
 /// <summary>
-/// Identity options setup.
+///     Identity options setup.
 /// </summary>
 public class IdentityOptionsSetup
 {
     /// <summary>
-    /// Setup identity.
+    ///     Setup identity.
     /// </summary>
     /// <param name="options">The options.</param>
     public void Setup(IdentityOptions options)

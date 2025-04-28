@@ -3,44 +3,45 @@
 namespace Vitrina.UseCases.Project.UpdateProject.DTO;
 
 /// <summary>
-/// Dto for update.
+///     Dto for update.
 /// </summary>
 public class UpdateUserDto
 {
     /// <summary>
-    /// User id.
-    /// </summary>ы
+    ///     User id.
+    /// </summary>
+    /// ы
     public int Id { get; init; }
 
     /// <summary>
-    /// User email.
+    ///     User email.
     /// </summary>
     public string? Email { get; init; }
 
     /// <summary>
-    /// User name.
+    ///     User name.
     /// </summary>
     [Required]
     required public string FirstName { get; init; }
 
     /// <summary>
-    /// User last name.
+    ///     User last name.
     /// </summary>
     [Required]
     required public string LastName { get; init; }
 
     /// <summary>
-    /// User patronymic.
+    ///     User patronymic.
     /// </summary>
     public string? Patronymic { get; init; }
 
     /// <summary>
-    /// User avatar.
+    ///     User avatar.
     /// </summary>
     public string? Avatar { get; init; }
 
     /// <summary>
-    /// User roles.
+    ///     User roles.
     /// </summary>
     public ICollection<UpdateRoleDto> Roles { get; init; } = new List<UpdateRoleDto>();
 }

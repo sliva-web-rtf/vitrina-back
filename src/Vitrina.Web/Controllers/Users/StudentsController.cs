@@ -1,4 +1,3 @@
-using System.Text.Json;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -11,14 +10,14 @@ using Vitrina.UseCases.User.UpdateUser;
 namespace Vitrina.Web.Controllers.Users;
 
 /// <summary>
-/// A controller for working with students.
+///     A controller for working with students.
 /// </summary>
 [Route("api/students/{id:int}/profile")]
 [ApiExplorerSettings(GroupName = "students")]
 public class StudentsController(IMediator mediator, IMapper mapper) : ControllerBase
 {
     /// <summary>
-    /// Getting student profile data by ID.
+    ///     Getting student profile data by ID.
     /// </summary>
     [HttpGet("")]
     [Produces("application/json")]
@@ -32,7 +31,7 @@ public class StudentsController(IMediator mediator, IMapper mapper) : Controller
     }
 
     /// <summary>
-    /// Edits student profile data.
+    ///     Edits student profile data.
     /// </summary>
     [ValidateUserId]
     [Authorize(Roles = "Student")]
