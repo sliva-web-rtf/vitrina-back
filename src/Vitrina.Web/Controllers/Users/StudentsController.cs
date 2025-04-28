@@ -39,11 +39,12 @@ public class StudentsController(IMediator mediator, IMapper mapper) : Controller
     [HttpPatch("")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<JsonDocument> EditStudentProfileById([FromRoute] int id,
+    public async Task<IActionResult> EditStudentProfileById([FromRoute] int id,
         [FromBody] UpdateStudentDto student, CancellationToken cancellationToken)
     {
         var user = mapper.Map<UpdateUserDto>(student);
         var command = new UpdateUserProfileCommand(id, user);
-        return await mediator.Send(command, cancellationToken);
+        var result = await mediator.Send(command, cancellationToken);
+        return Ok(result.RootElement);
     }
 }

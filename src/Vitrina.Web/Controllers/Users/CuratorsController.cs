@@ -1,4 +1,3 @@
-using System.Text.Json;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -26,11 +25,12 @@ public class CuratorsController(IMediator mediator, IMapper mapper) : Controller
     [HttpGet("")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<JsonDocument> GetUserProfileDataById([FromRoute] int id,
+    public async Task<IActionResult> GetUserProfileDataById([FromRoute] int id,
         CancellationToken cancellationToken)
     {
         var query = new GetUserProfileByIdQuery(id);
-        return await mediator.Send(query, cancellationToken);
+        var result = await mediator.Send(query, cancellationToken);
+        return Ok(result.RootElement);
     }
 
     /// <summary>
@@ -40,11 +40,12 @@ public class CuratorsController(IMediator mediator, IMapper mapper) : Controller
     [HttpPatch("")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<JsonDocument> EditUserProfileById([FromRoute] int id,
+    public async Task<IActionResult> EditUserProfileById([FromRoute] int id,
         [FromBody] UpdateCuratorDto curator, CancellationToken cancellationToken)
     {
         var user = mapper.Map<UpdateUserDto>(curator);
         var command = new UpdateUserProfileCommand(id, user);
-        return await mediator.Send(command, cancellationToken);
+        var result = await mediator.Send(command, cancellationToken);
+        return Ok(result.RootElement);
     }
 }

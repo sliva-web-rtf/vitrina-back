@@ -25,10 +25,11 @@ public class PartnersController(IMediator mediator, IMapper mapper) : Controller
     [HttpGet("")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<JsonDocument> GetPartnerProfileDataById([FromRoute] int id, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetPartnerProfileDataById([FromRoute] int id, CancellationToken cancellationToken)
     {
         var query = new GetUserProfileByIdQuery(id);
-        return await mediator.Send(query, cancellationToken);
+        var result = await mediator.Send(query, cancellationToken);
+        return Ok(result.RootElement);
     }
 
     /// <summary>
@@ -38,11 +39,12 @@ public class PartnersController(IMediator mediator, IMapper mapper) : Controller
     [HttpPatch("")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<JsonDocument> EditPartnerProfileById([FromRoute] int id,
+    public async Task<IActionResult> EditPartnerProfileById([FromRoute] int id,
         [FromBody] PartnerDto partner, CancellationToken cancellationToken)
     {
         var user = mapper.Map<UpdateUserDto>(partner);
         var command = new UpdateUserProfileCommand(id, user);
-        return await mediator.Send(command, cancellationToken);
+        var result = await mediator.Send(command, cancellationToken);
+        return Ok(result.RootElement);
     }
 }
