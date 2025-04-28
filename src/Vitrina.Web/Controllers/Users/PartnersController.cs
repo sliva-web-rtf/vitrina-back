@@ -13,7 +13,6 @@ namespace Vitrina.Web.Controllers.Users;
 /// <summary>
 /// A controller for working with partners.
 /// </summary>
-[Authorize(Roles = "Partner")]
 [Route("api/partners/{id:int}/profile")]
 [ApiExplorerSettings(GroupName = "partners")]
 public class PartnersController(IMediator mediator, IMapper mapper) : ControllerBase
@@ -35,8 +34,9 @@ public class PartnersController(IMediator mediator, IMapper mapper) : Controller
     /// <summary>
     /// Edits partner profile data.
     /// </summary>
-    [Produces("application/json")]
     [HttpPatch("")]
+    [Authorize(Roles = "Partner")]
+    [Produces("application/json")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> EditPartnerProfileById([FromRoute] int id,

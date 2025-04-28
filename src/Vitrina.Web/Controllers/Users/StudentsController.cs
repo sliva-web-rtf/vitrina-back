@@ -13,7 +13,6 @@ namespace Vitrina.Web.Controllers.Users;
 /// <summary>
 /// A controller for working with students.
 /// </summary>
-/*[Authorize(Roles = "Student")]*/
 [Route("api/students/{id:int}/profile")]
 [ApiExplorerSettings(GroupName = "students")]
 public class StudentsController(IMediator mediator, IMapper mapper) : ControllerBase
@@ -35,6 +34,7 @@ public class StudentsController(IMediator mediator, IMapper mapper) : Controller
     /// <summary>
     /// Edits student profile data.
     /// </summary>
+    [Authorize(Roles = "Student")]
     [Produces("application/json")]
     [HttpPatch("")]
     [ProducesResponseType(StatusCodes.Status200OK)]

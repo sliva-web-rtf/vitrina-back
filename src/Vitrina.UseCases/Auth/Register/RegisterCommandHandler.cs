@@ -33,22 +33,16 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, RegisterC
             request.Email,
             request.EducationCourse,
             request.EducationLevel);
-        try
+
+        var result = await userManager.CreateAsync(user, request.Password);
+        if (!result.Succeeded)
         {
-            var result = await userManager.CreateAsync(user, request.Password);
-            if (!result.Succeeded)
+            return new RegisterCommandResult
             {
-                return new RegisterCommandResult
-                {
-                    IsSuccess = false, Message = string.Join("\n", result.Errors.Select(e => e.Description))
-                };
-            }
+                IsSuccess = false, Message = string.Join("\n", result.Errors.Select(e => e.Description))
+            };
         }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            throw;
-        }
+        await userManager.AddToRoleAsync(user, $"{request.RoleOnPlatform}");
 
         var code = ConfirmationCodeGenerator.Generate();
         try

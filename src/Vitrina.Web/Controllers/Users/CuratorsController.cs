@@ -13,7 +13,6 @@ namespace Vitrina.Web.Controllers.Users;
 /// A controller for working with curators.
 /// </summary>
 [ApiController]
-[Authorize(Roles = "Curator")]
 [Route("api/curators/{id:int}/profile")]
 [ApiExplorerSettings(GroupName = "curators")]
 public class CuratorsController(IMediator mediator, IMapper mapper) : ControllerBase
@@ -36,8 +35,9 @@ public class CuratorsController(IMediator mediator, IMapper mapper) : Controller
     /// <summary>
     /// Edits curator profile data.
     /// </summary>
-    [Produces("application/json")]
     [HttpPatch("")]
+    [Authorize(Roles = "Curator")]
+    [Produces("application/json")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> EditUserProfileById([FromRoute] int id,

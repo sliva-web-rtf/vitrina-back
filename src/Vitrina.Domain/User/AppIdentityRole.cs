@@ -7,4 +7,7 @@ namespace Vitrina.Domain.User;
 /// </summary>
 public class AppIdentityRole : IdentityRole<int>
 {
+    public AppIdentityRole() : base() { }
+
+    public AppIdentityRole(string roleName) : base(roleName) { }
 }

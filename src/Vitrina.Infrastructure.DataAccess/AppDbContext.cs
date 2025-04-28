@@ -53,10 +53,6 @@ public class AppDbContext : IdentityDbContext<User, AppIdentityRole, int>, IAppD
     {
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.Entity<Specialization>()
-            .HasIndex(e => e.Name)
-            .IsUnique();
-
         RestrictCascadeDelete(modelBuilder);
         ForceHavingAllStringsAsVarchars(modelBuilder);
 

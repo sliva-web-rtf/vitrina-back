@@ -98,8 +98,8 @@ public class AuthController : ControllerBase
     /// </summary>
     /// <returns>Current logged user info.</returns>
     /// <param name="cancellationToken">Cancellation token to cancel the request.</param>
-    [HttpGet("get-me")]
     [Authorize]
+    [HttpGet("get-me")]
     public async Task<UserDetailsDto> GetMe(CancellationToken cancellationToken)
     {
         var query = new GetUserByIdQuery

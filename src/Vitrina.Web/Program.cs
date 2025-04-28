@@ -1,4 +1,6 @@
 ﻿using McMaster.Extensions.CommandLineUtils;
+using Microsoft.AspNetCore.Identity;
+using Vitrina.Web.Infrastructure.Settings;
 
 namespace Vitrina.Web;
 
@@ -21,6 +23,8 @@ internal sealed class Program
         startup.ConfigureServices(builder.Services, builder.Environment);
         app = builder.Build();
         startup.Configure(app, app.Environment);
+
+        await Seeder.ConfigureRoles(app.Services);
 
         // Command line processing.
         var commandLineApplication = new CommandLineApplication<Program>();
