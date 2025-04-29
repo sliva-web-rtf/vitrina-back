@@ -93,7 +93,7 @@ public class User : IdentityUser<int>
     public virtual ICollection<Teammate> PositionsInTeams { get; init; } = new List<Teammate>();
 
     /// <summary>
-    /// The list of project pages available for editing.
+    ///     The list of project pages available for editing.
     /// </summary>
     public virtual ICollection<PageEditor> EditingRights { get; init; } = new List<PageEditor>();
 

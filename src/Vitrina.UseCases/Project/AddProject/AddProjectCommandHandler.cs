@@ -2,14 +2,13 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Saritasa.Tools.Domain.Exceptions;
-using Vitrina.Domain.Project;
 using Vitrina.Domain.Project.Teammate;
 using Vitrina.Infrastructure.Abstractions.Interfaces;
 
 namespace Vitrina.UseCases.Project.AddProject;
 
 /// <summary>
-/// Add project handler.
+///     Add project handler.
 /// </summary>
 internal class AddProjectCommandHandler : IRequestHandler<AddProjectCommand, int>
 {
@@ -22,7 +21,7 @@ internal class AddProjectCommandHandler : IRequestHandler<AddProjectCommand, int
         this.dbContext = dbContext;
     }
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     public async Task<int> Handle(AddProjectCommand request, CancellationToken cancellationToken)
     {
         try
@@ -43,6 +42,7 @@ internal class AddProjectCommandHandler : IRequestHandler<AddProjectCommand, int
                     }
                 }
             }
+
             await dbContext.Projects.AddAsync(project, cancellationToken);
             var id = await dbContext.SaveChangesAsync(cancellationToken);
             return project.Id;

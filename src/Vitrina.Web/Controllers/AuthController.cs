@@ -13,7 +13,7 @@ using Vitrina.Web.Infrastructure.Web;
 namespace Vitrina.Web.Controllers;
 
 /// <summary>
-/// Auth controller.
+///     Auth controller.
 /// </summary>
 [ApiController]
 [Route("api/auth")]
@@ -23,28 +23,24 @@ public class AuthController : ControllerBase
     private readonly IMediator mediator;
 
     /// <summary>
-    /// Constructor.
+    ///     Constructor.
     /// </summary>
-    public AuthController(IMediator mediator)
-    {
-        this.mediator = mediator;
-    }
+    public AuthController(IMediator mediator) => this.mediator = mediator;
 
     /// <summary>
-    /// Authenticate user by email and password.
+    ///     Authenticate user by email and password.
     /// </summary>
     /// <param name="command">Login command.</param>
     /// <param name="cancellationToken">Cancellation token to cancel the request.</param>
     [HttpPost("log-in")]
     [ProducesResponseType(200)]
     [ProducesResponseType(400)]
-    public async Task<TokenModel> Authenticate([Required] LoginUserCommand command, CancellationToken cancellationToken)
-    {
-        return (await mediator.Send(command, cancellationToken)).TokenModel;
-    }
+    public async Task<TokenModel>
+        Authenticate([Required] LoginUserCommand command, CancellationToken cancellationToken) =>
+        (await mediator.Send(command, cancellationToken)).TokenModel;
 
     /// <summary>
-    /// Register user.
+    ///     Register user.
     /// </summary>
     /// <param name="command">Register command.</param>
     /// <param name="cancellationToken">Cancellation token to cancel the request.</param>
@@ -63,7 +59,7 @@ public class AuthController : ControllerBase
     }
 
     /// <summary>
-    /// Confirm email.
+    ///     Confirm email.
     /// </summary>
     [HttpPost("confirm")]
     [ProducesResponseType(200)]
@@ -81,7 +77,7 @@ public class AuthController : ControllerBase
     }
 
     /// <summary>
-    /// Get new token by refresh token.
+    ///     Get new token by refresh token.
     /// </summary>
     /// <param name="command">Refresh token command.</param>
     /// <returns>New authentication and refresh tokens.</returns>
@@ -94,7 +90,7 @@ public class AuthController : ControllerBase
         => mediator.Send(command, cancellationToken);
 
     /// <summary>
-    /// Get current logged user info.
+    ///     Get current logged user info.
     /// </summary>
     /// <returns>Current logged user info.</returns>
     /// <param name="cancellationToken">Cancellation token to cancel the request.</param>
@@ -102,10 +98,7 @@ public class AuthController : ControllerBase
     [Authorize]
     public async Task<UserDetailsDto> GetMe(CancellationToken cancellationToken)
     {
-        var query = new GetUserByIdQuery
-        {
-            UserId = User.GetCurrentUserId()
-        };
+        var query = new GetUserByIdQuery { UserId = User.GetCurrentUserId() };
         return await mediator.Send(query, cancellationToken);
     }
 }

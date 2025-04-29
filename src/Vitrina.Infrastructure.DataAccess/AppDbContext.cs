@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Vitrina.Domain.Project;
 using Vitrina.Domain.Project.Page;
 using Vitrina.Domain.Project.Teammate;
@@ -11,13 +10,19 @@ using Vitrina.Infrastructure.Abstractions.Interfaces;
 namespace Vitrina.Infrastructure.DataAccess;
 
 /// <summary>
-/// Application unit of work.
+///     Application unit of work.
 /// </summary>
 public class AppDbContext : IdentityDbContext<User, AppIdentityRole, int>, IAppDbContext, IDataProtectionKeyContext
 {
-    public DbSet<Project> Projects => Set<Project>();
+    /// <summary>
+    ///     Constructor.
+    /// </summary>
+    /// <param name="options">The options to be used by a <see cref="Microsoft.EntityFrameworkCore.DbContext" />.</param>
+    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+    {
+    }
 
-    public DbSet<DataProtectionKey> DataProtectionKeys { get; private set; }
+    public DbSet<Project> Projects => Set<Project>();
 
     public DbSet<Teammate> Teammates => Set<Teammate>();
 
@@ -35,18 +40,10 @@ public class AppDbContext : IdentityDbContext<User, AppIdentityRole, int>, IAppD
 
     public DbSet<ContentBlock> ContentBlocks => Set<ContentBlock>();
 
-    /// <summary>
-    /// Constructor.
-    /// </summary>
-    /// <param name="options">The options to be used by a <see cref="Microsoft.EntityFrameworkCore.DbContext" />.</param>
-    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
-    {
-    }
+    public DbSet<DataProtectionKey> DataProtectionKeys { get; private set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
         optionsBuilder.UseLazyLoadingProxies();
-    }
 
     /// <inheritdoc />
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -73,7 +70,7 @@ public class AppDbContext : IdentityDbContext<User, AppIdentityRole, int>, IAppD
             .GetEntityTypes()
             .SelectMany(e => e.GetProperties())
             .Where(p => p.ClrType == typeof(string));
-        foreach (IMutableProperty mutableProperty in stringColumns)
+        foreach (var mutableProperty in stringColumns)
         {
             mutableProperty.SetIsUnicode(false);
         }

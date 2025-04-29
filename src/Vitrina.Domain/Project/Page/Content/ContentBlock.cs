@@ -8,8 +8,7 @@ public class ContentBlock : BaseEntity<Guid>
 
     required public ProjectPage Page { get; init; }
 
-    [Column(TypeName = "jsonb")]
-    required public string Content { get; set; }
+    [Column(TypeName = "jsonb")] required public string Content { get; set; }
 
     required public ContentTypeEnum ContentType { get; init; }
 }

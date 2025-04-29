@@ -20,13 +20,11 @@ public class AddEditorByUserEmailCommandHandler(
         {
             throw new DomainException($"The editor with email = {request.UserEmail.Email} has already been added.");
         }
+
         var user = await userRepository.FindByEmailAsync(request.UserEmail.Email, cancellationToken);
         var editor = new PageEditor
         {
-            PageId = request.PageId,
-            UserId = user.Id,
-            Status = EditorStatus.Editor,
-            Id = Guid.NewGuid(),
+            PageId = request.PageId, UserId = user.Id, Status = EditorStatus.Editor, Id = Guid.NewGuid()
         };
 
         await editorRepository.AddAsync(editor, cancellationToken);

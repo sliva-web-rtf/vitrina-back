@@ -12,7 +12,7 @@ using UserDto = Vitrina.UseCases.User.DTO.UserDto;
 namespace Vitrina.Web.Controllers.Users;
 
 /// <summary>
-/// A controller for working with curators.
+///     A controller for working with curators.
 /// </summary>
 [ApiController]
 [Authorize(Roles = "Curator")]
@@ -21,7 +21,7 @@ namespace Vitrina.Web.Controllers.Users;
 public class CuratorsController(IMediator mediator, IMapper mapper) : ObtainingProjectInformationBase(mediator)
 {
     /// <summary>
-    /// Getting curator profile data by Id.
+    ///     Getting curator profile data by Id.
     /// </summary>
     [HttpGet("profile")]
     [Produces("application/json")]
@@ -35,7 +35,7 @@ public class CuratorsController(IMediator mediator, IMapper mapper) : ObtainingP
     }
 
     /// <summary>
-    /// Edits curator profile data.
+    ///     Edits curator profile data.
     /// </summary>
     [HttpPatch("profile")]
     [Produces("application/json")]
@@ -52,16 +52,12 @@ public class CuratorsController(IMediator mediator, IMapper mapper) : ObtainingP
     /// <inheritdoc />
     [HttpGet("projects")]
     [Produces("application/json")]
-    public override async Task<ICollection<PreviewProjectDto>> GetProjects([FromRoute] int id, CancellationToken cancellationToken)
-    {
-        return await base.GetProjects(id, cancellationToken);
-    }
+    public override async Task<ICollection<PreviewProjectDto>> GetProjects([FromRoute] int id,
+        CancellationToken cancellationToken) => await base.GetProjects(id, cancellationToken);
 
     /// <inheritdoc />
     [HttpGet("pages")]
     [Produces("application/json")]
-    public override async Task<ICollection<ProjectPageDto>> GetProjectPages([FromRoute] int id, CancellationToken cancellationToken)
-    {
-        return await base.GetProjectPages(id, cancellationToken);
-    }
+    public override async Task<ICollection<ProjectPageDto>> GetProjectPages([FromRoute] int id,
+        CancellationToken cancellationToken) => await base.GetProjectPages(id, cancellationToken);
 }

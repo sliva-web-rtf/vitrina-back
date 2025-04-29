@@ -2,7 +2,6 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Saritasa.Tools.Domain.Exceptions;
-using Vitrina.Domain.Project;
 using Vitrina.Domain.Project.Teammate;
 using Vitrina.Infrastructure.Abstractions.Interfaces;
 
@@ -24,9 +23,9 @@ internal class UpdateProjectCommandHandler : IRequestHandler<UpdateProjectComman
         try
         {
             var project = await appDbContext
-                .Projects
-                .FirstOrDefaultAsync(p => p.Id == request.ProjectId, cancellationToken)
-                        ?? throw new DomainException("Project not found");
+                              .Projects
+                              .FirstOrDefaultAsync(p => p.Id == request.ProjectId, cancellationToken)
+                          ?? throw new DomainException("Project not found");
             var users = await appDbContext.Teammates
                 .Include(u => u.Roles)
                 .Where(u => u.ProjectId == project.Id)
@@ -60,6 +59,7 @@ internal class UpdateProjectCommandHandler : IRequestHandler<UpdateProjectComman
 
                 resultUser.Add(userFromDb);
             }
+
             project.Users = resultUser;
             await appDbContext.SaveChangesAsync(cancellationToken);
         }

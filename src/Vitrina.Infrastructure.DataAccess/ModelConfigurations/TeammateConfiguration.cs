@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Vitrina.Domain.Project;
 using Vitrina.Domain.Project.Teammate;
 
 namespace Vitrina.Infrastructure.DataAccess.ModelConfigurations;

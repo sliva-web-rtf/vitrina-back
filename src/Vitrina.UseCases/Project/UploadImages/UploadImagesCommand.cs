@@ -4,22 +4,22 @@ using Vitrina.UseCases.Project.UploadImages.Dto;
 namespace Vitrina.UseCases.Project.UploadImages;
 
 /// <summary>
-/// Upload images command.
+///     Upload images command.
 /// </summary>
 public class UploadImagesCommand : IRequest
 {
     /// <summary>
-    /// Project id.
+    ///     Project id.
     /// </summary>
     public int Id { get; init; }
 
     /// <summary>
-    /// Is avatar.
+    ///     Is avatar.
     /// </summary>
     public bool IsAvatar { get; init; }
 
     /// <summary>
-    /// Files.
+    ///     Files.
     /// </summary>
     public ICollection<FileDto> Files { get; init; } = new List<FileDto>();
 }

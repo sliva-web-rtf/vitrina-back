@@ -1,4 +1,3 @@
-using System.Xml.Linq;
 using Microsoft.EntityFrameworkCore;
 using Saritasa.Tools.Domain.Exceptions;
 using Vitrina.Domain.Project.Page;
@@ -34,10 +33,8 @@ public class ProjectPageRepository : IProjectPageRepository
         throw new NotFoundException("Project page not found");
     }
 
-    public async Task AddAsync(ProjectPage page, CancellationToken cancellationToken)
-    {
+    public async Task AddAsync(ProjectPage page, CancellationToken cancellationToken) =>
         await pages.AddAsync(page, cancellationToken);
-    }
 
     public async Task Delete(Guid id, CancellationToken cancellationToken)
     {
@@ -50,8 +47,6 @@ public class ProjectPageRepository : IProjectPageRepository
         throw new NotFoundException("Project page not found");
     }
 
-    public async Task SaveChangesAsync(CancellationToken cancellationToken)
-    {
+    public async Task SaveChangesAsync(CancellationToken cancellationToken) =>
         await dbContext.SaveChangesAsync(cancellationToken);
-    }
 }

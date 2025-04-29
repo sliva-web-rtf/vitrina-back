@@ -4,6 +4,5 @@ namespace Vitrina.UseCases.Common.DTO;
 
 public record EmailDto
 {
-    [EmailAddress]
-    public string Email { get; init; }
+    [EmailAddress] public string Email { get; init; }
 }

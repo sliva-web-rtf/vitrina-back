@@ -1,70 +1,69 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Vitrina.Domain.Project;
-using Vitrina.UseCases.Common;
 using Vitrina.UseCases.Common.DTO;
 
 namespace Vitrina.UseCases.Project.UpdateProject.DTO;
 
 /// <summary>
-/// Dto for update.
+///     Dto for update.
 /// </summary>
 public class UpdateProjectDto
 {
     /// <summary>
-    /// Name.
+    ///     Name.
     /// </summary>
     [Required]
     required public string Name { get; init; }
 
     /// <summary>
-    /// Project description.
+    ///     Project description.
     /// </summary>
     public string? Description { get; init; }
 
     /// <summary>
-    /// Project aim.
+    ///     Project aim.
     /// </summary>
     public string? Aim { get; init; }
 
     /// <summary>
-    /// Project client.
+    ///     Project client.
     /// </summary>
     public string? Client { get; init; }
 
     /// <summary>
-    /// Markdown of page.
+    ///     Markdown of page.
     /// </summary>
     public string? Markdown { get; init; }
 
     /// <summary>
-    /// Url of project video.
+    ///     Url of project video.
     /// </summary>
     public string? VideoUrl { get; init; }
 
     /// <summary>
-    /// Priority of project.
+    ///     Priority of project.
     /// </summary>
     [Required]
     public int Priority { get; set; }
 
     /// <summary>
-    /// Semester.
+    ///     Semester.
     /// </summary>
     [Required]
     public SemesterEnum Semester { get; set; }
 
     /// <summary>
-    /// Project content.
+    ///     Project content.
     /// </summary>
     public ICollection<ContentDto> Contents { get; init; } = new List<ContentDto>();
 
     /// <summary>
-    /// Project tags.
+    ///     Project tags.
     /// </summary>
     public ICollection<TagDto> Tags { get; init; } = new List<TagDto>();
 
     /// <summary>
-    /// Project team.
+    ///     Project team.
     /// </summary>
     public ICollection<UpdateUserDto> Users { get; init; } = new List<UpdateUserDto>();
 }

@@ -11,7 +11,7 @@ using Vitrina.UseCases.User.UpdateUser;
 namespace Vitrina.Web.Controllers.Users;
 
 /// <summary>
-/// A controller for working with partners.
+///     A controller for working with partners.
 /// </summary>
 [Authorize(Roles = "Partner")]
 [Route("api/partners/{id:int}/profile")]
@@ -19,7 +19,7 @@ namespace Vitrina.Web.Controllers.Users;
 public class PartnersController(IMediator mediator, IMapper mapper) : ControllerBase
 {
     /// <summary>
-    /// Getting partner profile data by ID.
+    ///     Getting partner profile data by ID.
     /// </summary>
     [HttpGet("")]
     [Produces("application/json")]
@@ -32,7 +32,7 @@ public class PartnersController(IMediator mediator, IMapper mapper) : Controller
     }
 
     /// <summary>
-    /// Edits partner profile data.
+    ///     Edits partner profile data.
     /// </summary>
     [HttpPatch("")]
     [Produces("application/json")]

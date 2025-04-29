@@ -20,7 +20,7 @@ public class ContentBlockDtoValidator : AbstractValidator<ContentBlockDto>
         { ContentTypeEnum.HorizontalDividerBlock, typeof(HorizontalDividerDto) },
         { ContentTypeEnum.ImageBlock, typeof(ImageBlockDto) },
         { ContentTypeEnum.TextBlock, typeof(TextBlockDto) },
-        { ContentTypeEnum.VideoBlock, typeof(VideoBlockDto) },
+        { ContentTypeEnum.VideoBlock, typeof(VideoBlockDto) }
     };
 
     public ContentBlockDtoValidator()
@@ -30,7 +30,8 @@ public class ContentBlockDtoValidator : AbstractValidator<ContentBlockDto>
             .WithMessage("The value of the Content field should not be empty");
         RuleFor(contentBlock => contentBlock)
             .Must(TryDeserializeContentBlock)
-            .WithMessage(content => $"The value of the {nameof(content.Content)} property is invalid:{Environment.NewLine}{content.Content}");
+            .WithMessage(content =>
+                $"The value of the {nameof(content.Content)} property is invalid:{Environment.NewLine}{content.Content}");
     }
 
     private bool TryDeserializeContentBlock(ContentBlockDto block)

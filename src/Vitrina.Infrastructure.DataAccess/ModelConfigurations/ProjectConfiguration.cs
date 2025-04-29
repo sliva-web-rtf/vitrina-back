@@ -6,7 +6,7 @@ using Vitrina.Domain.Project.Page;
 namespace Vitrina.Infrastructure.DataAccess.ModelConfigurations;
 
 /// <summary>
-/// Configeration of project.
+///     Configeration of project.
 /// </summary>
 internal class ProjectConfiguration : IEntityTypeConfiguration<Project>
 {

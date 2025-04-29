@@ -12,19 +12,19 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AspNetCore.HealthChecks.NpgSql" Version="7.0.0" />
-    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
-    <PackageReference Include="Bogus" Version="34.0.2" />
-    <PackageReference Include="DateOnlyTimeOnly.AspNet.Swashbuckle" Version="2.1.1" />
-    <PackageReference Include="Extensions.Hosting.AsyncInitialization" Version="2.0.0" />
-    <PackageReference Include="FluentValidation" Version="12.0.0-preview1" />
-    <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
-    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.0.0-preview1" />
-    <PackageReference Include="McMaster.Extensions.CommandLineUtils" Version="4.0.2" />
-    <PackageReference Include="McMaster.Extensions.Hosting.CommandLine" Version="4.0.2" />
-    <PackageReference Include="Microsoft.AspNetCore.DataProtection.EntityFrameworkCore" Version="9.0.3" />
-    <PackageReference Include="Microsoft.AspNetCore.DataProtection.Extensions" Version="9.0.3" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="9.0.3" />
+    <PackageReference Include="AspNetCore.HealthChecks.NpgSql" Version="7.0.0"/>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1"/>
+    <PackageReference Include="Bogus" Version="34.0.2"/>
+    <PackageReference Include="DateOnlyTimeOnly.AspNet.Swashbuckle" Version="2.1.1"/>
+    <PackageReference Include="Extensions.Hosting.AsyncInitialization" Version="2.0.0"/>
+    <PackageReference Include="FluentValidation" Version="12.0.0-preview1"/>
+    <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0"/>
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.0.0-preview1"/>
+    <PackageReference Include="McMaster.Extensions.CommandLineUtils" Version="4.0.2"/>
+    <PackageReference Include="McMaster.Extensions.Hosting.CommandLine" Version="4.0.2"/>
+    <PackageReference Include="Microsoft.AspNetCore.DataProtection.EntityFrameworkCore" Version="9.0.3"/>
+    <PackageReference Include="Microsoft.AspNetCore.DataProtection.Extensions" Version="9.0.3"/>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="9.0.3"/>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.3">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -33,21 +33,21 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Saritasa.Tools.Common" Version="5.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.3" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
-    <PackageReference Include="System.Drawing.Common" Version="9.0.3" />
-    <PackageReference Include="Unchase.Swashbuckle.AspNetCore.Extensions" Version="2.7.1" />
+    <PackageReference Include="Saritasa.Tools.Common" Version="5.0.0"/>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.3"/>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0"/>
+    <PackageReference Include="System.Drawing.Common" Version="9.0.3"/>
+    <PackageReference Include="Unchase.Swashbuckle.AspNetCore.Extensions" Version="2.7.1"/>
   </ItemGroup>
 
   <ItemGroup>
-    <_ContentIncludedByDefault Remove="Views\Auth\Index.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Auth\Index.cshtml"/>
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Vitrina.Infrastructure.DataAccess\Vitrina.Infrastructure.DataAccess.csproj" />
-    <ProjectReference Include="..\Vitrina.UseCases\Vitrina.UseCases.csproj" />
-    <ProjectReference Include="..\Vitrina.Validators\Vitrina.Validators.csproj" />
+    <ProjectReference Include="..\Vitrina.Infrastructure.DataAccess\Vitrina.Infrastructure.DataAccess.csproj"/>
+    <ProjectReference Include="..\Vitrina.UseCases\Vitrina.UseCases.csproj"/>
+    <ProjectReference Include="..\Vitrina.Validators\Vitrina.Validators.csproj"/>
   </ItemGroup>
 
   <ItemGroup>
@@ -57,8 +57,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\Avatars\" />
-    <Folder Include="wwwroot\Preview\" />
+    <Folder Include="wwwroot\Avatars\"/>
+    <Folder Include="wwwroot\Preview\"/>
   </ItemGroup>
 
   <ItemGroup>

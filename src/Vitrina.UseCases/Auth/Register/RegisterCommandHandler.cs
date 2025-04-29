@@ -6,15 +6,15 @@ using Vitrina.Infrastructure.Abstractions.Interfaces;
 namespace Vitrina.UseCases.Auth.Register;
 
 /// <summary>
-/// Handler for <see cref="RegisterCommand"/>.
+///     Handler for <see cref="RegisterCommand" />.
 /// </summary>
 public class RegisterCommandHandler : IRequestHandler<RegisterCommand, RegisterCommandResult>
 {
-    private readonly UserManager<Domain.User.User> userManager;
     private readonly IAppDbContext appDbContext;
+    private readonly UserManager<Domain.User.User> userManager;
 
     /// <summary>
-    /// Constructor.
+    ///     Constructor.
     /// </summary>
     public RegisterCommandHandler(UserManager<Domain.User.User> userManager, IAppDbContext appDbContext)
     {
@@ -43,24 +43,16 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, RegisterC
         var code = ConfirmationCodeGenerator.Generate();
         try
         {
-            var confirmationCode = new ConfirmationCode { UserId = user.Id, Code = code, };
+            var confirmationCode = new ConfirmationCode { UserId = user.Id, Code = code };
             await appDbContext.Codes.AddAsync(confirmationCode, cancellationToken);
             await appDbContext.SaveChangesAsync(cancellationToken);
         }
         catch (Exception e)
         {
             Console.WriteLine(e);
-            return new RegisterCommandResult
-            {
-                IsSuccess = false, Message = "failed to save confirmation code."
-            };
+            return new RegisterCommandResult { IsSuccess = false, Message = "failed to save confirmation code." };
         }
 
-        return new RegisterCommandResult
-        {
-            IsSuccess = true,
-            UserId = user.Id,
-            ConfirmationCode = code,
-        };
+        return new RegisterCommandResult { IsSuccess = true, UserId = user.Id, ConfirmationCode = code };
     }
 }

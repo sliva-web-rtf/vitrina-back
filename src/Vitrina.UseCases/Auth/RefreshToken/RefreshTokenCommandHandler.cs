@@ -6,15 +6,15 @@ using Saritasa.Tools.Domain.Exceptions;
 namespace Vitrina.UseCases.Auth.RefreshToken;
 
 /// <summary>
-/// Handler for <see cref="RefreshTokenCommand" />.
+///     Handler for <see cref="RefreshTokenCommand" />.
 /// </summary>
 internal class RefreshTokenCommandHandler : IRequestHandler<RefreshTokenCommand, TokenModel>
 {
-    private readonly IAuthenticationTokenService tokenService;
     private readonly SignInManager<Domain.User.User> signInManager;
+    private readonly IAuthenticationTokenService tokenService;
 
     /// <summary>
-    /// Constructor.
+    ///     Constructor.
     /// </summary>
     public RefreshTokenCommandHandler(
         IAuthenticationTokenService tokenService,
@@ -69,6 +69,7 @@ internal class RefreshTokenCommandHandler : IRequestHandler<RefreshTokenCommand,
             throw new ArgumentException(
                 "User identifier claim cannot be found. Invalid token.");
         }
+
         return userIdClaim.Value;
     }
 

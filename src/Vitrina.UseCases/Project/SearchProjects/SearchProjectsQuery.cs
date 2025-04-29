@@ -5,27 +5,27 @@ using Vitrina.UseCases.Common.Pagination;
 namespace Vitrina.UseCases.Project.SearchProjects;
 
 /// <summary>
-/// Search projects.
+///     Search projects.
 /// </summary>
 public class SearchProjectsQuery : PageQueryFilter, IRequest<PagedList<ShortProjectDto>>
 {
     /// <summary>
-    /// Name.
+    ///     Name.
     /// </summary>
     public string? Name { get; init; }
 
     /// <summary>
-    /// Period.
+    ///     Period.
     /// </summary>
     public string? Period { get; init; }
 
     /// <summary>
-    /// Organization.
+    ///     Organization.
     /// </summary>
     public string? Organization { get; init; }
 
     /// <summary>
-    /// Semester.
+    ///     Semester.
     /// </summary>
     public int? Semester { get; init; }
 }

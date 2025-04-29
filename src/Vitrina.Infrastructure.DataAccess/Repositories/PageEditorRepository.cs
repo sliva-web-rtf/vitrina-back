@@ -12,19 +12,16 @@ public class PageEditorRepository : IPageEditorRepository
 
     public PageEditorRepository(IAppDbContext context)
     {
-        this.dbContext = context;
+        dbContext = context;
         editors = context.PageEditors;
     }
 
-    public async Task AddAsync(PageEditor editor, CancellationToken cancellationToken)
-    {
+    public async Task AddAsync(PageEditor editor, CancellationToken cancellationToken) =>
         await editors.AddAsync(editor, cancellationToken);
-    }
 
-    public Task<PageEditor> DeleteAsync(Guid id, CancellationToken cancellationToken) => throw new NotImplementedException();
+    public Task<PageEditor> DeleteAsync(Guid id, CancellationToken cancellationToken) =>
+        throw new NotImplementedException();
 
-    public async Task SaveChangesAsync(CancellationToken cancellationToken)
-    {
+    public async Task SaveChangesAsync(CancellationToken cancellationToken) =>
         await dbContext.SaveChangesAsync(cancellationToken);
-    }
 }

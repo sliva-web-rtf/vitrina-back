@@ -1,24 +1,20 @@
 ﻿using MediatR;
-using Vitrina.UseCases.Common;
 using Vitrina.UseCases.Common.DTO;
 
 namespace Vitrina.UseCases.Project.GetProjectById;
 
 /// <summary>
-/// Get project query.
+///     Get project query.
 /// </summary>
 public record GetProjectByIdQuery : IRequest<ProjectDto>
 {
     /// <summary>
-    /// Project id.
+    ///     Constructor.
     /// </summary>
-    public int Id { get; init; }
+    public GetProjectByIdQuery(int id) => Id = id;
 
     /// <summary>
-    /// Constructor.
+    ///     Project id.
     /// </summary>
-    public GetProjectByIdQuery(int id)
-    {
-        Id = id;
-    }
+    public int Id { get; init; }
 }

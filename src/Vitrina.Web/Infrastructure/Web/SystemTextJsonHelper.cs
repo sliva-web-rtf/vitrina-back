@@ -8,24 +8,22 @@ using Microsoft.Extensions.Options;
 namespace Vitrina.Web.Infrastructure.Web;
 
 /// <summary>
-/// System JSON helper that implements <see cref="IJsonHelper" /> interface.
+///     System JSON helper that implements <see cref="IJsonHelper" /> interface.
 /// </summary>
 /// <remarks>
-/// Source:
-/// https://github.com/dotnet/aspnetcore/blob/master/src/Mvc/Mvc.ViewFeatures/src/Rendering/SystemTextJsonHelper.cs .
+///     Source:
+///     https://github.com/dotnet/aspnetcore/blob/master/src/Mvc/Mvc.ViewFeatures/src/Rendering/SystemTextJsonHelper.cs .
 /// </remarks>
 internal class SystemTextJsonHelper : IJsonHelper
 {
     private readonly JsonSerializerOptions htmlSafeJsonSerializerOptions;
 
     /// <summary>
-    /// Constructor.
+    ///     Constructor.
     /// </summary>
     /// <param name="options">JSON options.</param>
-    public SystemTextJsonHelper(IOptions<JsonOptions> options)
-    {
-        htmlSafeJsonSerializerOptions = GetHtmlSafeSerializerOptions(options.Value.SerializerOptions);
-    }
+    public SystemTextJsonHelper(IOptions<JsonOptions> options) => htmlSafeJsonSerializerOptions =
+        GetHtmlSafeSerializerOptions(options.Value.SerializerOptions);
 
     /// <inheritdoc />
     public IHtmlContent Serialize(object value)
@@ -43,9 +41,6 @@ internal class SystemTextJsonHelper : IJsonHelper
             return serializerOptions;
         }
 
-        return new JsonSerializerOptions(serializerOptions)
-        {
-            Encoder = JavaScriptEncoder.Default,
-        };
+        return new JsonSerializerOptions(serializerOptions) { Encoder = JavaScriptEncoder.Default };
     }
 }

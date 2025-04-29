@@ -1,4 +1,3 @@
-using System.Text.Json;
 using AutoMapper;
 using MediatR;
 using Saritasa.Tools.Domain.Exceptions;
@@ -10,7 +9,8 @@ namespace Vitrina.UseCases.User.GetUserProjects;
 public class GetUserProjectsByUserIdQueryHandler(IUserRepository userRepository, IMapper mapper)
     : IRequestHandler<GetUserProjectsByUserIdQuery, ICollection<PreviewProjectDto>>
 {
-    public async Task<ICollection<PreviewProjectDto>> Handle(GetUserProjectsByUserIdQuery request, CancellationToken cancellationToken)
+    public async Task<ICollection<PreviewProjectDto>> Handle(GetUserProjectsByUserIdQuery request,
+        CancellationToken cancellationToken)
     {
         var user = await userRepository.GetByIdAsync(request.UserId, cancellationToken) ??
                    throw new NotFoundException("The user with the specified Id was not found");

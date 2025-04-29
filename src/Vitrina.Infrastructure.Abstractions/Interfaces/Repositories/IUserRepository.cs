@@ -3,7 +3,7 @@ using Vitrina.Domain.User;
 namespace Vitrina.Infrastructure.Abstractions.Interfaces.Repositories;
 
 /// <summary>
-/// Interface for working with user domain objects.
+///     Interface for working with user domain objects.
 /// </summary>
 public interface IUserRepository
 {

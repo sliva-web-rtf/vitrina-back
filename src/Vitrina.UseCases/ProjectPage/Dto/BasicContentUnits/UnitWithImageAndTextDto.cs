@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 namespace Vitrina.UseCases.ProjectPage.Dto.BasicContentUnits;
 
 /// <summary>
-/// Content unit consisting of an image and text.
+///     Content unit consisting of an image and text.
 /// </summary>
 public record UnitWithImageAndTextDto : UnitWithImageBaseDto
 {

@@ -1,27 +1,27 @@
 namespace Vitrina.UseCases.Auth.ConfirmEmail;
 
 /// <summary>
-/// Result of <see cref="ConfirmEmailCommand"/>.
+///     Result of <see cref="ConfirmEmailCommand" />.
 /// </summary>
 public class ConfirmEmailCommandResult
 {
     /// <summary>
-    /// Is success email confirmation.
+    ///     Is success email confirmation.
     /// </summary>
     public bool IsSuccess { get; init; }
 
     /// <summary>
-    /// Message.
+    ///     Message.
     /// </summary>
     public string? Message { get; init; }
 
     /// <summary>
-    /// User id.
+    ///     User id.
     /// </summary>
     public int UserId { get; init; }
 
     /// <summary>
-    /// Token.
+    ///     Token.
     /// </summary>
     public TokenModel? Token { get; init; }
 }

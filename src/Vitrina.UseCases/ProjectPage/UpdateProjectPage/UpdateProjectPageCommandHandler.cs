@@ -7,7 +7,10 @@ using Vitrina.UseCases.ProjectPages.UpdateProjectPage;
 
 namespace Vitrina.UseCases.ProjectPage.UpdateProjectPage;
 
-public class UpdateProjectPageCommandHandler(IProjectPageRepository repository, IValidator<ContentBlockDto> validator, IMapper mapper)
+public class UpdateProjectPageCommandHandler(
+    IProjectPageRepository repository,
+    IValidator<ContentBlockDto> validator,
+    IMapper mapper)
     : IRequestHandler<UpdateProjectPageCommand>
 {
     public async Task Handle(UpdateProjectPageCommand request, CancellationToken cancellationToken)
@@ -28,6 +31,7 @@ public class UpdateProjectPageCommandHandler(IProjectPageRepository repository, 
                 throw new ValidationException(validationResult.Errors);
             }
         }
+
         mapper.Map(pageDto, page);
         await repository.Update(page, cancellationToken);
         await repository.SaveChangesAsync(cancellationToken);

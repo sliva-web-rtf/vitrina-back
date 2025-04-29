@@ -1,9 +1,6 @@
 ﻿using AutoMapper;
 using Vitrina.Domain.Project;
-using Vitrina.Domain.Project.Page;
 using Vitrina.Domain.Project.Teammate;
-using Vitrina.Domain.User;
-using Vitrina.UseCases.Common;
 using Vitrina.UseCases.Common.DTO;
 using Vitrina.UseCases.Project.AddProject;
 using Vitrina.UseCases.Project.SearchProjects;
@@ -15,12 +12,12 @@ using UpdateUserDto = Vitrina.UseCases.Project.UpdateProject.DTO.UpdateUserDto;
 namespace Vitrina.UseCases.Project;
 
 /// <summary>
-/// Project mapping.
+///     Project mapping.
 /// </summary>
 public class ProjectMappingProfile : Profile
 {
     /// <summary>
-    /// Constructor.
+    ///     Constructor.
     /// </summary>
     public ProjectMappingProfile()
     {

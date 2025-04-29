@@ -16,24 +16,24 @@ using Vitrina.UseCases.Project.SearchProjects;
 using Vitrina.UseCases.Project.UpdateProject;
 using Vitrina.UseCases.Project.UpdateProject.DTO;
 using Vitrina.UseCases.Project.UploadImages;
-using Vitrina.UseCases.Project.UploadImages.Dto;
 using FileDto = Vitrina.UseCases.Project.UploadImages.Dto.FileDto;
+using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 using SearchProjectsQuery = Vitrina.UseCases.Project.SearchProjects.SearchProjectsQuery;
 using V2 = Vitrina.UseCases.Project.SearchProjects.V2;
 
 namespace Vitrina.Web.Controllers;
 
 /// <summary>
-/// Project controller.
+///     Project controller.
 /// </summary>
 [ApiController]
 // For dev [Route("api-dev/project")]
 [Route("api/project")]
 [ApiExplorerSettings(GroupName = "project")]
-public class ProjectController(IMediator mediator, Microsoft.AspNetCore.Hosting.IHostingEnvironment hostingEnvironment) : ControllerBase
+public class ProjectController(IMediator mediator, IHostingEnvironment hostingEnvironment) : ControllerBase
 {
     /// <summary>
-    /// Add project.
+    ///     Add project.
     /// </summary>
     /// <returns>Project id.</returns>
     [Authorize]
@@ -42,7 +42,7 @@ public class ProjectController(IMediator mediator, Microsoft.AspNetCore.Hosting.
         => await mediator.Send(command, cancellationToken);
 
     /// <summary>
-    /// Get project by id.
+    ///     Get project by id.
     /// </summary>
     /// <returns>Project.</returns>
     [HttpGet("{id}")]
@@ -50,14 +50,15 @@ public class ProjectController(IMediator mediator, Microsoft.AspNetCore.Hosting.
         => await mediator.Send(new GetProjectByIdQuery(id), cancellationToken);
 
     /// <summary>
-    /// Search projects by query.
+    ///     Search projects by query.
     /// </summary>
     [HttpPost("search")]
-    public async Task<PagedListMetadataDto<ShortProjectDto>> SearchProjects([FromBody] SearchProjectsQuery query, CancellationToken cancellationToken)
+    public async Task<PagedListMetadataDto<ShortProjectDto>> SearchProjects([FromBody] SearchProjectsQuery query,
+        CancellationToken cancellationToken)
         => (await mediator.Send(query, cancellationToken)).ToMetadataObject();
 
     /// <summary>
-    /// Project periods.
+    ///     Project periods.
     /// </summary>
     /// <returns>Periods collection.</returns>
     [HttpGet("periods")]
@@ -65,7 +66,7 @@ public class ProjectController(IMediator mediator, Microsoft.AspNetCore.Hosting.
         => await mediator.Send(new GetPeriodsQuery(), cancellationToken);
 
     /// <summary>
-    /// Get organizations.
+    ///     Get organizations.
     /// </summary>
     /// <returns>Organizations.</returns>
     [HttpGet("organizations")]
@@ -73,11 +74,12 @@ public class ProjectController(IMediator mediator, Microsoft.AspNetCore.Hosting.
         => await mediator.Send(new GetOrganizationsQuery(), cancellationToken);
 
     /// <summary>
-    /// Upload images to project.
+    ///     Upload images to project.
     /// </summary>
     [Authorize]
     [HttpPost("{id}/upload-images")]
-    public async Task<IActionResult> UploadImagesToProject([FromRoute] int id, IFormFile[] files, CancellationToken cancellationToken)
+    public async Task<IActionResult> UploadImagesToProject([FromRoute] int id, IFormFile[] files,
+        CancellationToken cancellationToken)
     {
         var command = new UploadImagesCommand { Id = id, IsAvatar = true };
         foreach (var file in files)
@@ -86,16 +88,18 @@ public class ProjectController(IMediator mediator, Microsoft.AspNetCore.Hosting.
             var fileDto = new FileDto(fileStream, file.FileName, file.ContentType);
             command.Files.Add(fileDto);
         }
+
         await mediator.Send(command, cancellationToken);
         return Ok();
     }
 
     /// <summary>
-    /// Upload images to project.
+    ///     Upload images to project.
     /// </summary>
     [Authorize]
     [HttpPost("{id}/upload-preview-images")]
-    public async Task<IActionResult> UploadPreviewImagesToProject([FromRoute] int id, IFormFile file, CancellationToken cancellationToken)
+    public async Task<IActionResult> UploadPreviewImagesToProject([FromRoute] int id, IFormFile file,
+        CancellationToken cancellationToken)
     {
         var command = new UploadImagesCommand { Id = id, IsAvatar = false };
         var fileStream = file.OpenReadStream();
@@ -106,7 +110,7 @@ public class ProjectController(IMediator mediator, Microsoft.AspNetCore.Hosting.
     }
 
     /// <summary>
-    /// Get image.
+    ///     Get image.
     /// </summary>
     [HttpGet("image/{name}")]
     public IResult GetImage(string name)
@@ -119,7 +123,7 @@ public class ProjectController(IMediator mediator, Microsoft.AspNetCore.Hosting.
     }
 
     /// <summary>
-    /// Get image.
+    ///     Get image.
     /// </summary>
     [HttpGet("preview-image/{name}")]
     public IResult GetPreviewImage(string name)
@@ -132,61 +136,55 @@ public class ProjectController(IMediator mediator, Microsoft.AspNetCore.Hosting.
     }
 
     /// <summary>
-    /// Delete project.
+    ///     Delete project.
     /// </summary>
     [Authorize]
     [HttpDelete("{id}")]
-    public async Task DeleteProject(int id, CancellationToken cancellationToken)
-    {
+    public async Task DeleteProject(int id, CancellationToken cancellationToken) =>
         await mediator.Send(new DeleteProjectCommand { ProjectId = id }, cancellationToken);
-    }
 
     /// <summary>
-    /// Update project.
+    ///     Update project.
     /// </summary>
     [Authorize]
     [HttpPut("{id}")]
-    public async Task UpdateProject([FromRoute] int id, [FromBody] UpdateProjectDto projectDto, CancellationToken cancellationToken)
-    {
+    public async Task UpdateProject([FromRoute] int id, [FromBody] UpdateProjectDto projectDto,
+        CancellationToken cancellationToken) =>
         await mediator.Send(new UpdateProjectCommand { ProjectId = id, Project = projectDto }, cancellationToken);
-    }
 
     /// <summary>
-    /// DeleteProjectImages.
+    ///     DeleteProjectImages.
     /// </summary>
     /// <param name="id"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [Authorize]
     [HttpDelete("{id}/images")]
-    public async Task DeleteProjectImages(int id, CancellationToken cancellationToken)
-    {
+    public async Task DeleteProjectImages(int id, CancellationToken cancellationToken) =>
         await mediator.Send(new DeleteProjectImagesCommand { ProjectId = id }, cancellationToken);
-    }
 
     /// <summary>
-    /// Get all project ids.
+    ///     Get all project ids.
     /// </summary>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [HttpGet("ids")]
-    public async Task<ICollection<int>> GetProjectsIds(CancellationToken cancellationToken)
-    {
-        return await mediator.Send(new GetProjectIdsQuery(), cancellationToken);
-    }
+    public async Task<ICollection<int>> GetProjectsIds(CancellationToken cancellationToken) =>
+        await mediator.Send(new GetProjectIdsQuery(), cancellationToken);
 
     /// <summary>
-    /// Search projects with new filters.
+    ///     Search projects with new filters.
     /// </summary>
     /// <param name="v2Query">Query to search.</param>
     /// <param name="cancellationToken"></param>
     /// <returns>Paged list of projects.</returns>
     [HttpPost("v2/search")]
-    public async Task<PagedListMetadataDto<V2.ShortProjectV2Dto>> SearchProjectsV2(V2.SearchProjectsV2Query v2Query, CancellationToken cancellationToken)
+    public async Task<PagedListMetadataDto<V2.ShortProjectV2Dto>> SearchProjectsV2(V2.SearchProjectsV2Query v2Query,
+        CancellationToken cancellationToken)
         => (await mediator.Send(v2Query, cancellationToken)).ToMetadataObject();
 
     /// <summary>
-    /// Get spheres.
+    ///     Get spheres.
     /// </summary>
     /// <returns>Spheres.</returns>
     [HttpGet("spheres")]
@@ -194,7 +192,7 @@ public class ProjectController(IMediator mediator, Microsoft.AspNetCore.Hosting.
         => await mediator.Send(new GetSpheresQuery(), cancellationToken);
 
     /// <summary>
-    /// Get types.
+    ///     Get types.
     /// </summary>
     /// <returns>Types.</returns>
     [HttpGet("types")]

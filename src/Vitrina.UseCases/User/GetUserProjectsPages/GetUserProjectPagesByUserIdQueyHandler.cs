@@ -9,7 +9,8 @@ namespace Vitrina.UseCases.User.GetUserProjectsPages;
 public class GetUserProjectPagesByUserIdQueyHandler(IUserRepository userRepository, IMapper mapper)
     : IRequestHandler<GetUserProjectPagesByUserIdQuey, ICollection<ProjectPageDto>>
 {
-    public async Task<ICollection<ProjectPageDto>> Handle(GetUserProjectPagesByUserIdQuey request, CancellationToken cancellationToken)
+    public async Task<ICollection<ProjectPageDto>> Handle(GetUserProjectPagesByUserIdQuey request,
+        CancellationToken cancellationToken)
     {
         var user = await userRepository.GetByIdAsync(request.UserId, cancellationToken) ??
                    throw new NotFoundException("The user with the specified Id was not found");

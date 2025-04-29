@@ -11,7 +11,7 @@ public record ProjectPageDto : BaseEntityDto<Guid>
     public PageReadyStatusEnum ReadyStatus { get; init; }
 
     /// <summary>
-    /// Page content blocks.
+    ///     Page content blocks.
     /// </summary>
     public ICollection<ContentBlockDto> ContentBlocks { get; init; } = new List<ContentBlockDto>();
 

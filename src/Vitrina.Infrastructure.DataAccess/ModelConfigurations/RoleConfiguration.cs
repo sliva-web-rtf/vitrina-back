@@ -1,12 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Vitrina.Domain.Project;
 using Vitrina.Domain.Project.Teammate;
 
 namespace Vitrina.Infrastructure.DataAccess.ModelConfigurations;
 
 /// <summary>
-/// Role configuration.
+///     Role configuration.
 /// </summary>
 internal class RoleConfiguration : IEntityTypeConfiguration<ProjectRole>
 {

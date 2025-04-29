@@ -14,7 +14,7 @@ public class ProjectPage : BaseEntity<Guid>
     public PageReadyStatusEnum ReadyStatus { get; set; }
 
     /// <summary>
-    /// Page content blocks.
+    ///     Page content blocks.
     /// </summary>
     public virtual ICollection<ContentBlock> ContentBlocks { get; init; } = new List<ContentBlock>();
 

@@ -1,17 +1,17 @@
 ﻿namespace Vitrina.UseCases.Common.DTO;
 
 /// <summary>
-/// Tag dto.
+///     Tag dto.
 /// </summary>
 public class TagDto
 {
     /// <summary>
-    /// Tag id.
+    ///     Tag id.
     /// </summary>
     public int Id { get; init; }
 
     /// <summary>
-    /// Tag name.
+    ///     Tag name.
     /// </summary>
     required public string Name { get; init; }
 }

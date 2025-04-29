@@ -6,7 +6,6 @@ using Vitrina.UseCases.Common.DTO;
 using Vitrina.UseCases.ProjectPage.CreateProjectPage;
 using Vitrina.UseCases.ProjectPages;
 using Vitrina.UseCases.ProjectPages.AddEditorByUserEmail;
-using Vitrina.UseCases.ProjectPages.CreateProjectPage;
 using Vitrina.UseCases.ProjectPages.DeleteEditorByPageEditorld;
 using Vitrina.UseCases.ProjectPages.DeleteProjectPage;
 using Vitrina.UseCases.ProjectPages.GetProjectPage;
@@ -22,18 +21,16 @@ namespace Vitrina.Web.Controllers;
 public class ProjectPageController(IMediator mediator) : ControllerBase
 {
     /// <summary>
-    /// Creates a project page.
+    ///     Creates a project page.
     /// </summary>
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<Guid> Create([FromBody] CreateProjectPageCommand command, CancellationToken cancellationToken)
-    {
-        return await mediator.Send(command, cancellationToken);
-    }
+    public async Task<Guid> Create([FromBody] CreateProjectPageCommand command, CancellationToken cancellationToken) =>
+        await mediator.Send(command, cancellationToken);
 
     /// <summary>
-    /// Deletes the project page.
+    ///     Deletes the project page.
     /// </summary>
     /// <param name="id">Page identifier.</param>
     [HttpDelete("{id:guid}")]
@@ -47,14 +44,15 @@ public class ProjectPageController(IMediator mediator) : ControllerBase
     }
 
     /// <summary>
-    /// Refreshes the project page.
+    ///     Refreshes the project page.
     /// </summary>
     /// <param name="id">Page identifier.</param>
     [HttpPatch("{id:guid}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] JsonPatchDocument<ProjectPageDto> page, CancellationToken cancellationToken)
+    public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] JsonPatchDocument<ProjectPageDto> page,
+        CancellationToken cancellationToken)
     {
         var command = new UpdateProjectPageCommand(id, page);
         await mediator.Send(command, cancellationToken);
@@ -62,7 +60,7 @@ public class ProjectPageController(IMediator mediator) : ControllerBase
     }
 
     /// <summary>
-    /// Gets the project page by id.
+    ///     Gets the project page by id.
     /// </summary>
     /// <param name="id">Page identifier.</param>
     [HttpGet("{id:guid}")]
@@ -75,7 +73,7 @@ public class ProjectPageController(IMediator mediator) : ControllerBase
     }
 
     /// <summary>
-    /// Allows you to get a list of users who have rights to edit the page.
+    ///     Allows you to get a list of users who have rights to edit the page.
     /// </summary>
     /// <param name="id">Page identifier.</param>
     [HttpGet("{id:guid}/editors")]
@@ -89,7 +87,7 @@ public class ProjectPageController(IMediator mediator) : ControllerBase
     }
 
     /// <summary>
-    /// Adds the user by email address to the list of page editors.
+    ///     Adds the user by email address to the list of page editors.
     /// </summary>
     /// <param name="id">Page identifier.</param>
     /// <param name="userEmail">Email user address.</param>
@@ -104,7 +102,7 @@ public class ProjectPageController(IMediator mediator) : ControllerBase
     }
 
     /// <summary>
-    /// Deleys the editor by ID.
+    ///     Deleys the editor by ID.
     /// </summary>
     /// <param name="id">Page identifier.</param>
     /// <param name="editorId">Editor identifier.</param>

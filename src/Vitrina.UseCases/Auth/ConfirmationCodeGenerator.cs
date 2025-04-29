@@ -1,7 +1,7 @@
 namespace Vitrina.UseCases.Auth;
 
 /// <summary>
-/// Helper to generate confirmation code.
+///     Helper to generate confirmation code.
 /// </summary>
 internal static class ConfirmationCodeGenerator
 {

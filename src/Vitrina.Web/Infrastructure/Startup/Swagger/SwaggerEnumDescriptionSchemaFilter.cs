@@ -7,15 +7,15 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 namespace Vitrina.Web.Infrastructure.Startup.Swagger;
 
 /// <summary>
-/// A filter that adds descriptions of enums depending on their name.
-/// It also adds additional descriptions if the enum elements have the attribute
-/// <see cref="DescriptionAttribute" />.
+///     A filter that adds descriptions of enums depending on their name.
+///     It also adds additional descriptions if the enum elements have the attribute
+///     <see cref="DescriptionAttribute" />.
 /// </summary>
 internal class EnumDescriptionSchemaFilter : ISchemaFilter
 {
     private const string LineBreakSeparator = "<br />";
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     public void Apply(OpenApiSchema schema, SchemaFilterContext context)
     {
         var type = context.Type;
@@ -39,8 +39,8 @@ internal class EnumDescriptionSchemaFilter : ISchemaFilter
             var enumUnderlyingTypeValue = Convert.ChangeType(enumValue, type.GetEnumUnderlyingType());
 
             var enumDescription = string.IsNullOrWhiteSpace(enumDescriptionFromAttribute)
-                        ? $"{enumUnderlyingTypeValue} = {enumValueName}"
-                        : $"{enumUnderlyingTypeValue} = {enumValueName} ({enumDescriptionFromAttribute})";
+                ? $"{enumUnderlyingTypeValue} = {enumValueName}"
+                : $"{enumUnderlyingTypeValue} = {enumValueName} ({enumDescriptionFromAttribute})";
 
             enumDescriptions.Add(enumDescription);
         }

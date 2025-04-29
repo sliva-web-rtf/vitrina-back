@@ -8,12 +8,12 @@ using Vitrina.UseCases.User.DTO.Profile;
 namespace Vitrina.UseCases.User;
 
 /// <summary>
-/// User mapping profile.
+///     User mapping profile.
 /// </summary>
 public class UserMappingProfile : Profile
 {
     /// <summary>
-    /// Constructor.
+    ///     Constructor.
     /// </summary>
     public UserMappingProfile()
     {

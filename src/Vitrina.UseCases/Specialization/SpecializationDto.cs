@@ -3,17 +3,17 @@ using System.ComponentModel.DataAnnotations;
 namespace Vitrina.UseCases.Specialization;
 
 /// <summary>
-/// User specialization.
+///     User specialization.
 /// </summary>
 public record SpecializationDto
 {
     /// <summary>
-    /// ID of the specialization.
+    ///     ID of the specialization.
     /// </summary>
     public int Id { get; set; }
 
     /// <summary>
-    /// Name of the specialization.
+    ///     Name of the specialization.
     /// </summary>
     [StringLength(255, ErrorMessage = "The Name must be no more than 255 characters long.")]
     public string Name { get; init; }

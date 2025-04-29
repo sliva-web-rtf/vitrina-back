@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Saritasa.Tools.Common.Pagination;
 using Saritasa.Tools.EntityFrameworkCore.Pagination;
 using Vitrina.Domain.Project;
@@ -9,7 +8,7 @@ using Vitrina.Infrastructure.Abstractions.Interfaces;
 namespace Vitrina.UseCases.Project.SearchProjects;
 
 /// <summary>
-/// Search projects handler.
+///     Search projects handler.
 /// </summary>
 internal class SearchProjectsQueryHandler : IRequestHandler<SearchProjectsQuery, PagedList<ShortProjectDto>>
 {
@@ -22,12 +21,13 @@ internal class SearchProjectsQueryHandler : IRequestHandler<SearchProjectsQuery,
         this.dbContext = dbContext;
     }
 
-    public async Task<PagedList<ShortProjectDto>> Handle(SearchProjectsQuery request, CancellationToken cancellationToken)
+    public async Task<PagedList<ShortProjectDto>> Handle(SearchProjectsQuery request,
+        CancellationToken cancellationToken)
     {
-        var query = dbContext.Projects
-            .OrderByDescending(p => p.Priority)
-            .Include(p => p.Pages)
-            .AsQueryable();
+        var query = Queryable
+            .AsQueryable<>(dbContext.Projects
+                .OrderByDescending(p => p.Priority)
+                .Include(p => p.Pages));
 
         if (!string.IsNullOrEmpty(request.Name))
         {
@@ -49,7 +49,9 @@ internal class SearchProjectsQueryHandler : IRequestHandler<SearchProjectsQuery,
         {
             query = query.Where(p => p.Period == request.Period);
         }
-        var pagedList = await EFPagedListFactory.FromSourceAsync(query, request.Page, request.PageSize, cancellationToken);
+
+        var pagedList =
+            await EFPagedListFactory.FromSourceAsync(query, request.Page, request.PageSize, cancellationToken);
         var result = new List<ShortProjectDto>();
         foreach (var item in pagedList)
         {
@@ -67,6 +69,7 @@ internal class SearchProjectsQueryHandler : IRequestHandler<SearchProjectsQuery,
 
             result.Add(dto);
         }
+
         var newPagedList = PagedListFactory.Create(result, request.Page, request.PageSize, pagedList.TotalCount);
         return newPagedList;
     }

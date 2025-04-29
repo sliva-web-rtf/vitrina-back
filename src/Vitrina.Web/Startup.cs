@@ -1,5 +1,4 @@
 ﻿using System.Net;
-using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -7,33 +6,30 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Vitrina.Domain.User;
 using Vitrina.Infrastructure.DataAccess;
-using Vitrina.UseCases.ProjectPages;
 using Vitrina.Web.Infrastructure.DependencyInjection;
 using Vitrina.Web.Infrastructure.Middlewares;
 using Vitrina.Web.Infrastructure.Settings;
 using Vitrina.Web.Infrastructure.Startup;
+using Vitrina.Web.Infrastructure.Startup.HealthCheck;
 using Vitrina.Web.Infrastructure.Startup.Swagger;
 
 namespace Vitrina.Web;
 
 /// <summary>
-/// Entry point for ASP.NET Core app.
+///     Entry point for ASP.NET Core app.
 /// </summary>
 public class Startup
 {
     private readonly IConfiguration configuration;
 
     /// <summary>
-    /// Entry point for web application.
+    ///     Entry point for web application.
     /// </summary>
     /// <param name="configuration">Global configuration.</param>
-    public Startup(IConfiguration configuration)
-    {
-        this.configuration = configuration;
-    }
+    public Startup(IConfiguration configuration) => this.configuration = configuration;
 
     /// <summary>
-    /// Configure application services on startup.
+    ///     Configure application services on startup.
     /// </summary>
     /// <param name="services">Services to configure.</param>
     /// <param name="environment">Application environment.</param>
@@ -120,7 +116,7 @@ public class Startup
     }
 
     /// <summary>
-    /// Configure web application.
+    ///     Configure web application.
     /// </summary>
     /// <param name="app">Application builder.</param>
     /// <param name="environment">Application environment.</param>
@@ -143,7 +139,7 @@ public class Startup
         app.UseAuthorization();
         app.UseEndpoints(endpoints =>
         {
-            Infrastructure.Startup.HealthCheck.HealthCheckModule.Register(endpoints);
+            HealthCheckModule.Register(endpoints);
             endpoints.Map("/", context =>
             {
                 context.Response.Redirect("/swagger");

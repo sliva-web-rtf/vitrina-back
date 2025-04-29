@@ -3,9 +3,7 @@ using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Vitrina.UseCases.Common.DTO;
 using Vitrina.UseCases.ProjectPages;
-using Vitrina.UseCases.User.DTO;
 using Vitrina.UseCases.User.DTO.Profile;
 using Vitrina.UseCases.User.GetUser;
 using Vitrina.UseCases.User.UpdateUser;
@@ -14,7 +12,7 @@ using UserDto = Vitrina.UseCases.User.DTO.UserDto;
 namespace Vitrina.Web.Controllers.Users;
 
 /// <summary>
-/// A controller for working with students.
+///     A controller for working with students.
 /// </summary>
 [Authorize(Roles = "Student")]
 [Route("api/students/{id:int}")]
@@ -22,7 +20,7 @@ namespace Vitrina.Web.Controllers.Users;
 public class StudentsController(IMediator mediator, IMapper mapper) : ObtainingProjectInformationBase(mediator)
 {
     /// <summary>
-    /// Getting student profile data by ID.
+    ///     Getting student profile data by ID.
     /// </summary>
     [Produces("application/json")]
     [HttpGet("profile")]
@@ -35,7 +33,7 @@ public class StudentsController(IMediator mediator, IMapper mapper) : ObtainingP
     }
 
     /// <summary>
-    /// Edits student profile data.
+    ///     Edits student profile data.
     /// </summary>
     [Produces("application/json")]
     [HttpPatch("profile")]
@@ -52,16 +50,12 @@ public class StudentsController(IMediator mediator, IMapper mapper) : ObtainingP
     /// <inheritdoc />
     [HttpGet("projects")]
     [Produces("application/json")]
-    public override async Task<ICollection<PreviewProjectDto>> GetProjects([FromRoute] int id, CancellationToken cancellationToken)
-    {
-        return await base.GetProjects(id, cancellationToken);
-    }
+    public override async Task<ICollection<PreviewProjectDto>> GetProjects([FromRoute] int id,
+        CancellationToken cancellationToken) => await base.GetProjects(id, cancellationToken);
 
     /// <inheritdoc />
     [HttpGet("pages")]
     [Produces("application/json")]
-    public override async Task<ICollection<ProjectPageDto>> GetProjectPages([FromRoute] int id, CancellationToken cancellationToken)
-    {
-        return await base.GetProjectPages(id, cancellationToken);
-    }
+    public override async Task<ICollection<ProjectPageDto>> GetProjectPages([FromRoute] int id,
+        CancellationToken cancellationToken) => await base.GetProjectPages(id, cancellationToken);
 }
