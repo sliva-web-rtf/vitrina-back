@@ -3,7 +3,6 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Saritasa.Tools.Common.Pagination;
 using Saritasa.Tools.EntityFrameworkCore.Pagination;
-using Vitrina.Domain.Project;
 using Vitrina.Infrastructure.Abstractions.Interfaces;
 
 namespace Vitrina.UseCases.Project.SearchProjects.V2;
@@ -31,7 +30,8 @@ internal class SearchProjectsV2QueryHandler : IRequestHandler<SearchProjectsV2Qu
 
         if (!string.IsNullOrEmpty(request.Name))
         {
-            query = query.Where(p => p.Name.ToLower() == request.Name.ToLower());
+            var nameInLowercase = request.Name.ToLower();
+            query = query.Where(project => project.Name.ToLower().Contains(nameInLowercase));
         }
 
         if (!string.IsNullOrEmpty(request.Customer))
