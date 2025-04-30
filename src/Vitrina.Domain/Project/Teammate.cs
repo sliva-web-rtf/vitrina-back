@@ -41,7 +41,7 @@ public class Teammate
     /// <summary>
     /// User roles.
     /// </summary>
-    public ICollection<ProjectRole> Roles { get; private set; } = new List<ProjectRole>();
+    public ICollection<ProjectRole> Roles { get; set; } = new List<ProjectRole>();
 
     /// <summary>
     /// User project id.

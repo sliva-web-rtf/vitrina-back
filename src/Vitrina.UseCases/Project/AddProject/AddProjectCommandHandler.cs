@@ -27,28 +27,48 @@ internal class AddProjectCommandHandler : IRequestHandler<AddProjectCommand, int
         try
         {
             var project = mapper.Map<AddProjectCommand, Domain.Project.Project>(request);
+
             var allRoles = await dbContext.ProjectRoles.ToListAsync(cancellationToken);
+
             foreach (var userInProject in project.Users)
             {
-                var clone = new List<ProjectRole>(userInProject.Roles);
-                foreach (var t in clone)
+                var updatedRoles = new List<ProjectRole>();
+
+                foreach (var role in userInProject.Roles)
                 {
-                    var role = allRoles.FirstOrDefault(r => r.Name.ToLower() == t.Name.ToLower());
-                    if (role != null)
+                    var existingRole = allRoles.FirstOrDefault(r => r.Name.Equals(role.Name, StringComparison.OrdinalIgnoreCase));
+
+                    if (existingRole != null)
                     {
-                        var userRole = userInProject.Roles.First(r => r.Name == t.Name);
-                        userInProject.Roles.Remove(userRole);
-                        userInProject.Roles.Add(role);
+                        updatedRoles.Add(existingRole);
+                    }
+                    else
+                    {
+                        var newRole = new ProjectRole
+                        {
+                            Name = role.Name,
+                        };
+
+                        dbContext.ProjectRoles.Add(newRole);
+
+                        allRoles.Add(newRole);
+
+                        updatedRoles.Add(newRole);
                     }
                 }
+
+                userInProject.Roles = updatedRoles;
             }
+
             await dbContext.Projects.AddAsync(project, cancellationToken);
-            var id = await dbContext.SaveChangesAsync(cancellationToken);
+
+            await dbContext.SaveChangesAsync(cancellationToken);
+
             return project.Id;
         }
         catch (Exception ex)
         {
-            throw new DomainException(ex.Message, ex.InnerException);
+            throw new DomainException("An error occurred while creating the project.", ex);
         }
     }
 }
