@@ -40,7 +40,7 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DataProtectionKeys");
+                    b.ToTable("DataProtectionKeys", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -168,7 +168,7 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
 
                     b.HasIndex("UsersId");
 
-                    b.ToTable("ProjectRoleTeammate");
+                    b.ToTable("ProjectRoleTeammate", (string)null);
                 });
 
             modelBuilder.Entity("ProjectTag", b =>
@@ -183,7 +183,7 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
 
                     b.HasIndex("TagsId");
 
-                    b.ToTable("ProjectTag");
+                    b.ToTable("ProjectTag", (string)null);
                 });
 
             modelBuilder.Entity("Vitrina.Domain.Project.Block", b =>
@@ -211,7 +211,7 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
 
                     b.HasIndex("ProjectId");
 
-                    b.ToTable("Block");
+                    b.ToTable("Block", (string)null);
                 });
 
             modelBuilder.Entity("Vitrina.Domain.Project.Content", b =>
@@ -234,7 +234,7 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
 
                     b.HasIndex("ProjectId");
 
-                    b.ToTable("Contents");
+                    b.ToTable("Contents", (string)null);
                 });
 
             modelBuilder.Entity("Vitrina.Domain.Project.Project", b =>
@@ -315,7 +315,7 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
 
                     b.HasIndex("Semester");
 
-                    b.ToTable("Projects");
+                    b.ToTable("Projects", (string)null);
                 });
 
             modelBuilder.Entity("Vitrina.Domain.Project.ProjectRole", b =>
@@ -336,7 +336,7 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("ProjectRoles");
+                    b.ToTable("ProjectRoles", (string)null);
                 });
 
             modelBuilder.Entity("Vitrina.Domain.Project.Tag", b =>
@@ -357,7 +357,7 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("Tags");
+                    b.ToTable("Tags", (string)null);
                 });
 
             modelBuilder.Entity("Vitrina.Domain.Project.Teammate", b =>
@@ -396,7 +396,7 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
 
                     b.HasIndex("ProjectId");
 
-                    b.ToTable("Teammates");
+                    b.ToTable("Teammates", (string)null);
                 });
 
             modelBuilder.Entity("Vitrina.Domain.User.AppIdentityRole", b =>
@@ -447,7 +447,7 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Codes");
+                    b.ToTable("Codes", (string)null);
                 });
 
             modelBuilder.Entity("Vitrina.Domain.User.User", b =>

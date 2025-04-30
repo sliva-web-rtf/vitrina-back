@@ -23,6 +23,8 @@ internal sealed class DatabaseInitializer : IAsyncInitializer
     /// <inheritdoc />
     public async Task InitializeAsync(CancellationToken cancellationToken)
     {
+        await appDbContext.Database.ExecuteSqlRawAsync("SELECT pg_advisory_lock(123456789)", cancellationToken);
         await appDbContext.Database.MigrateAsync(cancellationToken);
+        await appDbContext.Database.ExecuteSqlRawAsync("SELECT pg_advisory_unlock(123456789)", cancellationToken);
     }
 }
