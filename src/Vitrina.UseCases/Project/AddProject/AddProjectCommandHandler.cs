@@ -49,7 +49,7 @@ internal class AddProjectCommandHandler : IRequestHandler<AddProjectCommand, int
                             Name = role.Name,
                         };
 
-                        dbContext.ProjectRoles.Add(newRole);
+                        await dbContext.ProjectRoles.AddAsync(newRole, cancellationToken);
 
                         allRoles.Add(newRole);
 
