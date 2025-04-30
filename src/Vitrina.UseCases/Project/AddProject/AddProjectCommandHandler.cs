@@ -49,7 +49,9 @@ internal class AddProjectCommandHandler : IRequestHandler<AddProjectCommand, int
                             Name = role.Name,
                         };
 
-                        await dbContext.ProjectRoles.AddAsync(newRole, cancellationToken);
+                        dbContext.ProjectRoles.Add(newRole);
+
+                        await dbContext.SaveChangesAsync(cancellationToken);
 
                         allRoles.Add(newRole);
 
@@ -58,6 +60,7 @@ internal class AddProjectCommandHandler : IRequestHandler<AddProjectCommand, int
                 }
 
                 userInProject.Roles = updatedRoles;
+                await dbContext.SaveChangesAsync(cancellationToken);
             }
 
             await dbContext.Projects.AddAsync(project, cancellationToken);
