@@ -47,7 +47,7 @@ public class ProjectController : ControllerBase
     /// Add project.
     /// </summary>
     /// <returns>Project id.</returns>
-    /*[Authorize]*/
+    [Authorize]
     [HttpPost("create")]
     public async Task<int> CreateProject(AddProjectCommand command, CancellationToken cancellationToken)
         => await mediator.Send(command, cancellationToken);
