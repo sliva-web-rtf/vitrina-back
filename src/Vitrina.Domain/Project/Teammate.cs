@@ -36,5 +36,5 @@ public class Teammate
     /// <summary>
     ///     User roles.
     /// </summary>
-    public virtual ICollection<ProjectRole> Roles { get; private set; } = new List<ProjectRole>();
+    public virtual ICollection<ProjectRole> Roles { get; set; } = new List<ProjectRole>();
 }
