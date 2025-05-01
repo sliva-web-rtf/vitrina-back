@@ -47,7 +47,7 @@ public class ProjectController : ControllerBase
     /// Add project.
     /// </summary>
     /// <returns>Project id.</returns>
-    [Authorize]
+    /*[Authorize]*/
     [HttpPost("create")]
     public async Task<int> CreateProject(AddProjectCommand command, CancellationToken cancellationToken)
         => await mediator.Send(command, cancellationToken);
@@ -86,7 +86,7 @@ public class ProjectController : ControllerBase
     /// <summary>
     /// Upload images to project.
     /// </summary>
-    [Authorize]
+    /*[Authorize]*/
     [HttpPost("{id}/upload-images")]
     public async Task<IActionResult> UploadImagesToProject([FromRoute] int id, IFormFile[] files, CancellationToken cancellationToken)
     {
@@ -104,7 +104,7 @@ public class ProjectController : ControllerBase
     /// <summary>
     /// Upload images to project.
     /// </summary>
-    [Authorize]
+    /*[Authorize]*/
     [HttpPost("{id}/upload-preview-images")]
     public async Task<IActionResult> UploadPreviewImagesToProject([FromRoute] int id, IFormFile file, CancellationToken cancellationToken)
     {
@@ -145,7 +145,7 @@ public class ProjectController : ControllerBase
     /// <summary>
     /// Delete project.
     /// </summary>
-    [Authorize]
+    /*[Authorize]*/
     [HttpDelete("{id}")]
     public async Task DeleteProject(int id, CancellationToken cancellationToken)
     {
@@ -155,7 +155,7 @@ public class ProjectController : ControllerBase
     /// <summary>
     /// Update project.
     /// </summary>
-    [Authorize]
+    /*[Authorize]*/
     [HttpPut("{id}")]
     public async Task UpdateProject([FromRoute] int id, [FromBody] UpdateProjectDto projectDto, CancellationToken cancellationToken)
     {
@@ -168,7 +168,7 @@ public class ProjectController : ControllerBase
     /// <param name="id"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    [Authorize]
+    /*[Authorize]*/
     [HttpDelete("{id}/images")]
     public async Task DeleteProjectImages(int id, CancellationToken cancellationToken)
     {
