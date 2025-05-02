@@ -13,16 +13,16 @@ namespace Vitrina.UseCases.Project.UploadImages;
 /// <summary>
 /// Upload images handler.
 /// </summary>
-internal class UploadImagesCommandHandler : IRequestHandler<UploadImagesCommand>
+internal class UploadImagesCommandHandler(IHostingEnvironment hostingEnvironment, IAppDbContext appDbContext)
+    : IRequestHandler<UploadImagesCommand>
 {
-    private readonly IHostingEnvironment hostingEnvironment;
-    private readonly IAppDbContext appDbContext;
-
-    public UploadImagesCommandHandler(IHostingEnvironment hostingEnvironment, IAppDbContext appDbContext)
-    {
-        this.hostingEnvironment = hostingEnvironment;
-        this.appDbContext = appDbContext;
-    }
+    private readonly List<(string ContentType, string Extension)> allowedFormats =
+    [
+        ("image/jpeg", "jpg"),
+        ("image/png", "png"),
+        ("image/jpeg", "jpeg"),
+        ("image/webp", "webp"),
+    ];
 
     public async Task Handle(UploadImagesCommand request, CancellationToken cancellationToken)
     {
@@ -41,18 +41,14 @@ internal class UploadImagesCommandHandler : IRequestHandler<UploadImagesCommand>
             }
 
             var extension = file.FileName.Split(".").Last();
-            var allowedFormats =
-                new List<(string ContentType, string Extension)> { ("image/jpeg", "jpg"), ("image/png", "png"), ("image/jpeg", "jpeg") };
             if (!allowedFormats.Any(f => f.Extension == extension && f.ContentType == file.ContentType))
             {
                 throw new DomainException("Неправильный формат картинки.");
             }
 
-            var webRootDirectory = hostingEnvironment.WebRootPath.TrimEnd('/');
-            var path = request.IsAvatar ? $"/Avatars/{Guid.NewGuid()}.{extension}" : $"/Preview/{Guid.NewGuid()}.{extension}";
-            var webpPath = request.IsAvatar ? $"/Avatars/{Guid.NewGuid()}.webp" : $"/Preview/{Guid.NewGuid()}.webp";
-            var filePath = webRootDirectory + path;
-            var webpFilePath = webRootDirectory + webpPath;
+            var basePath = Path.Combine(hostingEnvironment.WebRootPath, request.IsAvatar ? "Avatars" : "Preview");
+            var filePath = Path.Combine(basePath, $"{Guid.NewGuid()}.{extension}");
+            var webpFilePath = Path.Combine(basePath,  $"{Guid.NewGuid()}.webp");
 
             await using (var fileStream = new FileStream(filePath, FileMode.OpenOrCreate))
             {
