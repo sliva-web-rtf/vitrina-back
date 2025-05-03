@@ -13,8 +13,7 @@ namespace Vitrina.UseCases.Project.UploadImages;
 /// <summary>
 /// Upload images handler.
 /// </summary>
-internal class UploadImagesCommandHandler(IHostingEnvironment hostingEnvironment, IAppDbContext appDbContext)
-    : IRequestHandler<UploadImagesCommand>
+internal class UploadImagesCommandHandler : IRequestHandler<UploadImagesCommand>
 {
     private readonly List<(string ContentType, string Extension)> allowedFormats =
     [
@@ -24,9 +23,21 @@ internal class UploadImagesCommandHandler(IHostingEnvironment hostingEnvironment
         ("image/webp", "webp"),
     ];
 
+    private readonly IHostingEnvironment hostingEnvironment1;
+    private readonly IAppDbContext appDbContext1;
+
+    /// <summary>
+    /// Upload images handler.
+    /// </summary>
+    public UploadImagesCommandHandler(IHostingEnvironment hostingEnvironment, IAppDbContext appDbContext)
+    {
+        hostingEnvironment1 = hostingEnvironment;
+        appDbContext1 = appDbContext;
+    }
+
     public async Task Handle(UploadImagesCommand request, CancellationToken cancellationToken)
     {
-        var project = await appDbContext.Projects.FirstOrDefaultAsync(p => p.Id == request.Id, cancellationToken)
+        var project = await appDbContext1.Projects.FirstOrDefaultAsync(p => p.Id == request.Id, cancellationToken)
             ?? throw new NotFoundException("Project not found.");
         foreach (var file in request.Files)
         {
@@ -46,7 +57,7 @@ internal class UploadImagesCommandHandler(IHostingEnvironment hostingEnvironment
                 throw new DomainException("Неправильный формат картинки.");
             }
 
-            var basePath = Path.Combine(hostingEnvironment.WebRootPath, request.IsAvatar ? "Avatars" : "Preview");
+            var basePath = Path.Combine(hostingEnvironment1.WebRootPath, request.IsAvatar ? "Avatars" : "Preview");
             var filePath = Path.Combine(basePath, $"{Guid.NewGuid()}.{extension}");
             var webpFilePath = Path.Combine(basePath,  $"{Guid.NewGuid()}.webp");
 
@@ -79,6 +90,6 @@ internal class UploadImagesCommandHandler(IHostingEnvironment hostingEnvironment
             await file.Data.DisposeAsync();
         }
 
-        await appDbContext.SaveChangesAsync(cancellationToken);
+        await appDbContext1.SaveChangesAsync(cancellationToken);
     }
 }
