@@ -15,13 +15,13 @@ namespace Vitrina.UseCases.Project.UploadImages;
 /// </summary>
 internal class UploadImagesCommandHandler : IRequestHandler<UploadImagesCommand>
 {
-    private readonly List<(string ContentType, string Extension)> allowedFormats =
-    [
+    private readonly List<(string ContentType, string Extension)> allowedFormats = new()
+    {
         ("image/jpeg", "jpg"),
         ("image/png", "png"),
         ("image/jpeg", "jpeg"),
-        ("image/webp", "webp"),
-    ];
+        ("image/webp", "webp")
+    };
 
     private readonly IHostingEnvironment hostingEnvironment1;
     private readonly IAppDbContext appDbContext1;
