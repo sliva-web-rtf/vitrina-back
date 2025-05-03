@@ -1,27 +1,21 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Vitrina.Domain.User;
 
 namespace Vitrina.Domain.Project;
 
 /// <summary>
 ///     Project users.
 /// </summary>
-public class Teammate
+public class Teammate : BaseEntity<int>
 {
     /// <summary>
-    ///     User id.
+    ///     Student id.
     /// </summary>
-    [Key]
-    public int Id { get; private set; }
-
-    /// <summary>
-    ///     User id.
-    /// </summary>
-    public int UserId { get; init; }
+    public int StudentId { get; init; }
 
     /// <summary>
     ///     User.
     /// </summary>
-    public virtual User.User User { get; private set; }
+    public virtual Student Student { get; private set; }
 
     /// <summary>
     ///     User project id.

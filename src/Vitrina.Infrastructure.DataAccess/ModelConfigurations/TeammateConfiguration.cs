@@ -9,13 +9,9 @@ public class TeammateConfiguration : IEntityTypeConfiguration<Teammate>
     public void Configure(EntityTypeBuilder<Teammate> builder)
     {
         builder
-            .HasOne(t => t.User)
-            .WithMany(u => u.PositionsInTeams)
-            .HasForeignKey(t => t.UserId)
+            .HasOne(teammate => teammate.Student)
+            .WithMany(user => user.PositionsInTeams)
+            .HasForeignKey(t => t.StudentId)
             .OnDelete(DeleteBehavior.Cascade);
-        builder
-            .HasOne(t => t.Project)
-            .WithMany(p => p.Users)
-            .HasForeignKey(t => t.ProjectId);
     }
 }
