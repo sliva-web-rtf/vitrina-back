@@ -39,11 +39,6 @@ public class User : IdentityUser<int>
     public DateTime? RemovedAt { get; set; }
 
     /// <summary>
-    ///     User role on the platform.
-    /// </summary>
-    public RoleOnPlatformEnum RoleOnPlatform { get; set; }
-
-    /// <summary>
     ///     User first name.
     /// </summary>
     required public string FirstName { get; set; }

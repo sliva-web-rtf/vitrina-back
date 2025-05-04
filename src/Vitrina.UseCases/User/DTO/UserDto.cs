@@ -1,15 +1,9 @@
 using System.ComponentModel.DataAnnotations;
-using Vitrina.Domain.User;
 
 namespace Vitrina.UseCases.User.DTO.Profile.Base;
 
-public abstract class UserDtoBase
+public record UserDto
 {
-    /// <summary>
-    ///     User role in team.
-    /// </summary>
-    public RoleOnPlatformEnum? RoleOnPlatform { get; init; }
-
     /// <summary>
     ///     User first name.
     /// </summary>

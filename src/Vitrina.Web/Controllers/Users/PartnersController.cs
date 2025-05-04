@@ -2,9 +2,6 @@ using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Vitrina.UseCases.User.DTO;
-using Vitrina.UseCases.User.DTO.Profile;
-using Vitrina.UseCases.User.GetUser;
 using Vitrina.UseCases.User.UpdateUser;
 
 namespace Vitrina.Web.Controllers.Users;
@@ -43,7 +40,7 @@ public class PartnersController(IMediator mediator, IMapper mapper) : Controller
         [FromBody] PartnerDto partner, CancellationToken cancellationToken)
     {
         var user = mapper.Map<UpdateUserDto>(partner);
-        var command = new UpdateUserProfileCommand(id, user);
+        var command = new UpdateUserCommand(id, user);
         var result = await mediator.Send(command, cancellationToken);
         return Ok(result.RootElement);
     }

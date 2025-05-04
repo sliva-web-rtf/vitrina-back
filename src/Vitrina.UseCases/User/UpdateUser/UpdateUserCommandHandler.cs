@@ -4,26 +4,26 @@ using MediatR;
 using Newtonsoft.Json;
 using Saritasa.Tools.Domain.Exceptions;
 using Vitrina.Domain.User;
-using Vitrina.Infrastructure.Abstractions.Interfaces.Repositories;
-using Vitrina.UseCases.User.DTO;
+using Vitrina.Infrastructure.Abstractions.Interfaces;
+using Vitrina.UseCases.Project.UpdateProject.DTO;
 using Vitrina.UseCases.User.DTO.Profile;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace Vitrina.UseCases.User.UpdateUser;
 
 /// <inheritdoc />
-public class UpdateUserProfileCommandHandler(IUserRepository userRepository, IMapper mapper)
-    : IRequestHandler<UpdateUserProfileCommand, JsonDocument>
+public class UpdateUserCommandHandler(IAppDbContext dbContext, IMapper mapper)
+    : IRequestHandler<UpdateUserCommand, JsonElement>
 {
     /// <inheritdoc />
-    public async Task<JsonDocument> Handle(UpdateUserProfileCommand request, CancellationToken cancellationToken)
+    public async Task<JsonElement> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
     {
         if (request.User is null)
         {
             throw new DomainException("Invalid JSON");
         }
 
-        var user = await userRepository.GetByIdAsync(request.UserId, cancellationToken);
+        var user = await userRepository.GetByIdAsync(request.Id, cancellationToken);
 
         if (user is null)
         {

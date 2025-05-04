@@ -2,9 +2,6 @@ using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Vitrina.UseCases.User.DTO;
-using Vitrina.UseCases.User.DTO.Profile;
-using Vitrina.UseCases.User.GetUser;
 using Vitrina.UseCases.User.UpdateUser;
 
 namespace Vitrina.Web.Controllers.Users;
@@ -42,10 +39,10 @@ public class CuratorsController(IMediator mediator, IMapper mapper) : Controller
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> EditUserProfileById([FromRoute] int id,
-        [FromBody] UpdateCuratorDto curator, CancellationToken cancellationToken)
+        [FromBody] UpdateNotStudentDto notStudent, CancellationToken cancellationToken)
     {
-        var user = mapper.Map<UpdateUserDto>(curator);
-        var command = new UpdateUserProfileCommand(id, user);
+        var user = mapper.Map<UpdateUserDto>(notStudent);
+        var command = new UpdateUserCommand(id, user);
         var result = await mediator.Send(command, cancellationToken);
         return Ok(result.RootElement);
     }

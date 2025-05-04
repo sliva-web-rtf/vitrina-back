@@ -1,6 +1,6 @@
 namespace Vitrina.Domain.User;
 
-public abstract class UserWithRoleBase : BaseEntity<Guid>
+public abstract class UserWithRoleBase
 {
     public User User { get; set; }
 

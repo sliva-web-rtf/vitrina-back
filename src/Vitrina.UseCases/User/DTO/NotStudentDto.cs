@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Vitrina.UseCases.User.DTO.Profile.Base;
 
-public abstract class NotStudentDtoBase : UserDtoBase
+public record NotStudentDto : UserWithRoleBaseDto
 {
     /// <summary>
     ///     Place of work
