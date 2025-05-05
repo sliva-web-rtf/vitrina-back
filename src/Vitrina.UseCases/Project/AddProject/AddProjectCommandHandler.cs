@@ -36,7 +36,8 @@ internal class AddProjectCommandHandler : IRequestHandler<AddProjectCommand, int
 
                 foreach (var role in userInProject.Roles)
                 {
-                    var existingRole = allRoles.FirstOrDefault(r => r.Name.Equals(role.Name, StringComparison.OrdinalIgnoreCase));
+                    var existingRole =
+                        allRoles.FirstOrDefault(r => r.Name.Equals(role.Name, StringComparison.OrdinalIgnoreCase));
 
                     if (existingRole != null)
                     {
@@ -44,10 +45,7 @@ internal class AddProjectCommandHandler : IRequestHandler<AddProjectCommand, int
                     }
                     else
                     {
-                        var newRole = new ProjectRole
-                        {
-                            Name = role.Name,
-                        };
+                        var newRole = new ProjectRole { Name = role.Name };
 
                         dbContext.ProjectRoles.Add(newRole);
 

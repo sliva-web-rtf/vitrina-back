@@ -44,7 +44,7 @@ internal class SystemJwtTokenService : IAuthenticationTokenService
     public IEnumerable<Claim> GetTokenClaims(string token)
     {
         var principal = new JwtSecurityTokenHandler()
-            .ValidateToken(token, tokenValidationParameters, out var _);
+            .ValidateToken(token, tokenValidationParameters, out _);
         return principal.Claims;
     }
 }

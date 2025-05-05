@@ -4,9 +4,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.JsonPatch;
 using Saritasa.Tools.Domain.Exceptions;
 using Vitrina.Domain.User;
-using Vitrina.Infrastructure.Abstractions.Interfaces;
+using Vitrina.Infrastructure.Abstractions.Interfaces.Repositories;
 using Vitrina.UseCases.User.DTO;
-using Vitrina.UseCases.User.DTO.Profile;
 
 namespace Vitrina.UseCases.User.UpdateUser;
 
@@ -14,7 +13,8 @@ namespace Vitrina.UseCases.User.UpdateUser;
 public class UpdateUserByIdCommandHandler(
     UserManager<Domain.User.User> userManager,
     IMapper mapper,
-    IAppDbContext dbContext) : IRequestHandler<UpdateUserByIdCommand, object>
+    UpdateUserDtoValidator validator,
+    ISpecializationRepository specializationRepository) : IRequestHandler<UpdateUserByIdCommand, object>
 {
     private static readonly HashSet<string> CommonPatchPaths =
     [
@@ -56,6 +56,20 @@ public class UpdateUserByIdCommandHandler(
 
         var updateUserDto = mapper.Map<UpdateUserDto>(user);
         request.PatchDocument.ApplyTo(updateUserDto);
+        var validationResult = await validator.ValidateAsync(updateUserDto, cancellationToken);
+        if (!validationResult.IsValid)
+        {
+            throw new DomainException($"Data did not go through the validity check:" +
+                                      $"{Environment.NewLine}{string.Join(Environment.NewLine, validationResult.Errors)}");
+        }
+
+        var specializationName = updateUserDto.AdditionalInformation.Specialization.Name;
+        if (specializationName is not null &&
+            await specializationRepository.FindAsync(specializationName, cancellationToken) is null)
+        {
+            throw new DomainException($"Specialization with Name = {specializationName} was not found.");
+        }
+
         return await TryUpdate(user, updateUserDto);
     }
 
@@ -93,7 +107,6 @@ public class UpdateUserByIdCommandHandler(
         }
 
         await userManager.UpdateAsync(user);
-        await dbContext.SaveChangesAsync();
         return result;
     }
 }

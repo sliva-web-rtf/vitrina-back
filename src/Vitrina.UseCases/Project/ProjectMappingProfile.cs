@@ -5,7 +5,7 @@ using Vitrina.UseCases.Project.AddProject;
 using Vitrina.UseCases.Project.SearchProjects;
 using Vitrina.UseCases.Project.SearchProjects.V2;
 using Vitrina.UseCases.Project.UpdateProject.DTO;
-using Vitrina.UseCases.User.DTO.Profile;
+using Vitrina.UseCases.User.DTO;
 using UpdateUserDto = Vitrina.UseCases.Project.UpdateProject.DTO.UpdateUserDto;
 
 namespace Vitrina.UseCases.Project;

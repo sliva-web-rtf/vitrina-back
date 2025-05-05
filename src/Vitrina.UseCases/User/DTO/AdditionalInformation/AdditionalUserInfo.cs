@@ -1,4 +1,3 @@
-using System.ComponentModel.DataAnnotations;
 using Vitrina.Domain.User;
 using Vitrina.UseCases.Specialization;
 
@@ -9,13 +8,11 @@ public class AdditionalUserInfo
     /// <summary>
     ///     Place of work
     /// </summary>
-    [StringLength(255, ErrorMessage = "The Company must be no more than 255 characters long.")]
     public string? Company { get; init; }
 
     /// <summary>
     ///     Position in the company.
     /// </summary>
-    [StringLength(255, ErrorMessage = "The Post must be no more than 255 characters long.")]
     public string? Post { get; init; }
 
     /// <summary>
@@ -26,7 +23,7 @@ public class AdditionalUserInfo
     /// <summary>
     ///     Education course of student.
     /// </summary>
-    public int EducationCourse { get; init; }
+    public int EducationCourse { get; set; }
 
     /// <summary>
     ///     Link to the image in the cloud storage.
@@ -41,5 +38,5 @@ public class AdditionalUserInfo
     /// <summary>
     ///     Student specializations.
     /// </summary>
-    public SpecializationDto? Specialization { get; init; }
+    public SpecializationDto? Specialization { get; init; } = new();
 }

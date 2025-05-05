@@ -2,8 +2,8 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using Vitrina.UseCases.User;
 using Vitrina.UseCases.User.DTO;
+using Vitrina.UseCases.User.GetUser;
 using Vitrina.UseCases.User.UpdateUser;
 
 namespace Vitrina.Web.Controllers.Users;

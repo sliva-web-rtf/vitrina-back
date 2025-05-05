@@ -1,6 +1,8 @@
 using System.Reflection;
 using AutoMapper;
 
+namespace Vitrina.UseCases.Common;
+
 public static class AutoMapperExtensions
 {
     public static IMappingExpression<TSource, TDestination> IgnoreAllNonExisting<TSource, TDestination>(

@@ -2,10 +2,10 @@ using AutoMapper;
 using Newtonsoft.Json;
 using Vitrina.UseCases.Auth.GetUserById;
 using Vitrina.UseCases.Auth.Register;
+using Vitrina.UseCases.Common;
 using Vitrina.UseCases.Specialization;
 using Vitrina.UseCases.User.DTO;
 using Vitrina.UseCases.User.DTO.AdditionalInformation;
-using Vitrina.UseCases.User.DTO.Profile;
 using UpdateUserDto = Vitrina.UseCases.User.DTO.UpdateUserDto;
 using UserDto = Vitrina.UseCases.Common.DTO.UserDto;
 
@@ -21,10 +21,7 @@ public class UserMappingProfile : Profile
     /// </summary>
     public UserMappingProfile()
     {
-        CreateMap<RegisterCommand, NotStudentDto>()
-            .IgnoreAllNonExisting();
-        CreateMap<RegisterCommand, StudentDto>()
-            .IgnoreAllNonExisting();
+        CreateMap<RegisterCommand, UpdateUserDto>().IgnoreAllNonExisting();
         CreateMap<RegisterCommand, Domain.User.User>()
             .ForMember(user => user.UserName, member =>
                 member.MapFrom(registerCommand => registerCommand.FirstName))

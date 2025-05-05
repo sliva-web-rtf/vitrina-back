@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Identity;
 using Saritasa.Tools.Domain.Exceptions;
 using Vitrina.Domain.User;
 using Vitrina.UseCases.User.DTO;
-using Vitrina.UseCases.User.DTO.Profile;
 
 namespace Vitrina.UseCases.User.GetUser;
 
