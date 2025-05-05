@@ -1,39 +1,26 @@
+using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Vitrina.Domain.User;
 using Vitrina.Infrastructure.Abstractions.Interfaces;
+using Vitrina.UseCases.User.DTO;
+using Vitrina.UseCases.User.DTO.Profile;
 
 namespace Vitrina.UseCases.Auth.Register;
 
 /// <summary>
 ///     Handler for <see cref="RegisterCommand" />.
 /// </summary>
-public class RegisterCommandHandler : IRequestHandler<RegisterCommand, RegisterCommandResult>
+public class RegisterCommandHandler(
+    UserManager<Domain.User.User> userManager,
+    IAppDbContext appDbContext,
+    IMapper mapper)
+    : IRequestHandler<RegisterCommand, RegisterCommandResult>
 {
-    private readonly IAppDbContext appDbContext;
-    private readonly UserManager<Domain.User.User> userManager;
-
-    /// <summary>
-    ///     Constructor.
-    /// </summary>
-    public RegisterCommandHandler(UserManager<Domain.User.User> userManager, IAppDbContext appDbContext)
-    {
-        this.userManager = userManager;
-        this.appDbContext = appDbContext;
-    }
-
     /// <inheritdoc />
     public async Task<RegisterCommandResult> Handle(RegisterCommand request, CancellationToken cancellationToken)
     {
-        var user = Domain.User.User.CreteUser(
-            request.LastName,
-            request.FirstName,
-            request.Patronymic,
-            request.RoleOnPlatform,
-            request.Email,
-            request.EducationCourse,
-            request.EducationLevel);
-
+        var user = CreateUser(request);
         var result = await userManager.CreateAsync(user, request.Password);
         if (!result.Succeeded)
         {
@@ -59,5 +46,20 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, RegisterC
         }
 
         return new RegisterCommandResult { IsSuccess = true, UserId = user.Id, ConfirmationCode = code };
+    }
+
+    private Domain.User.User CreateUser(RegisterCommand request)
+    {
+        var user = request.RoleOnPlatform switch
+        {
+            RoleOnPlatformEnum.Student => mapper.Map<Domain.User.User>(mapper.Map<StudentDto>(request)),
+            RoleOnPlatformEnum.Curator or RoleOnPlatformEnum.Partner => mapper.Map<Domain.User.User>(
+                mapper.Map<NotStudentDto>(request)),
+            _ => throw new NotImplementedException(
+                $"Logic for {nameof(RoleOnPlatformEnum)} = {request.RoleOnPlatform} is not defined")
+        };
+        user.UserName = $"{Guid.NewGuid()}";
+        user.RegistrationStatus = RegistrationStatusEnum.Registered;
+        return user;
     }
 }

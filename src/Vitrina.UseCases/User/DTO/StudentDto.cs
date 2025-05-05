@@ -1,33 +1,9 @@
-using Vitrina.Domain.User;
-using Vitrina.UseCases.Specialization;
-using Vitrina.UseCases.User.DTO.Profile.Base;
+using Vitrina.UseCases.Common.DTO;
+using Vitrina.UseCases.User.DTO.AdditionalInformation;
 
 namespace Vitrina.UseCases.User.DTO.Profile;
 
-public record StudentDto : UserWithRoleBaseDto
+public class StudentDto : UserDto
 {
-    /// <summary>
-    ///     Education level  of student.
-    /// </summary>
-    public EducationLevelEnum EducationLevel { get; init; }
-
-    /// <summary>
-    ///     Education course of student.
-    /// </summary>
-    public int EducationCourse { get; init; }
-
-    /// <summary>
-    ///     Link to the image in the cloud storage.
-    /// </summary>
-    public string? Resume { get; init; }
-
-    /// <summary>
-    ///     Role in the team.
-    /// </summary>
-    public string? RoleInTeam { get; init; }
-
-    /// <summary>
-    ///     Student specializations.
-    /// </summary>
-    public SpecializationDto? Specialization { get; init; }
+    public AdditionalStudentInfo AdditionalInformation { get; init; } = new();
 }

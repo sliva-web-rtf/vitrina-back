@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
 
 namespace Vitrina.Domain.User;
@@ -77,4 +78,11 @@ public class User : IdentityUser<int>
     ///     Link to the image in the cloud storage.
     /// </summary>
     public string? Avatar { get; set; }
+
+    /// <summary>
+    ///     User role on the platform.
+    /// </summary>
+    public RoleOnPlatformEnum RoleOnPlatform { get; set; }
+
+    [Column(TypeName = "jsonb")] public string? AdditionalInformation { get; set; }
 }

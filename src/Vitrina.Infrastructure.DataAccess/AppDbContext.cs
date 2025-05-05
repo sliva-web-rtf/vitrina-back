@@ -39,12 +39,6 @@ public class AppDbContext : IdentityDbContext<User, AppIdentityRole, int>, IAppD
 
     public DbSet<Specialization> Specializations => Set<Specialization>();
 
-    public DbSet<Student> Students => Set<Student>();
-
-    public DbSet<Curator> Curators => Set<Curator>();
-
-    public DbSet<Partner> Partners => Set<Partner>();
-
     /// <inheritdoc />
     public DbSet<DataProtectionKey> DataProtectionKeys { get; private set; }
 

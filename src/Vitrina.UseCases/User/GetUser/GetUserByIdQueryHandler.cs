@@ -1,41 +1,28 @@
-using System.Text.Json;
 using AutoMapper;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 using Saritasa.Tools.Domain.Exceptions;
 using Vitrina.Domain.User;
-using Vitrina.Infrastructure.Abstractions.Interfaces;
-using Vitrina.UseCases.User.DTO.Profile.Base;
+using Vitrina.UseCases.User.DTO;
+using Vitrina.UseCases.User.DTO.Profile;
 
-namespace Vitrina.UseCases.User;
+namespace Vitrina.UseCases.User.GetUser;
 
-public class GetUserByIdQueryHandler(IAppDbContext dbContext, IMapper mapper)
-    : IRequestHandler<GetUserByIdQuery, JsonElement>
+/// <inheritdoc />
+public class GetUserByIdQueryHandler(UserManager<Domain.User.User> userManager, IMapper mapper)
+    : IRequestHandler<GetUserByIdQuery, object>
 {
-    public Task<JsonElement> Handle(GetUserByIdQuery request, CancellationToken cancellationToken) =>
-        Task.FromResult(request.RoleOnPlatform switch
-        {
-            RoleOnPlatformEnum.Curator => GetSerializeUser<Curator, NotStudentDto>(dbContext.Curators, request.Id),
-            RoleOnPlatformEnum.Student => GetSerializeUser<Student, NotStudentDto>(dbContext.Students, request.Id),
-            RoleOnPlatformEnum.Partner => GetSerializeUser<Partner, NotStudentDto>(dbContext.Partners, request.Id),
-            _ => throw new InvalidOperationException("The user was not found")
-        });
-
-    private JsonElement GetSerializeUser<TUser, TUserDto>(DbSet<TUser> dbSet, int id) where TUser : UserWithRoleBase
+    /// <inheritdoc />
+    public async Task<object> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
     {
-        var user = GetUser(dbSet, id);
-        var dto = mapper.Map<TUser, TUserDto>(user);
-        return JsonDocument.Parse(JsonSerializer.Serialize(dto)).RootElement;
-    }
-
-    public TUser GetUser<TUser>(DbSet<TUser> dbSet, int id) where TUser : UserWithRoleBase
-    {
-        var user = dbSet.FirstOrDefault(curator => curator.UserId == id);
-        if (user is null)
+        var user = await userManager.FindByIdAsync($"{request.Id}") ??
+                   throw new NotFoundException($"User with id = {request.Id} not found");
+        return user.RoleOnPlatform switch
         {
-            throw new NotFoundException("Failed to find a user with this role on the platform");
-        }
-
-        return user;
+            RoleOnPlatformEnum.Student => mapper.Map<StudentDto>(user),
+            RoleOnPlatformEnum.Curator or RoleOnPlatformEnum.Partner => mapper.Map<NotStudentDto>(user),
+            _ => throw new NotImplementedException(
+                $"Logic for {nameof(RoleOnPlatformEnum)} = {user.RoleOnPlatform} is not defined")
+        };
     }
 }

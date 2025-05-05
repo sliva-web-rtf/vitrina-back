@@ -1,6 +1,4 @@
-﻿using Vitrina.Domain.User;
-
-namespace Vitrina.Domain.Project;
+﻿namespace Vitrina.Domain.Project;
 
 /// <summary>
 ///     Project users.
@@ -10,12 +8,12 @@ public class Teammate : BaseEntity<int>
     /// <summary>
     ///     Student id.
     /// </summary>
-    public int StudentId { get; init; }
+    public int UserId { get; init; }
 
     /// <summary>
     ///     User.
     /// </summary>
-    public virtual Student Student { get; private set; }
+    public virtual User.User User { get; private set; }
 
     /// <summary>
     ///     User project id.

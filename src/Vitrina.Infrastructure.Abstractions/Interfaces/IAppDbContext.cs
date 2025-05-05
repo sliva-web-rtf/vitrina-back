@@ -48,19 +48,4 @@ public interface IAppDbContext : IDbContextWithSets, IDisposable
     ///     Students' specializations.
     /// </summary>
     public DbSet<Specialization> Specializations { get; }
-
-    /// <summary>
-    ///     Students.
-    /// </summary>
-    public DbSet<Student> Students { get; }
-
-    /// <summary>
-    ///     Curators.
-    /// </summary>
-    public DbSet<Curator> Curators { get; }
-
-    /// <summary>
-    ///     Partners.
-    /// </summary>
-    public DbSet<Partner> Partners { get; }
 }

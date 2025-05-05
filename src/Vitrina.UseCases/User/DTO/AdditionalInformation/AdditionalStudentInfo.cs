@@ -1,8 +1,9 @@
-using Vitrina.Domain.Project;
+using Vitrina.Domain.User;
+using Vitrina.UseCases.Specialization;
 
-namespace Vitrina.Domain.User;
+namespace Vitrina.UseCases.User.DTO.AdditionalInformation;
 
-public class Student : UserWithRoleBase
+public class AdditionalStudentInfo
 {
     /// <summary>
     ///     Education level  of student.
@@ -20,17 +21,12 @@ public class Student : UserWithRoleBase
     public string? Resume { get; init; }
 
     /// <summary>
-    ///     Roles in the team.
+    ///     Role in the team.
     /// </summary>
-    public ICollection<string>? RolesInTeam { get; init; }
+    public string? RoleInTeam { get; init; }
 
     /// <summary>
     ///     Student specializations.
     /// </summary>
-    public Specialization? Specialization { get; init; }
-
-    /// <summary>
-    ///     Positions in teams.
-    /// </summary>
-    public virtual ICollection<Teammate> PositionsInTeams { get; init; } = new List<Teammate>();
+    public SpecializationDto? Specialization { get; init; }
 }

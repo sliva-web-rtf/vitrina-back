@@ -1,48 +1,42 @@
-using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using Vitrina.UseCases.User.DTO.Profile;
+using Vitrina.UseCases.User;
+using Vitrina.UseCases.User.DTO;
 using Vitrina.UseCases.User.UpdateUser;
 
 namespace Vitrina.Web.Controllers.Users;
 
-/// <summary>
-///     A controller for working with students.
-/// </summary>
-[Route("api/students/{id:int}/profile")]
-[ApiExplorerSettings(GroupName = "students")]
-public class StudentsController(IMediator mediator, IMapper mapper) : ControllerBase
+[Route("api/users/{id:int}")]
+[ApiExplorerSettings(GroupName = "users")]
+public class UserController(IMediator mediator) : ControllerBase
 {
-    /// <summary>
-    ///     Getting student profile data by ID.
-    /// </summary>
     [HttpGet("")]
     [Produces("application/json")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> GetStudentProfileDataById([FromRoute] int id, CancellationToken cancellationToken)
     {
-        var query = new GetUserProfileByIdQuery(id);
+        var query = new GetUserByIdQuery(id);
         var result = await mediator.Send(query, cancellationToken);
-        return Ok(result.RootElement);
+        return Ok(result);
     }
 
     /// <summary>
     ///     Edits student profile data.
     /// </summary>
     [ValidateUserId]
-    [Authorize(Roles = "Student")]
+    [Authorize(Roles = "Student, Curator, Partner")]
     [Produces("application/json")]
     [HttpPatch("")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> EditStudentProfileById([FromRoute] int id,
-        [FromBody] StudentDto studentDto, CancellationToken cancellationToken)
+        [FromBody] JsonPatchDocument<UpdateUserDto> patchDocument, CancellationToken cancellationToken)
     {
-        var user = mapper.Map<UpdateUserDto>(studentDto);
-        var command = new UpdateUserCommand(id, user);
+        var command = new UpdateUserByIdCommand(id, patchDocument);
         var result = await mediator.Send(command, cancellationToken);
-        return Ok(result.RootElement);
+        return Ok(result);
     }
 }

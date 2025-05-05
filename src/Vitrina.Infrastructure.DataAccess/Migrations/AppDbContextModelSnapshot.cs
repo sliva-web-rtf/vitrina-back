@@ -17,7 +17,7 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.20")
+                .HasAnnotation("ProductVersion", "9.0.3")
                 .HasAnnotation("Proxies:ChangeTracking", false)
                 .HasAnnotation("Proxies:CheckEquality", false)
                 .HasAnnotation("Proxies:LazyLoading", true)
@@ -481,6 +481,10 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                         .HasColumnType("integer")
                         .HasDefaultValue(5);
 
+                    b.Property<string>("AdditionalInformation")
+                        .IsUnicode(false)
+                        .HasColumnType("jsonb");
+
                     b.Property<string>("Avatar")
                         .IsUnicode(false)
                         .HasColumnType("text");
@@ -555,10 +559,6 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("boolean")
                         .HasDefaultValue(false);
-
-                    b.Property<string>("ProfileData")
-                        .IsUnicode(false)
-                        .HasColumnType("jsonb");
 
                     b.Property<int>("RegistrationStatus")
                         .ValueGeneratedOnAdd()
@@ -716,7 +716,7 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                         .IsRequired();
 
                     b.HasOne("Vitrina.Domain.User.User", "User")
-                        .WithMany("PositionsInTeams")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -733,11 +733,6 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                     b.Navigation("CustomBlocks");
 
                     b.Navigation("Users");
-                });
-
-            modelBuilder.Entity("Vitrina.Domain.User.User", b =>
-                {
-                    b.Navigation("PositionsInTeams");
                 });
 #pragma warning restore 612, 618
         }

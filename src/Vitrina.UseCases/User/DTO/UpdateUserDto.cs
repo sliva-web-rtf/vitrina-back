@@ -3,7 +3,7 @@ using Vitrina.UseCases.User.DTO.AdditionalInformation;
 
 namespace Vitrina.UseCases.User.DTO;
 
-public class NotStudentDto : UserDto
+public class UpdateUserDto : UserDto
 {
-    public AdditionalNotStudentInfo AdditionalInformation { get; init; } = new();
+    public AdditionalUserInfo AdditionalInformation { get; init; }
 }
