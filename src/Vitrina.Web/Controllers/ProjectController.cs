@@ -17,6 +17,7 @@ using Vitrina.UseCases.Project.UpdateProject;
 using Vitrina.UseCases.Project.UpdateProject.DTO;
 using Vitrina.UseCases.Project.UploadImages;
 using Vitrina.UseCases.Project.UploadImages.Dto;
+using Vitrina.UseCases.Project.YandexBucket;
 using SearchProjectsQuery = Vitrina.UseCases.Project.SearchProjects.SearchProjectsQuery;
 using V2 = Vitrina.UseCases.Project.SearchProjects.V2;
 
@@ -99,6 +100,23 @@ public class ProjectController : ControllerBase
         }
         await mediator.Send(command, cancellationToken);
         return Ok();
+    }
+
+    [HttpPost]
+    [Route("save-img")]
+    public async Task<IActionResult> SaveImage(IFormFile file, CancellationToken cancellationToken)
+    {
+        var command = new SaveImageCommand(file);
+        var result = await mediator.Send(command, cancellationToken);
+        return Ok(result);
+    }
+
+    [HttpGet("ImageURL/{fileName}")]
+    public async Task<IActionResult> GetImageURL(string fileName, CancellationToken cancellationToken)
+    {
+        var command = new GetImageURLCommand(fileName);
+        var result = await mediator.Send(command, cancellationToken);
+        return Ok(result);
     }
 
     /// <summary>
