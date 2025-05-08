@@ -3,7 +3,7 @@ namespace Vitrina.Domain.Project;
 public class Block
 {
     /// <summary>
-    /// Id of block.
+    /// ID of block.
     /// </summary>
     public int Id { get; set; }
 
@@ -16,6 +16,11 @@ public class Block
     /// Text of block.
     /// </summary>
     required public string Text { get; set; }
+
+    /// <summary>
+    ///     Sequence number.
+    /// </summary>
+    public int SequenceNumber { get; set; }
 
     /// <summary>
     /// Id og project.

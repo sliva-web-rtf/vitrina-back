@@ -71,7 +71,7 @@ public class Project
     /// <summary>
     /// Project tags.
     /// </summary>
-    public ICollection<Tag> Tags { get; private set; } = new List<Tag>();
+    public ICollection<Tag> Tags { get; set; } = new List<Tag>();
 
     /// <summary>
     /// Project team.

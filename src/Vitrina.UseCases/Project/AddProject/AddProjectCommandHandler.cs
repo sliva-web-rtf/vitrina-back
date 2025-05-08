@@ -27,6 +27,7 @@ internal class AddProjectCommandHandler : IRequestHandler<AddProjectCommand, int
         try
         {
             var project = mapper.Map<AddProjectCommand, Domain.Project.Project>(request);
+            NumberCustomBlocks(project);
 
             var allRoles = await dbContext.ProjectRoles.ToListAsync(cancellationToken);
 
@@ -36,7 +37,8 @@ internal class AddProjectCommandHandler : IRequestHandler<AddProjectCommand, int
 
                 foreach (var role in userInProject.Roles)
                 {
-                    var existingRole = allRoles.FirstOrDefault(r => r.Name.Equals(role.Name, StringComparison.OrdinalIgnoreCase));
+                    var existingRole =
+                        allRoles.FirstOrDefault(r => r.Name.Equals(role.Name, StringComparison.OrdinalIgnoreCase));
 
                     if (existingRole != null)
                     {
@@ -44,10 +46,7 @@ internal class AddProjectCommandHandler : IRequestHandler<AddProjectCommand, int
                     }
                     else
                     {
-                        var newRole = new ProjectRole
-                        {
-                            Name = role.Name,
-                        };
+                        var newRole = new ProjectRole { Name = role.Name };
 
                         dbContext.ProjectRoles.Add(newRole);
 
@@ -74,4 +73,13 @@ internal class AddProjectCommandHandler : IRequestHandler<AddProjectCommand, int
             throw new DomainException("An error occurred while creating the project.", ex);
         }
     }
+
+    public static void NumberCustomBlocks(Domain.Project.Project project) =>
+        project.CustomBlocks = project.CustomBlocks
+            .Select((block, index) =>
+            {
+                block.SequenceNumber = index;
+                return block;
+            })
+            .ToList();
 }

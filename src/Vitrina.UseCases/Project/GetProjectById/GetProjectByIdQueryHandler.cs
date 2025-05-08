@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Saritasa.Tools.Domain.Exceptions;
@@ -25,13 +24,17 @@ internal class GetProjectByIdQueryHandler : IRequestHandler<GetProjectByIdQuery,
     public async Task<ProjectDto> Handle(GetProjectByIdQuery request, CancellationToken cancellationToken)
     {
         var project = await dbContext.Projects
-            .ProjectTo<ProjectDto>(mapper.ConfigurationProvider)
-            .FirstOrDefaultAsync(p => p.Id == request.Id, cancellationToken)
-            ?? throw new NotFoundException($"Project with id {request.Id} not found.");
-        foreach (var content in project.Contents)
+                          .FirstOrDefaultAsync(p => p.Id == request.Id, cancellationToken)
+                      ?? throw new NotFoundException($"Project with id {request.Id} not found.");
+        project.CustomBlocks = project.CustomBlocks
+            .OrderBy(block => block.SequenceNumber)
+            .ToList();
+        var projectDto = mapper.Map<ProjectDto>(project);
+        foreach (var content in projectDto.Contents)
         {
             content.ImageUrl = content.ImageUrl.Split("/").Last();
         }
-        return project;
+
+        return projectDto;
     }
 }

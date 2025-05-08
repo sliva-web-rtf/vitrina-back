@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Saritasa.Tools.Domain.Exceptions;
 using Vitrina.Domain.Project;
 using Vitrina.Infrastructure.Abstractions.Interfaces;
+using Vitrina.UseCases.Project.AddProject;
 
 namespace Vitrina.UseCases.Project.UpdateProject;
 
@@ -23,15 +24,15 @@ internal class UpdateProjectCommandHandler : IRequestHandler<UpdateProjectComman
         try
         {
             var project = await appDbContext
-                .Projects
-                .FirstOrDefaultAsync(p => p.Id == request.ProjectId, cancellationToken)
-                        ?? throw new DomainException("Project not found");
+                              .Projects
+                              .FirstOrDefaultAsync(p => p.Id == request.ProjectId, cancellationToken)
+                          ?? throw new DomainException("Project not found");
             var users = await appDbContext.Teammates
-                .Include(u => u.Roles)
                 .Where(u => u.ProjectId == project.Id)
                 .ToListAsync(cancellationToken);
             var allRoles = await appDbContext.ProjectRoles.ToListAsync(cancellationToken);
             mapper.Map(request.Project, project);
+            AddProjectCommandHandler.NumberCustomBlocks(project);
             var resultUser = new List<Teammate>();
             foreach (var user in request.Project.Users)
             {
@@ -59,6 +60,7 @@ internal class UpdateProjectCommandHandler : IRequestHandler<UpdateProjectComman
 
                 resultUser.Add(userFromDb);
             }
+
             project.Users = resultUser;
             await appDbContext.SaveChangesAsync(cancellationToken);
         }
