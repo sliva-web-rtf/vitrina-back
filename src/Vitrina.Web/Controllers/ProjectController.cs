@@ -52,46 +52,53 @@ public class ProjectController : ControllerBase
     /// <returns>Project id.</returns>
     /*[Authorize]*/
     [HttpPost("create")]
-    public async Task<int> CreateProject(AddProjectCommand command, CancellationToken cancellationToken)
-        => await mediator.Send(command, cancellationToken);
+    public async Task<int> CreateProject(AddProjectCommand command, CancellationToken cancellationToken) =>
+        await mediator.Send(command, cancellationToken);
 
     /// <summary>
     /// Get project by id.
     /// </summary>
     /// <returns>Project.</returns>
     [HttpGet("{id}")]
-    public async Task<ProjectDto> GetProject(int id, CancellationToken cancellationToken)
-        => await mediator.Send(new GetProjectByIdQuery(id), cancellationToken);
+    public async Task<ProjectDto> GetProject(int id, CancellationToken cancellationToken) =>
+        await mediator.Send(new GetProjectByIdQuery(id), cancellationToken);
 
     /// <summary>
     /// Search projects by query.
     /// </summary>
     [HttpPost("search")]
-    public async Task<PagedListMetadataDto<ShortProjectDto>> SearchProjects([FromBody] SearchProjectsQuery query, CancellationToken cancellationToken)
-        => (await mediator.Send(query, cancellationToken)).ToMetadataObject();
+    public async Task<PagedListMetadataDto<ShortProjectDto>> SearchProjects(
+        [FromBody] SearchProjectsQuery query,
+        CancellationToken cancellationToken
+    ) =>
+        (await mediator.Send(query, cancellationToken)).ToMetadataObject();
 
     /// <summary>
     /// Project periods.
     /// </summary>
     /// <returns>Periods collection.</returns>
     [HttpGet("periods")]
-    public async Task<ICollection<string>> GetProjectPeriods(CancellationToken cancellationToken)
-        => await mediator.Send(new GetPeriodsQuery(), cancellationToken);
+    public async Task<ICollection<string>> GetProjectPeriods(CancellationToken cancellationToken) =>
+        await mediator.Send(new GetPeriodsQuery(), cancellationToken);
 
     /// <summary>
     /// Get organizations.
     /// </summary>
     /// <returns>Organizations.</returns>
     [HttpGet("organizations")]
-    public async Task<ICollection<string>> GetProjectOrganizations(CancellationToken cancellationToken)
-        => await mediator.Send(new GetOrganizationsQuery(), cancellationToken);
+    public async Task<ICollection<string>> GetProjectOrganizations(CancellationToken cancellationToken) =>
+        await mediator.Send(new GetOrganizationsQuery(), cancellationToken);
 
     /// <summary>
     /// Upload images to project.
     /// </summary>
     /*[Authorize]*/
     [HttpPost("{id}/upload-images")]
-    public async Task<IActionResult> UploadImagesToProject([FromRoute] int id, IFormFile[] files, CancellationToken cancellationToken)
+    public async Task<IActionResult> UploadImagesToProject(
+        [FromRoute] int id,
+        IFormFile[] files,
+        CancellationToken cancellationToken
+    )
     {
         var command = new UploadImagesCommand { Id = id, IsAvatar = true };
         foreach (var file in files)
@@ -105,18 +112,43 @@ public class ProjectController : ControllerBase
     }
 
     [HttpPost]
-    [Route("save-img")]
-    public async Task<IActionResult> SaveImage(IFormFile file, CancellationToken cancellationToken)
+    [Route("{id}/save-image-avatars")]
+    public async Task<IActionResult> SaveImageAvatars(
+        [FromRoute] int id,
+        IFormFile file,
+        CancellationToken cancellationToken
+    )
     {
-        var command = new SaveImageCommand(file);
+        var command = new SaveImageCommand(file, "Avatars/", id);
         var result = await mediator.Send(command, cancellationToken);
         return Ok(result);
     }
 
-    [HttpGet("ImageURL/{fileName}")]
-    public async Task<IActionResult> GetImageURL(string fileName, CancellationToken cancellationToken)
+    [HttpPost]
+    [Route("{id}/save-image-preview")]
+    public async Task<IActionResult> SaveImagePreview(
+        [FromRoute] int id,
+        IFormFile file,
+        CancellationToken cancellationToken
+    )
     {
-        var command = new GetImageURLCommand(fileName);
+        var command = new SaveImageCommand(file, "Preview/", id);
+        var result = await mediator.Send(command, cancellationToken);
+        return Ok(result);
+    }
+
+    [HttpGet("get-image-url-avatar/{fileName}")]
+    public async Task<IActionResult> GetImageUrlAvatar(string fileName, CancellationToken cancellationToken)
+    {
+        var command = new GetImageURLCommand("Avatars/" + fileName);
+        var result = await mediator.Send(command, cancellationToken);
+        return Ok(result);
+    }
+
+    [HttpGet("get-image-url-preview/{fileName}")]
+    public async Task<IActionResult> GetImageUrlPreview(string fileName, CancellationToken cancellationToken)
+    {
+        var command = new GetImageURLCommand("Previews/" + fileName);
         var result = await mediator.Send(command, cancellationToken);
         return Ok(result);
     }
@@ -126,7 +158,11 @@ public class ProjectController : ControllerBase
     /// </summary>
     /*[Authorize]*/
     [HttpPost("{id}/upload-preview-images")]
-    public async Task<IActionResult> UploadPreviewImagesToProject([FromRoute] int id, IFormFile file, CancellationToken cancellationToken)
+    public async Task<IActionResult> UploadPreviewImagesToProject(
+        [FromRoute] int id,
+        IFormFile file,
+        CancellationToken cancellationToken
+    )
     {
         var command = new UploadImagesCommand { Id = id, IsAvatar = false };
         var fileStream = file.OpenReadStream();
@@ -177,7 +213,11 @@ public class ProjectController : ControllerBase
     /// </summary>
     /*[Authorize]*/
     [HttpPut("{id}")]
-    public async Task UpdateProject([FromRoute] int id, [FromBody] UpdateProjectDto projectDto, CancellationToken cancellationToken)
+    public async Task UpdateProject(
+        [FromRoute] int id,
+        [FromBody] UpdateProjectDto projectDto,
+        CancellationToken cancellationToken
+    )
     {
         await mediator.Send(new UpdateProjectCommand { ProjectId = id, Project = projectDto }, cancellationToken);
     }
@@ -213,22 +253,25 @@ public class ProjectController : ControllerBase
     /// <param name="cancellationToken"></param>
     /// <returns>Paged list of projects.</returns>
     [HttpPost("v2/search")]
-    public async Task<PagedListMetadataDto<V2.ShortProjectV2Dto>> SearchProjectsV2(V2.SearchProjectsV2Query v2Query, CancellationToken cancellationToken)
-        => (await mediator.Send(v2Query, cancellationToken)).ToMetadataObject();
+    public async Task<PagedListMetadataDto<V2.ShortProjectV2Dto>> SearchProjectsV2(
+        V2.SearchProjectsV2Query v2Query,
+        CancellationToken cancellationToken
+    ) =>
+        (await mediator.Send(v2Query, cancellationToken)).ToMetadataObject();
 
     /// <summary>
     /// Get spheres.
     /// </summary>
     /// <returns>Spheres.</returns>
     [HttpGet("spheres")]
-    public async Task<ICollection<string>> GetProjectSpheres(CancellationToken cancellationToken)
-        => await mediator.Send(new GetSpheresQuery(), cancellationToken);
+    public async Task<ICollection<string>> GetProjectSpheres(CancellationToken cancellationToken) =>
+        await mediator.Send(new GetSpheresQuery(), cancellationToken);
 
     /// <summary>
     /// Get types.
     /// </summary>
     /// <returns>Types.</returns>
     [HttpGet("types")]
-    public async Task<ICollection<string>> GetProjectTypes(CancellationToken cancellationToken)
-        => await mediator.Send(new GetTypesQuery(), cancellationToken);
+    public async Task<ICollection<string>> GetProjectTypes(CancellationToken cancellationToken) =>
+        await mediator.Send(new GetTypesQuery(), cancellationToken);
 }
