@@ -28,6 +28,7 @@ internal class UpdateProjectCommandHandler : IRequestHandler<UpdateProjectComman
                               .FirstOrDefaultAsync(p => p.Id == request.ProjectId, cancellationToken)
                           ?? throw new DomainException("Project not found");
             var users = await appDbContext.Teammates
+                .Include(u => u.Roles)
                 .Where(u => u.ProjectId == project.Id)
                 .ToListAsync(cancellationToken);
             var allRoles = await appDbContext.ProjectRoles.ToListAsync(cancellationToken);

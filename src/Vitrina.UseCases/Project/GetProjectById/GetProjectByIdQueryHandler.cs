@@ -24,6 +24,11 @@ internal class GetProjectByIdQueryHandler : IRequestHandler<GetProjectByIdQuery,
     public async Task<ProjectDto> Handle(GetProjectByIdQuery request, CancellationToken cancellationToken)
     {
         var project = await dbContext.Projects
+                          .Include(project => project.Contents)
+                          .Include(project => project.Tags)
+                          .Include(project => project.Users)
+                          .Include(project => project.Users)
+                          .Include(project => project.CustomBlocks)
                           .FirstOrDefaultAsync(p => p.Id == request.Id, cancellationToken)
                       ?? throw new NotFoundException($"Project with id {request.Id} not found.");
         project.CustomBlocks = project.CustomBlocks
