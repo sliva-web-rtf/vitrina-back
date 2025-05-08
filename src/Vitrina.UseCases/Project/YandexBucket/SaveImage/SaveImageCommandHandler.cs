@@ -16,16 +16,15 @@ public class SaveImageCommandHandler(IS3StorageService s3Storage, IAppDbContext 
 
     public async Task<string> Handle(SaveImageCommand request, CancellationToken cancellationToken)
     {
-        await using var stream = request.File.OpenReadStream();
-
-        var project = await appDbContext.Projects.FirstOrDefaultAsync(p => p.Id == request.Id, cancellationToken)
-            ?? throw new NotFoundException("Project not found.");
-
         if (request.File == null)
         {
             throw new DomainException("Попытка отправить пустой файл.");
         }
 
+        await using var stream = request.File.OpenReadStream();
+
+        var project = await appDbContext.Projects.FirstOrDefaultAsync(p => p.Id == request.Id, cancellationToken)
+            ?? throw new NotFoundException("Project not found.");
         if (request.File.FileName.Split(".").Length < 2)
         {
             throw new DomainException("Неправильный формат картинки.");
