@@ -18,6 +18,8 @@ using Vitrina.UseCases.Project.UpdateProject.DTO;
 using Vitrina.UseCases.Project.UploadImages;
 using Vitrina.UseCases.Project.UploadImages.Dto;
 using Vitrina.UseCases.Project.YandexBucket;
+using Vitrina.UseCases.Project.YandexBucket.GetImageURL;
+using Vitrina.UseCases.Project.YandexBucket.SaveImage;
 using SearchProjectsQuery = Vitrina.UseCases.Project.SearchProjects.SearchProjectsQuery;
 using V2 = Vitrina.UseCases.Project.SearchProjects.V2;
 

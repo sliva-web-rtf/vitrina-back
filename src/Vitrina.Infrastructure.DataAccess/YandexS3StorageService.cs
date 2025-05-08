@@ -36,15 +36,14 @@ public class YandexS3StorageService : IS3StorageService
         return GetFileUrl(fileName);
     }
 
-    public Task<string> GetFileURLAsync(string fileName, TimeSpan validFor)
+    public Task<string> GetPreSignedURL(string fileName, TimeSpan validFor)
     {
         var request = new GetPreSignedUrlRequest
         {
             BucketName = bucketName, Key = fileName, Expires = DateTime.UtcNow.Add(validFor), Verb = HttpVerb.GET
         };
 
-        var r = s3Client.GetPreSignedURL(request);
-        return Task.FromResult(r);
+        return s3Client.GetPreSignedURLAsync(request);
     }
 
     public string GetFileUrl(string fileName)

@@ -1,7 +1,7 @@
 using MediatR;
 using Vitrina.Infrastructure.Abstractions.Interfaces;
 
-namespace Vitrina.UseCases.Project.YandexBucket;
+namespace Vitrina.UseCases.Project.YandexBucket.SaveImage;
 
 public class SaveImageCommandHandler(IS3StorageService s3Storage, IAppDbContext appDbContext)
     : IRequestHandler<SaveImageCommand, string>
