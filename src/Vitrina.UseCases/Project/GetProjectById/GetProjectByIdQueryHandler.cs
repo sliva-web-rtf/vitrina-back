@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Saritasa.Tools.Domain.Exceptions;
@@ -9,7 +8,7 @@ using Vitrina.UseCases.Common.DTO;
 namespace Vitrina.UseCases.Project.GetProjectById;
 
 /// <summary>
-///     Handler.
+/// Handler.
 /// </summary>
 internal class GetProjectByIdQueryHandler : IRequestHandler<GetProjectByIdQuery, ProjectDto>
 {
@@ -25,14 +24,22 @@ internal class GetProjectByIdQueryHandler : IRequestHandler<GetProjectByIdQuery,
     public async Task<ProjectDto> Handle(GetProjectByIdQuery request, CancellationToken cancellationToken)
     {
         var project = await dbContext.Projects
-                          .ProjectTo<ProjectDto>(mapper.ConfigurationProvider)
+                          .Include(project => project.Contents)
+                          .Include(project => project.Tags)
+                          .Include(project => project.Users)
+                          .Include(project => project.Users)
+                          .Include(project => project.CustomBlocks)
                           .FirstOrDefaultAsync(p => p.Id == request.Id, cancellationToken)
                       ?? throw new NotFoundException($"Project with id {request.Id} not found.");
-        foreach (var content in project.Contents)
+        project.CustomBlocks = project.CustomBlocks
+            .OrderBy(block => block.SequenceNumber)
+            .ToList();
+        var projectDto = mapper.Map<ProjectDto>(project);
+        foreach (var content in projectDto.Contents)
         {
             content.ImageUrl = content.ImageUrl.Split("/").Last();
         }
 
-        return project;
+        return projectDto;
     }
 }

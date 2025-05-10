@@ -27,6 +27,7 @@ internal class AddProjectCommandHandler : IRequestHandler<AddProjectCommand, int
         try
         {
             var project = mapper.Map<AddProjectCommand, Domain.Project.Project>(request);
+            NumberCustomBlocks(project);
 
             var allRoles = await dbContext.ProjectRoles.ToListAsync(cancellationToken);
 
@@ -72,4 +73,13 @@ internal class AddProjectCommandHandler : IRequestHandler<AddProjectCommand, int
             throw new DomainException("An error occurred while creating the project.", ex);
         }
     }
+
+    public static void NumberCustomBlocks(Domain.Project.Project project) =>
+        project.CustomBlocks = project.CustomBlocks
+            .Select((block, index) =>
+            {
+                block.SequenceNumber = index;
+                return block;
+            })
+            .ToList();
 }

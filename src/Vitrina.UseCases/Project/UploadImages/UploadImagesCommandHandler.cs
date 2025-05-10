@@ -10,22 +10,31 @@ using Vitrina.Infrastructure.Abstractions.Interfaces;
 namespace Vitrina.UseCases.Project.UploadImages;
 
 /// <summary>
-///     Upload images handler.
+/// Upload images handler.
 /// </summary>
 internal class UploadImagesCommandHandler : IRequestHandler<UploadImagesCommand>
 {
-    private readonly IAppDbContext appDbContext;
-    private readonly IHostingEnvironment hostingEnvironment;
+    private readonly List<(string ContentType, string Extension)> allowedFormats = new()
+    {
+        ("image/jpeg", "jpg"), ("image/png", "png"), ("image/jpeg", "jpeg"), ("image/webp", "webp")
+    };
 
+    private readonly IAppDbContext appDbContext1;
+
+    private readonly IHostingEnvironment hostingEnvironment1;
+
+    /// <summary>
+    ///     Upload images handler.
+    /// </summary>
     public UploadImagesCommandHandler(IHostingEnvironment hostingEnvironment, IAppDbContext appDbContext)
     {
-        this.hostingEnvironment = hostingEnvironment;
-        this.appDbContext = appDbContext;
+        hostingEnvironment1 = hostingEnvironment;
+        appDbContext1 = appDbContext;
     }
 
     public async Task Handle(UploadImagesCommand request, CancellationToken cancellationToken)
     {
-        var project = await appDbContext.Projects.FirstOrDefaultAsync(p => p.Id == request.Id, cancellationToken)
+        var project = await appDbContext1.Projects.FirstOrDefaultAsync(p => p.Id == request.Id, cancellationToken)
                       ?? throw new NotFoundException("Project not found.");
         foreach (var file in request.Files)
         {
@@ -40,23 +49,14 @@ internal class UploadImagesCommandHandler : IRequestHandler<UploadImagesCommand>
             }
 
             var extension = file.FileName.Split(".").Last();
-            var allowedFormats =
-                new List<(string ContentType, string Extension)>
-                {
-                    ("image/jpeg", "jpg"), ("image/png", "png"), ("image/jpeg", "jpeg")
-                };
             if (!allowedFormats.Any(f => f.Extension == extension && f.ContentType == file.ContentType))
             {
                 throw new DomainException("Неправильный формат картинки.");
             }
 
-            var webRootDirectory = hostingEnvironment.WebRootPath.TrimEnd('/');
-            var path = request.IsAvatar
-                ? $"/Avatars/{Guid.NewGuid()}.{extension}"
-                : $"/Preview/{Guid.NewGuid()}.{extension}";
-            var webpPath = request.IsAvatar ? $"/Avatars/{Guid.NewGuid()}.webp" : $"/Preview/{Guid.NewGuid()}.webp";
-            var filePath = webRootDirectory + path;
-            var webpFilePath = webRootDirectory + webpPath;
+            var basePath = Path.Combine(hostingEnvironment1.WebRootPath, request.IsAvatar ? "Avatars" : "Preview");
+            var filePath = Path.Combine(basePath, $"{Guid.NewGuid()}.{extension}");
+            var webpFilePath = Path.Combine(basePath, $"{Guid.NewGuid()}.webp");
 
             await using (var fileStream = new FileStream(filePath, FileMode.OpenOrCreate))
             {
@@ -85,6 +85,6 @@ internal class UploadImagesCommandHandler : IRequestHandler<UploadImagesCommand>
             await file.Data.DisposeAsync();
         }
 
-        await appDbContext.SaveChangesAsync(cancellationToken);
+        await appDbContext1.SaveChangesAsync(cancellationToken);
     }
 }
