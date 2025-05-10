@@ -1,4 +1,6 @@
 ﻿using McMaster.Extensions.CommandLineUtils;
+using Microsoft.EntityFrameworkCore;
+using Vitrina.Infrastructure.DataAccess;
 using Vitrina.Web.Infrastructure.Settings;
 
 namespace Vitrina.Web;
@@ -22,15 +24,18 @@ internal sealed class Program
         startup.ConfigureServices(builder.Services, builder.Environment);
         app = builder.Build();
         startup.Configure(app, app.Environment);
-
-        await Seeder.ConfigureRoles(app.Services);
-
         // Command line processing.
         var commandLineApplication = new CommandLineApplication<Program>();
         using var scope = app.Services.CreateScope();
+
+        var services = scope.ServiceProvider;
+        var context = services.GetRequiredService<AppDbContext>();
+        await context.Database.MigrateAsync();
+        await Seeder.ConfigureRoles(services);
+
         commandLineApplication
             .Conventions
-            .UseConstructorInjection(scope.ServiceProvider)
+            .UseConstructorInjection(services)
             .UseDefaultConventions();
 
         return await commandLineApplication.ExecuteAsync(args);

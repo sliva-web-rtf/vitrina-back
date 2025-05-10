@@ -560,7 +560,7 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                         .HasColumnType("boolean")
                         .HasDefaultValue(false);
 
-                    b.Property<int>("RegistrationStatus")
+                    b.Property<int?>("RegistrationStatus")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasDefaultValue(1);

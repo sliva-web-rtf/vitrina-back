@@ -14,6 +14,16 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                 name: "ProfileData",
                 table: "AspNetUsers",
                 newName: "AdditionalInformation");
+
+            migrationBuilder.AlterColumn<int>(
+                name: "RegistrationStatus",
+                table: "AspNetUsers",
+                type: "integer",
+                nullable: true,
+                defaultValue: 1,
+                oldClrType: typeof(int),
+                oldType: "integer",
+                oldDefaultValue: 1);
         }
 
         /// <inheritdoc />
@@ -23,6 +33,17 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                 name: "AdditionalInformation",
                 table: "AspNetUsers",
                 newName: "ProfileData");
+
+            migrationBuilder.AlterColumn<int>(
+                name: "RegistrationStatus",
+                table: "AspNetUsers",
+                type: "integer",
+                nullable: false,
+                defaultValue: 1,
+                oldClrType: typeof(int),
+                oldType: "integer",
+                oldNullable: true,
+                oldDefaultValue: 1);
         }
     }
 }

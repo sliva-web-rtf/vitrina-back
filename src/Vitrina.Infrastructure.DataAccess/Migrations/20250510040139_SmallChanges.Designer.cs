@@ -12,7 +12,7 @@ using Vitrina.Infrastructure.DataAccess;
 namespace Vitrina.Infrastructure.DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250505175804_SmallChanges")]
+    [Migration("20250510040139_SmallChanges")]
     partial class SmallChanges
     {
         /// <inheritdoc />
@@ -563,7 +563,7 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                         .HasColumnType("boolean")
                         .HasDefaultValue(false);
 
-                    b.Property<int>("RegistrationStatus")
+                    b.Property<int?>("RegistrationStatus")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasDefaultValue(1);

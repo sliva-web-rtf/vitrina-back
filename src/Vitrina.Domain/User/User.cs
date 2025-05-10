@@ -11,7 +11,7 @@ public class User : IdentityUser<int>
     /// <summary>
     ///     User registration status.
     /// </summary>
-    public RegistrationStatusEnum RegistrationStatus { get; set; }
+    public RegistrationStatusEnum? RegistrationStatus { get; set; }
 
     /// <summary>
     ///     The date when user last logged in.
