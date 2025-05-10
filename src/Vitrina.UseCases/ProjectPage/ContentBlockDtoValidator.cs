@@ -6,7 +6,7 @@ using Vitrina.UseCases.ProjectPage.Dto.Blocks;
 using Vitrina.UseCases.ProjectPages;
 using Vitrina.UseCases.ProjectPages.Blocks;
 
-namespace Vitrina.Validators;
+namespace Vitrina.UseCases.ProjectPage;
 
 public class ContentBlockDtoValidator : AbstractValidator<ContentBlockDto>
 {

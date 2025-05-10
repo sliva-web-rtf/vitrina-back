@@ -1,8 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Vitrina.UseCases.User.DTO.Profile.Base;
+namespace Vitrina.UseCases.User.DTO.AdditionalInformation;
 
-public abstract class NotStudentDtoBase : UserDtoBase
+public class AdditionalNotStudentInfo
 {
     /// <summary>
     ///     Place of work

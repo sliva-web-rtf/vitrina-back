@@ -6,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Vitrina.Infrastructure.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class ChangingTeammatesTable : Migration
+    public partial class ChangedTeammatesTable : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -35,20 +35,19 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                 name: "EducationCourse",
                 table: "AspNetUsers");
 
+            migrationBuilder.DropColumn(
+                name: "EducationLevel",
+                table: "AspNetUsers");
+
             migrationBuilder.RenameColumn(
                 name: "Surname",
                 table: "AspNetUsers",
-                newName: "Telegram");
+                newName: "Patronymic");
 
             migrationBuilder.RenameColumn(
                 name: "RoleInTeam",
                 table: "AspNetUsers",
                 newName: "RoleOnPlatform");
-
-            migrationBuilder.RenameColumn(
-                name: "EducationLevel",
-                table: "AspNetUsers",
-                newName: "Patronymic");
 
             migrationBuilder.AddColumn<int>(
                 name: "UserId",
@@ -95,18 +94,6 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                 defaultValue: false,
                 oldClrType: typeof(bool),
                 oldType: "boolean");
-
-            migrationBuilder.AlterColumn<string>(
-                name: "PhoneNumber",
-                table: "AspNetUsers",
-                type: "text",
-                unicode: false,
-                nullable: false,
-                defaultValue: "",
-                oldClrType: typeof(string),
-                oldType: "text",
-                oldUnicode: false,
-                oldNullable: true);
 
             migrationBuilder.AlterColumn<bool>(
                 name: "LockoutEnabled",
@@ -161,7 +148,7 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                 table: "AspNetUsers",
                 type: "jsonb",
                 unicode: false,
-                nullable: false);
+                nullable: true);
 
             migrationBuilder.AddColumn<int>(
                 name: "RegistrationStatus",
@@ -169,6 +156,13 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                 type: "integer",
                 nullable: false,
                 defaultValue: 1);
+
+            migrationBuilder.AddColumn<string>(
+                name: "Telegram",
+                table: "AspNetUsers",
+                type: "text",
+                unicode: false,
+                nullable: true);
 
             migrationBuilder.CreateTable(
                 name: "Specializations",
@@ -245,10 +239,9 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                 name: "RegistrationStatus",
                 table: "AspNetUsers");
 
-            migrationBuilder.RenameColumn(
+            migrationBuilder.DropColumn(
                 name: "Telegram",
-                table: "AspNetUsers",
-                newName: "Surname");
+                table: "AspNetUsers");
 
             migrationBuilder.RenameColumn(
                 name: "RoleOnPlatform",
@@ -258,7 +251,7 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
             migrationBuilder.RenameColumn(
                 name: "Patronymic",
                 table: "AspNetUsers",
-                newName: "EducationLevel");
+                newName: "Surname");
 
             migrationBuilder.AddColumn<byte[]>(
                 name: "Avatar",
@@ -314,16 +307,6 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                 oldType: "boolean",
                 oldDefaultValue: false);
 
-            migrationBuilder.AlterColumn<string>(
-                name: "PhoneNumber",
-                table: "AspNetUsers",
-                type: "text",
-                unicode: false,
-                nullable: true,
-                oldClrType: typeof(string),
-                oldType: "text",
-                oldUnicode: false);
-
             migrationBuilder.AlterColumn<bool>(
                 name: "LockoutEnabled",
                 table: "AspNetUsers",
@@ -369,6 +352,14 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                 type: "integer",
                 nullable: false,
                 defaultValue: 0);
+
+            migrationBuilder.AddColumn<string>(
+                name: "EducationLevel",
+                table: "AspNetUsers",
+                type: "text",
+                unicode: false,
+                nullable: false,
+                defaultValue: "");
         }
     }
 }

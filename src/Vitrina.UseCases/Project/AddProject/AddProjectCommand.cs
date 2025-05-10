@@ -24,8 +24,7 @@ public class AddProjectCommand : IRequest<int>
     /// <summary>
     ///     Project aim.
     /// </summary>
-    [Required]
-    required public string Aim { get; init; }
+    public string Aim { get; init; }
 
     /// <summary>
     ///     Project client.
@@ -67,17 +66,17 @@ public class AddProjectCommand : IRequest<int>
     /// <summary>
     ///     Problem of project.
     /// </summary>
-    public string Problem { get; set; }
+    public string? Problem { get; set; }
 
     /// <summary>
     ///     Idea of project.
     /// </summary>
-    public string Idea { get; set; }
+    public string? Idea { get; set; }
 
     /// <summary>
     ///     Problem of project.
     /// </summary>
-    public string Solution { get; set; }
+    public string? Solution { get; set; }
 
     public string? Sphere { get; set; }
 

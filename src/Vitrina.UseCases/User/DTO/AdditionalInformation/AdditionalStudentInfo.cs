@@ -1,10 +1,9 @@
 using Vitrina.Domain.User;
 using Vitrina.UseCases.Specialization;
-using Vitrina.UseCases.User.DTO.Profile.Base;
 
-namespace Vitrina.UseCases.User.DTO.Profile;
+namespace Vitrina.UseCases.User.DTO.AdditionalInformation;
 
-public class StudentDto : UserDtoBase
+public class AdditionalStudentInfo
 {
     /// <summary>
     ///     Education level  of student.
@@ -22,9 +21,9 @@ public class StudentDto : UserDtoBase
     public string? Resume { get; init; }
 
     /// <summary>
-    ///     Roles in the team.
+    ///     Role in the team.
     /// </summary>
-    public ICollection<string>? RolesInTeam { get; init; }
+    public string? RoleInTeam { get; init; }
 
     /// <summary>
     ///     Student specializations.

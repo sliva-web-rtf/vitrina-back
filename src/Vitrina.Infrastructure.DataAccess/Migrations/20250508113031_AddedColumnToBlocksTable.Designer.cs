@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Vitrina.Infrastructure.DataAccess;
@@ -11,16 +12,15 @@ using Vitrina.Infrastructure.DataAccess;
 namespace Vitrina.Infrastructure.DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250508113031_AddedColumnToBlocksTable")]
+    partial class AddedColumnToBlocksTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.3")
-                .HasAnnotation("Proxies:ChangeTracking", false)
-                .HasAnnotation("Proxies:CheckEquality", false)
-                .HasAnnotation("Proxies:LazyLoading", true)
+                .HasAnnotation("ProductVersion", "7.0.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -220,7 +220,7 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                     b.ToTable("Block");
                 });
 
-            modelBuilder.Entity("Vitrina.Domain.Project.ImageUnit", b =>
+            modelBuilder.Entity("Vitrina.Domain.Project.Content", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -240,7 +240,7 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
 
                     b.HasIndex("ProjectId");
 
-                    b.ToTable("Pages");
+                    b.ToTable("Contents");
                 });
 
             modelBuilder.Entity("Vitrina.Domain.Project.Project", b =>
@@ -258,9 +258,6 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                     b.Property<string>("Client")
                         .IsUnicode(false)
                         .HasColumnType("text");
-
-                    b.Property<int>("CompletionStatus")
-                        .HasColumnType("integer");
 
                     b.Property<string>("Description")
                         .IsUnicode(false)
@@ -306,16 +303,9 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                         .IsUnicode(false)
                         .HasColumnType("text");
 
-                    b.Property<string>("TextPreview")
-                        .IsUnicode(false)
-                        .HasColumnType("text");
-
                     b.Property<string>("Type")
                         .IsUnicode(false)
                         .HasColumnType("text");
-
-                    b.Property<int>("TypeInitiative")
-                        .HasColumnType("integer");
 
                     b.Property<string>("VideoUrl")
                         .IsUnicode(false)
@@ -384,17 +374,33 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("ProjectId")
-                        .HasColumnType("integer");
+                    b.Property<byte[]>("Avatar")
+                        .HasColumnType("bytea");
 
-                    b.Property<int>("UserId")
+                    b.Property<string>("Email")
+                        .IsUnicode(false)
+                        .HasColumnType("text");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .IsUnicode(false)
+                        .HasColumnType("text");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .IsUnicode(false)
+                        .HasColumnType("text");
+
+                    b.Property<string>("Patronymic")
+                        .IsUnicode(false)
+                        .HasColumnType("text");
+
+                    b.Property<int>("ProjectId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ProjectId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Teammates");
                 });
@@ -450,27 +456,6 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                     b.ToTable("Codes");
                 });
 
-            modelBuilder.Entity("Vitrina.Domain.User.Specialization", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .IsUnicode(false)
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Name")
-                        .IsUnique();
-
-                    b.ToTable("Specializations");
-                });
-
             modelBuilder.Entity("Vitrina.Domain.User.User", b =>
                 {
                     b.Property<int>("Id")
@@ -480,17 +465,7 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int>("AccessFailedCount")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasDefaultValue(5);
-
-                    b.Property<string>("AdditionalInformation")
-                        .IsUnicode(false)
-                        .HasColumnType("jsonb");
-
-                    b.Property<string>("Avatar")
-                        .IsUnicode(false)
-                        .HasColumnType("text");
+                        .HasColumnType("integer");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -500,16 +475,21 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("Email")
+                    b.Property<int>("EducationCourse")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("EducationLevel")
                         .IsRequired()
+                        .IsUnicode(false)
+                        .HasColumnType("text");
+
+                    b.Property<string>("Email")
                         .HasMaxLength(256)
                         .IsUnicode(false)
                         .HasColumnType("character varying(256)");
 
                     b.Property<bool>("EmailConfirmed")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
-                        .HasDefaultValue(false);
+                        .HasColumnType("boolean");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -528,9 +508,7 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<bool>("LockoutEnabled")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
-                        .HasDefaultValue(false);
+                        .HasColumnType("boolean");
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("timestamp with time zone");
@@ -549,43 +527,30 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                         .IsUnicode(false)
                         .HasColumnType("text");
 
-                    b.Property<string>("Patronymic")
-                        .IsRequired()
-                        .IsUnicode(false)
-                        .HasColumnType("text");
-
                     b.Property<string>("PhoneNumber")
                         .IsUnicode(false)
                         .HasColumnType("text");
 
                     b.Property<bool>("PhoneNumberConfirmed")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
-                        .HasDefaultValue(false);
-
-                    b.Property<int?>("RegistrationStatus")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasDefaultValue(1);
+                        .HasColumnType("boolean");
 
                     b.Property<DateTime?>("RemovedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int>("RoleOnPlatform")
+                    b.Property<int>("RoleInTeam")
                         .HasColumnType("integer");
 
                     b.Property<string>("SecurityStamp")
                         .IsUnicode(false)
                         .HasColumnType("text");
 
-                    b.Property<string>("Telegram")
+                    b.Property<string>("Surname")
+                        .IsRequired()
                         .IsUnicode(false)
                         .HasColumnType("text");
 
                     b.Property<bool>("TwoFactorEnabled")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
-                        .HasDefaultValue(false);
+                        .HasColumnType("boolean");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -699,10 +664,10 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                     b.Navigation("Project");
                 });
 
-            modelBuilder.Entity("Vitrina.Domain.Project.ImageUnit", b =>
+            modelBuilder.Entity("Vitrina.Domain.Project.Content", b =>
                 {
                     b.HasOne("Vitrina.Domain.Project.Project", "Project")
-                        .WithMany("Pages")
+                        .WithMany("Contents")
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -718,20 +683,12 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Vitrina.Domain.User.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Project");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Vitrina.Domain.Project.Project", b =>
                 {
-                    b.Navigation("Pages");
+                    b.Navigation("Contents");
 
                     b.Navigation("CustomBlocks");
 

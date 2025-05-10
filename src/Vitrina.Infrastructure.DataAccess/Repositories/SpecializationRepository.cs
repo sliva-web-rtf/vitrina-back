@@ -35,4 +35,11 @@ public class SpecializationRepository(IAppDbContext dbContext) : ISpecialization
         await dbContext.SaveChangesAsync(cancellationToken);
         return specialization;
     }
+
+    public Task<Specialization?> FindAsync(string name, CancellationToken cancellationToken)
+    {
+        ArgumentNullException.ThrowIfNull(name, nameof(name));
+        return dbContext.Specializations.FirstOrDefaultAsync(specialization => specialization.Name == name,
+            cancellationToken);
+    }
 }

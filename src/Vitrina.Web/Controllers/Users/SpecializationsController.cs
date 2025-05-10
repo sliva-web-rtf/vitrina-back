@@ -39,13 +39,13 @@ public class SpecializationsController(IMediator mediator) : ControllerBase
     /// </summary>
     [Authorize(Roles = "Admin")]
     [Produces("application/json")]
-    [HttpDelete("{specializationId:int}")]
+    [HttpDelete("{id:int}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<SpecializationDto> DeleteSpecialization([FromRoute] int specializationId,
+    public async Task<SpecializationDto> DeleteSpecialization([FromRoute] int id,
         CancellationToken cancellationToken)
     {
-        var command = new DeleteSpecializationCommand(specializationId);
+        var command = new DeleteSpecializationCommand(id);
         return await mediator.Send(command, cancellationToken);
     }
 }

@@ -19,10 +19,10 @@ internal class DeleteProjectCommandHandler : IRequestHandler<DeleteProjectComman
 
     public async Task Handle(DeleteProjectCommand request, CancellationToken cancellationToken)
     {
-        var project = await appDbContext.Projects.Include(p => p.Page)
+        var project = await appDbContext.Projects.Include(p => p.Contents)
                           .FirstOrDefaultAsync(p => p.Id == request.ProjectId, cancellationToken)
                       ?? throw new NotFoundException();
-        foreach (var content in project.Page)
+        foreach (var content in project.Contents)
         {
             var webRootDirectory = hostingEnvironment.WebRootPath.TrimEnd('/');
             var name = content.ImageUrl.Split("/").Last();

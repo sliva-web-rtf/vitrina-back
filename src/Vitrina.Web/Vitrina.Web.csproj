@@ -47,7 +47,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Vitrina.Infrastructure.DataAccess\Vitrina.Infrastructure.DataAccess.csproj"/>
     <ProjectReference Include="..\Vitrina.UseCases\Vitrina.UseCases.csproj"/>
-    <ProjectReference Include="..\Vitrina.Validators\Vitrina.Validators.csproj"/>
   </ItemGroup>
 
   <ItemGroup>

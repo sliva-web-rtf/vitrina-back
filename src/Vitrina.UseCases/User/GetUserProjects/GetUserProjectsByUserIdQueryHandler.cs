@@ -1,22 +1,19 @@
 using AutoMapper;
 using MediatR;
-using Saritasa.Tools.Domain.Exceptions;
-using Vitrina.Infrastructure.Abstractions.Interfaces.Repositories;
-using Vitrina.UseCases.User.DTO.Profile;
+using Microsoft.EntityFrameworkCore;
+using Vitrina.Infrastructure.Abstractions.Interfaces;
+using Vitrina.UseCases.User.DTO;
 
 namespace Vitrina.UseCases.User.GetUserProjects;
 
-public class GetUserProjectsByUserIdQueryHandler(IUserRepository userRepository, IMapper mapper)
+/// <inheritdoc />
+public class GetUserProjectsByUserIdQueryHandler(IAppDbContext dbContext, IMapper mapper)
     : IRequestHandler<GetUserProjectsByUserIdQuery, ICollection<PreviewProjectDto>>
 {
     public async Task<ICollection<PreviewProjectDto>> Handle(GetUserProjectsByUserIdQuery request,
-        CancellationToken cancellationToken)
-    {
-        var user = await userRepository.GetByIdAsync(request.UserId, cancellationToken) ??
-                   throw new NotFoundException("The user with the specified Id was not found");
-
-        return mapper.Map<ICollection<PreviewProjectDto>>(
-            user.PositionsInTeams
-                .Select(t => t.Project));
-    }
+        CancellationToken cancellationToken) =>
+        await dbContext.Teammates
+            .Where(teammate => teammate.UserId == request.UserId)
+            .Select(teammate => mapper.Map<PreviewProjectDto>(teammate.Project))
+            .ToListAsync(cancellationToken);
 }

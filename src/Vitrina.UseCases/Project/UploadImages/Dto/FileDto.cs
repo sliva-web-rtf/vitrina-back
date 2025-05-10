@@ -1,12 +1,12 @@
 ﻿namespace Vitrina.UseCases.Project.UploadImages.Dto;
 
 /// <summary>
-///     File dto.
+/// File dto.
 /// </summary>
 public class FileDto
 {
     /// <summary>
-    ///     Constructor.
+    /// Constructor.
     /// </summary>
     public FileDto(Stream data, string fileName, string contentType)
     {

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Vitrina.Infrastructure.DataAccess;
@@ -11,13 +12,15 @@ using Vitrina.Infrastructure.DataAccess;
 namespace Vitrina.Infrastructure.DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250427151116_ChangedTeammatesTable")]
+    partial class ChangedTeammatesTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.3")
+                .HasAnnotation("ProductVersion", "7.0.20")
                 .HasAnnotation("Proxies:ChangeTracking", false)
                 .HasAnnotation("Proxies:CheckEquality", false)
                 .HasAnnotation("Proxies:LazyLoading", true)
@@ -200,9 +203,6 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                     b.Property<int>("ProjectId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("SequenceNumber")
-                        .HasColumnType("integer");
-
                     b.Property<string>("Text")
                         .IsRequired()
                         .IsUnicode(false)
@@ -220,7 +220,7 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                     b.ToTable("Block");
                 });
 
-            modelBuilder.Entity("Vitrina.Domain.Project.ImageUnit", b =>
+            modelBuilder.Entity("Vitrina.Domain.Project.Content", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -240,7 +240,7 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
 
                     b.HasIndex("ProjectId");
 
-                    b.ToTable("Pages");
+                    b.ToTable("Contents");
                 });
 
             modelBuilder.Entity("Vitrina.Domain.Project.Project", b =>
@@ -484,10 +484,6 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                         .HasColumnType("integer")
                         .HasDefaultValue(5);
 
-                    b.Property<string>("AdditionalInformation")
-                        .IsUnicode(false)
-                        .HasColumnType("jsonb");
-
                     b.Property<string>("Avatar")
                         .IsUnicode(false)
                         .HasColumnType("text");
@@ -563,7 +559,11 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                         .HasColumnType("boolean")
                         .HasDefaultValue(false);
 
-                    b.Property<int?>("RegistrationStatus")
+                    b.Property<string>("ProfileData")
+                        .IsUnicode(false)
+                        .HasColumnType("jsonb");
+
+                    b.Property<int>("RegistrationStatus")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasDefaultValue(1);
@@ -699,10 +699,10 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                     b.Navigation("Project");
                 });
 
-            modelBuilder.Entity("Vitrina.Domain.Project.ImageUnit", b =>
+            modelBuilder.Entity("Vitrina.Domain.Project.Content", b =>
                 {
                     b.HasOne("Vitrina.Domain.Project.Project", "Project")
-                        .WithMany("Pages")
+                        .WithMany("Contents")
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -719,7 +719,7 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                         .IsRequired();
 
                     b.HasOne("Vitrina.Domain.User.User", "User")
-                        .WithMany()
+                        .WithMany("PositionsInTeams")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -731,11 +731,16 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
 
             modelBuilder.Entity("Vitrina.Domain.Project.Project", b =>
                 {
-                    b.Navigation("Pages");
+                    b.Navigation("Contents");
 
                     b.Navigation("CustomBlocks");
 
                     b.Navigation("Users");
+                });
+
+            modelBuilder.Entity("Vitrina.Domain.User.User", b =>
+                {
+                    b.Navigation("PositionsInTeams");
                 });
 #pragma warning restore 612, 618
         }

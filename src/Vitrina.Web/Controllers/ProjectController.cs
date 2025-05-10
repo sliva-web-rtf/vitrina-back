@@ -155,9 +155,6 @@ public class ProjectController(IMediator mediator, IHostingEnvironment hostingEn
     /// <summary>
     ///     DeleteProjectImages.
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
     [Authorize]
     [HttpDelete("{id}/images")]
     public async Task DeleteProjectImages(int id, CancellationToken cancellationToken) =>
@@ -166,8 +163,6 @@ public class ProjectController(IMediator mediator, IHostingEnvironment hostingEn
     /// <summary>
     ///     Get all project ids.
     /// </summary>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
     [HttpGet("ids")]
     public async Task<ICollection<int>> GetProjectsIds(CancellationToken cancellationToken) =>
         await mediator.Send(new GetProjectIdsQuery(), cancellationToken);
@@ -176,7 +171,6 @@ public class ProjectController(IMediator mediator, IHostingEnvironment hostingEn
     ///     Search projects with new filters.
     /// </summary>
     /// <param name="v2Query">Query to search.</param>
-    /// <param name="cancellationToken"></param>
     /// <returns>Paged list of projects.</returns>
     [HttpPost("v2/search")]
     public async Task<PagedListMetadataDto<V2.ShortProjectV2Dto>> SearchProjectsV2(V2.SearchProjectsV2Query v2Query,

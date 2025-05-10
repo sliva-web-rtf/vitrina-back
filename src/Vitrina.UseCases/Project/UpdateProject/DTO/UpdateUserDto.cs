@@ -38,7 +38,7 @@ public class UpdateUserDto
     /// <summary>
     ///     User avatar.
     /// </summary>
-    public ICollection<byte>? Avatar { get; init; } = new List<byte>();
+    public string? Avatar { get; init; }
 
     /// <summary>
     ///     User roles.

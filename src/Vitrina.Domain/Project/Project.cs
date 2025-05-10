@@ -3,27 +3,32 @@
 namespace Vitrina.Domain.Project;
 
 /// <summary>
-///     Domain class of project.
+/// Domain class of project.
 /// </summary>
 public class Project : BaseEntity<int>
 {
     /// <summary>
-    ///     Project name.
+    /// Project name.
     /// </summary>
     required public string Name { get; set; }
 
     /// <summary>
-    ///     Project aim.
+    ///     Project description.
+    /// </summary>
+    public string? Description { get; set; }
+
+    /// <summary>
+    /// Project aim.
     /// </summary>
     public string? Aim { get; set; }
 
     /// <summary>
-    ///     Project client.
+    /// Project client.
     /// </summary>
     public string? Client { get; set; }
 
     /// <summary>
-    ///     Semester.
+    /// Semester.
     /// </summary>
     public SemesterEnum Semester { get; set; }
 
@@ -36,6 +41,11 @@ public class Project : BaseEntity<int>
     ///     Project page id.
     /// </summary>
     public Guid PageId { get; set; }
+
+    /// <summary>
+    ///     Priority of project.
+    /// </summary>
+    public int Priority { get; set; }
 
     /// <summary>
     ///     Project page content.
@@ -66,6 +76,16 @@ public class Project : BaseEntity<int>
     ///     Problem of project.
     /// </summary>
     public string? Solution { get; set; }
+
+    /// <summary>
+    ///     Project sphere.
+    /// </summary>
+    public string? Sphere { get; set; }
+
+    /// <summary>
+    ///     Project type.
+    /// </summary>
+    public string? Type { get; set; }
 
     /// <summary>
     ///     Project completion status.

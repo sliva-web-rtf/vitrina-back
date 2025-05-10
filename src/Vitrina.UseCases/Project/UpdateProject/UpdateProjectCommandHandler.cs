@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Saritasa.Tools.Domain.Exceptions;
 using Vitrina.Domain.Project.Teammate;
 using Vitrina.Infrastructure.Abstractions.Interfaces;
+using Vitrina.UseCases.Project.AddProject;
 
 namespace Vitrina.UseCases.Project.UpdateProject;
 
@@ -32,6 +33,7 @@ internal class UpdateProjectCommandHandler : IRequestHandler<UpdateProjectComman
                 .ToListAsync(cancellationToken);
             var allRoles = await appDbContext.ProjectRoles.ToListAsync(cancellationToken);
             mapper.Map(request.Project, project);
+            AddProjectCommandHandler.NumberCustomBlocks(project);
             var resultUser = new List<Teammate>();
             foreach (var user in request.Project.Users)
             {

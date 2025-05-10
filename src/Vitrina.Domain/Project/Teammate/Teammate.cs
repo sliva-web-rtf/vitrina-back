@@ -1,4 +1,4 @@
-﻿namespace Vitrina.Domain.Project.Teammate;
+namespace Vitrina.Domain.Project.Teammate;
 
 /// <summary>
 ///     Project users.

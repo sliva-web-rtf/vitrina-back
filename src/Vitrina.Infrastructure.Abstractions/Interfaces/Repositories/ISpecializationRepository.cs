@@ -22,4 +22,9 @@ public interface ISpecializationRepository
     ///     Create a user by ID.
     /// </summary>
     public Task<Specialization> Create(string name, CancellationToken cancellationToken);
+
+    /// <summary>
+    ///     Find specialization by name.
+    /// </summary>
+    public Task<Specialization?> FindAsync(string name, CancellationToken cancellationToken);
 }

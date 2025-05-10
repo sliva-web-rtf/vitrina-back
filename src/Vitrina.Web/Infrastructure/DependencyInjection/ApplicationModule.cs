@@ -1,7 +1,7 @@
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Newtonsoft.Json;
-using Vitrina.Validators;
+using Vitrina.UseCases.ProjectPage;
 
 namespace Vitrina.Web.Infrastructure.DependencyInjection;
 

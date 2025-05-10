@@ -10,7 +10,7 @@ using Vitrina.Infrastructure.Abstractions.Interfaces;
 namespace Vitrina.Infrastructure.DataAccess;
 
 /// <summary>
-///     Application unit of work.
+/// Application unit of work.
 /// </summary>
 public class AppDbContext : IdentityDbContext<User, AppIdentityRole, int>, IAppDbContext, IDataProtectionKeyContext
 {
@@ -24,14 +24,18 @@ public class AppDbContext : IdentityDbContext<User, AppIdentityRole, int>, IAppD
 
     public DbSet<Project> Projects => Set<Project>();
 
+    /// <inheritdoc />
     public DbSet<Teammate> Teammates => Set<Teammate>();
 
+    /// <inheritdoc />
     public DbSet<Tag> Tags => Set<Tag>();
 
+    /// <inheritdoc />
     public DbSet<ProjectRole> ProjectRoles => Set<ProjectRole>();
 
     public DbSet<ProjectPage> ProjectPages => Set<ProjectPage>();
 
+    /// <inheritdoc />
     public DbSet<ConfirmationCode> Codes => Set<ConfirmationCode>();
 
     public DbSet<Specialization> Specializations => Set<Specialization>();
