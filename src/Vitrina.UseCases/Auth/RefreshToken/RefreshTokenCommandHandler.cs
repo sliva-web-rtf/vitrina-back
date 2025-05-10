@@ -2,24 +2,23 @@ using System.Security.Claims;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Saritasa.Tools.Domain.Exceptions;
-using Vitrina.Domain.User;
 
 namespace Vitrina.UseCases.Auth.RefreshToken;
 
 /// <summary>
-/// Handler for <see cref="RefreshTokenCommand" />.
+///     Handler for <see cref="RefreshTokenCommand" />.
 /// </summary>
 internal class RefreshTokenCommandHandler : IRequestHandler<RefreshTokenCommand, TokenModel>
 {
+    private readonly SignInManager<Domain.User.User> signInManager;
     private readonly IAuthenticationTokenService tokenService;
-    private readonly SignInManager<User> signInManager;
 
     /// <summary>
-    /// Constructor.
+    ///     Constructor.
     /// </summary>
     public RefreshTokenCommandHandler(
         IAuthenticationTokenService tokenService,
-        SignInManager<User> signInManager)
+        SignInManager<Domain.User.User> signInManager)
     {
         this.tokenService = tokenService;
         this.signInManager = signInManager;
@@ -70,6 +69,7 @@ internal class RefreshTokenCommandHandler : IRequestHandler<RefreshTokenCommand,
             throw new ArgumentException(
                 "User identifier claim cannot be found. Invalid token.");
         }
+
         return userIdClaim.Value;
     }
 

@@ -3,12 +3,12 @@
 namespace Vitrina.UseCases.Project.DeleteProjectImages;
 
 /// <summary>
-/// DeleteProjectImagesCommand.
+///     DeleteProjectImagesCommand.
 /// </summary>
 public class DeleteProjectImagesCommand : IRequest
 {
     /// <summary>
-    /// ProjectId.
+    ///     ProjectId.
     /// </summary>
     public int ProjectId { get; init; }
 }

@@ -4,16 +4,14 @@ using Microsoft.AspNetCore.Mvc;
 namespace Vitrina.Web.Infrastructure.Startup;
 
 /// <summary>
-/// JSON options setup.
+///     JSON options setup.
 /// </summary>
 internal class JsonOptionsSetup
 {
     /// <summary>
-    /// Setup method.
+    ///     Setup method.
     /// </summary>
     /// <param name="options">JSON options.</param>
-    public void Setup(JsonOptions options)
-    {
+    public void Setup(JsonOptions options) =>
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-    }
 }

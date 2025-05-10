@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Saritasa.Tools.Domain.Exceptions;
 using Vitrina.Infrastructure.Abstractions.Interfaces;
@@ -8,9 +9,9 @@ namespace Vitrina.UseCases.Project.DeleteProjectImages;
 internal class DeleteProjectImagesCommandHandler : IRequestHandler<DeleteProjectImagesCommand>
 {
     private readonly IAppDbContext appDbContext;
-    private readonly Microsoft.AspNetCore.Hosting.IHostingEnvironment hostingEnvironment;
+    private readonly IHostingEnvironment hostingEnvironment;
 
-    public DeleteProjectImagesCommandHandler(IAppDbContext appDbContext, Microsoft.AspNetCore.Hosting.IHostingEnvironment hostingEnvironment)
+    public DeleteProjectImagesCommandHandler(IAppDbContext appDbContext, IHostingEnvironment hostingEnvironment)
     {
         this.appDbContext = appDbContext;
         this.hostingEnvironment = hostingEnvironment;
@@ -18,8 +19,9 @@ internal class DeleteProjectImagesCommandHandler : IRequestHandler<DeleteProject
 
     public async Task Handle(DeleteProjectImagesCommand request, CancellationToken cancellationToken)
     {
-        var project = await appDbContext.Projects.Include(p => p.Contents).FirstOrDefaultAsync(p => p.Id == request.ProjectId, cancellationToken)
-            ?? throw new NotFoundException();
+        var project = await appDbContext.Projects.Include(p => p.Contents)
+                          .FirstOrDefaultAsync(p => p.Id == request.ProjectId, cancellationToken)
+                      ?? throw new NotFoundException();
         foreach (var content in project.Contents)
         {
             var webRootDirectory = hostingEnvironment.WebRootPath.TrimEnd('/');
@@ -28,6 +30,7 @@ internal class DeleteProjectImagesCommandHandler : IRequestHandler<DeleteProject
             var pathToFile = webRootDirectory + path;
             File.Delete(pathToFile);
         }
+
         await appDbContext.Contents
             .Where(c => c.ProjectId == request.ProjectId)
             .ExecuteDeleteAsync(cancellationToken);

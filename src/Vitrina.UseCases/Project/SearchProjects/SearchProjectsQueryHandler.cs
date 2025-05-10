@@ -9,7 +9,7 @@ using Vitrina.Infrastructure.Abstractions.Interfaces;
 namespace Vitrina.UseCases.Project.SearchProjects;
 
 /// <summary>
-/// Search projects handler.
+///     Search projects handler.
 /// </summary>
 internal class SearchProjectsQueryHandler : IRequestHandler<SearchProjectsQuery, PagedList<ShortProjectDto>>
 {
@@ -22,7 +22,8 @@ internal class SearchProjectsQueryHandler : IRequestHandler<SearchProjectsQuery,
         this.dbContext = dbContext;
     }
 
-    public async Task<PagedList<ShortProjectDto>> Handle(SearchProjectsQuery request, CancellationToken cancellationToken)
+    public async Task<PagedList<ShortProjectDto>> Handle(SearchProjectsQuery request,
+        CancellationToken cancellationToken)
     {
         var query = dbContext.Projects
             .OrderByDescending(p => p.Priority)
@@ -49,7 +50,9 @@ internal class SearchProjectsQueryHandler : IRequestHandler<SearchProjectsQuery,
         {
             query = query.Where(p => p.Period == request.Period);
         }
-        var pagedList = await EFPagedListFactory.FromSourceAsync(query, request.Page, request.PageSize, cancellationToken);
+
+        var pagedList =
+            await EFPagedListFactory.FromSourceAsync(query, request.Page, request.PageSize, cancellationToken);
         var result = new List<ShortProjectDto>();
         foreach (var item in pagedList)
         {
@@ -67,6 +70,7 @@ internal class SearchProjectsQueryHandler : IRequestHandler<SearchProjectsQuery,
 
             result.Add(dto);
         }
+
         var newPagedList = PagedListFactory.Create(result, request.Page, request.PageSize, pagedList.TotalCount);
         return newPagedList;
     }

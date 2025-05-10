@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Vitrina.Domain.Project;
-using Vitrina.UseCases.Common;
+using Vitrina.UseCases.Common.DTO;
 using Vitrina.UseCases.Project.AddProject;
 using Vitrina.UseCases.Project.SearchProjects;
 using Vitrina.UseCases.Project.SearchProjects.V2;

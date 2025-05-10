@@ -5,7 +5,7 @@ using Vitrina.Domain.Project;
 namespace Vitrina.Infrastructure.DataAccess.ModelConfigurations;
 
 /// <summary>
-/// Configeration of project.
+///     Configuration of project.
 /// </summary>
 internal class ProjectConfiguration : IEntityTypeConfiguration<Project>
 {
@@ -17,6 +17,5 @@ internal class ProjectConfiguration : IEntityTypeConfiguration<Project>
         builder.HasIndex(p => p.Period);
         builder.HasMany(p => p.Contents).WithOne(c => c.Project);
         builder.HasMany(p => p.Tags).WithMany(t => t.Projects);
-        builder.HasMany(p => p.Users).WithOne(u => u.Project);
     }
 }

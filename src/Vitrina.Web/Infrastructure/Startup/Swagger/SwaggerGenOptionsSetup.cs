@@ -4,16 +4,17 @@ using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using Unchase.Swashbuckle.AspNetCore.Extensions.Extensions;
+using Vitrina.UseCases.Common.Pagination;
 
 namespace Vitrina.Web.Infrastructure.Startup.Swagger;
 
 /// <summary>
-/// Swagger generation options.
+///     Swagger generation options.
 /// </summary>
 internal class SwaggerGenOptionsSetup
 {
     /// <summary>
-    /// Setup.
+    ///     Setup.
     /// </summary>
     /// <param name="options">Swagger generation options.</param>
     public void Setup(SwaggerGenOptions options)
@@ -28,19 +29,20 @@ internal class SwaggerGenOptionsSetup
             Description = "API documentation for the project."
         });
 
-        options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-        {
-            Description = "Insert JWT token to the field.",
-            Scheme = "bearer",
-            BearerFormat = "JWT",
-            Name = "bearer",
-            Type = SecuritySchemeType.Http
-        });
+        options.AddSecurityDefinition("Bearer",
+            new OpenApiSecurityScheme
+            {
+                Description = "Insert JWT token to the field.",
+                Scheme = "bearer",
+                BearerFormat = "JWT",
+                Name = "bearer",
+                Type = SecuritySchemeType.Http
+            });
 
         // TODO: Add your assemblies here.
         options.IncludeXmlCommentsWithRemarks(GetAssemblyLocationByType(GetType()));
-        options.IncludeXmlCommentsWithRemarks(GetAssemblyLocationByType(typeof(UseCases.Common.Pagination.PageQueryFilter)));
-        options.IncludeXmlCommentsFromInheritDocs(includeRemarks: true);
+        options.IncludeXmlCommentsWithRemarks(GetAssemblyLocationByType(typeof(PageQueryFilter)));
+        options.IncludeXmlCommentsFromInheritDocs(true);
 
         // Our custom filters.
         options.SchemaFilter<SwaggerExampleSetterSchemaFilter>();
@@ -49,10 +51,7 @@ internal class SwaggerGenOptionsSetup
         options.OperationFilter<SwaggerSecurityRequirementsOperationFilter>();
 
         // Group by ApiExplorerSettings.GroupName name.
-        options.TagActionsBy(apiDescription => new[]
-        {
-            apiDescription.GroupName
-        });
+        options.TagActionsBy(apiDescription => new[] { apiDescription.GroupName });
         options.DocInclusionPredicate((_, api) => !string.IsNullOrWhiteSpace(api.GroupName));
 
         options.CustomOperationIds(a =>

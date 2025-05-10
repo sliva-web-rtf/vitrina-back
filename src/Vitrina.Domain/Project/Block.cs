@@ -30,5 +30,5 @@ public class Block
     /// <summary>
     /// Project.
     /// </summary>
-    public Project? Project { get; set; }
+    public virtual Project? Project { get; set; }
 }

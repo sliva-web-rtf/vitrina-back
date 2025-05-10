@@ -6,12 +6,12 @@ using Xunit;
 namespace Vitrina.Web.Tests;
 
 /// <summary>
-/// Test for AutoMapper configuration.
+///     Test for AutoMapper configuration.
 /// </summary>
 public class AutoMapperTests
 {
     /// <summary>
-    /// Verify that automapper configuration is valid.
+    ///     Verify that automapper configuration is valid.
     /// </summary>
     [Fact]
     public void AutoMapper_Configuration_Valid()

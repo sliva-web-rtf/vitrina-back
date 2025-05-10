@@ -7,29 +7,25 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 namespace Vitrina.Web.Infrastructure.Startup.Swagger;
 
 /// <summary>
-/// Automatically adds information about authorization requirements for API endpoints.
+///     Automatically adds information about authorization requirements for API endpoints.
 /// </summary>
 internal sealed class SwaggerSecurityRequirementsOperationFilter : IOperationFilter
 {
     private static readonly string UnauthorizedCode = StatusCodes.Status401Unauthorized.ToString();
     private static readonly string ForbiddenCode = StatusCodes.Status403Forbidden.ToString();
 
-    private static readonly OpenApiSecurityRequirement BearerSecurityRequirement = new OpenApiSecurityRequirement
+    private static readonly OpenApiSecurityRequirement BearerSecurityRequirement = new()
     {
         {
             new OpenApiSecurityScheme
             {
-                Reference = new OpenApiReference
-                {
-                    Type = ReferenceType.SecurityScheme,
-                    Id = "Bearer",
-                },
+                Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Bearer" },
                 Scheme = "oauth2",
                 Name = "Bearer",
-                In = ParameterLocation.Header,
+                In = ParameterLocation.Header
             },
             new List<string>()
-        },
+        }
     };
 
     /// <inheritdoc />
@@ -78,10 +74,7 @@ internal sealed class SwaggerSecurityRequirementsOperationFilter : IOperationFil
 
         if (!operation.Responses.ContainsKey(ForbiddenCode))
         {
-            operation.Responses.Add(ForbiddenCode, new OpenApiResponse
-            {
-                Description = "Forbidden"
-            });
+            operation.Responses.Add(ForbiddenCode, new OpenApiResponse { Description = "Forbidden" });
         }
 
         var roleList = authorizeAttributes
@@ -114,6 +107,7 @@ internal sealed class SwaggerSecurityRequirementsOperationFilter : IOperationFil
             sb.Append("<br />Roles Required: ");
             sb.AppendJoin(", ", roleList.Select(role => $"<code>{role}</code>"));
         }
+
         if (permissionList.Any())
         {
             sb.Append("<br />Permissions Required: ");

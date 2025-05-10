@@ -6,19 +6,18 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 namespace Vitrina.Web.Infrastructure.Startup.HealthCheck;
 
 /// <summary>
-/// The class returns configured health check.
-/// More health checks can be found here https://github.com/Xabaril/AspNetCore.Diagnostics.HealthChecks .
+///     The class returns configured health check.
+///     More health checks can be found here https://github.com/Xabaril/AspNetCore.Diagnostics.HealthChecks .
 /// </summary>
 internal class HealthCheckOptionsSetup
 {
-    private static readonly JsonSerializerOptions JsonSerializerOptions = new JsonSerializerOptions
+    private static readonly JsonSerializerOptions JsonSerializerOptions = new()
     {
-        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-        Converters = { new JsonStringEnumConverter() }
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase, Converters = { new JsonStringEnumConverter() }
     };
 
     /// <summary>
-    /// Returns <see cref="HealthCheckOptions" />.
+    ///     Returns <see cref="HealthCheckOptions" />.
     /// </summary>
     public HealthCheckOptions Setup(HealthCheckOptions options)
     {
@@ -26,18 +25,12 @@ internal class HealthCheckOptionsSetup
         return options;
     }
 
-    private static async Task WriteResponse(HttpContext context, HealthReport report)
-    {
-        await context.Response.WriteAsJsonAsync(new
-        {
-            report.Status,
-            Results = report.Entries.Select(e => new
+    private static async Task WriteResponse(HttpContext context, HealthReport report) =>
+        await context.Response.WriteAsJsonAsync(
+            new
             {
-                Name = e.Key,
-                e.Value.Status,
-                e.Value.Description
-            })
-        },
+                report.Status,
+                Results = report.Entries.Select(e => new { Name = e.Key, e.Value.Status, e.Value.Description })
+            },
             JsonSerializerOptions);
-    }
 }

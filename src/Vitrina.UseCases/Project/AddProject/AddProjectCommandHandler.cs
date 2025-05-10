@@ -8,7 +8,7 @@ using Vitrina.Infrastructure.Abstractions.Interfaces;
 namespace Vitrina.UseCases.Project.AddProject;
 
 /// <summary>
-/// Add project handler.
+///     Add project handler.
 /// </summary>
 internal class AddProjectCommandHandler : IRequestHandler<AddProjectCommand, int>
 {
@@ -21,7 +21,7 @@ internal class AddProjectCommandHandler : IRequestHandler<AddProjectCommand, int
         this.dbContext = dbContext;
     }
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     public async Task<int> Handle(AddProjectCommand request, CancellationToken cancellationToken)
     {
         try

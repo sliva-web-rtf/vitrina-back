@@ -3,12 +3,12 @@ using System.Security.Claims;
 namespace Vitrina.Web.Infrastructure.Web;
 
 /// <summary>
-/// Extensions for the <see cref="ClaimsPrincipal" />.
+///     Extensions for the <see cref="ClaimsPrincipal" />.
 /// </summary>
 public static class ClaimsPrincipalExtensions
 {
     /// <summary>
-    /// Try to get current logged user.
+    ///     Try to get current logged user.
     /// </summary>
     /// <param name="principal">Claims principal.</param>
     /// <param name="userId">Current logged user id or -1.</param>
@@ -21,18 +21,19 @@ public static class ClaimsPrincipalExtensions
             userId = int.Parse(currentUserId);
             return true;
         }
+
         userId = -1;
         return false;
     }
 
     /// <summary>
-    /// Retrieves user id from identity claims.
+    ///     Retrieves user id from identity claims.
     /// </summary>
     /// <param name="principal">Claims principal.</param>
     /// <returns>User id.</returns>
     public static int GetCurrentUserId(this ClaimsPrincipal principal)
     {
-        if (TryGetCurrentUserId(principal, out int userId))
+        if (TryGetCurrentUserId(principal, out var userId))
         {
             return userId;
         }
@@ -41,7 +42,7 @@ public static class ClaimsPrincipalExtensions
     }
 
     /// <summary>
-    /// Returns roles of currently authorized user.
+    ///     Returns roles of currently authorized user.
     /// </summary>
     public static string[] GetCurrentUserRoles(this ClaimsPrincipal principal)
     {

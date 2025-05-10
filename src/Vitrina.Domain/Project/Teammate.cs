@@ -1,55 +1,32 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Vitrina.Domain.Project;
+﻿namespace Vitrina.Domain.Project;
 
 /// <summary>
-/// Project users.
+///     Project users.
 /// </summary>
-public class Teammate
+public class Teammate : BaseEntity<int>
 {
     /// <summary>
-    /// User id.
+    ///     Student id.
     /// </summary>
-    [Key]
-    public int Id { get; private set; }
+    public int UserId { get; init; }
 
     /// <summary>
-    /// User email.
+    ///     User.
     /// </summary>
-    public string? Email { get; set; }
+    public virtual User.User User { get; private set; }
 
     /// <summary>
-    /// User name.
-    /// </summary>
-    required public string FirstName { get; set; }
-
-    /// <summary>
-    /// User last name.
-    /// </summary>
-    required public string LastName { get; set; }
-
-    /// <summary>
-    /// User patronymic.
-    /// </summary>
-    public string? Patronymic { get; set; }
-
-    /// <summary>
-    /// User avatar.
-    /// </summary>
-    public byte[]? Avatar { get; set; }
-
-    /// <summary>
-    /// User roles.
-    /// </summary>
-    public ICollection<ProjectRole> Roles { get; set; } = new List<ProjectRole>();
-
-    /// <summary>
-    /// User project id.
+    ///     User project id.
     /// </summary>
     public int ProjectId { get; set; }
 
     /// <summary>
-    /// User project.
+    ///     User project.
     /// </summary>
-    required public Project Project { get; set; }
+    required public virtual Project Project { get; set; }
+
+    /// <summary>
+    ///     User roles.
+    /// </summary>
+    public virtual ICollection<ProjectRole> Roles { get; set; } = new List<ProjectRole>();
 }

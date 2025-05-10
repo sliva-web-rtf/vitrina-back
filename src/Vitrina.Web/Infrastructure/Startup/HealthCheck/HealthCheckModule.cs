@@ -1,15 +1,12 @@
-﻿using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-using Microsoft.Net.Http.Headers;
-
-namespace Vitrina.Web.Infrastructure.Startup.HealthCheck;
+﻿namespace Vitrina.Web.Infrastructure.Startup.HealthCheck;
 
 /// <summary>
-/// Module responsible for configuring application health checks.
+///     Module responsible for configuring application health checks.
 /// </summary>
 internal static class HealthCheckModule
 {
     /// <summary>
-    /// Register health check endpoints.
+    ///     Register health check endpoints.
     /// </summary>
     /// <param name="endpoints">Endpoints builder.</param>
     public static void Register(IEndpointRouteBuilder endpoints)

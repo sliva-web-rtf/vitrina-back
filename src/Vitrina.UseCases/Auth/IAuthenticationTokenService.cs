@@ -3,12 +3,12 @@ using System.Security.Claims;
 namespace Vitrina.UseCases.Auth;
 
 /// <summary>
-/// Methods to help generate and parse authentication token.
+///     Methods to help generate and parse authentication token.
 /// </summary>
 public interface IAuthenticationTokenService
 {
     /// <summary>
-    /// Generate access token.
+    ///     Generate access token.
     /// </summary>
     /// <param name="claims">User claims.</param>
     /// <param name="expirationTime">Token expiration time.</param>
@@ -16,10 +16,9 @@ public interface IAuthenticationTokenService
     string GenerateToken(IEnumerable<Claim> claims, TimeSpan expirationTime);
 
     /// <summary>
-    /// Get token claims.
+    ///     Get token claims.
     /// </summary>
     /// <param name="token">User token.</param>
     /// <returns>User claims.</returns>
     IEnumerable<Claim> GetTokenClaims(string token);
 }
-

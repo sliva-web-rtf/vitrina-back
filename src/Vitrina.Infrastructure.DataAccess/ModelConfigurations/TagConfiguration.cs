@@ -5,12 +5,9 @@ using Vitrina.Domain.Project;
 namespace Vitrina.Infrastructure.DataAccess.ModelConfigurations;
 
 /// <summary>
-/// Configuration of tags.
+///     Configuration of tags.
 /// </summary>
 internal class TagConfiguration : IEntityTypeConfiguration<Tag>
 {
-    public void Configure(EntityTypeBuilder<Tag> builder)
-    {
-        builder.HasIndex(e => e.Name).IsUnique();
-    }
+    public void Configure(EntityTypeBuilder<Tag> builder) => builder.HasIndex(e => e.Name).IsUnique();
 }

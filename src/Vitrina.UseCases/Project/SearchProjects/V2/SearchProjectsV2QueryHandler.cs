@@ -8,7 +8,7 @@ using Vitrina.Infrastructure.Abstractions.Interfaces;
 namespace Vitrina.UseCases.Project.SearchProjects.V2;
 
 /// <summary>
-/// Search projects handler.
+///     Search projects handler.
 /// </summary>
 internal class SearchProjectsV2QueryHandler : IRequestHandler<SearchProjectsV2Query, PagedList<ShortProjectV2Dto>>
 {
@@ -21,7 +21,8 @@ internal class SearchProjectsV2QueryHandler : IRequestHandler<SearchProjectsV2Qu
         this.dbContext = dbContext;
     }
 
-    public async Task<PagedList<ShortProjectV2Dto>> Handle(SearchProjectsV2Query request, CancellationToken cancellationToken)
+    public async Task<PagedList<ShortProjectV2Dto>> Handle(SearchProjectsV2Query request,
+        CancellationToken cancellationToken)
     {
         var query = dbContext.Projects
             .OrderByDescending(p => p.Priority)
@@ -49,7 +50,8 @@ internal class SearchProjectsV2QueryHandler : IRequestHandler<SearchProjectsV2Qu
             query = query.Where(p => p.Type != null && p.Type.Contains(request.ProjectType));
         }
 
-        var pagedList = await EFPagedListFactory.FromSourceAsync(query, request.Page, request.PageSize, cancellationToken);
+        var pagedList =
+            await EFPagedListFactory.FromSourceAsync(query, request.Page, request.PageSize, cancellationToken);
         var result = new List<ShortProjectV2Dto>();
         foreach (var item in pagedList)
         {
@@ -67,6 +69,7 @@ internal class SearchProjectsV2QueryHandler : IRequestHandler<SearchProjectsV2Qu
 
             result.Add(dto);
         }
+
         var newPagedList = PagedListFactory.Create(result, request.Page, request.PageSize, pagedList.TotalCount);
         return newPagedList;
     }

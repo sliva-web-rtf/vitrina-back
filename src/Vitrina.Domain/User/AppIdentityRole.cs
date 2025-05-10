@@ -3,8 +3,15 @@ using Microsoft.AspNetCore.Identity;
 namespace Vitrina.Domain.User;
 
 /// <summary>
-/// Custom application identity role.
+///     Custom application identity role.
 /// </summary>
 public class AppIdentityRole : IdentityRole<int>
 {
+    public AppIdentityRole()
+    {
+    }
+
+    public AppIdentityRole(string roleName) : base(roleName)
+    {
+    }
 }

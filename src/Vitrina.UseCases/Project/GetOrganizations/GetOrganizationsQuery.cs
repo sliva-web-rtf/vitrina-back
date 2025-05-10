@@ -3,7 +3,7 @@
 namespace Vitrina.UseCases.Project.GetOrganizations;
 
 /// <summary>
-/// Get organizations.
+///     Get organizations.
 /// </summary>
 public class GetOrganizationsQuery : IRequest<ICollection<string>>
 {

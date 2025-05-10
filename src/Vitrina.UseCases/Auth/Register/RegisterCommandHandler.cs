@@ -1,41 +1,28 @@
+using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Saritasa.Tools.Domain.Exceptions;
 using Vitrina.Domain.User;
 using Vitrina.Infrastructure.Abstractions.Interfaces;
+using Vitrina.UseCases.User;
+using Vitrina.UseCases.User.DTO;
 
 namespace Vitrina.UseCases.Auth.Register;
 
 /// <summary>
-/// Handler for <see cref="RegisterCommand"/>.
+///     Handler for <see cref="RegisterCommand" />.
 /// </summary>
-public class RegisterCommandHandler : IRequestHandler<RegisterCommand, RegisterCommandResult>
+public class RegisterCommandHandler(
+    UserManager<Domain.User.User> userManager,
+    IAppDbContext appDbContext,
+    IMapper mapper,
+    UpdateUserDtoValidator validator)
+    : IRequestHandler<RegisterCommand, RegisterCommandResult>
 {
-    private readonly UserManager<User> userManager;
-    private readonly IAppDbContext appDbContext;
-
-    /// <summary>
-    /// Constructor.
-    /// </summary>
-    public RegisterCommandHandler(UserManager<User> userManager, IAppDbContext appDbContext)
-    {
-        this.userManager = userManager;
-        this.appDbContext = appDbContext;
-    }
-
     /// <inheritdoc />
     public async Task<RegisterCommandResult> Handle(RegisterCommand request, CancellationToken cancellationToken)
     {
-        var user = new User
-        {
-            Email = request.Email,
-            UserName = request.Email,
-            EmailConfirmed = false,
-            EducationLevel = request.EducationLevel,
-            EducationCourse = request.EducationCourse,
-            FirstName = request.FirstName,
-            LastName = request.LastName,
-            Surname = request.Surname,
-        };
+        var user = await CreateUserAsync(request, cancellationToken);
         var result = await userManager.CreateAsync(user, request.Password);
         if (!result.Succeeded)
         {
@@ -45,28 +32,45 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, RegisterC
             };
         }
 
+        await userManager.AddToRoleAsync(user, $"{request.RoleOnPlatform}");
+
         var code = ConfirmationCodeGenerator.Generate();
         try
         {
-            var confirmationCode = new ConfirmationCode { UserId = user.Id, Code = code, };
+            var confirmationCode = new ConfirmationCode { UserId = user.Id, Code = code };
             await appDbContext.Codes.AddAsync(confirmationCode, cancellationToken);
             await appDbContext.SaveChangesAsync(cancellationToken);
         }
         catch (Exception e)
         {
             Console.WriteLine(e);
-            return new RegisterCommandResult
-            {
-                IsSuccess = false, Message = "failed to save confirmation code."
-            };
+            return new RegisterCommandResult { IsSuccess = false, Message = "failed to save confirmation code." };
         }
 
+        return new RegisterCommandResult { IsSuccess = true, UserId = user.Id, ConfirmationCode = code };
+    }
 
-        return new RegisterCommandResult
+    private async Task<Domain.User.User> CreateUserAsync(RegisterCommand request, CancellationToken cancellationToken)
+    {
+        var userDto = mapper.Map<UpdateUserDto>(request);
+        userDto.AdditionalInformation.EducationCourse = request.EducationCourse;
+        var validationResult = await validator.ValidateAsync(userDto, cancellationToken);
+        if (!validationResult.IsValid)
         {
-            IsSuccess = true,
-            UserId = user.Id,
-            ConfirmationCode = code,
+            throw new DomainException($"Data did not go through the validity check:" +
+                                      $"{Environment.NewLine}{string.Join(Environment.NewLine, validationResult.Errors)}");
+        }
+
+        var user = userDto.RoleOnPlatform switch
+        {
+            RoleOnPlatformEnum.Student => mapper.Map<Domain.User.User>(mapper.Map<StudentDto>(userDto)),
+            RoleOnPlatformEnum.Curator or RoleOnPlatformEnum.Partner => mapper.Map<Domain.User.User>(
+                mapper.Map<NotStudentDto>(userDto)),
+            _ => throw new NotImplementedException(
+                $"Logic for {nameof(RoleOnPlatformEnum)} = {userDto.RoleOnPlatform} is not defined")
         };
+        user.UserName = $"{Guid.NewGuid()}";
+        user.RegistrationStatus = RegistrationStatusEnum.Registered;
+        return user;
     }
 }

@@ -11,22 +11,16 @@ using ValidationException = Saritasa.Tools.Domain.Exceptions.ValidationException
 namespace Vitrina.Web.Infrastructure.Middlewares;
 
 /// <summary>
-/// Exception handling middleware. In general:
-/// ValidationException => 400 with additional "errors" property.
-/// DomainException => 400.
-/// _ => 500 with stack trace.
+///     Exception handling middleware. In general:
+///     ValidationException => 400 with additional "errors" property.
+///     DomainException => 400.
+///     _ => 500 with stack trace.
 /// </summary>
 internal sealed class ApiExceptionMiddleware
 {
     public const string ErrorsKey = "errors";
     public const string CodeKey = "code";
     private const string ProblemJsonMimeType = @"application/problem+json";
-
-    private readonly RequestDelegate next;
-    private readonly IJsonHelper jsonHelper;
-    private readonly ILogger<ApiExceptionMiddleware> logger;
-    private readonly IWebHostEnvironment environment;
-    private readonly HtmlTestEncoder encoder = new();
 
     private static readonly IDictionary<Type, int> ExceptionStatusCodes = new Dictionary<Type, int>
     {
@@ -39,8 +33,15 @@ internal sealed class ApiExceptionMiddleware
         [typeof(ArgumentException)] = StatusCodes.Status400BadRequest
     };
 
+    private readonly HtmlTestEncoder encoder = new();
+    private readonly IWebHostEnvironment environment;
+    private readonly IJsonHelper jsonHelper;
+    private readonly ILogger<ApiExceptionMiddleware> logger;
+
+    private readonly RequestDelegate next;
+
     /// <summary>
-    /// Initializes a new instance of the <see cref="ApiExceptionMiddleware" /> class.
+    ///     Initializes a new instance of the <see cref="ApiExceptionMiddleware" /> class.
     /// </summary>
     public ApiExceptionMiddleware(
         RequestDelegate next,
@@ -55,7 +56,7 @@ internal sealed class ApiExceptionMiddleware
     }
 
     /// <summary>
-    /// Invokes the next middleware.
+    ///     Invokes the next middleware.
     /// </summary>
     /// <param name="httpContext">HTTP context.</param>
     public async Task Invoke(HttpContext httpContext)
@@ -72,6 +73,7 @@ internal sealed class ApiExceptionMiddleware
                     "The response has already started, the API exception middleware will not be executed.");
                 throw;
             }
+
             var problemDetails = GetObjectByException(exception, httpContext.RequestServices);
             problemDetails.Instance = httpContext.Request.Path;
             httpContext.Response.Clear();
@@ -114,6 +116,7 @@ internal sealed class ApiExceptionMiddleware
                 {
                     problem.Title = exception.Message;
                 }
+
                 if (!environment.IsProduction())
                 {
                     // Since System.Text.Json cannot serialize exception we do that partially for debug.
@@ -125,10 +128,12 @@ internal sealed class ApiExceptionMiddleware
                             ["StackTrace"] = exception.StackTrace ?? string.Empty
                         };
                 }
+
                 statusCode = GetStatusCodeByExceptionType(exception.GetType());
                 logger.LogError(exception, exception.Message);
                 break;
         }
+
         problem.Status = statusCode;
         return problem;
     }
@@ -155,18 +160,20 @@ internal sealed class ApiExceptionMiddleware
         {
             return StatusCodes.Status400BadRequest;
         }
-        foreach ((Type exceptionTypeKey, int statusCode) in ExceptionStatusCodes)
+
+        foreach (var (exceptionTypeKey, statusCode) in ExceptionStatusCodes)
         {
             if (exceptionTypeKey.IsAssignableFrom(exceptionType))
             {
                 return statusCode;
             }
         }
+
         return StatusCodes.Status500InternalServerError;
     }
 
     /// <summary>
-    /// Format a path that defines a property in object to follow the JSON naming rules.
+    ///     Format a path that defines a property in object to follow the JSON naming rules.
     /// </summary>
     /// <param name="propertyPath">Path to the property.</param>
     /// <param name="jsonSerializerOptions">Json options.</param>

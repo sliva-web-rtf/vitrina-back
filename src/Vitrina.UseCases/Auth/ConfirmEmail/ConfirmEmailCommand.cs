@@ -3,17 +3,17 @@ using MediatR;
 namespace Vitrina.UseCases.Auth.ConfirmEmail;
 
 /// <summary>
-/// Confirm email command.
+///     Confirm email command.
 /// </summary>
 public class ConfirmEmailCommand : IRequest<ConfirmEmailCommandResult>
 {
     /// <summary>
-    /// User id.
+    ///     User id.
     /// </summary>
     public int UserId { get; init; }
 
     /// <summary>
-    /// Confirmation code.
+    ///     Confirmation code.
     /// </summary>
     public int ConfirmationCode { get; init; }
 }

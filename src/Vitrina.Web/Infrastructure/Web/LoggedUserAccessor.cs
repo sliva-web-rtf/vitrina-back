@@ -3,16 +3,14 @@ using Vitrina.Infrastructure.Abstractions.Interfaces;
 namespace Vitrina.Web.Infrastructure.Web;
 
 /// <summary>
-/// Logged user accessor implementation.
+///     Logged user accessor implementation.
 /// </summary>
 internal class LoggedUserAccessor : ILoggedUserAccessor
 {
     private readonly IHttpContextAccessor httpContextAccessor;
 
-    public LoggedUserAccessor(IHttpContextAccessor httpContextAccessor)
-    {
+    public LoggedUserAccessor(IHttpContextAccessor httpContextAccessor) =>
         this.httpContextAccessor = httpContextAccessor;
-    }
 
     /// <inheritdoc />
     public int GetCurrentUserId()
@@ -32,6 +30,7 @@ internal class LoggedUserAccessor : ILoggedUserAccessor
         {
             return false;
         }
+
         return httpContextAccessor.HttpContext.User.TryGetCurrentUserId(out _);
     }
 }
