@@ -19,6 +19,7 @@ internal static class SystemModule
     public static void Register(IServiceCollection services)
     {
         services.AddSingleton<IJsonHelper, SystemTextJsonHelper>();
+        services.AddSingleton<IS3StorageService, YandexS3StorageService>();
         services.AddScoped<IAuthenticationTokenService, SystemJwtTokenService>();
         services.AddScoped<IAppDbContext>(s => s.GetRequiredService<AppDbContext>());
         services.AddScoped<ILoggedUserAccessor, LoggedUserAccessor>();
