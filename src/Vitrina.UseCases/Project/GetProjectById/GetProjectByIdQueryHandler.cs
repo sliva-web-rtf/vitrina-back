@@ -27,6 +27,7 @@ internal class GetProjectByIdQueryHandler : IRequestHandler<GetProjectByIdQuery,
                           .Include(project => project.Contents)
                           .Include(project => project.Tags)
                           .Include(project => project.Users)
+                          .ThenInclude(teammate => teammate.Roles)
                           .Include(project => project.Users)
                           .Include(project => project.CustomBlocks)
                           .FirstOrDefaultAsync(p => p.Id == request.Id, cancellationToken)
