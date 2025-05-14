@@ -14,9 +14,7 @@ internal class ProjectConfiguration : IEntityTypeConfiguration<Project>
     {
         builder.HasIndex(project => project.Name);
         builder.HasIndex(project => project.Client);
-        builder.HasIndex(project => project.Semester);
         builder.HasOne(project => project.Page).WithOne(c => c.Project);
-        builder.HasMany(project => project.Tags).WithMany(t => t.Projects);
         builder
             .HasOne(project => project.Page)
             .WithOne(page => page.Project)

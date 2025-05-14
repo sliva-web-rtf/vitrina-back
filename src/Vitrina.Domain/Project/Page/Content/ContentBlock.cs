@@ -11,4 +11,6 @@ public class ContentBlock : BaseEntity<Guid>
     [Column(TypeName = "jsonb")] required public string Content { get; set; }
 
     required public ContentTypeEnum ContentType { get; init; }
+
+    required public int NumberOnPage { get; set; }
 }

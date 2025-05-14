@@ -22,11 +22,6 @@ public interface IAppDbContext : IDbContextWithSets, IDisposable
     DbSet<Project> Projects { get; }
 
     /// <summary>
-    ///     Tags.
-    /// </summary>
-    DbSet<Tag> Tags { get; }
-
-    /// <summary>
     ///     Roles.
     /// </summary>
     DbSet<ProjectRole> ProjectRoles { get; }

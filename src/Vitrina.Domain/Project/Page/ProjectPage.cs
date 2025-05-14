@@ -16,7 +16,7 @@ public class ProjectPage : BaseEntity<Guid>
     /// <summary>
     ///     Page content blocks.
     /// </summary>
-    public virtual ICollection<ContentBlock> ContentBlocks { get; init; } = new List<ContentBlock>();
+    public virtual ICollection<ContentBlock> ContentBlocks { get; private set; } = new List<ContentBlock>();
 
     /// <summary>
     ///     Project id.
@@ -27,4 +27,18 @@ public class ProjectPage : BaseEntity<Guid>
     ///     Project.
     /// </summary>
     public Project? Project { get; init; }
+
+    public void NumberCustomBlocks() =>
+        ContentBlocks = ContentBlocks
+            .Select((block, index) =>
+            {
+                block.NumberOnPage = index;
+                return block;
+            })
+            .ToList();
+
+    public void SortContentBlocks() =>
+        ContentBlocks = ContentBlocks
+            .OrderBy(contentBlock => contentBlock.NumberOnPage)
+            .ToList();
 }

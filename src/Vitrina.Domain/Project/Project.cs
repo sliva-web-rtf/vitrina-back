@@ -18,9 +18,9 @@ public class Project : BaseEntity<int>
     public string? Description { get; set; }
 
     /// <summary>
-    /// Project aim.
+    ///     Path to preview image.
     /// </summary>
-    public string? Aim { get; set; }
+    public string? PreviewImagePath { get; set; }
 
     /// <summary>
     /// Project client.
@@ -28,19 +28,14 @@ public class Project : BaseEntity<int>
     public string? Client { get; set; }
 
     /// <summary>
-    /// Semester.
-    /// </summary>
-    public SemesterEnum Semester { get; set; }
-
-    /// <summary>
-    ///     Path to preview image.
-    /// </summary>
-    public string? PreviewImagePath { get; set; }
-
-    /// <summary>
     ///     Project page id.
     /// </summary>
-    public Guid PageId { get; set; }
+    required public Guid PageId { get; init; }
+
+    /// <summary>
+    ///     Project page content.
+    /// </summary>
+    required public virtual ProjectPage Page { get; init; }
 
     /// <summary>
     ///     Priority of project.
@@ -48,34 +43,9 @@ public class Project : BaseEntity<int>
     public int Priority { get; set; }
 
     /// <summary>
-    ///     Project page content.
-    /// </summary>
-    public virtual ProjectPage Page { get; set; }
-
-    /// <summary>
-    ///     Project tags.
-    /// </summary>
-    public virtual ICollection<Tag> Tags { get; private set; } = new List<Tag>();
-
-    /// <summary>
     ///     Project team.
     /// </summary>
     public virtual ICollection<Teammate.Teammate> Users { get; set; } = new List<Teammate.Teammate>();
-
-    /// <summary>
-    ///     Problem of project.
-    /// </summary>
-    public string? Problem { get; set; }
-
-    /// <summary>
-    ///     Idea of project.
-    /// </summary>
-    public string? Idea { get; set; }
-
-    /// <summary>
-    ///     Problem of project.
-    /// </summary>
-    public string? Solution { get; set; }
 
     /// <summary>
     ///     Project sphere.
@@ -86,19 +56,4 @@ public class Project : BaseEntity<int>
     ///     Project type.
     /// </summary>
     public string? Type { get; set; }
-
-    /// <summary>
-    ///     Project completion status.
-    /// </summary>
-    public CompletionStatusEnum CompletionStatus { get; set; }
-
-    /// <summary>
-    ///     Type of initiative.
-    /// </summary>
-    public TypeInitiativeEnum TypeInitiative { get; set; }
-
-    /// <summary>
-    ///     A short description of the information that will be displayed on the project card.
-    /// </summary>
-    public string? TextPreview { get; set; }
 }

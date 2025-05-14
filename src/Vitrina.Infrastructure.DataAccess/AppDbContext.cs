@@ -28,9 +28,6 @@ public class AppDbContext : IdentityDbContext<User, AppIdentityRole, int>, IAppD
     public DbSet<Teammate> Teammates => Set<Teammate>();
 
     /// <inheritdoc />
-    public DbSet<Tag> Tags => Set<Tag>();
-
-    /// <inheritdoc />
     public DbSet<ProjectRole> ProjectRoles => Set<ProjectRole>();
 
     public DbSet<ProjectPage> ProjectPages => Set<ProjectPage>();

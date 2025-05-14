@@ -11,6 +11,7 @@ public class CreateProjectPageCommandHandler(IMapper mapper, IProjectPageReposit
     public async Task<Guid> Handle(CreateProjectPageCommand request, CancellationToken cancellationToken)
     {
         var page = mapper.Map<Domain.Project.Page.ProjectPage>(request);
+        page.NumberCustomBlocks();
         await repository.AddAsync(page, cancellationToken);
         await repository.SaveChangesAsync(cancellationToken);
         return page.Id;

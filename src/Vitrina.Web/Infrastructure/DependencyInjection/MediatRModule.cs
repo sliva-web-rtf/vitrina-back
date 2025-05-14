@@ -18,6 +18,6 @@ internal static class MediatRModule
     {
         services.AddSingleton<UpdateUserDtoValidator>();
         services.AddScoped<ISpecializationRepository, SpecializationRepository>();
-        services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(AddProjectCommand).Assembly));
+        services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateProjectCommand).Assembly));
     }
 }

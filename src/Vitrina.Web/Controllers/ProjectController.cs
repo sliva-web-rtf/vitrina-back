@@ -7,18 +7,15 @@ using Vitrina.UseCases.Project.AddProject;
 using Vitrina.UseCases.Project.DeleteProject;
 using Vitrina.UseCases.Project.DeleteProjectImages;
 using Vitrina.UseCases.Project.GetOrganizations;
-using Vitrina.UseCases.Project.GetPeriods;
 using Vitrina.UseCases.Project.GetProjectById;
 using Vitrina.UseCases.Project.GetProjectsIds;
 using Vitrina.UseCases.Project.GetSpheres;
 using Vitrina.UseCases.Project.GetTypes;
-using Vitrina.UseCases.Project.SearchProjects;
 using Vitrina.UseCases.Project.UpdateProject;
 using Vitrina.UseCases.Project.UpdateProject.DTO;
 using Vitrina.UseCases.Project.UploadImages;
 using FileDto = Vitrina.UseCases.Project.UploadImages.Dto.FileDto;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
-using SearchProjectsQuery = Vitrina.UseCases.Project.SearchProjects.SearchProjectsQuery;
 using V2 = Vitrina.UseCases.Project.SearchProjects.V2;
 
 namespace Vitrina.Web.Controllers;
@@ -38,7 +35,7 @@ public class ProjectController(IMediator mediator, IHostingEnvironment hostingEn
     /// <returns>Project id.</returns>
     [Authorize]
     [HttpPost("create")]
-    public async Task<int> CreateProject(AddProjectCommand command, CancellationToken cancellationToken)
+    public async Task<int> CreateProject(CreateProjectCommand command, CancellationToken cancellationToken)
         => await mediator.Send(command, cancellationToken);
 
     /// <summary>
@@ -48,22 +45,6 @@ public class ProjectController(IMediator mediator, IHostingEnvironment hostingEn
     [HttpGet("{id}")]
     public async Task<ProjectDto> GetProject(int id, CancellationToken cancellationToken)
         => await mediator.Send(new GetProjectByIdQuery(id), cancellationToken);
-
-    /// <summary>
-    ///     Search projects by query.
-    /// </summary>
-    [HttpPost("search")]
-    public async Task<PagedListMetadataDto<ShortProjectDto>> SearchProjects([FromBody] SearchProjectsQuery query,
-        CancellationToken cancellationToken)
-        => (await mediator.Send(query, cancellationToken)).ToMetadataObject();
-
-    /// <summary>
-    ///     Project periods.
-    /// </summary>
-    /// <returns>Periods collection.</returns>
-    [HttpGet("periods")]
-    public async Task<ICollection<string>> GetProjectPeriods(CancellationToken cancellationToken)
-        => await mediator.Send(new GetPeriodsQuery(), cancellationToken);
 
     /// <summary>
     ///     Get organizations.
@@ -153,7 +134,7 @@ public class ProjectController(IMediator mediator, IHostingEnvironment hostingEn
         await mediator.Send(new UpdateProjectCommand { ProjectId = id, Project = projectDto }, cancellationToken);
 
     /// <summary>
-    ///     DeleteProjectImages.
+    ///     Delete project images.
     /// </summary>
     [Authorize]
     [HttpDelete("{id}/images")]
@@ -173,9 +154,9 @@ public class ProjectController(IMediator mediator, IHostingEnvironment hostingEn
     /// <param name="v2Query">Query to search.</param>
     /// <returns>Paged list of projects.</returns>
     [HttpPost("v2/search")]
-    public async Task<PagedListMetadataDto<V2.ShortProjectV2Dto>> SearchProjectsV2(V2.SearchProjectsV2Query v2Query,
-        CancellationToken cancellationToken)
-        => (await mediator.Send(v2Query, cancellationToken)).ToMetadataObject();
+    public async Task<PagedListMetadataDto<ProjectDto>> SearchProjectsV2(
+        V2.SearchProjectsV2Query v2Query,
+        CancellationToken cancellationToken) => (await mediator.Send(v2Query, cancellationToken)).ToMetadataObject();
 
     /// <summary>
     ///     Get spheres.

@@ -1,7 +1,7 @@
 using MediatR;
-using Vitrina.UseCases.User.DTO;
+using Vitrina.UseCases.Common.DTO;
 
 namespace Vitrina.UseCases.User.GetUserProjects;
 
 /// <inheritdoc />
-public record GetUserProjectsByUserIdQuery(int UserId) : IRequest<ICollection<PreviewProjectDto>>;
+public record GetUserProjectsByUserIdQuery(int UserId) : IRequest<ICollection<ProjectDto>>;

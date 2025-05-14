@@ -13,5 +13,5 @@ public class AutoMapperModule
     /// <param name="services">Services.</param>
     public static void Register(IServiceCollection services) =>
         services.AddAutoMapper(
-            typeof(AddProjectCommand).Assembly);
+            typeof(CreateProjectCommand).Assembly);
 }

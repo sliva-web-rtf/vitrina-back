@@ -8,17 +8,9 @@ using Vitrina.UseCases.Project.AddProject;
 
 namespace Vitrina.UseCases.Project.UpdateProject;
 
-internal class UpdateProjectCommandHandler : IRequestHandler<UpdateProjectCommand>
+internal class UpdateProjectCommandHandler(IMapper mapper, IAppDbContext appDbContext)
+    : IRequestHandler<UpdateProjectCommand>
 {
-    private readonly IAppDbContext appDbContext;
-    private readonly IMapper mapper;
-
-    public UpdateProjectCommandHandler(IMapper mapper, IAppDbContext appDbContext)
-    {
-        this.mapper = mapper;
-        this.appDbContext = appDbContext;
-    }
-
     public async Task Handle(UpdateProjectCommand request, CancellationToken cancellationToken)
     {
         try
@@ -33,7 +25,7 @@ internal class UpdateProjectCommandHandler : IRequestHandler<UpdateProjectComman
                 .ToListAsync(cancellationToken);
             var allRoles = await appDbContext.ProjectRoles.ToListAsync(cancellationToken);
             mapper.Map(request.Project, project);
-            AddProjectCommandHandler.NumberCustomBlocks(project);
+            CreateProjectCommandHandler.NumberCustomBlocks(project);
             var resultUser = new List<Teammate>();
             foreach (var user in request.Project.Users)
             {
