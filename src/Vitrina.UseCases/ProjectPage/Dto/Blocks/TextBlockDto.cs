@@ -1,11 +1,12 @@
-using Vitrina.UseCases.ProjectPages.BasicContentUnits;
+using System.ComponentModel.DataAnnotations;
 
 namespace Vitrina.UseCases.ProjectPages.Blocks;
 
 public record TextBlockDto
 {
     /// <summary>
-    ///     Content.
+    ///     The marking of the text.
     /// </summary>
-    required public TextUnitDto Text { get; init; }
+    [StringLength(1_000_000, ErrorMessage = "The markup is too voluminous")]
+    required public string Markdown { get; init; }
 }
