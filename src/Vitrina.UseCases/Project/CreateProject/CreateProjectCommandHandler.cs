@@ -1,11 +1,10 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Saritasa.Tools.Domain.Exceptions;
 using Vitrina.Domain.Project.Teammate;
 using Vitrina.Infrastructure.Abstractions.Interfaces;
 
-namespace Vitrina.UseCases.Project.AddProject;
+namespace Vitrina.UseCases.Project.CreateProject;
 
 /// <summary>
 ///     Add project handler.
@@ -16,35 +15,30 @@ internal class CreateProjectCommandHandler(IMapper mapper, IAppDbContext dbConte
     /// <inheritdoc />
     public async Task<int> Handle(CreateProjectCommand request, CancellationToken cancellationToken)
     {
-        // TODO: переписать полностью.
-        try
-        {
-            var project = mapper.Map<CreateProjectCommand, Domain.Project.Project>(request);
-            await AddNewUserRoles(project, cancellationToken);
-            await dbContext.Projects.AddAsync(project, cancellationToken);
-            await dbContext.SaveChangesAsync(cancellationToken);
+        var project = mapper.Map<CreateProjectCommand, Domain.Project.Project>(request);
 
-            return project.Id;
-        }
-        catch (Exception ex)
-        {
-            throw new DomainException("An error occurred while creating the project.", ex);
-        }
+        // Понадобится если будем указывать членов команды при публикации проекта
+        // TODO: Добавить несуществующих пользователей со статусом регистрации - не зарегистрирован и найти в системе существующих
+        // await AddNewUserRoles(project, cancellationToken);
+
+        await dbContext.Projects.AddAsync(project, cancellationToken);
+        await dbContext.SaveChangesAsync(cancellationToken);
+
+        return project.Id;
     }
 
     private async Task AddNewUserRoles(Domain.Project.Project project, CancellationToken cancellationToken)
     {
         var allRoles = await dbContext.ProjectRoles.ToListAsync(cancellationToken);
 
-        foreach (var userInProject in project.Users)
+        foreach (var teammate in project.TeamMembers)
         {
             var updatedRoles = new List<ProjectRole>();
 
-            foreach (var role in userInProject.Roles)
+            foreach (var role in teammate.Roles)
             {
-                var existingRole = allRoles
-                    .FirstOrDefault(projectRole =>
-                        projectRole.Name.Equals(role.Name, StringComparison.OrdinalIgnoreCase));
+                var existingRole = allRoles.FirstOrDefault(projectRole =>
+                    projectRole.Name.Equals(role.Name, StringComparison.OrdinalIgnoreCase));
 
                 if (existingRole != null)
                 {
@@ -59,7 +53,7 @@ internal class CreateProjectCommandHandler(IMapper mapper, IAppDbContext dbConte
                 }
             }
 
-            userInProject.Roles = updatedRoles;
+            teammate.Roles = updatedRoles;
         }
     }
 }

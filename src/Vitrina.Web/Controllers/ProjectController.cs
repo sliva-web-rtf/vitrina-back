@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Saritasa.Tools.Common.Pagination;
 using Vitrina.UseCases.Common.DTO;
-using Vitrina.UseCases.Project.AddProject;
+using Vitrina.UseCases.Project.CreateProject;
 using Vitrina.UseCases.Project.DeleteProject;
 using Vitrina.UseCases.Project.DeleteProjectImages;
 using Vitrina.UseCases.Project.GetOrganizations;

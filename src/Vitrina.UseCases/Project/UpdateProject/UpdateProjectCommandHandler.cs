@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Saritasa.Tools.Domain.Exceptions;
 using Vitrina.Domain.Project.Teammate;
 using Vitrina.Infrastructure.Abstractions.Interfaces;
-using Vitrina.UseCases.Project.AddProject;
+using Vitrina.UseCases.Project.CreateProject;
 
 namespace Vitrina.UseCases.Project.UpdateProject;
 
@@ -54,7 +54,7 @@ internal class UpdateProjectCommandHandler(IMapper mapper, IAppDbContext appDbCo
                 resultUser.Add(userFromDb);
             }
 
-            project.Users = resultUser;
+            project.TeamMembers = resultUser;
             await appDbContext.SaveChangesAsync(cancellationToken);
         }
         catch (Exception ex)

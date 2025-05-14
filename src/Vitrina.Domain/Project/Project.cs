@@ -45,7 +45,7 @@ public class Project : BaseEntity<int>
     /// <summary>
     ///     Project team.
     /// </summary>
-    public virtual ICollection<Teammate.Teammate> Users { get; set; } = new List<Teammate.Teammate>();
+    public virtual ICollection<Teammate.Teammate> TeamMembers { get; set; } = new List<Teammate.Teammate>();
 
     /// <summary>
     ///     Project sphere.

@@ -8,12 +8,6 @@ namespace Vitrina.UseCases.Common.DTO;
 public class RoleDto
 {
     /// <summary>
-    ///     Role id.
-    /// </summary>
-    /// ы
-    public int Id { get; init; }
-
-    /// <summary>
     ///     Name.
     /// </summary>
     [Required]

@@ -1,4 +1,4 @@
-﻿using Vitrina.UseCases.Project.AddProject;
+﻿using Vitrina.UseCases.Project.CreateProject;
 
 namespace Vitrina.Web.Infrastructure.DependencyInjection;
 
