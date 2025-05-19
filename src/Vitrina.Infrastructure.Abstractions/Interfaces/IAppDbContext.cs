@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Vitrina.Domain;
 using Vitrina.Domain.Project;
 using Vitrina.Domain.Project.Page;
 using Vitrina.Domain.Project.Teammate;
@@ -11,6 +12,21 @@ namespace Vitrina.Infrastructure.Abstractions.Interfaces;
 /// </summary>
 public interface IAppDbContext : IDbContextWithSets, IDisposable
 {
+    /// <summary>
+    ///     Project spheres.
+    /// </summary>
+    public DbSet<ProjectSphere> ProjectSpheres { get; }
+
+    /// <summary>
+    ///     ТProject thematics.
+    /// </summary>
+    public DbSet<ProjectThematics> ProjectThematics { get; }
+
+    /// <summary>
+    ///     Project teams.
+    /// </summary>
+    DbSet<Team> Teams { get; }
+
     /// <summary>
     ///     Users.
     /// </summary>

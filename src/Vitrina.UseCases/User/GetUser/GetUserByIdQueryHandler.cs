@@ -18,8 +18,8 @@ public class GetUserByIdQueryHandler(UserManager<Domain.User.User> userManager, 
                    throw new NotFoundException($"User with id = {request.Id} not found");
         return user.RoleOnPlatform switch
         {
-            RoleOnPlatformEnum.Student => mapper.Map<StudentDto>(user),
-            RoleOnPlatformEnum.Curator or RoleOnPlatformEnum.Partner => mapper.Map<NotStudentDto>(user),
+            RoleOnPlatformEnum.Student => mapper.Map<StudentDtoBase>(user),
+            RoleOnPlatformEnum.Curator or RoleOnPlatformEnum.Partner => mapper.Map<NotStudentDtoBase>(user),
             _ => throw new NotImplementedException(
                 $"Logic for {nameof(RoleOnPlatformEnum)} = {user.RoleOnPlatform} is not defined")
         };

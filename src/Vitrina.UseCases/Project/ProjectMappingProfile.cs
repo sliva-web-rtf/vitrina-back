@@ -16,7 +16,6 @@ public class ProjectMappingProfile : Profile
     public ProjectMappingProfile()
     {
         CreateMap<ProjectRole, RoleDto>().ReverseMap();
-        CreateMap<Teammate, UserDto>().ReverseMap();
         CreateMap<Domain.Project.Project, ProjectDto>().ReverseMap();
         CreateMap<UpdateUserDto, Teammate>()
             .ForMember(teammate => teammate.ProjectId, member => member.Ignore())

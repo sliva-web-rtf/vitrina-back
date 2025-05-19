@@ -25,19 +25,22 @@ public class SpecializationsController(IMediator mediator) : ControllerBase
     /// <summary>
     ///     Adding a specialization.
     /// </summary>
-    [HttpPost("create")]
-    [Authorize(Roles = "Admin")]
+    [HttpPost("")]
+    [Authorize(Roles = "Administrator")]
     [Produces("application/json")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<SpecializationDto> CreateSpecialization([FromBody] CreateSpecializationCommand command,
-        CancellationToken cancellationToken) =>
-        await mediator.Send(command, cancellationToken);
+    public async Task<IActionResult> CreateSpecialization([FromBody] CreateSpecializationCommand command,
+        CancellationToken cancellationToken)
+    {
+        var result = await mediator.Send(command, cancellationToken);
+        return Created($"api/specializations/{result.Id}", result);
+    }
 
     /// <summary>
     ///     Removing a specialization.
     /// </summary>
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Administrator")]
     [Produces("application/json")]
     [HttpDelete("{id:int}")]
     [ProducesResponseType(StatusCodes.Status200OK)]

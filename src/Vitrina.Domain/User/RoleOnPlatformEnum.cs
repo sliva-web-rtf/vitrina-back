@@ -19,5 +19,7 @@ public enum RoleOnPlatformEnum
     /// <summary>
     ///     Partner role.
     /// </summary>
-    Partner
+    Partner,
+
+    Administrator
 }

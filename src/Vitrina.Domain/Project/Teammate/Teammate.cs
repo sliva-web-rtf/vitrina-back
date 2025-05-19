@@ -5,6 +5,8 @@ namespace Vitrina.Domain.Project.Teammate;
 /// </summary>
 public class Teammate : BaseEntity<int>
 {
+    public Teammate(User.User user) => User = user;
+
     /// <summary>
     ///     User id.
     /// </summary>
@@ -13,17 +15,11 @@ public class Teammate : BaseEntity<int>
     /// <summary>
     ///     User.
     /// </summary>
-    public virtual User.User User { get; private set; }
+    public virtual User.User User { get; set; }
 
-    /// <summary>
-    ///     User project id.
-    /// </summary>
-    public int ProjectId { get; set; }
+    public Guid TeamId { get; set; }
 
-    /// <summary>
-    ///     User project.
-    /// </summary>
-    required public virtual Project Project { get; set; }
+    required public virtual Team Team { get; set; }
 
     /// <summary>
     ///     User roles.

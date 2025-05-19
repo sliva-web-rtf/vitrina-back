@@ -4,7 +4,7 @@ using Vitrina.UseCases.User.DTO;
 
 namespace Vitrina.UseCases.User;
 
-public class UpdateUserDtoValidator : AbstractValidator<UpdateUserDto>
+public class UpdateUserDtoValidator : AbstractValidator<UpdateUserDtoBase>
 {
     public UpdateUserDtoValidator()
     {

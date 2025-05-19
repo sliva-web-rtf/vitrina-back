@@ -6,7 +6,7 @@ namespace Vitrina.UseCases.ProjectPages;
 
 public record PageEditorDto : BaseEntityDto<Guid>
 {
-    required public UserDto User { get; init; }
+    required public UserDtoBase User { get; init; }
 
     required public EditorStatus Status { get; init; }
 }

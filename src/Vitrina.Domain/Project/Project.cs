@@ -1,4 +1,5 @@
-﻿using Vitrina.Domain.Project.Page;
+﻿using Saritasa.Tools.Domain.Exceptions;
+using Vitrina.Domain.Project.Page;
 
 namespace Vitrina.Domain.Project;
 
@@ -40,12 +41,12 @@ public class Project : BaseEntity<int>
     /// <summary>
     ///     Project sphere.
     /// </summary>
-    public string? Sphere { get; set; }
+    public virtual ProjectSphere? Sphere { get; set; }
 
     /// <summary>
     ///     Project type.
     /// </summary>
-    public string? Type { get; set; }
+    public ProjectThematics? Thematics { get; set; }
 
     /// <summary>
     ///     Project page content.
@@ -58,11 +59,30 @@ public class Project : BaseEntity<int>
     required public int CreatorId { get; init; }
 
     /// <summary>
+    ///     Project team id.
+    /// </summary>
+    public Guid TeamId { get; init; }
+
+    /// <summary>
     ///     Project team.
     /// </summary>
-    public virtual ICollection<Teammate.Teammate> TeamMembers { get; set; } = new List<Teammate.Teammate>();
+    public virtual Team? Team { get; set; }
 
-    public bool CheckYourEditingRights(int idAuthorizedUser) => CreatorId == idAuthorizedUser &&
-                                                                !TeamMembers.All(teammate =>
-                                                                    teammate.Id != idAuthorizedUser);
+    /// <summary>
+    ///     The project supervisor's ID.
+    /// </summary>
+    public int? CuratorId { get; set; }
+
+    /// <summary>
+    ///     Checks the user's editing rights.
+    ///     If the user with the passed id is not allowed to make changes to the project, an exception is generated.
+    /// </summary>
+    public void ThrowExceptionIfNoAccessRights(int idAuthorizedUser)
+    {
+        if (CreatorId == idAuthorizedUser || CuratorId == idAuthorizedUser ||
+            Team.TeamMembers.Any(teammate => teammate.Id == idAuthorizedUser))
+        {
+            throw new ForbiddenException("You do not have the rights to change the data of this project.")
+        }
+    }
 }

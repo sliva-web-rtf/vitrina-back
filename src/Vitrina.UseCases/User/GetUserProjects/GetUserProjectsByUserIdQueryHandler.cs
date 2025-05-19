@@ -14,6 +14,6 @@ public class GetUserProjectsByUserIdQueryHandler(IAppDbContext dbContext, IMappe
         CancellationToken cancellationToken) =>
         await dbContext.Teammates
             .Where(teammate => teammate.UserId == request.UserId)
-            .Select(teammate => mapper.Map<ProjectDto>(teammate.Project))
+            .Select(teammate => mapper.Map<ProjectDto>(teammate.Team))
             .ToListAsync(cancellationToken);
 }

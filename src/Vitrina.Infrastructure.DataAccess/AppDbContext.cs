@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Vitrina.Domain;
 using Vitrina.Domain.Project;
 using Vitrina.Domain.Project.Page;
 using Vitrina.Domain.Project.Teammate;
@@ -24,15 +25,18 @@ public class AppDbContext : IdentityDbContext<User, AppIdentityRole, int>, IAppD
 
     public DbSet<Project> Projects => Set<Project>();
 
-    /// <inheritdoc />
+    public DbSet<ProjectSphere> ProjectSpheres => Set<ProjectSphere>();
+
+    public DbSet<ProjectThematics> ProjectThematics => Set<ProjectThematics>();
+
+    public DbSet<Team> Teams => Set<Team>();
+
     public DbSet<Teammate> Teammates => Set<Teammate>();
 
-    /// <inheritdoc />
     public DbSet<ProjectRole> ProjectRoles => Set<ProjectRole>();
 
     public DbSet<ProjectPage> ProjectPages => Set<ProjectPage>();
 
-    /// <inheritdoc />
     public DbSet<ConfirmationCode> Codes => Set<ConfirmationCode>();
 
     public DbSet<Specialization> Specializations => Set<Specialization>();
@@ -46,7 +50,6 @@ public class AppDbContext : IdentityDbContext<User, AppIdentityRole, int>, IAppD
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
         optionsBuilder.UseLazyLoadingProxies();
 
-    /// <inheritdoc />
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);

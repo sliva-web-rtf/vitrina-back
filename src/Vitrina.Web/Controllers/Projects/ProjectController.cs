@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Saritasa.Tools.Common.Pagination;
 using Vitrina.UseCases.Common.DTO;
@@ -8,16 +9,10 @@ using Vitrina.UseCases.Project.DeleteProject;
 using Vitrina.UseCases.Project.DeleteProjectImages;
 using Vitrina.UseCases.Project.GetOrganizations;
 using Vitrina.UseCases.Project.GetProjectById;
-using Vitrina.UseCases.Project.GetProjectsIds;
-using Vitrina.UseCases.Project.GetProjectTeamMembers;
-using Vitrina.UseCases.Project.GetSpheres;
-using Vitrina.UseCases.Project.GetTypes;
-using Vitrina.UseCases.Project.UpdateProject;
-using Vitrina.UseCases.Project.UpdateProject.DTO;
+using Vitrina.UseCases.Project.GetProjects;
 using Vitrina.UseCases.Project.UploadImages;
 using FileDto = Vitrina.UseCases.Project.UploadImages.Dto.FileDto;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
-using V2 = Vitrina.UseCases.Project.SearchProjects.V2;
 
 namespace Vitrina.Web.Controllers.Projects;
 
@@ -25,18 +20,22 @@ namespace Vitrina.Web.Controllers.Projects;
 ///     Project controller.
 /// </summary>
 [ApiController]
-[Route("api/project")]
-[ApiExplorerSettings(GroupName = "project")]
+[Route("api/projects")]
+[ApiExplorerSettings(GroupName = "projects")]
 public class ProjectController(IMediator mediator, IHostingEnvironment hostingEnvironment) : ControllerBase
 {
     /// <summary>
-    ///     Add project.
+    ///     Create project.
     /// </summary>
     /// <returns>Project id.</returns>
-    [Authorize]
-    [HttpPost("create")]
-    public async Task<int> CreateProject(CreateProjectCommand command, CancellationToken cancellationToken)
-        => await mediator.Send(command, cancellationToken);
+    [HttpPost("")]
+    [Authorize(Roles = "Student, Curator")]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    public async Task<IActionResult> CreateProject(CreateProjectCommand command, CancellationToken cancellationToken)
+    {
+        var result = await mediator.Send(command, cancellationToken);
+        return Created($"api/projects/{result}", new { id = result });
+    }
 
     /// <summary>
     ///     Get project by id.
@@ -57,7 +56,7 @@ public class ProjectController(IMediator mediator, IHostingEnvironment hostingEn
     /// <summary>
     ///     Upload images to project.
     /// </summary>
-    [Authorize]
+    [Authorize(Roles = "Student, Curator")]
     [HttpPost("{id}/upload-images")]
     public async Task<IActionResult> UploadImagesToProject([FromRoute] int id, IFormFile[] files,
         CancellationToken cancellationToken)
@@ -77,7 +76,7 @@ public class ProjectController(IMediator mediator, IHostingEnvironment hostingEn
     /// <summary>
     ///     Upload images to project.
     /// </summary>
-    [Authorize]
+    [Authorize(Roles = "Student, Curator")]
     [HttpPost("{id}/upload-preview-images")]
     public async Task<IActionResult> UploadPreviewImagesToProject([FromRoute] int id, IFormFile file,
         CancellationToken cancellationToken)
@@ -119,7 +118,7 @@ public class ProjectController(IMediator mediator, IHostingEnvironment hostingEn
     /// <summary>
     ///     Delete project.
     /// </summary>
-    [Authorize]
+    [Authorize(Roles = "Student, Curator")]
     [HttpDelete("{id}")]
     public async Task DeleteProject(int id, CancellationToken cancellationToken) =>
         await mediator.Send(new DeleteProjectCommand { ProjectId = id }, cancellationToken);
@@ -127,11 +126,11 @@ public class ProjectController(IMediator mediator, IHostingEnvironment hostingEn
     /// <summary>
     ///     Update project.
     /// </summary>
-    [Authorize]
-    [HttpPut("{id}")]
-    public async Task UpdateProject([FromRoute] int id, [FromBody] UpdateProjectDto projectDto,
+    [Authorize(Roles = "Student, Curator")]
+    [HttpPatch("{id}")]
+    public async Task<ProjectDto> UpdateProject([FromRoute] int id, [FromBody] JsonPatchDocument<ProjectDto> patchDto,
         CancellationToken cancellationToken) =>
-        await mediator.Send(new UpdateProjectCommand { ProjectId = id, Project = projectDto }, cancellationToken);
+        throw new NotImplementedException();
 
     /// <summary>
     ///     Delete project images.
@@ -142,48 +141,10 @@ public class ProjectController(IMediator mediator, IHostingEnvironment hostingEn
         await mediator.Send(new DeleteProjectImagesCommand { ProjectId = id }, cancellationToken);
 
     /// <summary>
-    ///     Get all project ids.
+    ///     Search for projects with filtering.
     /// </summary>
-    [HttpGet("ids")]
-    public async Task<ICollection<int>> GetProjectsIds(CancellationToken cancellationToken) =>
-        await mediator.Send(new GetProjectIdsQuery(), cancellationToken);
-
-    /// <summary>
-    ///     Search projects with new filters.
-    /// </summary>
-    /// <param name="v2Query">Query to search.</param>
     /// <returns>Paged list of projects.</returns>
-    [HttpPost("v2/search")]
-    public async Task<PagedListMetadataDto<ProjectDto>> SearchProjectsV2(
-        V2.SearchProjectsV2Query v2Query,
-        CancellationToken cancellationToken) => (await mediator.Send(v2Query, cancellationToken)).ToMetadataObject();
-
-    /// <summary>
-    ///     Get spheres.
-    /// </summary>
-    /// <returns>Spheres.</returns>
-    [HttpGet("spheres")]
-    public async Task<ICollection<string>> GetProjectSpheres(CancellationToken cancellationToken)
-        => await mediator.Send(new GetSpheresQuery(), cancellationToken);
-
-    /// <summary>
-    ///     Get types.
-    /// </summary>
-    /// <returns>Types.</returns>
-    [HttpGet("types")]
-    public async Task<ICollection<string>> GetProjectTypes(CancellationToken cancellationToken)
-        => await mediator.Send(new GetTypesQuery(), cancellationToken);
-
-    /// <summary>
-    ///     Receives members of the project team.
-    /// </summary>
-    [HttpGet("{id:int}/teammates")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetProjectTeamMembers([FromRoute] int id,
-        CancellationToken cancellationToken)
-    {
-        var query = new GetProjectTeamMembersQuery(id);
-        return Ok(await mediator.Send(query, cancellationToken));
-    }
+    [HttpGet("")]
+    public async Task<PagedListMetadataDto<ProjectDto>> SearchProjects([FromQuery] GetProjectsQuery query,
+        CancellationToken cancellationToken) => (await mediator.Send(query, cancellationToken)).ToMetadataObject();
 }
