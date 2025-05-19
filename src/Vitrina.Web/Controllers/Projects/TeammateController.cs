@@ -65,6 +65,7 @@ public class TeammateController(IMediator mediator) : ControllerBase
     [HttpDelete("{id:int}")]
     [Authorize(Roles = "Student, Curator")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Delete([FromRoute] int id, CancellationToken cancellationToken)
     {
         var idAuthorizedUser = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);

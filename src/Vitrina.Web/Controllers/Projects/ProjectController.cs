@@ -3,13 +3,13 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Saritasa.Tools.Common.Pagination;
 using Vitrina.UseCases.Common.DTO;
-using Vitrina.UseCases.Project;
 using Vitrina.UseCases.Project.CreateProject;
 using Vitrina.UseCases.Project.DeleteProject;
 using Vitrina.UseCases.Project.DeleteProjectImages;
 using Vitrina.UseCases.Project.GetOrganizations;
 using Vitrina.UseCases.Project.GetProjectById;
 using Vitrina.UseCases.Project.GetProjectsIds;
+using Vitrina.UseCases.Project.GetProjectTeamMembers;
 using Vitrina.UseCases.Project.GetSpheres;
 using Vitrina.UseCases.Project.GetTypes;
 using Vitrina.UseCases.Project.UpdateProject;
@@ -178,7 +178,12 @@ public class ProjectController(IMediator mediator, IHostingEnvironment hostingEn
     ///     Receives members of the project team.
     /// </summary>
     [HttpGet("{id:int}/teammates")]
-    public async Task<ICollection<TeammateDto>> GetProjectTeammates([FromRoute] int id,
-        CancellationToken cancellationToken) =>
-        throw new NotImplementedException();
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetProjectTeamMembers([FromRoute] int id,
+        CancellationToken cancellationToken)
+    {
+        var query = new GetProjectTeamMembersQuery(id);
+        return Ok(await mediator.Send(query, cancellationToken));
+    }
 }
