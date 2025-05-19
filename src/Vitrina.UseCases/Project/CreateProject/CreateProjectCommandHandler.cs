@@ -1,8 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
-using Vitrina.Domain.Project.Teammate;
 using Vitrina.Infrastructure.Abstractions.Interfaces;
+using Vitrina.UseCases.Common.DTO;
 
 namespace Vitrina.UseCases.Project.CreateProject;
 
@@ -15,45 +14,13 @@ internal class CreateProjectCommandHandler(IMapper mapper, IAppDbContext dbConte
     /// <inheritdoc />
     public async Task<int> Handle(CreateProjectCommand request, CancellationToken cancellationToken)
     {
-        var project = mapper.Map<CreateProjectCommand, Domain.Project.Project>(request);
-
-        // Понадобится если будем указывать членов команды при публикации проекта
-        // TODO: Добавить несуществующих пользователей со статусом регистрации - не зарегистрирован и найти в системе существующих
-        // await AddNewUserRoles(project, cancellationToken);
-
+        var project = mapper.Map<ProjectDto, Domain.Project.Project>(request.ProjectDto);
+        // TODO: прописать валидацию страницы при создания проекта
+        // 1) проверить, что проекта с таким PageID не существует
+        // 2) проверить, что существует страница с указанным PageID
         await dbContext.Projects.AddAsync(project, cancellationToken);
         await dbContext.SaveChangesAsync(cancellationToken);
 
         return project.Id;
-    }
-
-    private async Task AddNewUserRoles(Domain.Project.Project project, CancellationToken cancellationToken)
-    {
-        var allRoles = await dbContext.ProjectRoles.ToListAsync(cancellationToken);
-
-        foreach (var teammate in project.TeamMembers)
-        {
-            var updatedRoles = new List<ProjectRole>();
-
-            foreach (var role in teammate.Roles)
-            {
-                var existingRole = allRoles.FirstOrDefault(projectRole =>
-                    projectRole.Name.Equals(role.Name, StringComparison.OrdinalIgnoreCase));
-
-                if (existingRole != null)
-                {
-                    updatedRoles.Add(existingRole);
-                }
-                else
-                {
-                    var newRole = new ProjectRole { Name = role.Name };
-                    dbContext.ProjectRoles.Add(newRole);
-                    allRoles.Add(newRole);
-                    updatedRoles.Add(newRole);
-                }
-            }
-
-            teammate.Roles = updatedRoles;
-        }
     }
 }

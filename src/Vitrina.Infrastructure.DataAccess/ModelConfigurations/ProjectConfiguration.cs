@@ -13,7 +13,7 @@ internal class ProjectConfiguration : IEntityTypeConfiguration<Project>
     public void Configure(EntityTypeBuilder<Project> builder)
     {
         builder.HasIndex(project => project.Name);
-        builder.HasIndex(project => project.Client);
+        builder.HasIndex(project => project.PageId);
         builder.HasOne(project => project.Page).WithOne(c => c.Project);
         builder
             .HasOne(project => project.Page)

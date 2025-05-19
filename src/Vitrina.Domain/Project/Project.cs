@@ -33,19 +33,9 @@ public class Project : BaseEntity<int>
     required public Guid PageId { get; init; }
 
     /// <summary>
-    ///     Project page content.
-    /// </summary>
-    required public virtual ProjectPage Page { get; init; }
-
-    /// <summary>
     ///     Priority of project.
     /// </summary>
     public int Priority { get; set; }
-
-    /// <summary>
-    ///     Project team.
-    /// </summary>
-    public virtual ICollection<Teammate.Teammate> TeamMembers { get; set; } = new List<Teammate.Teammate>();
 
     /// <summary>
     ///     Project sphere.
@@ -56,4 +46,23 @@ public class Project : BaseEntity<int>
     ///     Project type.
     /// </summary>
     public string? Type { get; set; }
+
+    /// <summary>
+    ///     Project page content.
+    /// </summary>
+    required public virtual ProjectPage Page { get; init; }
+
+    /// <summary>
+    ///     Creator's ID.
+    /// </summary>
+    required public int CreatorId { get; init; }
+
+    /// <summary>
+    ///     Project team.
+    /// </summary>
+    public virtual ICollection<Teammate.Teammate> TeamMembers { get; set; } = new List<Teammate.Teammate>();
+
+    public bool CheckYourEditingRights(int idAuthorizedUser) => CreatorId == idAuthorizedUser &&
+                                                                !TeamMembers.All(teammate =>
+                                                                    teammate.Id != idAuthorizedUser);
 }

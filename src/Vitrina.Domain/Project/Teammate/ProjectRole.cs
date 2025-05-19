@@ -21,5 +21,5 @@ public class ProjectRole
     /// <summary>
     ///     Role users.
     /// </summary>
-    public virtual ICollection<Teammate> Users { get; private set; } = new List<Teammate>();
+    public virtual ICollection<Teammate> TeamMembers { get; private set; } = new List<Teammate>();
 }

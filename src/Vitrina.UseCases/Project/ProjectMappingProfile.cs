@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Vitrina.Domain.Project.Teammate;
 using Vitrina.UseCases.Common.DTO;
-using Vitrina.UseCases.Project.CreateProject;
 using Vitrina.UseCases.Project.UpdateProject.DTO;
 
 namespace Vitrina.UseCases.Project;
@@ -16,7 +15,6 @@ public class ProjectMappingProfile : Profile
     /// </summary>
     public ProjectMappingProfile()
     {
-        CreateMap<CreateProjectCommand, Domain.Project.Project>();
         CreateMap<ProjectRole, RoleDto>().ReverseMap();
         CreateMap<Teammate, UserDto>().ReverseMap();
         CreateMap<Domain.Project.Project, ProjectDto>().ReverseMap();

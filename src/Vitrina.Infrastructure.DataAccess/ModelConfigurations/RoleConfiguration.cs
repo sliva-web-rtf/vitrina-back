@@ -12,6 +12,6 @@ internal class RoleConfiguration : IEntityTypeConfiguration<ProjectRole>
     public void Configure(EntityTypeBuilder<ProjectRole> builder)
     {
         builder.HasIndex(r => r.Name).IsUnique();
-        builder.HasMany(r => r.Users).WithMany(u => u.Roles);
+        builder.HasMany(r => r.TeamMembers).WithMany(u => u.Roles);
     }
 }

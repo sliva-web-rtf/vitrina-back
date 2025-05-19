@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Saritasa.Tools.Common.Pagination;
 using Vitrina.UseCases.Common.DTO;
+using Vitrina.UseCases.Project;
 using Vitrina.UseCases.Project.CreateProject;
 using Vitrina.UseCases.Project.DeleteProject;
 using Vitrina.UseCases.Project.DeleteProjectImages;
@@ -18,13 +19,12 @@ using FileDto = Vitrina.UseCases.Project.UploadImages.Dto.FileDto;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 using V2 = Vitrina.UseCases.Project.SearchProjects.V2;
 
-namespace Vitrina.Web.Controllers;
+namespace Vitrina.Web.Controllers.Projects;
 
 /// <summary>
 ///     Project controller.
 /// </summary>
 [ApiController]
-// For dev [Route("api-dev/project")]
 [Route("api/project")]
 [ApiExplorerSettings(GroupName = "project")]
 public class ProjectController(IMediator mediator, IHostingEnvironment hostingEnvironment) : ControllerBase
@@ -173,4 +173,12 @@ public class ProjectController(IMediator mediator, IHostingEnvironment hostingEn
     [HttpGet("types")]
     public async Task<ICollection<string>> GetProjectTypes(CancellationToken cancellationToken)
         => await mediator.Send(new GetTypesQuery(), cancellationToken);
+
+    /// <summary>
+    ///     Receives members of the project team.
+    /// </summary>
+    [HttpGet("{id:int}/teammates")]
+    public async Task<ICollection<TeammateDto>> GetProjectTeammates([FromRoute] int id,
+        CancellationToken cancellationToken) =>
+        throw new NotImplementedException();
 }

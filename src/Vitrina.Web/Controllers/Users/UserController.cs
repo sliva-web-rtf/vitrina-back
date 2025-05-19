@@ -12,6 +12,7 @@ using Vitrina.UseCases.User.UpdateUser;
 
 namespace Vitrina.Web.Controllers.Users;
 
+[ApiController]
 [Route("api/users/{id:int}")]
 [ApiExplorerSettings(GroupName = "users")]
 public class UserController(IMediator mediator) : ControllerBase
