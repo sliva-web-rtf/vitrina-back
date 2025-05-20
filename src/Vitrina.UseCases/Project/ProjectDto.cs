@@ -1,4 +1,5 @@
-﻿using Vitrina.UseCases.Project.Dto;
+﻿using Vitrina.UseCases.ProjectSphere;
+using Vitrina.UseCases.ProjectThematics;
 
 namespace Vitrina.UseCases.Common.DTO;
 
@@ -35,12 +36,12 @@ public record ProjectDto
     /// <summary>
     ///     Project sphere.
     /// </summary>
-    public virtual ProjectSphereDto? Sphere { get; set; }
+    public virtual RequestSphereDto? Sphere { get; set; }
 
     /// <summary>
     ///     Project type.
     /// </summary>
-    public ProjectThematicsDto? Thematics { get; set; }
+    public RequestThematicsDto? Thematics { get; set; }
 
     /// <summary>
     ///     The project supervisor's ID.

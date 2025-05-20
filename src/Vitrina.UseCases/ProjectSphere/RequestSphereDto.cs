@@ -1,8 +1,8 @@
 using Vitrina.UseCases.ProjectPages.Blocks;
 
-namespace Vitrina.UseCases.Project.Dto;
+namespace Vitrina.UseCases.ProjectSphere;
 
-public record ProjectSphereDto : BaseEntityDto<Guid>
+public record RequestSphereDto : BaseEntityDto<Guid>
 {
     required public string Name { get; init; }
 }
