@@ -20,7 +20,12 @@ public class AddTeammateCommandHandler(
         var team = await dbContext.Teams.FindAsync(request.TeamId, cancellationToken)
                    ?? throw new NotFoundException($"The team with id = {request.TeamId} was not found");
         team.Project.ThrowExceptionIfNoAccessRights(request.IdAuthorizedUser);
-        var teammate = await CreateTeamCommandHandler.GetTeammate(userManager, mapper, request.TeammateDto);
+        var teammate = await CreateTeamCommandHandler.GetTeammate(
+            dbContext,
+            userManager,
+            mapper,
+            request.TeammateDto,
+            cancellationToken);
         if (team.TeamMembers.Any(currentTeammate => currentTeammate.UserId == teammate.UserId))
         {
             throw new DomainException("The team member with the transmitted data is already in the team.");

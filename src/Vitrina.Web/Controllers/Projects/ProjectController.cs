@@ -41,7 +41,7 @@ public class ProjectController(IMediator mediator, IHostingEnvironment hostingEn
     ///     Get project by id.
     /// </summary>
     /// <returns>Project.</returns>
-    [HttpGet("{id}")]
+    [HttpGet("{id:int}")]
     public async Task<ProjectDto> GetProject(int id, CancellationToken cancellationToken)
         => await mediator.Send(new GetProjectByIdQuery(id), cancellationToken);
 
@@ -127,7 +127,7 @@ public class ProjectController(IMediator mediator, IHostingEnvironment hostingEn
     ///     Update project.
     /// </summary>
     [Authorize(Roles = "Student, Curator")]
-    [HttpPatch("{id}")]
+    [HttpPatch("{id:int}")]
     public async Task<ProjectDto> UpdateProject([FromRoute] int id, [FromBody] JsonPatchDocument<ProjectDto> patchDto,
         CancellationToken cancellationToken) =>
         throw new NotImplementedException();

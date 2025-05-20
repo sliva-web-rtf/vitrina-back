@@ -79,10 +79,10 @@ public class Project : BaseEntity<int>
     /// </summary>
     public void ThrowExceptionIfNoAccessRights(int idAuthorizedUser)
     {
-        if (CreatorId == idAuthorizedUser || CuratorId == idAuthorizedUser ||
-            Team.TeamMembers.Any(teammate => teammate.Id == idAuthorizedUser))
+        if (!(CreatorId == idAuthorizedUser || CuratorId == idAuthorizedUser ||
+              Team.TeamMembers.Any(teammate => teammate.Id == idAuthorizedUser)))
         {
-            throw new ForbiddenException("You do not have the rights to change the data of this project.")
+            throw new ForbiddenException("You do not have the rights to change the data of this project.");
         }
     }
 }
