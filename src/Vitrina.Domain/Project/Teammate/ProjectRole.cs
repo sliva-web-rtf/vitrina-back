@@ -17,9 +17,4 @@ public class ProjectRole
     ///     Name.
     /// </summary>
     required public string Name { get; set; }
-
-    /// <summary>
-    ///     Role users.
-    /// </summary>
-    public virtual ICollection<Teammate> TeamMembers { get; private set; } = new List<Teammate>();
 }

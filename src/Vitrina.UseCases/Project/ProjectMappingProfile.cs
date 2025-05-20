@@ -2,6 +2,7 @@
 using Vitrina.Domain.Project.Teammate;
 using Vitrina.UseCases.Common.DTO;
 using Vitrina.UseCases.Project.UpdateProject.DTO;
+using Vitrina.UseCases.ProjectTeam.Role;
 
 namespace Vitrina.UseCases.Project;
 
@@ -15,7 +16,7 @@ public class ProjectMappingProfile : Profile
     /// </summary>
     public ProjectMappingProfile()
     {
-        CreateMap<ProjectRole, RoleDto>().ReverseMap();
+        CreateMap<ProjectRole, ResponceRoleDto>().ReverseMap();
         CreateMap<Domain.Project.Project, ProjectDto>().ReverseMap();
         CreateMap<UpdateUserDto, Teammate>()
             .ForMember(teammate => teammate.ProjectId, member => member.Ignore())

@@ -1,11 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Vitrina.UseCases.ProjectPages.Blocks;
 
-namespace Vitrina.UseCases.Common.DTO;
+namespace Vitrina.UseCases.ProjectTeam.Role;
 
 /// <summary>
 ///     Role dto.
 /// </summary>
-public class RoleDto
+public record ResponceRoleDto : BaseEntityDto<int>
 {
     /// <summary>
     ///     Name.

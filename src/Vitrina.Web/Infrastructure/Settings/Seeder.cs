@@ -5,7 +5,7 @@ namespace Vitrina.Web.Infrastructure.Settings;
 
 public static class Seeder
 {
-    private static readonly string[] RoleNames = ["Curator", "Partner", "Student"];
+    private static readonly string[] RoleNames = ["Curator", "Partner", "Student", "Administrator"];
 
     /// <summary>
     ///     Sets up user roles in the application.
