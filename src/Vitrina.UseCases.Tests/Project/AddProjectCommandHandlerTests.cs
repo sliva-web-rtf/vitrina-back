@@ -1,30 +1,26 @@
-namespace Vitrina.UseCases.Tests.Project;
-
-using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using Moq;
 using Vitrina.Domain.Project;
-using Vitrina.Domain.User;
-using Vitrina.Infrastructure.Abstractions.Interfaces;
 using Vitrina.UseCases.Common;
 using Vitrina.UseCases.Project.AddProject;
+using Vitrina.UseCases.Tests.Infrastructure;
 using Xunit;
-using Block = Vitrina.Domain.Project.Block;
+
+namespace Vitrina.UseCases.Tests.Project;
 
 /// <summary>
 /// Tests for AddProjectCommandHandler.
 /// </summary>
 public class AddProjectCommandHandlerTests
 {
+    /// <summary>
+    /// Проверяет, что обработчик успешно создает проект и возвращает его идентификатор.
+    /// </summary>
     [Fact]
     public async Task Handle_ValidProject_ShouldCreateProjectAndReturnId()
     {
         // Arrange
-        var mockMapper = new Mock<IMapper>();
-        var options = new DbContextOptionsBuilder<TestDbContext>()
-            .UseInMemoryDatabase(databaseName: "TestDb")
-            .Options;
-        var dbContext = new TestDbContext(options);
+        var mapper = TestMapper.CreateMapper();
+        var dbContext = new TestDbContext();
 
         var command = new AddProjectCommand
         {
@@ -50,29 +46,8 @@ public class AddProjectCommandHandlerTests
                 new() { Title = "Block 1", Text = "Text 1" }, new() { Title = "Block 2", Text = "Text 2" }
             }
         };
-        var project = new Domain.Project.Project
-        {
-            Name = command.Name,
-            Description = command.Description,
-            Aim = command.Aim,
-            Period = command.Period,
-            Semester = command.Semester,
-            CustomBlocks = command.CustomBlocks.Select(b => new Block { Title = b.Title, Text = b.Text })
-                .ToList()
-        };
 
-        project.Users = command.Users.Select(u => new Teammate
-        {
-            FirstName = u.FirstName,
-            LastName = u.LastName,
-            Email = u.Email,
-            Project = project,
-            Roles = new List<ProjectRole> { new() { Name = u.Roles.First().Name } }
-        }).ToList();
-        mockMapper.Setup(m => m.Map<AddProjectCommand, Domain.Project.Project>(command))
-            .Returns(project);
-
-        var handler = new AddProjectCommandHandler(mockMapper.Object, dbContext);
+        var handler = new AddProjectCommandHandler(mapper, dbContext);
 
         // Act
         var result = await handler.Handle(command, CancellationToken.None);
@@ -90,15 +65,15 @@ public class AddProjectCommandHandlerTests
         Assert.Equal("Developer", teammate.Roles.First().Name);
     }
 
+    /// <summary>
+    /// Проверяет, что обработчик повторно использует существующие роли вместо создания дубликатов.
+    /// </summary>
     [Fact]
     public async Task Handle_DuplicateRoles_ShouldReuseExistingRoles()
     {
         // Arrange
-        var mockMapper = new Mock<IMapper>();
-        var options = new DbContextOptionsBuilder<TestDbContext>()
-            .UseInMemoryDatabase(databaseName: "TestDb_DuplicateRoles")
-            .Options;
-        var dbContext = new TestDbContext(options);
+        var mapper = TestMapper.CreateMapper();
+        var dbContext = new TestDbContext();
 
         // Add existing role
         var existingRole = new ProjectRole { Name = "Developer" };
@@ -121,31 +96,12 @@ public class AddProjectCommandHandlerTests
                     FirstName = "John",
                     LastName = "Doe",
                     Email = "john.doe@example.com",
-                    Roles = new List<RoleDto> { new RoleDto { Name = "Developer" } } // Same role name as existing
+                    Roles = new List<RoleDto> { new RoleDto { Name = "Developer" } }
                 }
             }
         };
-        var project = new Domain.Project.Project
-        {
-            Name = command.Name,
-            Description = command.Description,
-            Aim = command.Aim,
-            Period = command.Period,
-            Semester = command.Semester,
-        };
 
-        project.Users = command.Users.Select(u => new Teammate
-        {
-            FirstName = u.FirstName,
-            LastName = u.LastName,
-            Email = u.Email,
-            Project = project,
-            Roles = new List<ProjectRole> { new() { Name = u.Roles.First().Name } }
-        }).ToList();
-        mockMapper.Setup(m => m.Map<AddProjectCommand, Domain.Project.Project>(command))
-            .Returns(project);
-
-        var handler = new AddProjectCommandHandler(mockMapper.Object, dbContext);
+        var handler = new AddProjectCommandHandler(mapper, dbContext);
 
         // Act
         await handler.Handle(command, CancellationToken.None);
@@ -154,28 +110,4 @@ public class AddProjectCommandHandlerTests
         var roleCount = await dbContext.ProjectRoles.CountAsync();
         Assert.Equal(1, roleCount); // Should not create duplicate role
     }
-}
-
-/// <summary>
-/// Test database context.
-/// </summary>
-internal class TestDbContext : DbContext, IAppDbContext
-{
-    public TestDbContext(DbContextOptions options) : base(options)
-    {
-    }
-
-    public DbSet<Teammate> Teammates { get; }
-
-    public DbSet<Domain.Project.Project> Projects { get; set; }
-
-    public DbSet<Tag> Tags { get; }
-
-    public DbSet<ProjectRole> ProjectRoles { get; set; }
-
-    public DbSet<Content> Contents { get; }
-
-    public DbSet<User> Users { get; }
-
-    public DbSet<ConfirmationCode> Codes { get; }
 }
