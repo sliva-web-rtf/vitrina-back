@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Vitrina.UseCases.Common.DTO;
+using Vitrina.UseCases.Project.Dto;
 using Vitrina.UseCases.ProjectPages;
 using Vitrina.UseCases.User.DTO;
 using Vitrina.UseCases.User.GetUser;

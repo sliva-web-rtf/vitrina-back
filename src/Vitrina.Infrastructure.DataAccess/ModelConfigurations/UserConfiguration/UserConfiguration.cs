@@ -2,26 +2,26 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Vitrina.Domain.User;
 
-namespace Vitrina.Infrastructure.DataAccess.ModelConfigurations;
+namespace Vitrina.Infrastructure.DataAccess.ModelConfigurations.UserConfiguration;
 
 public class UserConfiguration : IEntityTypeConfiguration<User>
 {
     public void Configure(EntityTypeBuilder<User> builder)
     {
         builder
-            .Property(u => u.EmailConfirmed)
+            .Property(user => user.EmailConfirmed)
             .HasDefaultValue("false");
         builder
-            .Property(u => u.PhoneNumberConfirmed)
+            .Property(user => user.PhoneNumberConfirmed)
             .HasDefaultValue("false");
         builder
-            .Property(u => u.TwoFactorEnabled)
+            .Property(user => user.TwoFactorEnabled)
             .HasDefaultValue("false");
         builder
-            .Property(u => u.LockoutEnabled)
+            .Property(user => user.LockoutEnabled)
             .HasDefaultValue("false");
         builder
-            .Property(u => u.AccessFailedCount)
+            .Property(user => user.AccessFailedCount)
             .HasDefaultValue("5");
         builder
             .Property(user => user.RegistrationStatus)

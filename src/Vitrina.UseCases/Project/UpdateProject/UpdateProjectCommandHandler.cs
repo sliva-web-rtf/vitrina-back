@@ -1,65 +1,23 @@
 ﻿using AutoMapper;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Saritasa.Tools.Domain.Exceptions;
-using Vitrina.Domain.Project.Teammate;
 using Vitrina.Infrastructure.Abstractions.Interfaces;
-using Vitrina.UseCases.Project.CreateProject;
+using Vitrina.UseCases.Project.Dto;
 
 namespace Vitrina.UseCases.Project.UpdateProject;
 
-internal class UpdateProjectCommandHandler(IMapper mapper, IAppDbContext appDbContext)
-    : IRequestHandler<UpdateProjectCommand>
+internal class UpdateProjectCommandHandler(IMapper mapper, IAppDbContext dbContext)
+    : IRequestHandler<UpdateProjectCommand, ProjectDto>
 {
-    public async Task Handle(UpdateProjectCommand request, CancellationToken cancellationToken)
+    public async Task<ProjectDto> Handle(UpdateProjectCommand request, CancellationToken cancellationToken)
     {
-        try
-        {
-            var project = await appDbContext
-                              .Projects
-                              .FirstOrDefaultAsync(p => p.Id == request.ProjectId, cancellationToken)
-                          ?? throw new DomainException("Project not found");
-            var users = await appDbContext.Teammates
-                .Include(u => u.Roles)
-                .Where(u => u.ProjectId == project.Id)
-                .ToListAsync(cancellationToken);
-            var allRoles = await appDbContext.ProjectRoles.ToListAsync(cancellationToken);
-            mapper.Map(request.Project, project);
-            CreateProjectCommandHandler.NumberCustomBlocks(project);
-            var resultUser = new List<Teammate>();
-            foreach (var user in request.Project.Users)
-            {
-                var userFromDb = users.FirstOrDefault(u => u.Id == user.Id);
-                mapper.Map(user, userFromDb);
-                userFromDb ??= mapper.Map<Teammate>(user);
-                userFromDb.Roles.Clear();
-                foreach (var role in user.Roles)
-                {
-                    var userRoleFromDb = userFromDb.Roles.FirstOrDefault(r => r.Name == role.Name);
-                    if (userRoleFromDb == null)
-                    {
-                        var roleFromDb = allRoles.FirstOrDefault(r => r.Name == role.Name);
-                        if (roleFromDb != null)
-                        {
-                            userFromDb.Roles.Add(roleFromDb);
-                        }
-                        else
-                        {
-                            var newRole = new ProjectRole { Name = role.Name };
-                            userFromDb.Roles.Add(newRole);
-                        }
-                    }
-                }
-
-                resultUser.Add(userFromDb);
-            }
-
-            project.TeamMembers = resultUser;
-            await appDbContext.SaveChangesAsync(cancellationToken);
-        }
-        catch (Exception ex)
-        {
-            throw new DomainException(ex.Message, ex.InnerException);
-        }
+        var project = await dbContext.Projects.FindAsync(request.ProjectId, cancellationToken)
+                      ?? throw new NotFoundException($"Project with id = {request.ProjectId} not found.");
+        project.ThrowExceptionIfNoAccessRights(request.IdAuthorizedUser);
+        var projectDto = mapper.Map<UpdateProjectDto>(project);
+        request.PatchDocument.ApplyTo(projectDto);
+        mapper.Map(projectDto, project);
+        await dbContext.SaveChangesAsync(cancellationToken);
+        return mapper.Map<ProjectDto>(project);
     }
 }

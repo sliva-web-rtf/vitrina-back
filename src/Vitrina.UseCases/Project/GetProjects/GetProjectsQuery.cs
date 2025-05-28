@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Saritasa.Tools.Common.Pagination;
-using Vitrina.UseCases.Common.DTO;
 using Vitrina.UseCases.Common.Pagination;
+using Vitrina.UseCases.Project.Dto;
 
 namespace Vitrina.UseCases.Project.GetProjects;
 

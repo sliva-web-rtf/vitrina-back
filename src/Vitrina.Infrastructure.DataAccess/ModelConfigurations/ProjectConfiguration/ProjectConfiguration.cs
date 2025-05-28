@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Vitrina.Domain.Project;
 using Vitrina.Domain.Project.Page;
 
-namespace Vitrina.Infrastructure.DataAccess.ModelConfigurations;
+namespace Vitrina.Infrastructure.DataAccess.ModelConfigurations.ProjectConfiguration;
 
 /// <summary>
 ///     Configuration of project.
@@ -24,5 +24,10 @@ internal class ProjectConfiguration : IEntityTypeConfiguration<Project>
             .WithOne(page => page.Project)
             .HasForeignKey<ProjectPage>(projectPage => projectPage.ProjectId)
             .OnDelete(DeleteBehavior.Cascade);
+        builder
+            .HasOne(project => project.Curator)
+            .WithMany()
+            .HasForeignKey(project => project.CuratorId)
+            .OnDelete(DeleteBehavior.ClientSetNull);
     }
 }

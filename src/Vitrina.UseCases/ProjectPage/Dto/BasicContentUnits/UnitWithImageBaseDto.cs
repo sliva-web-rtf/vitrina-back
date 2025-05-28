@@ -1,5 +1,5 @@
 using System.ComponentModel.DataAnnotations;
-using Vitrina.UseCases.Project.UploadImages.Dto;
+using Vitrina.UseCases.Common.DTO;
 
 namespace Vitrina.UseCases.ProjectPage.Dto.BasicContentUnits;
 

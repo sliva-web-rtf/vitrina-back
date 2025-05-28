@@ -2,7 +2,7 @@ using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Vitrina.Infrastructure.Abstractions.Interfaces;
-using Vitrina.UseCases.Common.DTO;
+using Vitrina.UseCases.Project.Dto;
 
 namespace Vitrina.UseCases.User.GetUserProjects;
 

@@ -9,9 +9,5 @@ namespace Vitrina.Infrastructure.DataAccess.ModelConfigurations;
 /// </summary>
 internal class RoleConfiguration : IEntityTypeConfiguration<ProjectRole>
 {
-    public void Configure(EntityTypeBuilder<ProjectRole> builder)
-    {
-        builder.HasIndex(r => r.Name).IsUnique();
-        builder.HasMany(r => r.TeamMembers).WithMany(u => u.Roles);
-    }
+    public void Configure(EntityTypeBuilder<ProjectRole> builder) => builder.HasIndex(role => role.Name).IsUnique();
 }

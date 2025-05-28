@@ -3,7 +3,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Saritasa.Tools.Domain.Exceptions;
 using Vitrina.Infrastructure.Abstractions.Interfaces;
-using Vitrina.UseCases.Common.DTO;
+using Vitrina.UseCases.Project.Dto;
 
 namespace Vitrina.UseCases.Project.GetProjectById;
 
@@ -18,8 +18,6 @@ internal class GetProjectByIdQueryHandler(IMapper mapper, IAppDbContext dbContex
         var project = await dbContext.Projects
                           .FirstOrDefaultAsync(p => p.Id == request.Id, cancellationToken)
                       ?? throw new NotFoundException($"Project with id {request.Id} not found.");
-        project.Page.SortContentBlocks();
-        var projectDto = mapper.Map<ProjectDto>(project);
-        return projectDto;
+        return mapper.Map<ProjectDto>(project);
     }
 }

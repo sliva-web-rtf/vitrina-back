@@ -89,5 +89,14 @@ public class TeamController(IMediator mediator) : ControllerBase
         return Ok(await mediator.Send(command, cancellationToken));
     }
 
+    [HttpGet("{id:guid}/teammates")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetTeammates([FromRoute] Guid id, CancellationToken cancellationToken)
+    {
+        var query = new GetTeamByIdQuery(id);
+        return Ok(await mediator.Send(query, cancellationToken));
+    }
+
     private int GetIdAuthorizedUser() => int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
 }

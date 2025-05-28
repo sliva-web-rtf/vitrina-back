@@ -1,7 +1,7 @@
 ﻿using Vitrina.UseCases.ProjectSphere;
 using Vitrina.UseCases.ProjectThematics;
 
-namespace Vitrina.UseCases.Common.DTO;
+namespace Vitrina.UseCases.Project.Dto;
 
 /// <summary>
 ///     Project dto.

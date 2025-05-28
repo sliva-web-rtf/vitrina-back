@@ -3,7 +3,6 @@ using Newtonsoft.Json;
 using Vitrina.UseCases.Auth.GetUserById;
 using Vitrina.UseCases.Auth.Register;
 using Vitrina.UseCases.Common;
-using Vitrina.UseCases.Project.UpdateProject.DTO;
 using Vitrina.UseCases.Specialization;
 using Vitrina.UseCases.User.DTO;
 using Vitrina.UseCases.User.DTO.AdditionalInformation;
@@ -49,7 +48,5 @@ public class UserMappingProfile : Profile
         CreateMap<UpdateUserDtoBase, NotStudentDtoBase>();
         CreateMap<AdditionalUserInfo, AdditionalStudentInfo>();
         CreateMap<AdditionalUserInfo, AdditionalNotStudentInfo>();
-        CreateMap<Domain.User.User, UpdateUserDto>()
-            .ForMember(user => user.Roles, member => member.Ignore());
     }
 }

@@ -1,19 +1,19 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Saritasa.Tools.Domain.Exceptions;
 using Vitrina.Infrastructure.Abstractions.Interfaces;
 
 namespace Vitrina.UseCases.Project.DeleteProject;
 
-internal class DeleteProjectCommandHandler(IAppDbContext appDbContext, IHostingEnvironment hostingEnvironment)
+internal class DeleteProjectCommandHandler(IAppDbContext appDbContext)
     : IRequestHandler<DeleteProjectCommand>
 {
     public async Task Handle(DeleteProjectCommand request, CancellationToken cancellationToken)
     {
         var project = await appDbContext.Projects
                           .FirstOrDefaultAsync(p => p.Id == request.ProjectId, cancellationToken)
-                      ?? throw new NotFoundException();
+                      ?? throw new NotFoundException($"Project with id = {request.ProjectId} not found.");
+        project.ThrowExceptionIfNoAccessRights(request.IdAuthorizedUser);
 
         // TODO: реализовать удаление previewImage проекта из облака
         // TODO: реализовать удаление файлов боков страниц проектов из облака

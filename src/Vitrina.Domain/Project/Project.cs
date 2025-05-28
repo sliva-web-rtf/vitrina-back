@@ -74,6 +74,11 @@ public class Project : BaseEntity<int>
     public int? CuratorId { get; set; }
 
     /// <summary>
+    ///     Project curator.
+    /// </summary>
+    public User.User? Curator { get; set; }
+
+    /// <summary>
     ///     Checks the user's editing rights.
     ///     If the user with the passed id is not allowed to make changes to the project, an exception is generated.
     /// </summary>

@@ -1,20 +1,14 @@
 ﻿using MediatR;
-using Vitrina.UseCases.Project.UpdateProject.DTO;
+using Microsoft.AspNetCore.JsonPatch;
+using Vitrina.UseCases.Project.Dto;
 
 namespace Vitrina.UseCases.Project.UpdateProject;
 
 /// <summary>
 ///     Update project command.
 /// </summary>
-public class UpdateProjectCommand : IRequest
-{
-    /// <summary>
-    ///     Id of project.
-    /// </summary>
-    public int ProjectId { get; init; }
-
-    /// <summary>
-    ///     Updated project.
-    /// </summary>
-    required public UpdateProjectDto Project { get; init; }
-}
+public record UpdateProjectCommand(
+    int ProjectId,
+    JsonPatchDocument<UpdateProjectDto> PatchDocument,
+    int IdAuthorizedUser)
+    : IRequest<ProjectDto>;
