@@ -7,11 +7,10 @@ using Vitrina.UseCases.ProjectPage.AddEditorByUserEmail;
 using Vitrina.UseCases.ProjectPage.CreateProjectPage;
 using Vitrina.UseCases.ProjectPage.DeleteEditorByPageEditorId;
 using Vitrina.UseCases.ProjectPage.Dto;
-using Vitrina.UseCases.ProjectPages;
+using Vitrina.UseCases.ProjectPage.UpdateProjectPage;
 using Vitrina.UseCases.ProjectPages.DeleteProjectPage;
 using Vitrina.UseCases.ProjectPages.GetProjectPage;
 using Vitrina.UseCases.ProjectPages.GetProjectPageEditor;
-using Vitrina.UseCases.ProjectPages.UpdateProjectPage;
 
 namespace Vitrina.Web.Controllers;
 

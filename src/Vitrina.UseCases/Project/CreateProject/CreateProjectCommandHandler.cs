@@ -2,6 +2,7 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Saritasa.Tools.Domain.Exceptions;
+using Vitrina.Domain.Project.Page;
 using Vitrina.Infrastructure.Abstractions.Interfaces;
 using Vitrina.UseCases.Project.Dto;
 
@@ -11,20 +12,28 @@ namespace Vitrina.UseCases.Project.CreateProject;
 ///     Add project handler.
 /// </summary>
 internal class CreateProjectCommandHandler(IMapper mapper, IAppDbContext dbContext)
-    : IRequestHandler<CreateProjectCommand, int>
+    : IRequestHandler<CreateProjectCommand, Guid>
 {
     /// <inheritdoc />
-    public async Task<int> Handle(CreateProjectCommand request, CancellationToken cancellationToken)
+    public async Task<Guid> Handle(CreateProjectCommand request, CancellationToken cancellationToken)
     {
         await ValidateModelAsync(request.ProjectDto, cancellationToken);
-        var project = mapper.Map<ProjectDto, Domain.Project.Project>(request.ProjectDto);
+        var project = new Domain.Project.Project
+        {
+            Id = Guid.NewGuid(),
+            PageId = request.ProjectDto.PageId,
+            Name = request.ProjectDto.Name,
+            CreatorId = request.IdAuthorizedUser
+        };
+        mapper.Map(request.ProjectDto, project);
+        project.Page.ReadyStatus = PageReadyStatusEnum.UnderReview;
         await dbContext.Projects.AddAsync(project, cancellationToken);
         await dbContext.SaveChangesAsync(cancellationToken);
 
         return project.Id;
     }
 
-    private async Task ValidateModelAsync(ProjectDto projectDto, CancellationToken cancellationToken)
+    private async Task ValidateModelAsync(CreateProjectDto projectDto, CancellationToken cancellationToken)
     {
         if (await dbContext.Projects.FirstOrDefaultAsync(existingProject => existingProject.PageId == projectDto.PageId,
                 cancellationToken) != null)

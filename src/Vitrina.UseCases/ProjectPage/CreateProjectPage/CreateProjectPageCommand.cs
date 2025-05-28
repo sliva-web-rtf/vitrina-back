@@ -20,7 +20,7 @@ public record CreateProjectPageCommand : IRequest<Guid>
     /// <summary>
     ///     Project id.
     /// </summary>
-    public int ProjectId { get; init; }
+    public Guid ProjectId { get; init; }
 
     /// <summary>
     ///     User ID who created the project page.

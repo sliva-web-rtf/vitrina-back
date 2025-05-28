@@ -2,6 +2,7 @@
 using MediatR;
 using Saritasa.Tools.Common.Pagination;
 using Saritasa.Tools.EntityFrameworkCore.Pagination;
+using Vitrina.Domain.Project.Page;
 using Vitrina.Infrastructure.Abstractions.Interfaces;
 using Vitrina.UseCases.Project.Dto;
 
@@ -11,12 +12,13 @@ namespace Vitrina.UseCases.Project.GetProjects;
 ///     Search projects handler.
 /// </summary>
 internal class GetProjectsQueryHandler(IMapper mapper, IAppDbContext dbContext)
-    : IRequestHandler<GetProjectsQuery, PagedList<ProjectDto>>
+    : IRequestHandler<GetProjectsQuery, PagedList<ResponceProjectDto>>
 {
-    public async Task<PagedList<ProjectDto>> Handle(GetProjectsQuery request,
+    public async Task<PagedList<ResponceProjectDto>> Handle(GetProjectsQuery request,
         CancellationToken cancellationToken)
     {
         var projects = dbContext.Projects
+            .Where(project => project.Page.ReadyStatus == PageReadyStatusEnum.Published)
             .OrderByDescending(project => project.Priority)
             .AsQueryable();
         var filteredProjects = ApplyFilters(projects, request);
@@ -62,9 +64,9 @@ internal class GetProjectsQueryHandler(IMapper mapper, IAppDbContext dbContext)
         return query;
     }
 
-    private ProjectDto MapToProjectDto(Domain.Project.Project project)
+    private ResponceProjectDto MapToProjectDto(Domain.Project.Project project)
     {
-        var dto = mapper.Map<ProjectDto>(project);
+        var dto = mapper.Map<ResponceProjectDto>(project);
         if (project.PreviewImagePath != null)
         {
             dto.PreviewImagePath = project.PreviewImagePath.Split("/").Last();

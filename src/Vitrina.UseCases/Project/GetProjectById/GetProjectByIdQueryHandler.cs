@@ -11,13 +11,13 @@ namespace Vitrina.UseCases.Project.GetProjectById;
 ///     Handler.
 /// </summary>
 internal class GetProjectByIdQueryHandler(IMapper mapper, IAppDbContext dbContext)
-    : IRequestHandler<GetProjectByIdQuery, ProjectDto>
+    : IRequestHandler<GetProjectByIdQuery, ResponceProjectDto>
 {
-    public async Task<ProjectDto> Handle(GetProjectByIdQuery request, CancellationToken cancellationToken)
+    public async Task<ResponceProjectDto> Handle(GetProjectByIdQuery request, CancellationToken cancellationToken)
     {
         var project = await dbContext.Projects
-                          .FirstOrDefaultAsync(p => p.Id == request.Id, cancellationToken)
+                          .FirstOrDefaultAsync(existingProject => existingProject.Id == request.Id, cancellationToken)
                       ?? throw new NotFoundException($"Project with id {request.Id} not found.");
-        return mapper.Map<ProjectDto>(project);
+        return mapper.Map<ResponceProjectDto>(project);
     }
 }

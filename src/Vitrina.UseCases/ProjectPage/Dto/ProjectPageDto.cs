@@ -1,7 +1,8 @@
 using Vitrina.Domain.Project.Page;
+using Vitrina.UseCases.ProjectPages;
 using Vitrina.UseCases.ProjectPages.Blocks;
 
-namespace Vitrina.UseCases.ProjectPages;
+namespace Vitrina.UseCases.ProjectPage.Dto;
 
 public record ProjectPageDto : BaseEntityDto<Guid>
 {
@@ -18,7 +19,7 @@ public record ProjectPageDto : BaseEntityDto<Guid>
     /// <summary>
     ///     Project id.
     /// </summary>
-    public int ProjectId { get; init; }
+    public Guid ProjectId { get; init; }
 
     /// <summary>
     ///     User ID who created the project page.

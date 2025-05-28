@@ -1,9 +1,10 @@
 using AutoMapper;
 using FluentValidation;
 using MediatR;
+using Vitrina.Domain.Project.Page;
 using Vitrina.Infrastructure.Abstractions.Interfaces.Repositories;
+using Vitrina.UseCases.ProjectPage.Dto;
 using Vitrina.UseCases.ProjectPages;
-using Vitrina.UseCases.ProjectPages.UpdateProjectPage;
 
 namespace Vitrina.UseCases.ProjectPage.UpdateProjectPage;
 
@@ -37,6 +38,9 @@ public class UpdateProjectPageCommandHandler(
 
         mapper.Map(pageDto, page);
         page.NumberCustomBlocks();
+        page.ReadyStatus = pageDto.ReadyStatus == PageReadyStatusEnum.Draft
+            ? PageReadyStatusEnum.Draft
+            : PageReadyStatusEnum.UnderReview;
         await repository.Update(page, cancellationToken);
         await repository.SaveChangesAsync(cancellationToken);
     }

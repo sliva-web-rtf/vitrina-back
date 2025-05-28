@@ -30,8 +30,10 @@ public class ProjectController(IMediator mediator) : ControllerBase
     [Authorize(Roles = "Student, Curator")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> CreateProject(CreateProjectCommand command, CancellationToken cancellationToken)
+    public async Task<IActionResult> CreateProject([FromBody] CreateProjectDto projectDto,
+        CancellationToken cancellationToken)
     {
+        var command = new CreateProjectCommand(projectDto, GetIdAuthorizedUser());
         var result = await mediator.Send(command, cancellationToken);
         return Created($"api/projects/{result}", new { id = result });
     }
@@ -40,10 +42,10 @@ public class ProjectController(IMediator mediator) : ControllerBase
     ///     Get project by id.
     /// </summary>
     /// <returns>Project.</returns>
-    [HttpGet("{id:int}")]
+    [HttpGet("{id:guid}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ProjectDto> GetProject(int id, CancellationToken cancellationToken)
+    public async Task<CreateProjectDto> GetProject([FromRoute] Guid id, CancellationToken cancellationToken)
         => await mediator.Send(new GetProjectByIdQuery(id), cancellationToken);
 
     /// <summary>
@@ -58,11 +60,11 @@ public class ProjectController(IMediator mediator) : ControllerBase
     /// <summary>
     ///     Delete project.
     /// </summary>
-    [HttpDelete("{id}")]
+    [HttpDelete("{id:guid}")]
     [Authorize(Roles = "Student, Curator")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> DeleteProject(int id, CancellationToken cancellationToken)
+    public async Task<IActionResult> DeleteProject([FromRoute] Guid id, CancellationToken cancellationToken)
     {
         var command = new DeleteProjectCommand(id, GetIdAuthorizedUser());
         await mediator.Send(command, cancellationToken);
@@ -72,11 +74,11 @@ public class ProjectController(IMediator mediator) : ControllerBase
     /// <summary>
     ///     Update project.
     /// </summary>
-    [HttpPatch("{id:int}")]
+    [HttpPatch("{id:guid}")]
     [Authorize(Roles = "Student, Curator")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> UpdateProject([FromRoute] int id,
+    public async Task<IActionResult> UpdateProject([FromRoute] Guid id,
         [FromBody] JsonPatchDocument<UpdateProjectDto> patchDocument,
         CancellationToken cancellationToken)
     {
@@ -91,7 +93,7 @@ public class ProjectController(IMediator mediator) : ControllerBase
     /// <returns>Paged list of projects.</returns>
     [HttpGet("")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<PagedListMetadataDto<ProjectDto>> SearchProjects([FromQuery] GetProjectsQuery query,
+    public async Task<PagedListMetadataDto<ResponceProjectDto>> SearchProjects([FromQuery] GetProjectsQuery query,
         CancellationToken cancellationToken) => (await mediator.Send(query, cancellationToken)).ToMetadataObject();
 
     private int GetIdAuthorizedUser() => int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);

@@ -16,7 +16,7 @@ public class ProjectMappingProfile : Profile
     public ProjectMappingProfile()
     {
         CreateMap<ProjectRole, ResponceRoleDto>().ReverseMap();
-        CreateMap<Domain.Project.Project, ProjectDto>().ReverseMap();
+        CreateMap<Domain.Project.Project, CreateProjectDto>().ReverseMap();
         CreateMap<Domain.Project.Project, UpdateProjectDto>().ReverseMap();
     }
 }

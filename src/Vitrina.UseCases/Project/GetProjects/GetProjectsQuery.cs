@@ -8,7 +8,7 @@ namespace Vitrina.UseCases.Project.GetProjects;
 /// <summary>
 ///     Search projects.
 /// </summary>
-public record GetProjectsQuery : PageQueryFilter, IRequest<PagedList<ProjectDto>>
+public record GetProjectsQuery : PageQueryFilter, IRequest<PagedList<ResponceProjectDto>>
 {
     /// <summary>
     ///     Project name.

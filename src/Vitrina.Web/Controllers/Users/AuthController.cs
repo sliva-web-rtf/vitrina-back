@@ -11,7 +11,7 @@ using Vitrina.UseCases.Auth.Register;
 using Vitrina.UseCases.User.DTO;
 using Vitrina.Web.Infrastructure.Web;
 
-namespace Vitrina.Web.Controllers;
+namespace Vitrina.Web.Controllers.Users;
 
 /// <summary>
 ///     Auth controller.
@@ -19,15 +19,8 @@ namespace Vitrina.Web.Controllers;
 [ApiController]
 [Route("api/auth")]
 [ApiExplorerSettings(GroupName = "auth")]
-public class AuthController : ControllerBase
+public class AuthController(IMediator mediator) : ControllerBase
 {
-    private readonly IMediator mediator;
-
-    /// <summary>
-    ///     Constructor.
-    /// </summary>
-    public AuthController(IMediator mediator) => this.mediator = mediator;
-
     /// <summary>
     ///     Authenticate user by email and password.
     /// </summary>

@@ -2,9 +2,8 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using Vitrina.UseCases.Common.DTO;
 using Vitrina.UseCases.Project.Dto;
-using Vitrina.UseCases.ProjectPages;
+using Vitrina.UseCases.ProjectPage.Dto;
 using Vitrina.UseCases.User.DTO;
 using Vitrina.UseCases.User.GetUser;
 using Vitrina.UseCases.User.GetUserProjects;
@@ -72,7 +71,7 @@ public class UserController(IMediator mediator) : ControllerBase
     [Produces("application/json")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ICollection<ProjectDto>> GetProjects([FromRoute] int id,
+    public async Task<ICollection<CreateProjectDto>> GetProjects([FromRoute] int id,
         CancellationToken cancellationToken)
     {
         var query = new GetUserProjectsByUserIdQuery(id);

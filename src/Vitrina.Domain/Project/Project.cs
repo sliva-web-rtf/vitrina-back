@@ -6,7 +6,7 @@ namespace Vitrina.Domain.Project;
 /// <summary>
 /// Domain class of project.
 /// </summary>
-public class Project : BaseEntity<int>
+public class Project : BaseEntity<Guid>
 {
     /// <summary>
     /// Project name.
@@ -51,7 +51,7 @@ public class Project : BaseEntity<int>
     /// <summary>
     ///     Project page content.
     /// </summary>
-    required public virtual ProjectPage Page { get; init; }
+    public virtual ProjectPage Page { get; init; }
 
     /// <summary>
     ///     Creator's ID.

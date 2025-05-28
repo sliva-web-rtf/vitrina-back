@@ -2,7 +2,7 @@ using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Saritasa.Tools.Domain.Exceptions;
-using Vitrina.UseCases.ProjectPages;
+using Vitrina.UseCases.ProjectPage.Dto;
 
 namespace Vitrina.UseCases.User.GetUserProjectsPages;
 

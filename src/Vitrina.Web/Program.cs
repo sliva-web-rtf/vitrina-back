@@ -22,7 +22,6 @@ internal sealed class Program
         {
             WebRootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")
         };
-        TryToCreateDirectoriesForStoringFiles(appOptions.WebRootPath);
         var builder = WebApplication.CreateBuilder(appOptions);
         var startup = new Startup(builder.Configuration);
         // For dev: builder.WebHost.UseUrls("http://localhost:5006");
@@ -44,25 +43,6 @@ internal sealed class Program
             .UseDefaultConventions();
 
         return await commandLineApplication.ExecuteAsync(args);
-    }
-
-    private static void TryToCreateDirectoriesForStoringFiles(string webRootPath)
-    {
-        if (!Directory.Exists(webRootPath))
-        {
-            throw new DirectoryNotFoundException($"The directory \"{webRootPath}\" does not exist.");
-        }
-
-        CreateDirectory(Path.Combine(webRootPath, "Avatars"));
-        CreateDirectory(Path.Combine(webRootPath, "Preview"));
-    }
-
-    private static void CreateDirectory(string directoryPath)
-    {
-        if (!Directory.Exists(directoryPath))
-        {
-            Directory.CreateDirectory(directoryPath);
-        }
     }
 
     /// <summary>

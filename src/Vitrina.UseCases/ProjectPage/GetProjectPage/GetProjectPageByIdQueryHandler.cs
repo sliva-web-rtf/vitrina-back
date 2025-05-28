@@ -1,7 +1,7 @@
 using AutoMapper;
 using MediatR;
 using Vitrina.Infrastructure.Abstractions.Interfaces.Repositories;
-using Vitrina.UseCases.ProjectPages;
+using Vitrina.UseCases.ProjectPage.Dto;
 using Vitrina.UseCases.ProjectPages.GetProjectPage;
 
 namespace Vitrina.UseCases.ProjectPage.GetProjectPage;
