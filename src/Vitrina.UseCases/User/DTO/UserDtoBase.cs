@@ -1,12 +1,11 @@
 ﻿using Vitrina.Domain.User;
-using Vitrina.UseCases.User.DTO;
 
-namespace Vitrina.UseCases.Common.DTO;
+namespace Vitrina.UseCases.User.DTO;
 
 /// <summary>
 ///     User dto.
 /// </summary>
-public record UserDtoBase : ResponceShortenedUserDto
+public abstract record UserDtoBase : ResponceShortenedUserDto
 {
     /// <summary>
     ///     User role on the platform.

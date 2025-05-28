@@ -2,6 +2,7 @@ using AutoMapper;
 using MediatR;
 using Saritasa.Tools.EntityFrameworkCore;
 using Vitrina.Infrastructure.Abstractions.Interfaces;
+using Vitrina.UseCases.User.DTO;
 
 namespace Vitrina.UseCases.Auth.GetUserById;
 

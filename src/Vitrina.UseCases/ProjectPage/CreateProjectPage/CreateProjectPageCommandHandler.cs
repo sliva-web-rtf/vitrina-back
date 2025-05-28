@@ -1,13 +1,14 @@
 using AutoMapper;
 using MediatR;
 using Vitrina.Infrastructure.Abstractions.Interfaces.Repositories;
-using Vitrina.UseCases.ProjectPage.CreateProjectPage;
 
-namespace Vitrina.UseCases.ProjectPages.CreateProjectPage;
+namespace Vitrina.UseCases.ProjectPage.CreateProjectPage;
 
+/// <inheritdoc />
 public class CreateProjectPageCommandHandler(IMapper mapper, IProjectPageRepository repository)
     : IRequestHandler<CreateProjectPageCommand, Guid>
 {
+    /// <inheritdoc />
     public async Task<Guid> Handle(CreateProjectPageCommand request, CancellationToken cancellationToken)
     {
         var page = mapper.Map<Domain.Project.Page.ProjectPage>(request);

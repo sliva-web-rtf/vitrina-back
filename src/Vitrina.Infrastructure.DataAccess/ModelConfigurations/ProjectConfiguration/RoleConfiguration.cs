@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Vitrina.Domain.Project.Teammate;
 
-namespace Vitrina.Infrastructure.DataAccess.ModelConfigurations;
+namespace Vitrina.Infrastructure.DataAccess.ModelConfigurations.ProjectConfiguration;
 
 /// <summary>
 ///     Role configuration.

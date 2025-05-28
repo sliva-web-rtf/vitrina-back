@@ -1,4 +1,5 @@
 using MediatR;
+using Vitrina.UseCases.User.DTO;
 
 namespace Vitrina.UseCases.Auth.GetUserById;
 

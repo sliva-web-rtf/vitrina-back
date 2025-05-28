@@ -1,8 +1,7 @@
 using AutoMapper;
 using MediatR;
 using Vitrina.Infrastructure.Abstractions.Interfaces.Repositories;
-using Vitrina.UseCases.ProjectPages;
-using Vitrina.UseCases.ProjectPages.DeleteEditorByPageEditorld;
+using Vitrina.UseCases.ProjectPage.Dto;
 
 namespace Vitrina.UseCases.ProjectPage.DeleteEditorByPageEditorId;
 

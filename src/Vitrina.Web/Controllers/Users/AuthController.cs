@@ -8,6 +8,7 @@ using Vitrina.UseCases.Auth.GetUserById;
 using Vitrina.UseCases.Auth.Login;
 using Vitrina.UseCases.Auth.RefreshToken;
 using Vitrina.UseCases.Auth.Register;
+using Vitrina.UseCases.User.DTO;
 using Vitrina.Web.Infrastructure.Web;
 
 namespace Vitrina.Web.Controllers;

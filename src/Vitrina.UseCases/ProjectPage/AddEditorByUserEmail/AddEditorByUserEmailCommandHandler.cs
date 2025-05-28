@@ -4,8 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Saritasa.Tools.Domain.Exceptions;
 using Vitrina.Domain.Project.Page;
 using Vitrina.Infrastructure.Abstractions.Interfaces.Repositories;
-using Vitrina.UseCases.ProjectPages;
-using Vitrina.UseCases.ProjectPages.AddEditorByUserEmail;
+using Vitrina.UseCases.ProjectPage.Dto;
 
 namespace Vitrina.UseCases.ProjectPage.AddEditorByUserEmail;
 

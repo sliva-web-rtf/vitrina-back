@@ -1,6 +1,5 @@
 using AutoMapper;
 using Newtonsoft.Json;
-using Vitrina.UseCases.Auth.GetUserById;
 using Vitrina.UseCases.Auth.Register;
 using Vitrina.UseCases.Common;
 using Vitrina.UseCases.Specialization;
@@ -48,5 +47,6 @@ public class UserMappingProfile : Profile
         CreateMap<UpdateUserDtoBase, NotStudentDtoBase>();
         CreateMap<AdditionalUserInfo, AdditionalStudentInfo>();
         CreateMap<AdditionalUserInfo, AdditionalNotStudentInfo>();
+        CreateMap<Domain.User.User, ResponceShortenedUserDto>().ReverseMap();
     }
 }

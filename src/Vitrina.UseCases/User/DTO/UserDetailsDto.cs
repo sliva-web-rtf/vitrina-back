@@ -1,4 +1,4 @@
-namespace Vitrina.UseCases.Auth.GetUserById;
+namespace Vitrina.UseCases.User.DTO;
 
 /// <summary>
 ///     User details.

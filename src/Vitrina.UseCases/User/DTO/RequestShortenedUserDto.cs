@@ -1,4 +1,4 @@
-namespace Vitrina.UseCases.Common.DTO;
+namespace Vitrina.UseCases.User.DTO;
 
 public record RequestShortenedUserDto
 {

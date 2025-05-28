@@ -1,4 +1,5 @@
 using MediatR;
+using Vitrina.UseCases.ProjectPage.Dto;
 
 namespace Vitrina.UseCases.ProjectPages.GetProjectPageEditor;
 
