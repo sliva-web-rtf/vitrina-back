@@ -4,4 +4,5 @@ using Vitrina.UseCases.ProjectPage.Dto;
 
 namespace Vitrina.UseCases.ProjectPage.AddEditorByUserEmail;
 
-public record AddEditorByUserEmailCommand(Guid PageId, EmailDto UserEmail) : IRequest<PageEditorDto>;
+public record AddEditorByUserEmailCommand(Guid PageId, EmailDto UserEmail, int? IdAuthorizedUser)
+    : IRequest<PageEditorDto>;

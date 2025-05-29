@@ -17,7 +17,7 @@ internal class CreateProjectCommandHandler(IMapper mapper, IAppDbContext dbConte
     /// <inheritdoc />
     public async Task<Guid> Handle(CreateProjectCommand request, CancellationToken cancellationToken)
     {
-        await ValidateModelAsync(request.ProjectDto, cancellationToken);
+        await ValidateModelAsync(request.ProjectDto, request.IdAuthorizedUser, cancellationToken);
         var project = new Domain.Project.Project
         {
             Id = Guid.NewGuid(),
@@ -33,7 +33,8 @@ internal class CreateProjectCommandHandler(IMapper mapper, IAppDbContext dbConte
         return project.Id;
     }
 
-    private async Task ValidateModelAsync(CreateProjectDto projectDto, CancellationToken cancellationToken)
+    private async Task ValidateModelAsync(CreateProjectDto projectDto, int idAuthorizedUser,
+        CancellationToken cancellationToken)
     {
         if (await dbContext.Projects.FirstOrDefaultAsync(existingProject => existingProject.PageId == projectDto.PageId,
                 cancellationToken) != null)
@@ -41,10 +42,13 @@ internal class CreateProjectCommandHandler(IMapper mapper, IAppDbContext dbConte
             throw new DomainException("Project with the insect page already created");
         }
 
-        if (await dbContext.ProjectPages.FindAsync(projectDto.PageId, cancellationToken) == null)
+        var page = await dbContext.ProjectPages.FindAsync(projectDto.PageId, cancellationToken);
+        if (page == null)
         {
             throw new DomainException($"Page with id = {projectDto.PageId} not found");
         }
+
+        page.ThrowExceptionIfNoAccessRights(idAuthorizedUser);
 
         var sphere = projectDto.Sphere;
         if (await dbContext.ProjectSpheres.FirstOrDefaultAsync(existingSphere =>

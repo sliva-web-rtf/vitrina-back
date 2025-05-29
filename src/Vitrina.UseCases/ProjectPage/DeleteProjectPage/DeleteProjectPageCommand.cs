@@ -1,5 +1,6 @@
 using MediatR;
 
-namespace Vitrina.UseCases.ProjectPages.DeleteProjectPage;
+namespace Vitrina.UseCases.ProjectPage.DeleteProjectPage;
 
-public record DeleteProjectPageCommand(Guid Id) : IRequest;
+/// <inheritdoc />
+public record DeleteProjectPageCommand(Guid Id, int? IdAuthorizedUser) : IRequest;

@@ -19,6 +19,7 @@ public class UpdateProjectPageCommandHandler(
     public async Task Handle(UpdateProjectPageCommand request, CancellationToken cancellationToken)
     {
         var page = await repository.GetByIdAsync(request.Id, cancellationToken);
+        page.ThrowExceptionIfNoAccessRights(request.IdAuthorizedUser);
         page.SortContentBlocks();
         var pageDto = mapper.Map<ProjectPageDto>(page);
         request.PatchDocument.ApplyTo(pageDto);

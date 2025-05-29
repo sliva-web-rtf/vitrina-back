@@ -18,11 +18,7 @@ internal sealed class Program
     /// <param name="args">Program arguments.</param>
     public static async Task<int> Main(string[] args)
     {
-        var appOptions = new WebApplicationOptions
-        {
-            WebRootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")
-        };
-        var builder = WebApplication.CreateBuilder(appOptions);
+        var builder = WebApplication.CreateBuilder(args);
         var startup = new Startup(builder.Configuration);
         // For dev: builder.WebHost.UseUrls("http://localhost:5006");
         startup.ConfigureServices(builder.Services, builder.Environment);

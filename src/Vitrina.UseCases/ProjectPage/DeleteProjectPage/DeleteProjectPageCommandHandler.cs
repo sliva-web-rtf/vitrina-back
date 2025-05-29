@@ -1,6 +1,5 @@
 using MediatR;
 using Vitrina.Infrastructure.Abstractions.Interfaces.Repositories;
-using Vitrina.UseCases.ProjectPages.DeleteProjectPage;
 
 namespace Vitrina.UseCases.ProjectPage.DeleteProjectPage;
 
@@ -11,6 +10,8 @@ public class DeleteProjectPageCommandHandler(IProjectPageRepository repository)
     /// <inheritdoc />
     public async Task Handle(DeleteProjectPageCommand request, CancellationToken cancellationToken)
     {
+        var page = await repository.GetByIdAsync(request.Id, cancellationToken);
+        page.ThrowExceptionIfNoAccessRights(request.IdAuthorizedUser);
         await repository.Delete(request.Id, cancellationToken);
         await repository.SaveChangesAsync(cancellationToken);
     }

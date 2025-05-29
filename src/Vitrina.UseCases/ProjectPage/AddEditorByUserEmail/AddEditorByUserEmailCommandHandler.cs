@@ -20,6 +20,7 @@ public class AddEditorByUserEmailCommandHandler(
     public async Task<PageEditorDto> Handle(AddEditorByUserEmailCommand request, CancellationToken cancellationToken)
     {
         var page = await pageRepository.GetByIdAsync(request.PageId, cancellationToken);
+        page.ThrowExceptionIfNoAccessRights(request.IdAuthorizedUser);
         if (page.Editors.Any(editor => editor.User.Email == request.UserEmail.Email))
         {
             throw new DomainException($"The editor with email = {request.UserEmail.Email} has already been added.");

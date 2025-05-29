@@ -85,7 +85,7 @@ public class Project : BaseEntity<Guid>
     public void ThrowExceptionIfNoAccessRights(int idAuthorizedUser)
     {
         if (!(CreatorId == idAuthorizedUser || CuratorId == idAuthorizedUser ||
-              Team.TeamMembers.Any(teammate => teammate.Id == idAuthorizedUser)))
+              (Team is not null && Team.TeamMembers.Any(teammate => teammate.UserId == idAuthorizedUser))))
         {
             throw new ForbiddenException("You do not have the rights to change the data of this project.");
         }

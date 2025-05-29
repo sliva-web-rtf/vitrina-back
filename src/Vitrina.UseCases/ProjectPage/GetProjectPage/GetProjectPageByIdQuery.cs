@@ -1,6 +1,6 @@
 using MediatR;
 using Vitrina.UseCases.ProjectPage.Dto;
 
-namespace Vitrina.UseCases.ProjectPages.GetProjectPage;
+namespace Vitrina.UseCases.ProjectPage.GetProjectPage;
 
-public record GetProjectPageByIdQuery(Guid Id) : IRequest<ProjectPageDto>;
+public record GetProjectPageByIdQuery(Guid Id, int? IdAuthorizedUser) : IRequest<ProjectPageDto>;

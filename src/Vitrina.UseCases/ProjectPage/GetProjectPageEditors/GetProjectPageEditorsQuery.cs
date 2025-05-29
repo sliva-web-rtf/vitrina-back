@@ -1,6 +1,7 @@
 using MediatR;
 using Vitrina.UseCases.ProjectPage.Dto;
 
-namespace Vitrina.UseCases.ProjectPages.GetProjectPageEditor;
+namespace Vitrina.UseCases.ProjectPage.GetProjectPageEditors;
 
-public record GetProjectPageEditorsQuery(Guid PageId) : IRequest<ICollection<PageEditorDto>>;
+/// <inheritdoc />
+public record GetProjectPageEditorsQuery(Guid PageId, int? IdAuthorizedUser) : IRequest<ICollection<PageEditorDto>>;
