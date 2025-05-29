@@ -1,4 +1,4 @@
-namespace Vitrina.Domain;
+namespace Vitrina.Domain.Project;
 
 public class ProjectThematics : BaseEntity<Guid>
 {

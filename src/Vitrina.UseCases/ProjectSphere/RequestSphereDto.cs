@@ -1,4 +1,4 @@
-using Vitrina.UseCases.ProjectPages.Blocks;
+using Vitrina.UseCases.Common.DTO;
 
 namespace Vitrina.UseCases.ProjectSphere;
 

@@ -1,6 +1,6 @@
 using MediatR;
 
-namespace Vitrina.UseCases.Project.Teammate.DeleteTeammate;
+namespace Vitrina.UseCases.ProjectTeam.Teammate.DeleteTeammate;
 
 /// <summary>
 ///     Command to delete a team member.

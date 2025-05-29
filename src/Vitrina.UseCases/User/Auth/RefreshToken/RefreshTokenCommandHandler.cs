@@ -3,7 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Saritasa.Tools.Domain.Exceptions;
 
-namespace Vitrina.UseCases.Auth.RefreshToken;
+namespace Vitrina.UseCases.User.Auth.RefreshToken;
 
 /// <summary>
 ///     Handler for <see cref="RefreshTokenCommand" />.

@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Vitrina.Domain;
 using Vitrina.Domain.Project;
 using Vitrina.Domain.Project.Page;
+using Vitrina.Domain.Project.Page.Content;
+using Vitrina.Domain.Project.Page.Editor;
 using Vitrina.Domain.Project.Teammate;
 using Vitrina.Domain.User;
 using Vitrina.Infrastructure.Abstractions.Interfaces;
@@ -11,7 +12,7 @@ using Vitrina.Infrastructure.Abstractions.Interfaces;
 namespace Vitrina.Infrastructure.DataAccess;
 
 /// <summary>
-/// Application unit of work.
+///     Application unit of work.
 /// </summary>
 public class AppDbContext : IdentityDbContext<User, AppIdentityRole, int>, IAppDbContext, IDataProtectionKeyContext
 {

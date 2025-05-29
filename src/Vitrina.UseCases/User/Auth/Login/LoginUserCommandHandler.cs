@@ -2,7 +2,7 @@ using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 
-namespace Vitrina.UseCases.Auth.Login;
+namespace Vitrina.UseCases.User.Auth.Login;
 
 /// <summary>
 ///     Handler for <see cref="LoginUserCommand" />.

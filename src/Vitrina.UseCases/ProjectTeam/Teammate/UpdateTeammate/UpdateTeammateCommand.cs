@@ -1,8 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.JsonPatch;
-using Vitrina.UseCases.ProjectTeam.Teammate;
 
-namespace Vitrina.UseCases.Project.Teammate.UpdateTeammate;
+namespace Vitrina.UseCases.ProjectTeam.Teammate.UpdateTeammate;
 
 /// <summary>
 ///     Command for updating the information of a team member.

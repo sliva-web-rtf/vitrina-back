@@ -2,10 +2,8 @@ using AutoMapper;
 using MediatR;
 using Saritasa.Tools.Domain.Exceptions;
 using Vitrina.Infrastructure.Abstractions.Interfaces;
-using Vitrina.UseCases.ProjectTeam.Teammate;
-using Vitrina.UseCases.ProjectTeam.Teammate.GetTeammateById;
 
-namespace Vitrina.UseCases.Project.Teammate.GetTeammateById;
+namespace Vitrina.UseCases.ProjectTeam.Teammate.GetTeammateById;
 
 /// <inheritdoc />
 public class GetTeammateByIdQueryHandler(IAppDbContext dbContext, IMapper mapper)

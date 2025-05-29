@@ -4,7 +4,6 @@ using MediatR;
 using Vitrina.Domain.Project.Page;
 using Vitrina.Infrastructure.Abstractions.Interfaces.Repositories;
 using Vitrina.UseCases.ProjectPage.Dto;
-using Vitrina.UseCases.ProjectPages;
 
 namespace Vitrina.UseCases.ProjectPage.UpdateProjectPage;
 

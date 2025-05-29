@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Vitrina.UseCases.ProjectPages.Blocks;
+using Vitrina.UseCases.Common.DTO;
 
 namespace Vitrina.UseCases.ProjectTeam.Role;
 

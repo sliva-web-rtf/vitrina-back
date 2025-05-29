@@ -1,4 +1,4 @@
-namespace Vitrina.UseCases.Auth;
+namespace Vitrina.UseCases.User.Auth;
 
 /// <summary>
 ///     Helper to generate confirmation code.

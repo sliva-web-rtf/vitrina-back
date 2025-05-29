@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using MediatR;
 using Vitrina.Domain.User;
 
-namespace Vitrina.UseCases.Auth.Register;
+namespace Vitrina.UseCases.User.Auth.Register;
 
 /// <summary>
 ///     Register user command.

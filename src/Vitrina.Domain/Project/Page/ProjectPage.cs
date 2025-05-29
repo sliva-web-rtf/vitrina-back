@@ -1,4 +1,6 @@
 ﻿using Saritasa.Tools.Domain.Exceptions;
+using Vitrina.Domain.Project.Page.Content;
+using Vitrina.Domain.Project.Page.Editor;
 
 namespace Vitrina.Domain.Project.Page;
 

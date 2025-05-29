@@ -4,12 +4,12 @@ using Vitrina.Domain.Project.Page;
 namespace Vitrina.Domain.Project;
 
 /// <summary>
-/// Domain class of project.
+///     Domain class of project.
 /// </summary>
 public class Project : BaseEntity<Guid>
 {
     /// <summary>
-    /// Project name.
+    ///     Project name.
     /// </summary>
     required public string Name { get; set; }
 
@@ -24,7 +24,7 @@ public class Project : BaseEntity<Guid>
     public string? PreviewImagePath { get; set; }
 
     /// <summary>
-    /// Project client.
+    ///     Project client.
     /// </summary>
     public string? Client { get; set; }
 

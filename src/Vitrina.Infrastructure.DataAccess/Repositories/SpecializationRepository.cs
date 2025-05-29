@@ -4,7 +4,7 @@ using Vitrina.Domain.User;
 using Vitrina.Infrastructure.Abstractions.Interfaces;
 using Vitrina.Infrastructure.Abstractions.Interfaces.Repositories;
 
-namespace Vitrina.UseCases.Common.Repositories;
+namespace Vitrina.Infrastructure.DataAccess.Repositories;
 
 public class SpecializationRepository(IAppDbContext dbContext) : ISpecializationRepository
 {

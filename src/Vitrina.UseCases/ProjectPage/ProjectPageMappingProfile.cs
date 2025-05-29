@@ -1,9 +1,10 @@
 using AutoMapper;
-using Vitrina.Domain.Project.Page;
+using Vitrina.Domain.Project.Page.Content;
+using Vitrina.Domain.Project.Page.Editor;
 using Vitrina.UseCases.ProjectPage.CreateProjectPage;
 using Vitrina.UseCases.ProjectPage.Dto;
 
-namespace Vitrina.UseCases.ProjectPages;
+namespace Vitrina.UseCases.ProjectPage;
 
 public class ProjectPageMappingProfile : Profile
 {

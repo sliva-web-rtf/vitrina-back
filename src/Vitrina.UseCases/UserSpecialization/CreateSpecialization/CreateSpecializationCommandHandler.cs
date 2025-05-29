@@ -2,7 +2,7 @@ using AutoMapper;
 using MediatR;
 using Vitrina.Infrastructure.Abstractions.Interfaces.Repositories;
 
-namespace Vitrina.UseCases.Specialization.CreateSpecialization;
+namespace Vitrina.UseCases.UserSpecialization.CreateSpecialization;
 
 /// <inheritdoc />
 public class CreateSpecializationCommandHandler(ISpecializationRepository repository, IMapper mapper)

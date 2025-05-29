@@ -1,10 +1,9 @@
 using FluentValidation;
 using Newtonsoft.Json;
 using Saritasa.Tools.Domain.Exceptions;
-using Vitrina.Domain.Project.Page;
+using Vitrina.Domain.Project.Page.Content;
+using Vitrina.UseCases.ProjectPage.Dto;
 using Vitrina.UseCases.ProjectPage.Dto.Blocks;
-using Vitrina.UseCases.ProjectPages;
-using Vitrina.UseCases.ProjectPages.Blocks;
 
 namespace Vitrina.UseCases.ProjectPage;
 

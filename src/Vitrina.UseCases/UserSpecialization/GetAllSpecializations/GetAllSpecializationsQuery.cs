@@ -1,6 +1,6 @@
 using MediatR;
 
-namespace Vitrina.UseCases.Specialization.GetAllSpecializations;
+namespace Vitrina.UseCases.UserSpecialization.GetAllSpecializations;
 
 /// <summary>
 ///     Query for all specializations

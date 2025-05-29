@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Vitrina.Domain.Project.Page;
+namespace Vitrina.Domain.Project.Page.Content;
 
 public class ContentBlock : BaseEntity<Guid>
 {

@@ -1,4 +1,3 @@
-using Vitrina.UseCases.Project;
 using Vitrina.UseCases.User.DTO;
 
 namespace Vitrina.UseCases.ProjectTeam.Teammate;

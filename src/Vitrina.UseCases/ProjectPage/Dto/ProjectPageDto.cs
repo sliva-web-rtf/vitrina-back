@@ -1,6 +1,5 @@
 using Vitrina.Domain.Project.Page;
-using Vitrina.UseCases.ProjectPages;
-using Vitrina.UseCases.ProjectPages.Blocks;
+using Vitrina.UseCases.Common.DTO;
 
 namespace Vitrina.UseCases.ProjectPage.Dto;
 

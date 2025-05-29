@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using MediatR;
 
-namespace Vitrina.UseCases.Specialization.CreateSpecialization;
+namespace Vitrina.UseCases.UserSpecialization.CreateSpecialization;
 
 /// <summary>
 ///     The specialization creation command.

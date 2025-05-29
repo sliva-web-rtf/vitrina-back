@@ -1,4 +1,4 @@
-namespace Vitrina.UseCases.Auth.Register;
+namespace Vitrina.UseCases.User.Auth.Register;
 
 /// <summary>
 ///     Result of <see cref="RegisterCommand" />.

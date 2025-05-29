@@ -3,9 +3,8 @@ using MediatR;
 using Saritasa.Tools.Domain.Exceptions;
 using Vitrina.Domain.User;
 using Vitrina.Infrastructure.Abstractions.Interfaces;
-using Vitrina.UseCases.ProjectTeam.Teammate;
 
-namespace Vitrina.UseCases.Project.Teammate.UpdateTeammate;
+namespace Vitrina.UseCases.ProjectTeam.Teammate.UpdateTeammate;
 
 /// <inheritdoc />
 public class UpdateTeammateCommandHandler(IAppDbContext dbContext, IMapper mapper)

@@ -1,10 +1,11 @@
 using AutoMapper;
 using Newtonsoft.Json;
-using Vitrina.UseCases.Auth.Register;
+using Vitrina.Domain.User;
 using Vitrina.UseCases.Common;
-using Vitrina.UseCases.Specialization;
+using Vitrina.UseCases.User.Auth.Register;
 using Vitrina.UseCases.User.DTO;
 using Vitrina.UseCases.User.DTO.AdditionalInformation;
+using Vitrina.UseCases.UserSpecialization;
 
 namespace Vitrina.UseCases.User;
 
@@ -39,7 +40,7 @@ public class UserMappingProfile : Profile
         CreateMap<Domain.User.User, NotStudentDtoBase>()
             .ForMember(userDto => userDto.AdditionalInformation, member => member.MapFrom(user =>
                 JsonConvert.DeserializeObject<AdditionalNotStudentInfo>(user.AdditionalInformation)));
-        CreateMap<Domain.User.Specialization, SpecializationDto>();
+        CreateMap<Specialization, SpecializationDto>();
         CreateMap<Domain.User.User, UpdateUserDtoBase>()
             .ForMember(userDto => userDto.AdditionalInformation, member => member.MapFrom(user =>
                 JsonConvert.DeserializeObject<AdditionalUserInfo>(user.AdditionalInformation)));

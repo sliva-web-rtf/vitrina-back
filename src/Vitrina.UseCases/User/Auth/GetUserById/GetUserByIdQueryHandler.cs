@@ -4,7 +4,7 @@ using Saritasa.Tools.EntityFrameworkCore;
 using Vitrina.Infrastructure.Abstractions.Interfaces;
 using Vitrina.UseCases.User.DTO;
 
-namespace Vitrina.UseCases.Auth.GetUserById;
+namespace Vitrina.UseCases.User.Auth.GetUserById;
 
 /// <summary>
 ///     Handler for <see cref="GetUserByIdQuery" />.

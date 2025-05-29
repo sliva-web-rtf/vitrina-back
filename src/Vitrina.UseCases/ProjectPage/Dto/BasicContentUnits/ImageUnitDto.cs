@@ -1,5 +1,3 @@
-using Vitrina.UseCases.ProjectPage.Dto.BasicContentUnits;
-
-namespace Vitrina.UseCases.ProjectPages.BasicContentUnits;
+namespace Vitrina.UseCases.ProjectPage.Dto.BasicContentUnits;
 
 public record ImageUnitDto : UnitWithImageBaseDto;

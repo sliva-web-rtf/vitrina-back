@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Vitrina.Infrastructure.Abstractions.Interfaces;
 using Vitrina.Infrastructure.DataAccess;
-using Vitrina.UseCases.Auth;
+using Vitrina.UseCases.User.Auth;
 using Vitrina.Web.Infrastructure.Jwt;
 using Vitrina.Web.Infrastructure.Web;
 

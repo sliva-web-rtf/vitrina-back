@@ -4,10 +4,9 @@ using Microsoft.AspNetCore.Identity;
 using Saritasa.Tools.Domain.Exceptions;
 using Vitrina.Domain.User;
 using Vitrina.Infrastructure.Abstractions.Interfaces;
-using Vitrina.UseCases.User;
 using Vitrina.UseCases.User.DTO;
 
-namespace Vitrina.UseCases.Auth.Register;
+namespace Vitrina.UseCases.User.Auth.Register;
 
 /// <summary>
 ///     Handler for <see cref="RegisterCommand" />.

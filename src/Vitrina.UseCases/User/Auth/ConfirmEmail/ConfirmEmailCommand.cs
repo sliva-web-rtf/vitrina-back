@@ -1,6 +1,6 @@
 using MediatR;
 
-namespace Vitrina.UseCases.Auth.ConfirmEmail;
+namespace Vitrina.UseCases.User.Auth.ConfirmEmail;
 
 /// <summary>
 ///     Confirm email command.

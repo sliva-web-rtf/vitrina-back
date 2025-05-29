@@ -1,7 +1,7 @@
-using Vitrina.Domain.Project.Page;
-using Vitrina.UseCases.ProjectPages.Blocks;
+using Vitrina.Domain.Project.Page.Content;
+using Vitrina.UseCases.Common.DTO;
 
-namespace Vitrina.UseCases.ProjectPages;
+namespace Vitrina.UseCases.ProjectPage.Dto;
 
 public record ContentBlockDto : BaseEntityDto<Guid>
 {

@@ -1,4 +1,4 @@
-namespace Vitrina.Domain.Project.Page;
+namespace Vitrina.Domain.Project.Page.Content;
 
 public enum ContentTypeEnum
 {

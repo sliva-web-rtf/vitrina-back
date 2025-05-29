@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Vitrina.Domain;
+using Vitrina.Domain.Project;
 
-namespace Vitrina.Infrastructure.DataAccess.ModelConfigurations;
+namespace Vitrina.Infrastructure.DataAccess.ModelConfigurations.ProjectConfiguration;
 
 public class ProjectThematicsConfiguration : IEntityTypeConfiguration<ProjectThematics>
 {

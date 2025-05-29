@@ -6,12 +6,12 @@ using Vitrina.UseCases.ProjectTeam.Role;
 namespace Vitrina.UseCases.Project;
 
 /// <summary>
-/// Project mapping.
+///     Project mapping.
 /// </summary>
 public class ProjectMappingProfile : Profile
 {
     /// <summary>
-    /// Constructor.
+    ///     Constructor.
     /// </summary>
     public ProjectMappingProfile()
     {

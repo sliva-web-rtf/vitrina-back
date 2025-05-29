@@ -1,4 +1,4 @@
-namespace Vitrina.UseCases.ProjectPages.Blocks;
+namespace Vitrina.UseCases.Common.DTO;
 
 public abstract record BaseEntityDto<TId>
 {

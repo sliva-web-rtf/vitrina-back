@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Saritasa.Tools.Domain.Exceptions;
-using Vitrina.Domain.Project.Page;
+using Vitrina.Domain.Project.Page.Editor;
 using Vitrina.Infrastructure.Abstractions.Interfaces;
 using Vitrina.Infrastructure.Abstractions.Interfaces.Repositories;
 

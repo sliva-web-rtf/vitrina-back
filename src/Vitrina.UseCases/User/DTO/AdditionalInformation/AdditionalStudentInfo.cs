@@ -1,5 +1,5 @@
 using Vitrina.Domain.User;
-using Vitrina.UseCases.Specialization;
+using Vitrina.UseCases.UserSpecialization;
 
 namespace Vitrina.UseCases.User.DTO.AdditionalInformation;
 

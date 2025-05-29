@@ -1,4 +1,4 @@
-namespace Vitrina.UseCases.Auth.Login;
+namespace Vitrina.UseCases.User.Auth.Login;
 
 /// <summary>
 ///     Represents user login attempt to system.

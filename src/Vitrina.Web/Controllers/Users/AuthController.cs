@@ -2,12 +2,12 @@ using System.ComponentModel.DataAnnotations;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Vitrina.UseCases.Auth;
-using Vitrina.UseCases.Auth.ConfirmEmail;
-using Vitrina.UseCases.Auth.GetUserById;
-using Vitrina.UseCases.Auth.Login;
-using Vitrina.UseCases.Auth.RefreshToken;
-using Vitrina.UseCases.Auth.Register;
+using Vitrina.UseCases.User.Auth;
+using Vitrina.UseCases.User.Auth.ConfirmEmail;
+using Vitrina.UseCases.User.Auth.GetUserById;
+using Vitrina.UseCases.User.Auth.Login;
+using Vitrina.UseCases.User.Auth.RefreshToken;
+using Vitrina.UseCases.User.Auth.Register;
 using Vitrina.UseCases.User.DTO;
 using Vitrina.Web.Infrastructure.Web;
 

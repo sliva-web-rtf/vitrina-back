@@ -2,6 +2,8 @@ using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Vitrina.Domain.Project.Page;
+using Vitrina.Domain.Project.Page.Content;
+using Vitrina.Domain.Project.Page.Editor;
 using Vitrina.Infrastructure.Abstractions.Interfaces.Repositories;
 
 namespace Vitrina.UseCases.ProjectPage.CreateProjectPage;

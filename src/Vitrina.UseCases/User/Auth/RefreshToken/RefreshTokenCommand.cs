@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using MediatR;
 
-namespace Vitrina.UseCases.Auth.RefreshToken;
+namespace Vitrina.UseCases.User.Auth.RefreshToken;
 
 /// <summary>
 ///     Refresh token command.

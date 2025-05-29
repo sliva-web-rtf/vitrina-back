@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using MediatR;
 
-namespace Vitrina.UseCases.Auth.Login;
+namespace Vitrina.UseCases.User.Auth.Login;
 
 /// <summary>
 ///     Login user command.

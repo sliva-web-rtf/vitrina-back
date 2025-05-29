@@ -1,4 +1,4 @@
-using Vitrina.Domain.Project.Page;
+using Vitrina.Domain.Project.Page.Editor;
 
 namespace Vitrina.Infrastructure.Abstractions.Interfaces.Repositories;
 

@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Vitrina.Domain.Project.Page;
 
-namespace Vitrina.Infrastructure.DataAccess.ModelConfigurations;
+namespace Vitrina.Infrastructure.DataAccess.ModelConfigurations.ProjectConfiguration.PageConfiguration;
 
 public class ProjectPageConfiguration : IEntityTypeConfiguration<ProjectPage>
 {

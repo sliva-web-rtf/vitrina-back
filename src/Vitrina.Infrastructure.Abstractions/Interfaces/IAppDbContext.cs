@@ -1,7 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Vitrina.Domain;
 using Vitrina.Domain.Project;
 using Vitrina.Domain.Project.Page;
+using Vitrina.Domain.Project.Page.Content;
+using Vitrina.Domain.Project.Page.Editor;
 using Vitrina.Domain.Project.Teammate;
 using Vitrina.Domain.User;
 

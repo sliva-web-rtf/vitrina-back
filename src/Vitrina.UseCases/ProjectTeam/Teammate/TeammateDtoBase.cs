@@ -1,6 +1,6 @@
 using Vitrina.UseCases.ProjectTeam.Role;
 
-namespace Vitrina.UseCases.Project;
+namespace Vitrina.UseCases.ProjectTeam.Teammate;
 
 public abstract record TeammateDtoBase
 {

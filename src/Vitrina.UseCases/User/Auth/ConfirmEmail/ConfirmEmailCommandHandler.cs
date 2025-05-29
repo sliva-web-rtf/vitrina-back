@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Vitrina.Infrastructure.Abstractions.Interfaces;
 
-namespace Vitrina.UseCases.Auth.ConfirmEmail;
+namespace Vitrina.UseCases.User.Auth.ConfirmEmail;
 
 /// <summary>
 ///     Handler for <see cref="ConfirmEmailCommand" />

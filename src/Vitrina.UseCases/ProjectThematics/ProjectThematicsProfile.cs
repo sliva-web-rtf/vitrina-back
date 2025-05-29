@@ -6,7 +6,7 @@ public class ProjectThematicsProfile : Profile
 {
     public ProjectThematicsProfile()
     {
-        CreateMap<Domain.ProjectThematics, RequestThematicsDto>().ReverseMap();
-        CreateMap<Domain.ProjectThematics, ResponceThematicsDto>().ReverseMap();
+        CreateMap<Domain.Project.ProjectThematics, RequestThematicsDto>().ReverseMap();
+        CreateMap<Domain.Project.ProjectThematics, ResponceThematicsDto>().ReverseMap();
     }
 }

@@ -1,6 +1,6 @@
-using Vitrina.UseCases.ProjectPages.BasicContentUnits;
+using Vitrina.UseCases.ProjectPage.Dto.BasicContentUnits;
 
-namespace Vitrina.UseCases.ProjectPages.Blocks;
+namespace Vitrina.UseCases.ProjectPage.Dto.Blocks;
 
 public record ImageBlockDto
 {

@@ -3,10 +3,10 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using Vitrina.UseCases.Project.Teammate.DeleteTeammate;
-using Vitrina.UseCases.Project.Teammate.UpdateTeammate;
 using Vitrina.UseCases.ProjectTeam.Teammate;
+using Vitrina.UseCases.ProjectTeam.Teammate.DeleteTeammate;
 using Vitrina.UseCases.ProjectTeam.Teammate.GetTeammateById;
+using Vitrina.UseCases.ProjectTeam.Teammate.UpdateTeammate;
 
 namespace Vitrina.Web.Controllers.Projects;
 

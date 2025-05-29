@@ -1,4 +1,4 @@
-namespace Vitrina.UseCases.ProjectPages.Blocks;
+namespace Vitrina.UseCases.ProjectPage.Dto.Blocks;
 
 public record CommandBlockDto
 {

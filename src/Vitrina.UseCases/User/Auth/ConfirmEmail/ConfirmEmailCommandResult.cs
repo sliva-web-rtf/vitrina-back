@@ -1,4 +1,4 @@
-namespace Vitrina.UseCases.Auth.ConfirmEmail;
+namespace Vitrina.UseCases.User.Auth.ConfirmEmail;
 
 /// <summary>
 ///     Result of <see cref="ConfirmEmailCommand" />.

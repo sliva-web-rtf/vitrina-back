@@ -1,5 +1,3 @@
-using Vitrina.UseCases.ProjectPages;
-
 namespace Vitrina.UseCases.ProjectPage.Dto;
 
 public class CreateProjectPageDto

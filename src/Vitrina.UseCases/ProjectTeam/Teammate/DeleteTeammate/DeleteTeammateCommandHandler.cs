@@ -2,7 +2,6 @@ using AutoMapper;
 using MediatR;
 using Saritasa.Tools.Domain.Exceptions;
 using Vitrina.Infrastructure.Abstractions.Interfaces;
-using Vitrina.UseCases.Project.Teammate.DeleteTeammate;
 
 namespace Vitrina.UseCases.ProjectTeam.Teammate.DeleteTeammate;
 

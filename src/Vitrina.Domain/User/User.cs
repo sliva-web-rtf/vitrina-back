@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
-using Vitrina.Domain.Project.Page;
+using Vitrina.Domain.Project.Page.Editor;
 
 namespace Vitrina.Domain.User;
 

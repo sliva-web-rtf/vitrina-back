@@ -1,6 +1,6 @@
 using System.Security.Claims;
 
-namespace Vitrina.UseCases.Auth;
+namespace Vitrina.UseCases.User.Auth;
 
 /// <summary>
 ///     Methods to help generate and parse authentication token.

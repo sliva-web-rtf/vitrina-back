@@ -1,6 +1,6 @@
 using System.Security.Claims;
 
-namespace Vitrina.UseCases.Auth;
+namespace Vitrina.UseCases.User.Auth;
 
 /// <summary>
 ///     Helper to generate <see cref="TokenModel" />.

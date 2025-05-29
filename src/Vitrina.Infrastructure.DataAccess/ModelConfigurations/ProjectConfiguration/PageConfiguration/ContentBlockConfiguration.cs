@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Vitrina.Domain.Project.Page;
+using Vitrina.Domain.Project.Page.Content;
 
-namespace Vitrina.Infrastructure.DataAccess.ModelConfigurations.PageConfiguration;
+namespace Vitrina.Infrastructure.DataAccess.ModelConfigurations.ProjectConfiguration.PageConfiguration;
 
 public class ContentBlockConfiguration : IEntityTypeConfiguration<ContentBlock>
 {
