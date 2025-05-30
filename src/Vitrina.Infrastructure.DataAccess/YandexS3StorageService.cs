@@ -29,7 +29,7 @@ public class YandexS3StorageService : IS3StorageService
         CancellationToken cancellationToken
     )
     {
-        fileName = fileName.Split('.')[0] + ".webp";
+        fileName = Guid.NewGuid() + ".webp";
 
         using var image = await Image.LoadAsync(fileStream, cancellationToken);
 
@@ -48,7 +48,7 @@ public class YandexS3StorageService : IS3StorageService
         };
 
         await s3Client.PutObjectAsync(putRequest, cancellationToken);
-        return GetFileUrl(fileName);
+        return fileName;
     }
 
     public Task<string> GetPreSignedURL(string fileName, TimeSpan validFor)

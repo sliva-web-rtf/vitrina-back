@@ -36,12 +36,15 @@ public class SaveImageCommandHandler(IS3StorageService s3Storage, IAppDbContext 
             throw new DomainException("Неправильный формат картинки.");
         }
 
-        var url = await s3Storage.SaveFileAsync(stream, request.path + request.File.FileName, request.File.ContentType,
+        var fileId = await s3Storage.SaveFileAsync(stream, request.path + request.File.FileName,
+            request.File.ContentType,
             cancellationToken);
+        var url = s3Storage.GetFileUrl(fileId);
         var content = new Content { ImageUrl = url, Project = null };
+
         project.Contents.Add(content);
 
         await appDbContext.SaveChangesAsync(cancellationToken);
-        return url;
+        return fileId;
     }
 }
