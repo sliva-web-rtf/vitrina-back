@@ -8,5 +8,5 @@ public class ImageDto
     /// <summary>
     /// Image name.
     /// </summary>
-    public string Id { get; set; }
+    required public string Id { get; set; }
 }
