@@ -1,7 +1,7 @@
 using MediatR;
 using Vitrina.Infrastructure.Abstractions.Interfaces;
 
-namespace Vitrina.UseCases.Project.YandexBucket.GetImageURL;
+namespace Vitrina.UseCases.Project.YandexBucket.Image.GetImageURL;
 
 public class GetImageURLCommandHandler(IS3StorageService s3Storage)
     : IRequestHandler<GetImageURLCommand, string>

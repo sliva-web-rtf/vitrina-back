@@ -1,4 +1,4 @@
-namespace Vitrina.UseCases.Project.YandexBucket.Dto;
+namespace Vitrina.UseCases.Project.YandexBucket.Image.Dto;
 
 /// <summary>
 /// ImageDto.

@@ -23,4 +23,9 @@
     <ProjectReference Include="..\Vitrina.UseCases.Common\Vitrina.UseCases.Common.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Project\YandexBucket\Image\" />
+    <Folder Include="Project\YandexBucket\Resume\" />
+  </ItemGroup>
+
 </Project>

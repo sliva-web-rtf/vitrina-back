@@ -1,7 +1,7 @@
 using MediatR;
 using Vitrina.Infrastructure.Abstractions.Interfaces;
 
-namespace Vitrina.UseCases.Project.YandexBucket.DeleteImage;
+namespace Vitrina.UseCases.Project.YandexBucket.Image.DeleteImage;
 
 public class DeleteImageCommandHandler(IS3StorageService s3Storage) : IRequestHandler<DeleteImageCommand>
 {

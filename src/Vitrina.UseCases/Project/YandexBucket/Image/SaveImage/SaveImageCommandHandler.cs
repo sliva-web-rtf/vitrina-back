@@ -4,7 +4,7 @@ using Saritasa.Tools.Domain.Exceptions;
 using Vitrina.Domain.Project;
 using Vitrina.Infrastructure.Abstractions.Interfaces;
 
-namespace Vitrina.UseCases.Project.YandexBucket.SaveImage;
+namespace Vitrina.UseCases.Project.YandexBucket.Image.SaveImage;
 
 public class SaveImageCommandHandler(IS3StorageService s3Storage, IAppDbContext appDbContext)
     : IRequestHandler<SaveImageCommand, string>
@@ -36,7 +36,7 @@ public class SaveImageCommandHandler(IS3StorageService s3Storage, IAppDbContext 
             throw new DomainException("Неправильный формат картинки.");
         }
 
-        var fileId = await s3Storage.SaveFileAsync(stream, request.path + request.File.FileName,
+        var fileId = await s3Storage.SaveImageAsync(stream, request.path + request.File.FileName,
             request.File.ContentType,
             cancellationToken);
         var url = s3Storage.GetFileUrl(fileId);

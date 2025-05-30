@@ -22,7 +22,7 @@ public class YandexS3StorageService : IS3StorageService
             amazonConfig);
     }
 
-    public async Task<string> SaveFileAsync(
+    public async Task<string> SaveImageAsync(
         Stream fileStream,
         string fileName,
         string contentType,
@@ -38,16 +38,7 @@ public class YandexS3StorageService : IS3StorageService
 
         webpStream.Seek(0, SeekOrigin.Begin);
 
-        var putRequest = new PutObjectRequest
-        {
-            BucketName = bucketName,
-            Key = fileName,
-            InputStream = webpStream,
-            ContentType = contentType,
-            CannedACL = S3CannedACL.PublicRead
-        };
-
-        await s3Client.PutObjectAsync(putRequest, cancellationToken);
+        await SaveFileAsync(fileName, contentType,  webpStream, cancellationToken);
         return fileName;
     }
 
@@ -66,6 +57,25 @@ public class YandexS3StorageService : IS3StorageService
         var removeRequest = new DeleteObjectRequest { BucketName = bucketName, Key = fileName };
 
         await s3Client.DeleteObjectAsync(removeRequest, cancellationToken);
+    }
+
+    public async Task SaveFileAsync(
+        string fileName,
+        string contentType,
+        Stream webpStream,
+        CancellationToken cancellationToken
+    )
+    {
+        var putRequest = new PutObjectRequest
+        {
+            BucketName = bucketName,
+            Key = fileName,
+            InputStream = webpStream,
+            ContentType = contentType,
+            CannedACL = S3CannedACL.PublicRead
+        };
+
+        await s3Client.PutObjectAsync(putRequest, cancellationToken);
     }
 
     public string GetFileUrl(string fileName)
