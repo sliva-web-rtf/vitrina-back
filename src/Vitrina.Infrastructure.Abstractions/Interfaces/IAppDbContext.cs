@@ -43,4 +43,14 @@ public interface IAppDbContext : IDbContextWithSets, IDisposable
     /// Confirmation codes.
     /// </summary>
     DbSet<ConfirmationCode> Codes { get; }
+
+    /// <summary>
+    /// Images.
+    /// </summary>
+    DbSet<Image> Images { get; }
+
+    /// <summary>
+    /// Resume.
+    /// </summary>
+    DbSet<Resume> Resume { get; }
 }

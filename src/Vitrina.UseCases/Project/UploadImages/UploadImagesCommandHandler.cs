@@ -7,6 +7,7 @@ using SixLabors.ImageSharp.Formats;
 using SixLabors.ImageSharp.Formats.Webp;
 using Vitrina.Domain.Project;
 using Vitrina.Infrastructure.Abstractions.Interfaces;
+using Image = SixLabors.ImageSharp.Image;
 
 namespace Vitrina.UseCases.Project.UploadImages;
 

@@ -1,9 +1,9 @@
-namespace Vitrina.UseCases.Project.YandexBucket.Image.Dto;
+namespace Vitrina.Domain.Project;
 
 /// <summary>
-/// ImageDto.
+/// Image.
 /// </summary>
-public class ImageDto
+public class Image
 {
     /// <summary>
     /// Image name.

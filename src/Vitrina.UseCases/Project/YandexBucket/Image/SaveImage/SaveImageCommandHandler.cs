@@ -43,6 +43,7 @@ public class SaveImageCommandHandler(IS3StorageService s3Storage, IAppDbContext 
         var content = new Content { ImageUrl = url, Project = null };
 
         project.Contents.Add(content);
+        appDbContext.Images.Add(new() { Id = fileId });
 
         await appDbContext.SaveChangesAsync(cancellationToken);
         return fileId;
