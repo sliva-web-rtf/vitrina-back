@@ -38,7 +38,7 @@ public class YandexS3StorageService : IS3StorageService
 
         webpStream.Seek(0, SeekOrigin.Begin);
 
-        await SaveFileAsync(fileName, contentType,  webpStream, cancellationToken);
+        await SaveFileAsync(webpStream, fileName, contentType, cancellationToken);
         return fileName;
     }
 
@@ -60,9 +60,9 @@ public class YandexS3StorageService : IS3StorageService
     }
 
     public async Task SaveFileAsync(
+        Stream fileStream,
         string fileName,
         string contentType,
-        Stream webpStream,
         CancellationToken cancellationToken
     )
     {
@@ -70,7 +70,7 @@ public class YandexS3StorageService : IS3StorageService
         {
             BucketName = bucketName,
             Key = fileName,
-            InputStream = webpStream,
+            InputStream = fileStream,
             ContentType = contentType,
             CannedACL = S3CannedACL.PublicRead
         };

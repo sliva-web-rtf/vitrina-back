@@ -1,7 +1,7 @@
 namespace Vitrina.Domain.Project;
 
 /// <summary>
-/// ResumeDto.
+/// Resume.
 /// </summary>
 public class Resume
 {
@@ -11,12 +11,17 @@ public class Resume
     public Guid Id { get; set; } = Guid.NewGuid();
 
     /// <summary>
-    /// File name
+    /// User id
+    /// </summary>
+    required public int UserId { get; set; }
+
+    /// <summary>
+    /// The name of the resume file in the repository.
     /// </summary>
     required public string FileName { get; set; }
 
     /// <summary>
-    /// Resume id
+    /// Navigation property to the user.
     /// </summary>
-    required public Guid UserId { get; set; }
+    public User.User User { get; set; } = null!;
 }

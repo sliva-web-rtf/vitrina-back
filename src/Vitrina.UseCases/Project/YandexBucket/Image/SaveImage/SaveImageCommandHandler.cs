@@ -21,8 +21,6 @@ public class SaveImageCommandHandler(IS3StorageService s3Storage, IAppDbContext 
             throw new DomainException("Попытка отправить пустой файл.");
         }
 
-        await using var stream = request.File.OpenReadStream();
-
         var project = await appDbContext.Projects.FirstOrDefaultAsync(p => p.Id == request.Id, cancellationToken)
             ?? throw new NotFoundException("Project not found.");
         if (request.File.FileName.Split(".").Length < 2)
@@ -36,7 +34,8 @@ public class SaveImageCommandHandler(IS3StorageService s3Storage, IAppDbContext 
             throw new DomainException("Неправильный формат картинки.");
         }
 
-        var fileId = await s3Storage.SaveImageAsync(stream, request.path + request.File.FileName,
+        await using var stream = request.File.OpenReadStream();
+        var fileId = await s3Storage.SaveImageAsync(stream, request.Path + request.File.FileName,
             request.File.ContentType,
             cancellationToken);
         var url = s3Storage.GetFileUrl(fileId);

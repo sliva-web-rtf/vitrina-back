@@ -19,6 +19,10 @@ using Vitrina.UseCases.Project.UploadImages.Dto;
 using Vitrina.UseCases.Project.YandexBucket.Image.DeleteImage;
 using Vitrina.UseCases.Project.YandexBucket.Image.GetImageURL;
 using Vitrina.UseCases.Project.YandexBucket.Image.SaveImage;
+using Vitrina.UseCases.Project.YandexBucket.Resume.DeleteResume;
+using Vitrina.UseCases.Project.YandexBucket.Resume.GetFileURL;
+using Vitrina.UseCases.Project.YandexBucket.Resume.ReplacementResume;
+using Vitrina.UseCases.Project.YandexBucket.Resume.SaveResume;
 using SearchProjectsQuery = Vitrina.UseCases.Project.SearchProjects.SearchProjectsQuery;
 using V2 = Vitrina.UseCases.Project.SearchProjects.V2;
 
@@ -88,8 +92,48 @@ public class ProjectController : ControllerBase
     public async Task<ICollection<string>> GetProjectOrganizations(CancellationToken cancellationToken) =>
         await mediator.Send(new GetOrganizationsQuery(), cancellationToken);
 
+    [HttpPost("{id:int}/save-resume")]
+    public async Task<IActionResult> SaveResume(
+        [FromRoute] int id,
+        IFormFile file,
+        CancellationToken cancellationToken
+    )
+    {
+        var command = new SaveResumeCommand(file, "Resume/", id);
+        await mediator.Send(command, cancellationToken);
+        return Ok();
+    }
+
+    [HttpPost("{id:int}/replacement-resume")]
+    public async Task<IActionResult> ReplacementResume(
+        [FromRoute] int id,
+        IFormFile file,
+        CancellationToken cancellationToken
+    )
+    {
+        var command = new ReplacementResumeCommand(file, "Resume/", id);
+        await mediator.Send(command, cancellationToken);
+        return Ok();
+    }
+
+    [HttpGet("get-resume-url/{userId:int}")]
+    public async Task<IActionResult> GetResumeUrl(int userId, CancellationToken cancellationToken)
+    {
+        var command = new GetResumeURLCommand(userId);
+        var result = await mediator.Send(command, cancellationToken);
+        return Ok(result);
+    }
+
+    [HttpDelete("delete-resume/{userId:int}")]
+    public async Task<IActionResult> DeleteResume(int userId, CancellationToken cancellationToken)
+    {
+        var command = new DeleteResumeCommand(userId);
+        await mediator.Send(command, cancellationToken);
+        return Ok();
+    }
+
     [HttpPost("{id}/save-image")]
-    public async Task<IActionResult> SaveImageAvatars(
+    public async Task<IActionResult> SaveImage(
         [FromRoute] int id,
         IFormFile file,
         CancellationToken cancellationToken
@@ -101,7 +145,7 @@ public class ProjectController : ControllerBase
     }
 
     [HttpGet("get-image-url/{fileName}")]
-    public async Task<IActionResult> GetImageUrlAvatar(string fileName, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetImageUrl(string fileName, CancellationToken cancellationToken)
     {
         var command = new GetImageURLCommand("Images/" + fileName);
         var result = await mediator.Send(command, cancellationToken);
@@ -109,7 +153,7 @@ public class ProjectController : ControllerBase
     }
 
     [HttpDelete("delete-image/{fileName}")]
-    public async Task<IActionResult> DeleteImageAvatar(string fileName, CancellationToken cancellationToken)
+    public async Task<IActionResult> DeleteImage(string fileName, CancellationToken cancellationToken)
     {
         var command = new DeleteImageCommand("Images/" + fileName);
         await mediator.Send(command, cancellationToken);

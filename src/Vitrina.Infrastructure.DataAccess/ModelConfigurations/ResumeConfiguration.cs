@@ -16,10 +16,12 @@ internal class ResumeConfiguration : IEntityTypeConfiguration<Resume>
         builder.Property(r => r.FileName)
             .IsRequired();
 
-        builder.Property(r => r.UserId)
-            .IsRequired();
-
         builder.HasIndex(r => r.UserId)
             .IsUnique();
+
+        builder.HasOne(r => r.User)
+            .WithOne(u => u.Resume)
+            .HasForeignKey<Resume>(r => r.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

@@ -25,7 +25,6 @@
 
   <ItemGroup>
     <Folder Include="Project\YandexBucket\Image\" />
-    <Folder Include="Project\YandexBucket\Resume\" />
   </ItemGroup>
 
 </Project>

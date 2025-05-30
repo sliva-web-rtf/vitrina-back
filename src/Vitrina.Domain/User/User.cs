@@ -1,5 +1,5 @@
-using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
+using Vitrina.Domain.Project;
 
 namespace Vitrina.Domain.User;
 
@@ -68,4 +68,9 @@ public class User : IdentityUser<int>
     /// Full name of user.
     /// </summary>
     public string FullName => $"{LastName} {FirstName} {Surname}";
+
+    /// <summary>
+    /// Resume
+    /// </summary>
+    public Resume? Resume { get; set; }
 }
