@@ -2,6 +2,7 @@ using Amazon.Runtime;
 using Amazon.S3;
 using Amazon.S3.Model;
 using Microsoft.Extensions.Configuration;
+using SixLabors.ImageSharp;
 using Vitrina.Infrastructure.Abstractions.Interfaces;
 
 namespace Vitrina.Infrastructure.DataAccess;
@@ -21,13 +22,27 @@ public class YandexS3StorageService : IS3StorageService
             amazonConfig);
     }
 
-    public async Task<string> SaveFileAsync(Stream fileStream, string fileName, string contentType, CancellationToken cancellationToken)
+    public async Task<string> SaveFileAsync(
+        Stream fileStream,
+        string fileName,
+        string contentType,
+        CancellationToken cancellationToken
+    )
     {
+        fileName = fileName.Split('.')[0] + ".webp";
+
+        using var image = await Image.LoadAsync(fileStream, cancellationToken);
+
+        await using var webpStream = new MemoryStream();
+        await image.SaveAsWebpAsync(webpStream, cancellationToken);
+
+        webpStream.Seek(0, SeekOrigin.Begin);
+
         var putRequest = new PutObjectRequest
         {
             BucketName = bucketName,
             Key = fileName,
-            InputStream = fileStream,
+            InputStream = webpStream,
             ContentType = contentType,
             CannedACL = S3CannedACL.PublicRead
         };
@@ -46,16 +61,11 @@ public class YandexS3StorageService : IS3StorageService
         return s3Client.GetPreSignedURLAsync(request);
     }
 
-    public async Task<bool> DeleteFileAsync(string fileName, CancellationToken cancellationToken)
+    public async Task DeleteFileAsync(string fileName, CancellationToken cancellationToken)
     {
-        var removeRequest = new DeleteObjectRequest
-        {
-            BucketName = bucketName,
-            Key = fileName
-        };
+        var removeRequest = new DeleteObjectRequest { BucketName = bucketName, Key = fileName };
 
-        var a = await s3Client.DeleteObjectAsync(removeRequest, cancellationToken);
-        return true;
+        await s3Client.DeleteObjectAsync(removeRequest, cancellationToken);
     }
 
     public string GetFileUrl(string fileName)

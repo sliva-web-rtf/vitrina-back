@@ -6,7 +6,7 @@ public interface IS3StorageService
 
     public Task<string> GetPreSignedURL(string fileName, TimeSpan validFor);
 
-    public Task<bool> DeleteFileAsync(string fileName, CancellationToken cancellationToken);
+    public Task DeleteFileAsync(string fileName, CancellationToken cancellationToken);
 
     public string GetFileUrl(string fileName);
 }

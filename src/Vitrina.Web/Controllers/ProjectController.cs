@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Saritasa.Tools.Common.Pagination;
 using Vitrina.UseCases.Common;
@@ -17,7 +16,6 @@ using Vitrina.UseCases.Project.UpdateProject;
 using Vitrina.UseCases.Project.UpdateProject.DTO;
 using Vitrina.UseCases.Project.UploadImages;
 using Vitrina.UseCases.Project.UploadImages.Dto;
-using Vitrina.UseCases.Project.YandexBucket;
 using Vitrina.UseCases.Project.YandexBucket.DeleteImage;
 using Vitrina.UseCases.Project.YandexBucket.GetImageURL;
 using Vitrina.UseCases.Project.YandexBucket.SaveImage;
