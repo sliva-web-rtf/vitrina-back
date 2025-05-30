@@ -18,6 +18,7 @@ using Vitrina.UseCases.Project.UpdateProject.DTO;
 using Vitrina.UseCases.Project.UploadImages;
 using Vitrina.UseCases.Project.UploadImages.Dto;
 using Vitrina.UseCases.Project.YandexBucket;
+using Vitrina.UseCases.Project.YandexBucket.DeleteImage;
 using Vitrina.UseCases.Project.YandexBucket.GetImageURL;
 using Vitrina.UseCases.Project.YandexBucket.SaveImage;
 using SearchProjectsQuery = Vitrina.UseCases.Project.SearchProjects.SearchProjectsQuery;
@@ -89,6 +90,34 @@ public class ProjectController : ControllerBase
     public async Task<ICollection<string>> GetProjectOrganizations(CancellationToken cancellationToken) =>
         await mediator.Send(new GetOrganizationsQuery(), cancellationToken);
 
+    [HttpPost("{id}/save-image")]
+    public async Task<IActionResult> SaveImageAvatars(
+        [FromRoute] int id,
+        IFormFile file,
+        CancellationToken cancellationToken
+    )
+    {
+        var command = new SaveImageCommand(file, "Images/", id);
+        var result = await mediator.Send(command, cancellationToken);
+        return Ok(result);
+    }
+
+    [HttpGet("get-image-url/{fileName}")]
+    public async Task<IActionResult> GetImageUrlAvatar(string fileName, CancellationToken cancellationToken)
+    {
+        var command = new GetImageURLCommand("Images/" + fileName);
+        var result = await mediator.Send(command, cancellationToken);
+        return Ok(result);
+    }
+
+    [HttpDelete("delete-image/{fileName}")]
+    public async Task<IActionResult> DeleteImageAvatar(string fileName, CancellationToken cancellationToken)
+    {
+        var command = new DeleteImageCommand("Images/" + fileName);
+        await mediator.Send(command, cancellationToken);
+        return Ok();
+    }
+
     /// <summary>
     /// Upload images to project.
     /// </summary>
@@ -109,48 +138,6 @@ public class ProjectController : ControllerBase
         }
         await mediator.Send(command, cancellationToken);
         return Ok();
-    }
-
-    [HttpPost]
-    [Route("{id}/save-image-avatars")]
-    public async Task<IActionResult> SaveImageAvatars(
-        [FromRoute] int id,
-        IFormFile file,
-        CancellationToken cancellationToken
-    )
-    {
-        var command = new SaveImageCommand(file, "Avatars/", id);
-        var result = await mediator.Send(command, cancellationToken);
-        return Ok(result);
-    }
-
-    [HttpPost]
-    [Route("{id}/save-image-preview")]
-    public async Task<IActionResult> SaveImagePreview(
-        [FromRoute] int id,
-        IFormFile file,
-        CancellationToken cancellationToken
-    )
-    {
-        var command = new SaveImageCommand(file, "Preview/", id);
-        var result = await mediator.Send(command, cancellationToken);
-        return Ok(result);
-    }
-
-    [HttpGet("get-image-url-avatar/{fileName}")]
-    public async Task<IActionResult> GetImageUrlAvatar(string fileName, CancellationToken cancellationToken)
-    {
-        var command = new GetImageURLCommand("Avatars/" + fileName);
-        var result = await mediator.Send(command, cancellationToken);
-        return Ok(result);
-    }
-
-    [HttpGet("get-image-url-preview/{fileName}")]
-    public async Task<IActionResult> GetImageUrlPreview(string fileName, CancellationToken cancellationToken)
-    {
-        var command = new GetImageURLCommand("Previews/" + fileName);
-        var result = await mediator.Send(command, cancellationToken);
-        return Ok(result);
     }
 
     /// <summary>

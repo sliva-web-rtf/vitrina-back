@@ -3,7 +3,7 @@ using Vitrina.Infrastructure.Abstractions.Interfaces;
 
 namespace Vitrina.UseCases.Project.YandexBucket.GetImageURL;
 
-public class GetImageURLCommandHandler(IS3StorageService s3Storage, IAppDbContext appDbContext)
+public class GetImageURLCommandHandler(IS3StorageService s3Storage)
     : IRequestHandler<GetImageURLCommand, string>
 {
     public Task<string> Handle(GetImageURLCommand request, CancellationToken cancellationToken)
