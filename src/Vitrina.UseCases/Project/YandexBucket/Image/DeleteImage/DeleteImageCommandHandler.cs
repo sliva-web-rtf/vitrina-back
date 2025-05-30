@@ -3,10 +3,14 @@ using Vitrina.Infrastructure.Abstractions.Interfaces;
 
 namespace Vitrina.UseCases.Project.YandexBucket.Image.DeleteImage;
 
-public class DeleteImageCommandHandler(IS3StorageService s3Storage) : IRequestHandler<DeleteImageCommand>
+public class DeleteImageCommandHandler(IS3StorageService s3Storage, IAppDbContext appDbContext)
+    : IRequestHandler<DeleteImageCommand>
 {
-    public Task Handle(DeleteImageCommand request, CancellationToken cancellationToken)
+    public async Task Handle(DeleteImageCommand request, CancellationToken cancellationToken)
     {
-        return s3Storage.DeleteFileAsync(request.FileName, cancellationToken);
+        appDbContext.Images.Remove(
+            await appDbContext.Images.FindAsync([request.FileName, cancellationToken], cancellationToken));
+        await appDbContext.SaveChangesAsync(cancellationToken);
+        await s3Storage.DeleteFileAsync(request.FileName, cancellationToken);
     }
 }
