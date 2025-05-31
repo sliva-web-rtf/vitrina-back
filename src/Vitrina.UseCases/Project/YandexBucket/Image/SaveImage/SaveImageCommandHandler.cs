@@ -4,7 +4,7 @@ using Saritasa.Tools.Domain.Exceptions;
 using Vitrina.Domain.Project;
 using Vitrina.Infrastructure.Abstractions.Interfaces;
 
-namespace Vitrina.UseCases.Project.YandexBucket.SaveImage;
+namespace Vitrina.UseCases.Project.YandexBucket.Image.SaveImage;
 
 public class SaveImageCommandHandler(IS3StorageService s3Storage, IAppDbContext appDbContext)
     : IRequestHandler<SaveImageCommand, string>
@@ -21,8 +21,6 @@ public class SaveImageCommandHandler(IS3StorageService s3Storage, IAppDbContext 
             throw new DomainException("Попытка отправить пустой файл.");
         }
 
-        await using var stream = request.File.OpenReadStream();
-
         var project = await appDbContext.Projects.FirstOrDefaultAsync(p => p.Id == request.Id, cancellationToken)
             ?? throw new NotFoundException("Project not found.");
         if (request.File.FileName.Split(".").Length < 2)
@@ -36,11 +34,17 @@ public class SaveImageCommandHandler(IS3StorageService s3Storage, IAppDbContext 
             throw new DomainException("Неправильный формат картинки.");
         }
 
-        var url = await s3Storage.SaveFileAsync(stream, request.path + request.File.FileName, request.File.ContentType);
+        await using var stream = request.File.OpenReadStream();
+        var fileId = await s3Storage.SaveImageAsync(stream, request.File.FileName, request.Path,
+            request.File.ContentType,
+            cancellationToken);
+        var url = s3Storage.GetFileUrl(fileId);
         var content = new Content { ImageUrl = url, Project = null };
+
         project.Contents.Add(content);
+        appDbContext.Images.Add(new() { Id = fileId });
 
         await appDbContext.SaveChangesAsync(cancellationToken);
-        return url;
+        return fileId;
     }
 }

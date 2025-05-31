@@ -1,5 +1,5 @@
-using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
+using Vitrina.Domain.Project;
 
 namespace Vitrina.Domain.User;
 

@@ -240,6 +240,17 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                     b.ToTable("Contents");
                 });
 
+            modelBuilder.Entity("Vitrina.Domain.Project.Image", b =>
+                {
+                    b.Property<string>("Id")
+                        .IsUnicode(false)
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Images");
+                });
+
             modelBuilder.Entity("Vitrina.Domain.Project.Project", b =>
                 {
                     b.Property<int>("Id")
@@ -340,6 +351,28 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                         .IsUnique();
 
                     b.ToTable("ProjectRoles");
+                });
+
+            modelBuilder.Entity("Vitrina.Domain.Project.Resume", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .IsUnicode(false)
+                        .HasColumnType("text");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("Resume");
                 });
 
             modelBuilder.Entity("Vitrina.Domain.Project.Tag", b =>
@@ -672,6 +705,17 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                     b.Navigation("Project");
                 });
 
+            modelBuilder.Entity("Vitrina.Domain.Project.Resume", b =>
+                {
+                    b.HasOne("Vitrina.Domain.User.User", "User")
+                        .WithOne("Resume")
+                        .HasForeignKey("Vitrina.Domain.Project.Resume", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Vitrina.Domain.Project.Teammate", b =>
                 {
                     b.HasOne("Vitrina.Domain.Project.Project", "Project")
@@ -690,6 +734,11 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                     b.Navigation("CustomBlocks");
 
                     b.Navigation("Users");
+                });
+
+            modelBuilder.Entity("Vitrina.Domain.User.User", b =>
+                {
+                    b.Navigation("Resume");
                 });
 #pragma warning restore 612, 618
         }
