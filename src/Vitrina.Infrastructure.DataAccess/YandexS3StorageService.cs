@@ -25,6 +25,7 @@ public class YandexS3StorageService : IS3StorageService
     public async Task<string> SaveImageAsync(
         Stream fileStream,
         string fileName,
+        string path,
         string contentType,
         CancellationToken cancellationToken
     )
@@ -38,23 +39,26 @@ public class YandexS3StorageService : IS3StorageService
 
         webpStream.Seek(0, SeekOrigin.Begin);
 
-        await SaveFileAsync(webpStream, fileName, contentType, cancellationToken);
+        await SaveFileAsync(webpStream, fileName, path, contentType, cancellationToken);
         return fileName;
     }
 
-    public Task<string> GetPreSignedURL(string fileName, TimeSpan validFor)
+    public Task<string> GetPreSignedURL(string fileName, string path, TimeSpan validFor)
     {
         var request = new GetPreSignedUrlRequest
         {
-            BucketName = bucketName, Key = fileName, Expires = DateTime.UtcNow.Add(validFor), Verb = HttpVerb.GET
+            BucketName = bucketName,
+            Key = path + fileName,
+            Expires = DateTime.UtcNow.Add(validFor),
+            Verb = HttpVerb.GET
         };
 
         return s3Client.GetPreSignedURLAsync(request);
     }
 
-    public async Task DeleteFileAsync(string fileName, CancellationToken cancellationToken)
+    public async Task DeleteFileAsync(string fileName, string path, CancellationToken cancellationToken)
     {
-        var removeRequest = new DeleteObjectRequest { BucketName = bucketName, Key = fileName };
+        var removeRequest = new DeleteObjectRequest { BucketName = bucketName, Key = path + fileName };
 
         await s3Client.DeleteObjectAsync(removeRequest, cancellationToken);
     }
@@ -62,6 +66,7 @@ public class YandexS3StorageService : IS3StorageService
     public async Task SaveFileAsync(
         Stream fileStream,
         string fileName,
+        string path,
         string contentType,
         CancellationToken cancellationToken
     )
@@ -69,7 +74,7 @@ public class YandexS3StorageService : IS3StorageService
         var putRequest = new PutObjectRequest
         {
             BucketName = bucketName,
-            Key = fileName,
+            Key = path + fileName,
             InputStream = fileStream,
             ContentType = contentType,
             CannedACL = S3CannedACL.PublicRead

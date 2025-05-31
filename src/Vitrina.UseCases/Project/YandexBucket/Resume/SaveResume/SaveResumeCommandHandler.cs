@@ -7,7 +7,7 @@ namespace Vitrina.UseCases.Project.YandexBucket.Resume.SaveResume;
 public class SaveResumeCommandHandler(IS3StorageService s3Storage, IAppDbContext appDbContext)
     : IRequestHandler<SaveResumeCommand>
 {
-    private readonly List<(string ContentType, string Extension)> allowedFormats = [("resume/pdf", "pdf")];
+    private readonly List<string> allowedFormats = ["pdf"];
 
     public async Task Handle(SaveResumeCommand request, CancellationToken cancellationToken)
     {
@@ -25,18 +25,24 @@ public class SaveResumeCommandHandler(IS3StorageService s3Storage, IAppDbContext
         }
 
         var extension = request.File.FileName.Split(".").Last();
-        if (!allowedFormats.Any(f => f.Extension == extension && f.ContentType == request.File.ContentType))
+        if (allowedFormats.All(ext => ext != extension))
         {
             throw new DomainException("Неправильный формат файла.");
         }
 
+        if (appDbContext.Resume.FirstOrDefault(resume => resume.UserId == request.UserId) != null)
+        {
+            throw new DomainException("У пользователя уже есть резюме.");
+        }
+
         await using var stream = request.File.OpenReadStream();
-        var fileName = request.Path + Guid.NewGuid() + ".pdf";
-        await s3Storage.SaveFileAsync(stream, fileName,
+        var fileName = Guid.NewGuid() + ".pdf";
+        await s3Storage.SaveFileAsync(stream, fileName, request.Path,
             request.File.ContentType,
             cancellationToken);
 
-        currentUser.Resume = new() { UserId = request.UserId, FileName = fileName, User = currentUser };
+        var resume = new Domain.Project.Resume { UserId = request.UserId, FileName = fileName, User = currentUser };
+        appDbContext.Resume.Add(resume);
 
         await appDbContext.SaveChangesAsync(cancellationToken);
     }

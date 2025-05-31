@@ -18,10 +18,5 @@ internal class ResumeConfiguration : IEntityTypeConfiguration<Resume>
 
         builder.HasIndex(r => r.UserId)
             .IsUnique();
-
-        builder.HasOne(r => r.User)
-            .WithOne(u => u.Resume)
-            .HasForeignKey<Resume>(r => r.UserId)
-            .OnDelete(DeleteBehavior.Cascade);
     }
 }

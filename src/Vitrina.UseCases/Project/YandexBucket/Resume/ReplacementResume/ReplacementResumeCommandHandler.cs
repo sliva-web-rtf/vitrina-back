@@ -7,7 +7,7 @@ namespace Vitrina.UseCases.Project.YandexBucket.Resume.ReplacementResume;
 public class ReplacementResumeCommandHandler(IS3StorageService s3Storage, IAppDbContext appDbContext)
     : IRequestHandler<ReplacementResumeCommand>
 {
-    private readonly List<(string ContentType, string Extension)> allowedFormats = [("resume/pdf", "pdf")];
+    private readonly List<string> allowedFormats = ["pdf"];
 
     public async Task Handle(ReplacementResumeCommand request, CancellationToken cancellationToken)
     {
@@ -25,21 +25,28 @@ public class ReplacementResumeCommandHandler(IS3StorageService s3Storage, IAppDb
         }
 
         var extension = request.File.FileName.Split(".").Last();
-        if (!allowedFormats.Any(f => f.Extension == extension && f.ContentType == request.File.ContentType))
+        if (allowedFormats.All(ext => ext != extension))
         {
             throw new DomainException("Неправильный формат файла.");
         }
 
-        await s3Storage.DeleteFileAsync(currentUser.Resume!.FileName, cancellationToken);
-        currentUser.Resume = null;
+        var resume = appDbContext.Resume.FirstOrDefault(resume => resume.UserId == request.UserId);
+        if (resume == null)
+        {
+            throw new DomainException("У пользователя нет резюме.");
+        }
+
+        await s3Storage.DeleteFileAsync(resume.FileName, request.Path, cancellationToken);
+        appDbContext.Resume.Remove(resume);
 
         await using var stream = request.File.OpenReadStream();
-        var fileName = request.Path + Guid.NewGuid() + ".pdf";
-        await s3Storage.SaveFileAsync(stream, fileName,
+        var fileName = Guid.NewGuid() + ".pdf";
+        await s3Storage.SaveFileAsync(stream, fileName, request.Path,
             request.File.ContentType,
             cancellationToken);
 
-        currentUser.Resume = new() { UserId = request.UserId, FileName = fileName, User = currentUser };
+        resume = new() { UserId = request.UserId, FileName = fileName, User = currentUser };
+        appDbContext.Resume.Add(resume);
 
         await appDbContext.SaveChangesAsync(cancellationToken);
     }

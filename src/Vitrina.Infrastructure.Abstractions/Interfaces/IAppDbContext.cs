@@ -48,4 +48,9 @@ public interface IAppDbContext : IDbContextWithSets, IDisposable
     /// Images.
     /// </summary>
     DbSet<Image> Images { get; }
+
+    /// <summary>
+    /// Resumes.
+    /// </summary>
+    DbSet<Resume> Resume { get; }
 }

@@ -35,7 +35,7 @@ public class SaveImageCommandHandler(IS3StorageService s3Storage, IAppDbContext 
         }
 
         await using var stream = request.File.OpenReadStream();
-        var fileId = await s3Storage.SaveImageAsync(stream, request.Path + request.File.FileName,
+        var fileId = await s3Storage.SaveImageAsync(stream, request.File.FileName, request.Path,
             request.File.ContentType,
             cancellationToken);
         var url = s3Storage.GetFileUrl(fileId);

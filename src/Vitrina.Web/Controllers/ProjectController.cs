@@ -119,7 +119,7 @@ public class ProjectController : ControllerBase
     [HttpGet("get-resume-url/{userId:int}")]
     public async Task<IActionResult> GetResumeUrl(int userId, CancellationToken cancellationToken)
     {
-        var command = new GetResumeURLCommand(userId);
+        var command = new GetResumeURLCommand(userId, "Resume/");
         var result = await mediator.Send(command, cancellationToken);
         return Ok(result);
     }
@@ -127,7 +127,7 @@ public class ProjectController : ControllerBase
     [HttpDelete("delete-resume/{userId:int}")]
     public async Task<IActionResult> DeleteResume(int userId, CancellationToken cancellationToken)
     {
-        var command = new DeleteResumeCommand(userId);
+        var command = new DeleteResumeCommand(userId, "Resume/");
         await mediator.Send(command, cancellationToken);
         return Ok();
     }
@@ -147,7 +147,7 @@ public class ProjectController : ControllerBase
     [HttpGet("get-image-url/{fileName}")]
     public async Task<IActionResult> GetImageUrl(string fileName, CancellationToken cancellationToken)
     {
-        var command = new GetImageURLCommand("Images/" + fileName);
+        var command = new GetImageURLCommand(fileName, "Images/");
         var result = await mediator.Send(command, cancellationToken);
         return Ok(result);
     }
@@ -155,7 +155,7 @@ public class ProjectController : ControllerBase
     [HttpDelete("delete-image/{fileName}")]
     public async Task<IActionResult> DeleteImage(string fileName, CancellationToken cancellationToken)
     {
-        var command = new DeleteImageCommand("Images/" + fileName);
+        var command = new DeleteImageCommand(fileName, "Images/");
         await mediator.Send(command, cancellationToken);
         return Ok();
     }

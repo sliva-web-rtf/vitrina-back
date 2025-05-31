@@ -68,9 +68,4 @@ public class User : IdentityUser<int>
     /// Full name of user.
     /// </summary>
     public string FullName => $"{LastName} {FirstName} {Surname}";
-
-    /// <summary>
-    /// Resume
-    /// </summary>
-    public Resume? Resume { get; set; }
 }

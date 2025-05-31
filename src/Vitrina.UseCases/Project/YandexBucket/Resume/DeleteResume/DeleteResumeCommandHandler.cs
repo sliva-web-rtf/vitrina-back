@@ -9,11 +9,19 @@ public class DeleteResumeCommandHandler(IS3StorageService s3Storage, IAppDbConte
 {
     public async Task Handle(DeleteResumeCommand request, CancellationToken cancellationToken)
     {
-        var currentUser = appDbContext.Users.FirstOrDefault(user => user.Id == request.UserId) ??
+        if (appDbContext.Users.FirstOrDefault(user => user.Id == request.UserId) == null)
+        {
             throw new DomainException("Такого пользователя не существует.");
+        }
 
-        await s3Storage.DeleteFileAsync(currentUser.Resume!.FileName, cancellationToken);
-        currentUser.Resume = null;
+        var resume = appDbContext.Resume.FirstOrDefault(resume => resume.UserId == request.UserId);
+        if (resume == null)
+        {
+            throw new DomainException("У пользователя нет резюме.");
+        }
+
+        await s3Storage.DeleteFileAsync(resume.FileName, request.Path, cancellationToken);
+        appDbContext.Resume.Remove(resume);
         await appDbContext.SaveChangesAsync(cancellationToken);
     }
 }

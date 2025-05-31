@@ -8,6 +8,6 @@ public class GetImageURLCommandHandler(IS3StorageService s3Storage)
 {
     public Task<string> Handle(GetImageURLCommand request, CancellationToken cancellationToken)
     {
-        return s3Storage.GetPreSignedURL(request.FileName, TimeSpan.FromHours(1));
+        return s3Storage.GetPreSignedURL(request.FileName, request.Path, TimeSpan.FromHours(1));
     }
 }
