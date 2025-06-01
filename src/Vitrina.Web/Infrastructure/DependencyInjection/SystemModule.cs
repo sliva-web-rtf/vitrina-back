@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Vitrina.Infrastructure.Abstractions.Interfaces;
+using Vitrina.Infrastructure.Abstractions.Interfaces.Repositories;
 using Vitrina.Infrastructure.DataAccess;
+using Vitrina.Infrastructure.DataAccess.Repositories;
 using Vitrina.UseCases.User.Auth;
 using Vitrina.Web.Infrastructure.Jwt;
 using Vitrina.Web.Infrastructure.Web;
@@ -21,6 +23,7 @@ internal static class SystemModule
         services.AddSingleton<IJsonHelper, SystemTextJsonHelper>();
         services.AddScoped<IAuthenticationTokenService, SystemJwtTokenService>();
         services.AddScoped<IAppDbContext>(s => s.GetRequiredService<AppDbContext>());
+        services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<ILoggedUserAccessor, LoggedUserAccessor>();
     }
 }
