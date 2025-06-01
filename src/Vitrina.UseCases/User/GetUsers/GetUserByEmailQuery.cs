@@ -8,7 +8,4 @@ namespace Vitrina.UseCases.User.GetUsers;
 /// <summary>
 ///     Query for user search.
 /// </summary>
-public record GetUsersQuery : PageQueryFilter, IRequest<PagedList<ResponceShortenedUserDto>>
-{
-    public string? Email { get; init; }
-}
+public record GetUserByEmailQuery(string Email) : PageQueryFilter, IRequest<ResponceShortenedUserDto>;
