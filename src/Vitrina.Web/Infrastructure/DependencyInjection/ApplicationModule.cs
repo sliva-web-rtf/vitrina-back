@@ -1,3 +1,5 @@
+using Newtonsoft.Json.Converters;
+
 namespace Vitrina.Web.Infrastructure.DependencyInjection;
 
 /// <summary>
@@ -16,6 +18,6 @@ internal static class ApplicationModule
     {
         services
             .AddControllers()
-            .AddNewtonsoftJson();
+            .AddNewtonsoftJson(options => options.SerializerSettings.Converters.Add(new StringEnumConverter()));
     }
 }
