@@ -1,8 +1,6 @@
-using Vitrina.UseCases.Common.DTO;
-
 namespace Vitrina.UseCases.ProjectSphere;
 
-public record RequestSphereDto : BaseEntityDto<Guid>
+public record RequestSphereDto
 {
     required public string Name { get; init; }
 }

@@ -51,8 +51,8 @@ internal class CreateProjectCommandHandler(IMapper mapper, IAppDbContext dbConte
         page.ThrowExceptionIfNoAccessRights(idAuthorizedUser);
 
         var sphere = projectDto.Sphere;
-        if (await dbContext.ProjectSpheres.FirstOrDefaultAsync(existingSphere =>
-                existingSphere.Name == sphere.Name && existingSphere.Id == sphere.Id, cancellationToken) == null)
+        if (await dbContext.ProjectSpheres.FirstOrDefaultAsync(existingSphere => existingSphere.Name == sphere.Name,
+                cancellationToken) == null)
         {
             throw new DomainException("Sphere not found");
         }
