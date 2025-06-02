@@ -6,8 +6,10 @@ namespace Vitrina.Infrastructure.DataAccess.ModelConfigurations.ProjectConfigura
 
 public class ProjectThematicsConfiguration : IEntityTypeConfiguration<ProjectThematics>
 {
-    public void Configure(EntityTypeBuilder<ProjectThematics> builder) =>
+    public void Configure(EntityTypeBuilder<ProjectThematics> builder)
+    {
         builder
             .HasIndex(thematics => thematics.Name)
             .IsUnique();
+    }
 }

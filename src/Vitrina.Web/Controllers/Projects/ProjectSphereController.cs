@@ -41,7 +41,7 @@ public class ProjectSphereController(IMediator mediator) : ControllerBase
     {
         var command = new CreateSphereCommand(sphere);
         var result = await mediator.Send(command, cancellationToken);
-        return Created($"project-spheres/{result}", new { Id = result });
+        return Created($"api/project-spheres/{result}", new { Id = result });
     }
 
     [HttpDelete("{id:guid}")]

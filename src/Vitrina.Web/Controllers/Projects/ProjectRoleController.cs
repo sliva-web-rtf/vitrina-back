@@ -50,7 +50,7 @@ public class ProjectRoleController(IMediator mediator) : ControllerBase
     {
         var command = new CreateRoleCommand(roleDto);
         var result = await mediator.Send(command, cancellationToken);
-        return Created($"project-roles/{result}", new { id = result });
+        return Created($"api/project-roles/{result}", new { id = result });
     }
 
     /// <summary>

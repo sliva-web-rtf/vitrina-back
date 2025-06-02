@@ -28,10 +28,12 @@ public class ProjectPageController(IMediator mediator) : ControllerBase
     [Authorize(Roles = "Student, Curator")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<Guid> Create([FromBody] CreateProjectPageDto pageDto, CancellationToken cancellationToken)
+    public async Task<IActionResult> Create([FromBody] CreateProjectPageDto pageDto,
+        CancellationToken cancellationToken)
     {
         var command = new CreateProjectPageCommand(pageDto, GetIdAuthorizedUser());
-        return await mediator.Send(command, cancellationToken);
+        var result = await mediator.Send(command, cancellationToken);
+        return Created($"api/pages/{result}", new { Id = result });
     }
 
     /// <summary>
@@ -40,13 +42,13 @@ public class ProjectPageController(IMediator mediator) : ControllerBase
     /// <param name="id">Page identifier.</param>
     [HttpDelete("{id:guid}")]
     [Authorize(Roles = "Student, Curator")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Delete([FromRoute] Guid id, CancellationToken cancellationToken)
     {
         var command = new DeleteProjectPageCommand(id, GetIdAuthorizedUser());
         await mediator.Send(command, cancellationToken);
-        return Ok();
+        return NoContent();
     }
 
     /// <summary>

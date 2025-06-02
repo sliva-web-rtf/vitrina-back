@@ -59,8 +59,7 @@ internal class CreateProjectCommandHandler(IMapper mapper, IAppDbContext dbConte
 
         var thematics = projectDto.Thematics;
         if (await dbContext.ProjectThematics.FirstOrDefaultAsync(existingThematics =>
-                existingThematics.Name == thematics.Name && existingThematics.Id == thematics.Id, cancellationToken) ==
-            null)
+                existingThematics.Name == thematics.Name, cancellationToken) == null)
         {
             throw new DomainException("Thematics not found");
         }
