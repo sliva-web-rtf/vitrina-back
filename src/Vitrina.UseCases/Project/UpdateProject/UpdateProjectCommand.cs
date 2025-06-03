@@ -8,7 +8,7 @@ namespace Vitrina.UseCases.Project.UpdateProject;
 ///     Update project command.
 /// </summary>
 public record UpdateProjectCommand(
-    Guid ProjectId,
+    int ProjectId,
     JsonPatchDocument<UpdateProjectDto> PatchDocument,
     int IdAuthorizedUser)
     : IRequest<ResponceProjectDto>;

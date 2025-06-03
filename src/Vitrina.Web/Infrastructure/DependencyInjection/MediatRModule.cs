@@ -17,7 +17,9 @@ internal static class MediatRModule
     public static void Register(IServiceCollection services)
     {
         services.AddSingleton<UpdateUserDtoValidator>();
-        services.AddScoped<ISpecializationRepository, SpecializationRepository>();
+        services.AddTransient<ISpecializationRepository, SpecializationRepository>();
+        services.AddTransient<IProjectPageRepository, ProjectPageRepository>();
+        services.AddTransient<IPageEditorRepository, PageEditorRepository>();
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateProjectCommand).Assembly));
     }
 }

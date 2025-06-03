@@ -1,4 +1,5 @@
-﻿using Saritasa.Tools.Domain.Exceptions;
+﻿using System.ComponentModel.DataAnnotations;
+using Saritasa.Tools.Domain.Exceptions;
 using Vitrina.Domain.Project.Page;
 
 namespace Vitrina.Domain.Project;
@@ -6,8 +7,10 @@ namespace Vitrina.Domain.Project;
 /// <summary>
 ///     Domain class of project.
 /// </summary>
-public class Project : BaseEntity<Guid>
+public class Project
 {
+    [Key] public int Id { get; init; }
+
     /// <summary>
     ///     Project name.
     /// </summary>
@@ -46,7 +49,7 @@ public class Project : BaseEntity<Guid>
     /// <summary>
     ///     Project type.
     /// </summary>
-    public ProjectThematics? Thematics { get; set; }
+    public virtual ProjectThematics? Thematics { get; set; }
 
     /// <summary>
     ///     Project page content.
@@ -76,7 +79,7 @@ public class Project : BaseEntity<Guid>
     /// <summary>
     ///     Project curator.
     /// </summary>
-    public User.User? Curator { get; set; }
+    public virtual User.User? Curator { get; set; }
 
     /// <summary>
     ///     Checks the user's editing rights.

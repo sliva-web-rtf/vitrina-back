@@ -6,4 +6,4 @@ namespace Vitrina.UseCases.Project.CreateProject;
 /// <summary>
 ///     Add project command.
 /// </summary>
-public record CreateProjectCommand(CreateProjectDto ProjectDto, int IdAuthorizedUser) : IRequest<Guid>;
+public record CreateProjectCommand(CreateProjectDto ProjectDto, int IdAuthorizedUser) : IRequest<int>;

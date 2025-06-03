@@ -12,18 +12,15 @@ namespace Vitrina.UseCases.Project.CreateProject;
 ///     Add project handler.
 /// </summary>
 internal class CreateProjectCommandHandler(IMapper mapper, IAppDbContext dbContext)
-    : IRequestHandler<CreateProjectCommand, Guid>
+    : IRequestHandler<CreateProjectCommand, int>
 {
     /// <inheritdoc />
-    public async Task<Guid> Handle(CreateProjectCommand request, CancellationToken cancellationToken)
+    public async Task<int> Handle(CreateProjectCommand request, CancellationToken cancellationToken)
     {
         await ValidateModelAsync(request.ProjectDto, request.IdAuthorizedUser, cancellationToken);
         var project = new Domain.Project.Project
         {
-            Id = Guid.NewGuid(),
-            PageId = request.ProjectDto.PageId,
-            Name = request.ProjectDto.Name,
-            CreatorId = request.IdAuthorizedUser
+            PageId = request.ProjectDto.PageId, Name = request.ProjectDto.Name, CreatorId = request.IdAuthorizedUser
         };
         mapper.Map(request.ProjectDto, project);
         project.Page.ReadyStatus = PageReadyStatusEnum.UnderReview;

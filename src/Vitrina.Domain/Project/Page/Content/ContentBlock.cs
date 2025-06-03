@@ -6,7 +6,7 @@ public class ContentBlock : BaseEntity<Guid>
 {
     required public Guid PageId { get; init; }
 
-    required public ProjectPage Page { get; init; }
+    required public virtual ProjectPage Page { get; init; }
 
     [Column(TypeName = "jsonb")] required public string Content { get; set; }
 

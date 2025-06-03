@@ -6,4 +6,4 @@ namespace Vitrina.UseCases.Project.GetProjectById;
 /// <summary>
 ///     Get project query.
 /// </summary>
-public record GetProjectByIdQuery(Guid Id) : IRequest<ResponceProjectDto>;
+public record GetProjectByIdQuery(int Id) : IRequest<ResponceProjectDto>;

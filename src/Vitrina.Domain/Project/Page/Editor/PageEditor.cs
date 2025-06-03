@@ -2,13 +2,13 @@ namespace Vitrina.Domain.Project.Page.Editor;
 
 public class PageEditor : BaseEntity<Guid>
 {
-    public int UserId { get; set; }
+    required public int UserId { get; init; }
 
-    public User.User User { get; set; }
+    public virtual User.User User { get; init; }
 
-    public Guid PageId { get; set; }
+    required public Guid PageId { get; init; }
 
-    public ProjectPage Page { get; set; }
+    public virtual ProjectPage Page { get; init; }
 
     public EditorStatus Status { get; set; }
 }

@@ -5,4 +5,4 @@ namespace Vitrina.UseCases.Project.DeleteProject;
 /// <summary>
 ///     Delete project command.
 /// </summary>
-public record DeleteProjectCommand(Guid ProjectId, int IdAuthorizedUser) : IRequest;
+public record DeleteProjectCommand(int ProjectId, int IdAuthorizedUser) : IRequest;

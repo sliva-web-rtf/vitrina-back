@@ -25,12 +25,12 @@ public class ProjectPage : BaseEntity<Guid>
     /// <summary>
     ///     Project id.
     /// </summary>
-    public Guid? ProjectId { get; init; }
+    public int? ProjectId { get; init; }
 
     /// <summary>
     ///     Project.
     /// </summary>
-    public Project? Project { get; init; }
+    public virtual Project? Project { get; init; }
 
     public void NumberCustomBlocks() =>
         ContentBlocks = ContentBlocks
