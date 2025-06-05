@@ -51,7 +51,7 @@ public class RegisterCommandHandler(
 
     private async Task<Domain.User.User> CreateUserAsync(RegisterCommand request, CancellationToken cancellationToken)
     {
-        var userDto = mapper.Map<UpdateUserDtoBase>(request);
+        var userDto = mapper.Map<UserDto>(request);
         userDto.AdditionalInformation.EducationCourse = request.EducationCourse;
         var validationResult = await validator.ValidateAsync(userDto, cancellationToken);
         if (!validationResult.IsValid)
@@ -62,9 +62,9 @@ public class RegisterCommandHandler(
 
         var user = userDto.RoleOnPlatform switch
         {
-            RoleOnPlatformEnum.Student => mapper.Map<Domain.User.User>(mapper.Map<StudentDtoBase>(userDto)),
+            RoleOnPlatformEnum.Student => mapper.Map<Domain.User.User>(mapper.Map<StudentDto>(userDto)),
             RoleOnPlatformEnum.Curator or RoleOnPlatformEnum.Partner => mapper.Map<Domain.User.User>(
-                mapper.Map<NotStudentDtoBase>(userDto)),
+                mapper.Map<NotStudentDto>(userDto)),
             _ => throw new NotImplementedException(
                 $"Logic for {nameof(RoleOnPlatformEnum)} = {userDto.RoleOnPlatform} is not defined")
         };

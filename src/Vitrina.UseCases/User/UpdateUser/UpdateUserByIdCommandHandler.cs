@@ -54,7 +54,7 @@ public class UpdateUserByIdCommandHandler(
                                       $" {string.Join(',', invalidPatchPaths)}");
         }
 
-        var updateUserDto = mapper.Map<UpdateUserDtoBase>(user);
+        var updateUserDto = mapper.Map<UserDto>(user);
         request.PatchDocument.ApplyTo(updateUserDto);
         var validationResult = await validator.ValidateAsync(updateUserDto, cancellationToken);
         if (!validationResult.IsValid)
@@ -74,7 +74,7 @@ public class UpdateUserByIdCommandHandler(
     }
 
     private IEnumerable<string> GetInvalidPatchPaths(RoleOnPlatformEnum roleOnPlatformEnum,
-        JsonPatchDocument<UpdateUserDtoBase> patchDocument)
+        JsonPatchDocument<UserDto> patchDocument)
     {
         var paths = patchDocument.Operations.Select(operation => operation.path);
         return roleOnPlatformEnum switch
@@ -88,17 +88,17 @@ public class UpdateUserByIdCommandHandler(
         };
     }
 
-    private async Task<object> TryUpdate(Domain.User.User user, UpdateUserDtoBase updateUserDtoBase)
+    private async Task<object> TryUpdate(Domain.User.User user, UserDto updateUserDtoBase)
     {
         object result;
         switch (user.RoleOnPlatform)
         {
             case RoleOnPlatformEnum.Student:
-                var studentDto = mapper.Map<StudentDtoBase>(updateUserDtoBase);
+                var studentDto = mapper.Map<StudentDto>(updateUserDtoBase);
                 mapper.Map(result = studentDto, user);
                 break;
             case RoleOnPlatformEnum.Curator or RoleOnPlatformEnum.Partner:
-                var notStudent = mapper.Map<NotStudentDtoBase>(updateUserDtoBase);
+                var notStudent = mapper.Map<NotStudentDto>(updateUserDtoBase);
                 user = mapper.Map(result = notStudent, user);
                 break;
             default:

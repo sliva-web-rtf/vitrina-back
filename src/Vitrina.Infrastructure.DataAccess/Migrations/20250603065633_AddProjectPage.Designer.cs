@@ -12,7 +12,7 @@ using Vitrina.Infrastructure.DataAccess;
 namespace Vitrina.Infrastructure.DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250603054105_AddProjectPage")]
+    [Migration("20250603065633_AddProjectPage")]
     partial class AddProjectPage
     {
         /// <inheritdoc />
@@ -540,6 +540,7 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("NormalizedEmail")
+                        .IsRequired()
                         .HasMaxLength(256)
                         .IsUnicode(false)
                         .HasColumnType("character varying(256)");

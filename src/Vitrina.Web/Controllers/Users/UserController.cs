@@ -39,7 +39,7 @@ public class UserController(IMediator mediator) : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Update([FromRoute] int id,
-        [FromBody] JsonPatchDocument<UpdateUserDtoBase> patchDocument, CancellationToken cancellationToken)
+        [FromBody] JsonPatchDocument<UserDto> patchDocument, CancellationToken cancellationToken)
     {
         var command = new UpdateUserByIdCommand(id, patchDocument);
         var result = await mediator.Send(command, cancellationToken);

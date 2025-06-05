@@ -25,6 +25,6 @@ internal static class ApplicationModule
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
             });
         services.AddFluentValidationAutoValidation();
-        services.AddValidatorsFromAssembly(typeof(ContentBlockDtoValidator).Assembly);
+        services.AddValidatorsFromAssemblyContaining<ContentBlockDtoValidator>();
     }
 }

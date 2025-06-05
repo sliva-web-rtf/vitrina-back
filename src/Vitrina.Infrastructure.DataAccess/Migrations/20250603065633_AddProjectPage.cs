@@ -157,6 +157,20 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                 type: "integer",
                 nullable: true);
 
+            migrationBuilder.AlterColumn<string>(
+                name: "NormalizedEmail",
+                table: "AspNetUsers",
+                type: "character varying(256)",
+                unicode: false,
+                maxLength: 256,
+                nullable: false,
+                defaultValue: "",
+                oldClrType: typeof(string),
+                oldType: "character varying(256)",
+                oldUnicode: false,
+                oldMaxLength: 256,
+                oldNullable: true);
+
             migrationBuilder.AddColumn<string>(
                 name: "ProfileData",
                 table: "AspNetUsers",
@@ -606,6 +620,18 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                 type: "text",
                 unicode: false,
                 nullable: true);
+
+            migrationBuilder.AlterColumn<string>(
+                name: "NormalizedEmail",
+                table: "AspNetUsers",
+                type: "character varying(256)",
+                unicode: false,
+                maxLength: 256,
+                nullable: true,
+                oldClrType: typeof(string),
+                oldType: "character varying(256)",
+                oldUnicode: false,
+                oldMaxLength: 256);
 
             migrationBuilder.CreateTable(
                 name: "Block",

@@ -58,7 +58,7 @@ public class User : IdentityUser<int>
     /// <summary>
     ///     User patronymic.
     /// </summary>
-    required public string Patronymic { get; set; }
+    public string Patronymic { get; set; }
 
     /// <summary>
     ///     Full name of user.
@@ -97,4 +97,6 @@ public class User : IdentityUser<int>
     public string ProfileData { get; set; }
 
     [Column(TypeName = "jsonb")] public string? AdditionalInformation { get; set; }
+
+    public override string NormalizedEmail => Email.ToUpper();
 }

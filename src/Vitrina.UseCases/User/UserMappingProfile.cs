@@ -19,33 +19,33 @@ public class UserMappingProfile : Profile
     /// </summary>
     public UserMappingProfile()
     {
-        CreateMap<RegisterCommand, UpdateUserDtoBase>().IgnoreAllNonExisting();
+        CreateMap<RegisterCommand, UserDto>().IgnoreAllNonExisting();
         CreateMap<RegisterCommand, Domain.User.User>()
             .ForMember(user => user.UserName, member =>
                 member.MapFrom(registerCommand => registerCommand.FirstName))
             .ForAllMembers(member => member.Ignore());
         CreateMap<Domain.User.User, UserDetailsDto>();
-        CreateMap<StudentDtoBase, Domain.User.User>()
+        CreateMap<StudentDto, Domain.User.User>()
             .ForMember(user => user.AdditionalInformation, member => member.MapFrom(userDto =>
                 JsonConvert.SerializeObject(userDto.AdditionalInformation)))
             .IgnoreAllNonExisting();
-        CreateMap<Domain.User.User, StudentDtoBase>()
+        CreateMap<Domain.User.User, StudentDto>()
             .ForMember(userDto => userDto.AdditionalInformation, member =>
                 member.MapFrom(user =>
                     JsonConvert.DeserializeObject<AdditionalStudentInfo>(user.AdditionalInformation)));
-        CreateMap<NotStudentDtoBase, Domain.User.User>()
+        CreateMap<NotStudentDto, Domain.User.User>()
             .ForMember(user => user.AdditionalInformation, member =>
                 member.MapFrom(userDto => JsonConvert.SerializeObject(userDto.AdditionalInformation)))
             .IgnoreAllNonExisting();
-        CreateMap<Domain.User.User, NotStudentDtoBase>()
+        CreateMap<Domain.User.User, NotStudentDto>()
             .ForMember(userDto => userDto.AdditionalInformation, member => member.MapFrom(user =>
                 JsonConvert.DeserializeObject<AdditionalNotStudentInfo>(user.AdditionalInformation)));
         CreateMap<Specialization, SpecializationDto>();
-        CreateMap<Domain.User.User, UpdateUserDtoBase>()
+        CreateMap<Domain.User.User, UserDto>()
             .ForMember(userDto => userDto.AdditionalInformation, member => member.MapFrom(user =>
                 JsonConvert.DeserializeObject<AdditionalUserInfo>(user.AdditionalInformation)));
-        CreateMap<UpdateUserDtoBase, StudentDtoBase>();
-        CreateMap<UpdateUserDtoBase, NotStudentDtoBase>();
+        CreateMap<UserDto, StudentDto>();
+        CreateMap<UserDto, NotStudentDto>();
         CreateMap<AdditionalUserInfo, AdditionalStudentInfo>();
         CreateMap<AdditionalUserInfo, AdditionalNotStudentInfo>();
         CreateMap<Domain.User.User, ResponceShortenedUserDto>().ReverseMap();
