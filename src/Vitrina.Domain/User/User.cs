@@ -31,16 +31,6 @@ public class User : IdentityUser<int>
     public DateTime CreatedAt { get; set; }
 
     /// <summary>
-    ///     Indicates when the user was updated.
-    /// </summary>
-    public DateTime UpdatedAt { get; set; }
-
-    /// <summary>
-    ///     Indicates when the user was removed.
-    /// </summary>
-    public DateTime? RemovedAt { get; set; }
-
-    /// <summary>
     ///     User role on the platform.
     /// </summary>
     public RoleOnPlatformEnum RoleOnPlatform { get; set; }
@@ -59,11 +49,6 @@ public class User : IdentityUser<int>
     ///     User patronymic.
     /// </summary>
     public string Patronymic { get; set; }
-
-    /// <summary>
-    ///     Full name of user.
-    /// </summary>
-    public string FullName => $"{LastName} {FirstName} {Patronymic}";
 
     /// <summary>
     ///     Telegram username of user.

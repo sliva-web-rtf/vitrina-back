@@ -17,7 +17,7 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.3")
+                .HasAnnotation("ProductVersion", "9.0.5")
                 .HasAnnotation("Proxies:ChangeTracking", false)
                 .HasAnnotation("Proxies:CheckEquality", false)
                 .HasAnnotation("Proxies:LazyLoading", true)
@@ -483,7 +483,7 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                     b.Property<int>("AccessFailedCount")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .HasDefaultValue(5);
+                        .HasDefaultValue(0);
 
                     b.Property<string>("AdditionalInformation")
                         .IsUnicode(false)
@@ -570,9 +570,6 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                         .HasColumnType("integer")
                         .HasDefaultValue(1);
 
-                    b.Property<DateTime?>("RemovedAt")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<int>("RoleOnPlatform")
                         .HasColumnType("integer");
 
@@ -588,9 +585,6 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("boolean")
                         .HasDefaultValue(false);
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256)

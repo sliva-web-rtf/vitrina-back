@@ -70,6 +70,7 @@ public class RegisterCommandHandler(
         };
         user.UserName = $"{Guid.NewGuid()}";
         user.RegistrationStatus = RegistrationStatusEnum.Registered;
+        user.CreatedAt = DateTime.UtcNow;
         return user;
     }
 }

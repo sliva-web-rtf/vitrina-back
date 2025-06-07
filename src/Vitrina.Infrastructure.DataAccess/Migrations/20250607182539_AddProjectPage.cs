@@ -107,6 +107,14 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                 name: "VideoUrl",
                 table: "Projects");
 
+            migrationBuilder.DropColumn(
+                name: "RemovedAt",
+                table: "AspNetUsers");
+
+            migrationBuilder.DropColumn(
+                name: "UpdatedAt",
+                table: "AspNetUsers");
+
             migrationBuilder.RenameColumn(
                 name: "TypeInitiative",
                 table: "Projects",
@@ -170,6 +178,16 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                 oldUnicode: false,
                 oldMaxLength: 256,
                 oldNullable: true);
+
+            migrationBuilder.AlterColumn<int>(
+                name: "AccessFailedCount",
+                table: "AspNetUsers",
+                type: "integer",
+                nullable: false,
+                defaultValue: 0,
+                oldClrType: typeof(int),
+                oldType: "integer",
+                oldDefaultValue: 5);
 
             migrationBuilder.CreateTable(
                 name: "ProjectPages",
@@ -620,6 +638,29 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                 oldType: "character varying(256)",
                 oldUnicode: false,
                 oldMaxLength: 256);
+
+            migrationBuilder.AlterColumn<int>(
+                name: "AccessFailedCount",
+                table: "AspNetUsers",
+                type: "integer",
+                nullable: false,
+                defaultValue: 5,
+                oldClrType: typeof(int),
+                oldType: "integer",
+                oldDefaultValue: 0);
+
+            migrationBuilder.AddColumn<DateTime>(
+                name: "RemovedAt",
+                table: "AspNetUsers",
+                type: "timestamp with time zone",
+                nullable: true);
+
+            migrationBuilder.AddColumn<DateTime>(
+                name: "UpdatedAt",
+                table: "AspNetUsers",
+                type: "timestamp with time zone",
+                nullable: false,
+                defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
 
             migrationBuilder.CreateTable(
                 name: "Block",
