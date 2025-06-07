@@ -6,9 +6,10 @@
 
   <ItemGroup>
     <PackageReference Include="Innofactor.EfCoreJsonValueConverter" Version="6.0.0"/>
-    <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="9.0.3"/>
+    <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="9.0.5"/>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3"/>
     <PackageReference Include="Saritasa.Tools.Common" Version="5.0.0"/>
+    <PackageReference Include="Saritasa.Tools.EntityFrameworkCore" Version="8.0.0"/>
     <PackageReference Include="Saritasa.Tools.Domain" Version="0.8.2"/>
     <PackageReference Update="StyleCop.Analyzers.Unstable" Version="1.2.0.556">
       <PrivateAssets>all</PrivateAssets>

@@ -12,7 +12,7 @@ using Vitrina.Infrastructure.DataAccess;
 namespace Vitrina.Infrastructure.DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250603065633_AddProjectPage")]
+    [Migration("20250607160709_AddProjectPage")]
     partial class AddProjectPage
     {
         /// <inheritdoc />
@@ -567,11 +567,6 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("boolean")
                         .HasDefaultValue(false);
-
-                    b.Property<string>("ProfileData")
-                        .IsRequired()
-                        .IsUnicode(false)
-                        .HasColumnType("jsonb");
 
                     b.Property<int?>("RegistrationStatus")
                         .ValueGeneratedOnAdd()

@@ -90,12 +90,6 @@ public class User : IdentityUser<int>
     /// </summary>
     public virtual ICollection<PageEditor> EditingRights { get; init; } = new List<PageEditor>();
 
-    /// <summary>
-    ///     User profile information.
-    /// </summary>
-    [Column(TypeName = "jsonb")]
-    public string ProfileData { get; set; }
-
     [Column(TypeName = "jsonb")] public string? AdditionalInformation { get; set; }
 
     public override string NormalizedEmail => Email.ToUpper();

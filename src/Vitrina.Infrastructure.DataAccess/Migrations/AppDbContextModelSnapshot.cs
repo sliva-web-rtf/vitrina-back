@@ -565,11 +565,6 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                         .HasColumnType("boolean")
                         .HasDefaultValue(false);
 
-                    b.Property<string>("ProfileData")
-                        .IsRequired()
-                        .IsUnicode(false)
-                        .HasColumnType("jsonb");
-
                     b.Property<int?>("RegistrationStatus")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")

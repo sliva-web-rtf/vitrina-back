@@ -171,14 +171,6 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                 oldMaxLength: 256,
                 oldNullable: true);
 
-            migrationBuilder.AddColumn<string>(
-                name: "ProfileData",
-                table: "AspNetUsers",
-                type: "jsonb",
-                unicode: false,
-                nullable: false,
-                defaultValue: "");
-
             migrationBuilder.CreateTable(
                 name: "ProjectPages",
                 columns: table => new
@@ -519,10 +511,6 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
             migrationBuilder.DropColumn(
                 name: "TeammateId",
                 table: "ProjectRoles");
-
-            migrationBuilder.DropColumn(
-                name: "ProfileData",
-                table: "AspNetUsers");
 
             migrationBuilder.RenameColumn(
                 name: "CreatorId",
