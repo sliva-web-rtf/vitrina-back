@@ -12,7 +12,7 @@ using Vitrina.Infrastructure.DataAccess;
 namespace Vitrina.Infrastructure.DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250608111456_AddProjectPage")]
+    [Migration("20250608161749_AddProjectPage")]
     partial class AddProjectPage
     {
         /// <inheritdoc />
@@ -273,7 +273,7 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                     b.Property<Guid?>("SphereId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("TeamId")
+                    b.Property<Guid?>("TeamId")
                         .HasColumnType("uuid");
 
                     b.Property<Guid?>("ThematicsId")
@@ -712,8 +712,7 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                     b.HasOne("Vitrina.Domain.Project.Team", "Team")
                         .WithOne("Project")
                         .HasForeignKey("Vitrina.Domain.Project.Project", "TeamId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("Vitrina.Domain.Project.ProjectThematics", "Thematics")
                         .WithMany()

@@ -71,7 +71,7 @@ public class UserController(IMediator mediator) : ControllerBase
     [Produces("application/json")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ICollection<CreateProjectDto>> GetProjects([FromRoute] int id,
+    public async Task<ICollection<ResponceProjectDto>> GetProjects([FromRoute] int id,
         CancellationToken cancellationToken)
     {
         var query = new GetUserProjectsByUserIdQuery(id);

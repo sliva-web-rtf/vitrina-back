@@ -8,12 +8,12 @@ namespace Vitrina.UseCases.User.GetUserProjects;
 
 /// <inheritdoc />
 public class GetUserProjectsByUserIdQueryHandler(IAppDbContext dbContext, IMapper mapper)
-    : IRequestHandler<GetUserProjectsByUserIdQuery, ICollection<CreateProjectDto>>
+    : IRequestHandler<GetUserProjectsByUserIdQuery, ICollection<ResponceProjectDto>>
 {
-    public async Task<ICollection<CreateProjectDto>> Handle(GetUserProjectsByUserIdQuery request,
+    public async Task<ICollection<ResponceProjectDto>> Handle(GetUserProjectsByUserIdQuery request,
         CancellationToken cancellationToken) =>
         await dbContext.Teammates
             .Where(teammate => teammate.UserId == request.UserId)
-            .Select(teammate => mapper.Map<CreateProjectDto>(teammate.Team))
+            .Select(teammate => mapper.Map<ResponceProjectDto>(teammate.Team))
             .ToListAsync(cancellationToken);
 }

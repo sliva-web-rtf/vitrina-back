@@ -5,5 +5,5 @@ public record ResponceProjectDto : CreateProjectDto
     /// <summary>
     ///     ID.
     /// </summary>
-    public Guid Id { get; init; }
+    public int Id { get; init; }
 }

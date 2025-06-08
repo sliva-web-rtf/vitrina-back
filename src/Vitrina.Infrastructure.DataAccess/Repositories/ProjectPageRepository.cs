@@ -23,16 +23,6 @@ public class ProjectPageRepository : IProjectPageRepository
         return page ?? throw new NotFoundException($"Page with id = {id} not found");
     }
 
-    public async Task Update(ProjectPage page, CancellationToken cancellationToken)
-    {
-        if (await pages.FindAsync(page.Id, cancellationToken) != null)
-        {
-            pages.Update(page);
-        }
-
-        throw new NotFoundException("Project page not found");
-    }
-
     public async Task AddAsync(ProjectPage page, CancellationToken cancellationToken) =>
         await pages.AddAsync(page, cancellationToken);
 

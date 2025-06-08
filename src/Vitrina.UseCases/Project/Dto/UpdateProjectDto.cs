@@ -28,15 +28,15 @@ public record UpdateProjectDto
     /// <summary>
     ///     Project sphere.
     /// </summary>
-    public virtual RequestSphereDto? Sphere { get; set; }
+    public virtual RequestSphereDto? Sphere { get; init; }
 
     /// <summary>
     ///     Project type.
     /// </summary>
-    public RequestThematicsDto? Thematics { get; set; }
+    public RequestThematicsDto? Thematics { get; init; }
 
     /// <summary>
     ///     The project supervisor's ID.
     /// </summary>
-    public int? CuratorId { get; set; }
+    public int? CuratorId { get; init; }
 }

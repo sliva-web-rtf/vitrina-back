@@ -54,7 +54,7 @@ public class Project
     /// <summary>
     ///     Project page content.
     /// </summary>
-    public virtual ProjectPage Page { get; init; }
+    required public virtual ProjectPage Page { get; init; }
 
     /// <summary>
     ///     Creator's ID.
@@ -64,7 +64,7 @@ public class Project
     /// <summary>
     ///     Project team id.
     /// </summary>
-    public Guid TeamId { get; init; }
+    public Guid? TeamId { get; init; }
 
     /// <summary>
     ///     Project team.

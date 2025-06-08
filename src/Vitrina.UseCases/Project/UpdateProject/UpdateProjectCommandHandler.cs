@@ -7,9 +7,9 @@ using Vitrina.UseCases.Project.Dto;
 namespace Vitrina.UseCases.Project.UpdateProject;
 
 internal class UpdateProjectCommandHandler(IMapper mapper, IAppDbContext dbContext)
-    : IRequestHandler<UpdateProjectCommand, CreateProjectDto>
+    : IRequestHandler<UpdateProjectCommand, ResponceProjectDto>
 {
-    public async Task<CreateProjectDto> Handle(UpdateProjectCommand request, CancellationToken cancellationToken)
+    public async Task<ResponceProjectDto> Handle(UpdateProjectCommand request, CancellationToken cancellationToken)
     {
         var project = await dbContext.Projects.FindAsync(request.ProjectId, cancellationToken)
                       ?? throw new NotFoundException($"Project with id = {request.ProjectId} not found.");
@@ -18,6 +18,6 @@ internal class UpdateProjectCommandHandler(IMapper mapper, IAppDbContext dbConte
         request.PatchDocument.ApplyTo(projectDto);
         mapper.Map(projectDto, project);
         await dbContext.SaveChangesAsync(cancellationToken);
-        return mapper.Map<CreateProjectDto>(project);
+        return mapper.Map<ResponceProjectDto>(project);
     }
 }

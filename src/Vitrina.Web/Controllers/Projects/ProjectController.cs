@@ -45,8 +45,8 @@ public class ProjectController(IMediator mediator) : ControllerBase
     [HttpGet("{id:int}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<CreateProjectDto> GetProject([FromRoute] int id, CancellationToken cancellationToken)
-        => await mediator.Send(new GetProjectByIdQuery(id), cancellationToken);
+    public async Task<IActionResult> GetProject([FromRoute] int id, CancellationToken cancellationToken)
+        => Ok(await mediator.Send(new GetProjectByIdQuery(id), cancellationToken));
 
     /// <summary>
     ///     Get organizations.

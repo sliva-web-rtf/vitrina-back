@@ -17,21 +17,34 @@ internal class CreateProjectCommandHandler(IMapper mapper, IAppDbContext dbConte
     /// <inheritdoc />
     public async Task<int> Handle(CreateProjectCommand request, CancellationToken cancellationToken)
     {
-        await ValidateModelAsync(request.ProjectDto, request.IdAuthorizedUser, cancellationToken);
+        await ValidateModelAsync(request.ProjectDto, cancellationToken);
+
+        var page = await dbContext.ProjectPages.FindAsync(request.ProjectDto.PageId, cancellationToken)
+                   ?? throw new DomainException($"Page with id = {request.ProjectDto.PageId} not found");
+        page.ThrowExceptionIfNoAccessRights(request.IdAuthorizedUser);
+
         var project = new Domain.Project.Project
         {
-            PageId = request.ProjectDto.PageId, Name = request.ProjectDto.Name, CreatorId = request.IdAuthorizedUser
+            Page = page,
+            PageId = request.ProjectDto.PageId,
+            Name = request.ProjectDto.Name,
+            CreatorId = request.IdAuthorizedUser
         };
         mapper.Map(request.ProjectDto, project);
         project.Page.ReadyStatus = PageReadyStatusEnum.UnderReview;
         await dbContext.Projects.AddAsync(project, cancellationToken);
-        await dbContext.SaveChangesAsync(cancellationToken);
+        try
+        {
+            await dbContext.SaveChangesAsync(cancellationToken);
+        }
+        catch (Exception e)
+        {
+        }
 
         return project.Id;
     }
 
-    private async Task ValidateModelAsync(CreateProjectDto projectDto, int idAuthorizedUser,
-        CancellationToken cancellationToken)
+    private async Task ValidateModelAsync(CreateProjectDto projectDto, CancellationToken cancellationToken)
     {
         if (await dbContext.Projects.FirstOrDefaultAsync(existingProject => existingProject.PageId == projectDto.PageId,
                 cancellationToken) != null)
@@ -39,23 +52,16 @@ internal class CreateProjectCommandHandler(IMapper mapper, IAppDbContext dbConte
             throw new DomainException("Project with the insect page already created");
         }
 
-        var page = await dbContext.ProjectPages.FindAsync(projectDto.PageId, cancellationToken);
-        if (page == null)
-        {
-            throw new DomainException($"Page with id = {projectDto.PageId} not found");
-        }
-
-        page.ThrowExceptionIfNoAccessRights(idAuthorizedUser);
-
         var sphere = projectDto.Sphere;
-        if (await dbContext.ProjectSpheres.FirstOrDefaultAsync(existingSphere => existingSphere.Name == sphere.Name,
+        if (sphere is not null && await dbContext.ProjectSpheres.FirstOrDefaultAsync(
+                existingSphere => existingSphere.Name == sphere.Name,
                 cancellationToken) == null)
         {
             throw new DomainException("Sphere not found");
         }
 
         var thematics = projectDto.Thematics;
-        if (await dbContext.ProjectThematics.FirstOrDefaultAsync(existingThematics =>
+        if (thematics is not null && await dbContext.ProjectThematics.FirstOrDefaultAsync(existingThematics =>
                 existingThematics.Name == thematics.Name, cancellationToken) == null)
         {
             throw new DomainException("Thematics not found");
