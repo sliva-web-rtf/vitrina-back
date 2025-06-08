@@ -18,10 +18,5 @@ public record ProjectPageDto : BaseEntityDto<Guid>
     /// <summary>
     ///     Project id.
     /// </summary>
-    public int ProjectId { get; init; }
-
-    /// <summary>
-    ///     User ID who created the project page.
-    /// </summary>
-    public int CreatorId { get; init; }
+    public int? ProjectId { get; init; }
 }

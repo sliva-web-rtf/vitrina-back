@@ -29,6 +29,7 @@ public class GetProjectPageByIdQueryHandler(
         }
 
         page.SortContentBlocks();
-        return mapper.Map<ProjectPageDto>(page);
+        var p = mapper.Map<ProjectPageDto>(page);
+        return p;
     }
 }

@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Vitrina.Domain.Project.Page.Content;
 using Vitrina.Domain.Project.Page.Editor;
+using Vitrina.UseCases.Common;
 using Vitrina.UseCases.ProjectPage.CreateProjectPage;
 using Vitrina.UseCases.ProjectPage.Dto;
 
@@ -12,12 +13,7 @@ public class ProjectPageMappingProfile : Profile
 {
     public ProjectPageMappingProfile()
     {
-        CreateMap<Domain.Project.Page.ProjectPage, ProjectPageDto>()
-            .ForMember(
-                member => member.CreatorId,
-                memberConfiguration => memberConfiguration.MapFrom(page =>
-                    page.Editors.First(editor => editor.Status == EditorStatus.Creator)))
-            .ForAllMembers(member => member.Ignore());
+        CreateMap<Domain.Project.Page.ProjectPage, ProjectPageDto>();
         CreateMap<ProjectPageDto, Domain.Project.Page.ProjectPage>()
             .ForMember(projectPage => projectPage.Editors, member => member.Ignore())
             .ForMember(projectPage => projectPage.Project, member => member.Ignore());
@@ -28,7 +24,8 @@ public class ProjectPageMappingProfile : Profile
         CreateMap<ContentBlockDto, ContentBlock>()
             .ForMember(
                 contentBlock => contentBlock.Content,
-                member => member.MapFrom(contentBlock => contentBlock.Content.ToString(Formatting.Indented)));
+                member => member.MapFrom(contentBlock => contentBlock.Content.ToString(Formatting.Indented)))
+            .IgnoreAllNonExisting();
         CreateMap<PageEditor, PageEditorDto>()
             .ReverseMap()
             .ForAllMembers(member => member.Ignore());

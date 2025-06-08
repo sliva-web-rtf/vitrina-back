@@ -24,8 +24,8 @@ internal static class ApplicationModule
             .AddNewtonsoftJson(options =>
             {
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-            })
-            .AddNewtonsoftJson(options => options.SerializerSettings.Converters.Add(new StringEnumConverter()));
+                options.SerializerSettings.Converters.Add(new StringEnumConverter());
+            });
         services.AddFluentValidationAutoValidation();
         services.AddValidatorsFromAssemblyContaining<ContentBlockDtoValidator>();
     }

@@ -6,6 +6,7 @@ using Vitrina.Domain.Project.Page;
 using Vitrina.Domain.Project.Page.Content;
 using Vitrina.Domain.Project.Page.Editor;
 using Vitrina.Infrastructure.Abstractions.Interfaces.Repositories;
+using Vitrina.UseCases.ProjectPage.Dto;
 
 namespace Vitrina.UseCases.ProjectPage.CreateProjectPage;
 
@@ -14,7 +15,7 @@ public class CreateProjectPageCommandHandler(
     IMapper mapper,
     IProjectPageRepository repository,
     UserManager<Domain.User.User> userManager,
-    ContentBlockDtoValidator validator)
+    IValidator<ContentBlockDto> validator)
     : IRequestHandler<CreateProjectPageCommand, Guid>
 {
     /// <inheritdoc />
@@ -37,13 +38,7 @@ public class CreateProjectPageCommandHandler(
 
         page.NumberCustomBlocks();
         await repository.AddAsync(page, cancellationToken);
-        try
-        {
-            await repository.SaveChangesAsync(cancellationToken);
-        }
-        catch (Exception ex)
-        {
-        }
+        await repository.SaveChangesAsync(cancellationToken);
 
         return page.Id;
     }
