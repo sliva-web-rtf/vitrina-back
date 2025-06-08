@@ -179,16 +179,6 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                 oldMaxLength: 256,
                 oldNullable: true);
 
-            migrationBuilder.AlterColumn<int>(
-                name: "AccessFailedCount",
-                table: "AspNetUsers",
-                type: "integer",
-                nullable: false,
-                defaultValue: 0,
-                oldClrType: typeof(int),
-                oldType: "integer",
-                oldDefaultValue: 5);
-
             migrationBuilder.CreateTable(
                 name: "ProjectPages",
                 columns: table => new
@@ -638,16 +628,6 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                 oldType: "character varying(256)",
                 oldUnicode: false,
                 oldMaxLength: 256);
-
-            migrationBuilder.AlterColumn<int>(
-                name: "AccessFailedCount",
-                table: "AspNetUsers",
-                type: "integer",
-                nullable: false,
-                defaultValue: 5,
-                oldClrType: typeof(int),
-                oldType: "integer",
-                oldDefaultValue: 0);
 
             migrationBuilder.AddColumn<DateTime>(
                 name: "RemovedAt",

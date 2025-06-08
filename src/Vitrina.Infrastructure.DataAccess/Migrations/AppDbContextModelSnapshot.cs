@@ -483,7 +483,7 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                     b.Property<int>("AccessFailedCount")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .HasDefaultValue(0);
+                        .HasDefaultValue(5);
 
                     b.Property<string>("AdditionalInformation")
                         .IsUnicode(false)
