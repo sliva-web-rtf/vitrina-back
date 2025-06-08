@@ -22,10 +22,16 @@ public class ContentBlockDtoValidator : AbstractValidator<ContentBlockDto>
         { ContentTypeEnum.VideoBlock, typeof(VideoBlockDto) }
     };
 
+    private static readonly JsonSerializerSettings SerializerSettings = new()
+    {
+        MissingMemberHandling = MissingMemberHandling.Error,
+        Error = (_, args) => { args.ErrorContext.Handled = false; }
+    };
+
     public ContentBlockDtoValidator()
     {
         RuleFor(contentBlock => contentBlock.Content)
-            .NotEmpty()
+            .NotNull()
             .WithMessage("The value of the Content field should not be empty");
         RuleFor(contentBlock => contentBlock)
             .Must(TryDeserializeContentBlock)
@@ -39,10 +45,10 @@ public class ContentBlockDtoValidator : AbstractValidator<ContentBlockDto>
         {
             try
             {
-                JsonConvert.DeserializeObject(block.Content, type);
+                block.Content.ToObject(type, JsonSerializer.Create(SerializerSettings));
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return false;
             }

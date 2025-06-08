@@ -1,6 +1,7 @@
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using Vitrina.UseCases.ProjectPage;
 
 namespace Vitrina.Web.Infrastructure.DependencyInjection;
@@ -23,7 +24,8 @@ internal static class ApplicationModule
             .AddNewtonsoftJson(options =>
             {
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-            });
+            })
+            .AddNewtonsoftJson(options => options.SerializerSettings.Converters.Add(new StringEnumConverter()));
         services.AddFluentValidationAutoValidation();
         services.AddValidatorsFromAssemblyContaining<ContentBlockDtoValidator>();
     }

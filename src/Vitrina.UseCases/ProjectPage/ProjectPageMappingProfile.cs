@@ -1,4 +1,6 @@
 using AutoMapper;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Vitrina.Domain.Project.Page.Content;
 using Vitrina.Domain.Project.Page.Editor;
 using Vitrina.UseCases.ProjectPage.CreateProjectPage;
@@ -20,8 +22,13 @@ public class ProjectPageMappingProfile : Profile
             .ForMember(projectPage => projectPage.Editors, member => member.Ignore())
             .ForMember(projectPage => projectPage.Project, member => member.Ignore());
         CreateMap<ContentBlock, ContentBlockDto>()
-            .ReverseMap()
-            .ForAllMembers(member => member.Ignore());
+            .ForMember(
+                contentBlockDto => contentBlockDto.Content,
+                member => member.MapFrom(contentBlock => JObject.Parse(contentBlock.Content)));
+        CreateMap<ContentBlockDto, ContentBlock>()
+            .ForMember(
+                contentBlock => contentBlock.Content,
+                member => member.MapFrom(contentBlock => contentBlock.Content.ToString(Formatting.Indented)));
         CreateMap<PageEditor, PageEditorDto>()
             .ReverseMap()
             .ForAllMembers(member => member.Ignore());
