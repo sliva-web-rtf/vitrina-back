@@ -42,10 +42,11 @@ public class ProjectController(IMediator mediator) : ControllerBase
     ///     Get project by id.
     /// </summary>
     /// <returns>Project.</returns>
-    [HttpGet("{id:int}")]
+    [HttpGet("{project-id:int}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetProject([FromRoute] int id, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetProject([FromRoute(Name = "project-id")] int id,
+        CancellationToken cancellationToken)
         => Ok(await mediator.Send(new GetProjectByIdQuery(id), cancellationToken));
 
     /// <summary>
@@ -60,11 +61,12 @@ public class ProjectController(IMediator mediator) : ControllerBase
     /// <summary>
     ///     Delete project.
     /// </summary>
-    [HttpDelete("{id:int}")]
+    [HttpDelete("{project-id:int}")]
     [Authorize(Roles = "Student, Curator")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> DeleteProject([FromRoute] int id, CancellationToken cancellationToken)
+    public async Task<IActionResult> DeleteProject([FromRoute(Name = "project-id")] int id,
+        CancellationToken cancellationToken)
     {
         var command = new DeleteProjectCommand(id, GetIdAuthorizedUser());
         await mediator.Send(command, cancellationToken);
@@ -74,11 +76,11 @@ public class ProjectController(IMediator mediator) : ControllerBase
     /// <summary>
     ///     Update project.
     /// </summary>
-    [HttpPatch("{id:int}")]
+    [HttpPatch("{project-id:int}")]
     [Authorize(Roles = "Student, Curator")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> UpdateProject([FromRoute] int id,
+    public async Task<IActionResult> UpdateProject([FromRoute(Name = "project-id")] int id,
         [FromBody] JsonPatchDocument<UpdateProjectDto> patchDocument,
         CancellationToken cancellationToken)
     {

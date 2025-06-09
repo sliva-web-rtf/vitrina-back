@@ -12,7 +12,7 @@ using Vitrina.Infrastructure.DataAccess;
 namespace Vitrina.Infrastructure.DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250608161749_AddProjectPage")]
+    [Migration("20250609112350_AddProjectPage")]
     partial class AddProjectPage
     {
         /// <inheritdoc />
@@ -456,11 +456,9 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
 
             modelBuilder.Entity("Vitrina.Domain.User.Specialization", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Name")
                         .IsRequired()

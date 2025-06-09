@@ -17,8 +17,8 @@ namespace Vitrina.Web.Controllers.Projects;
 
 [Authorize]
 [ApiController]
-[Route("api/pages")]
-[ApiExplorerSettings(GroupName = "pages")]
+[Route("api/project-pages")]
+[ApiExplorerSettings(GroupName = "project-pages")]
 public class ProjectPageController(IMediator mediator) : ControllerBase
 {
     /// <summary>
@@ -40,11 +40,11 @@ public class ProjectPageController(IMediator mediator) : ControllerBase
     ///     Deletes the project page.
     /// </summary>
     /// <param name="id">Page identifier.</param>
-    [HttpDelete("{id:guid}")]
+    [HttpDelete("{page-id:guid}")]
     [Authorize(Roles = "Student, Curator")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> Delete([FromRoute] Guid id, CancellationToken cancellationToken)
+    public async Task<IActionResult> Delete([FromRoute(Name = "page-id")] Guid id, CancellationToken cancellationToken)
     {
         var command = new DeleteProjectPageCommand(id, GetIdAuthorizedUser());
         await mediator.Send(command, cancellationToken);
@@ -55,12 +55,12 @@ public class ProjectPageController(IMediator mediator) : ControllerBase
     ///     Refreshes the project page.
     /// </summary>
     /// <param name="id">Page identifier.</param>
-    [HttpPatch("{id:guid}")]
+    [HttpPatch("{page-id:guid}")]
     [Authorize(Roles = "Student, Curator")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> Update([FromRoute] Guid id,
+    public async Task<IActionResult> Update([FromRoute(Name = "page-id")] Guid id,
         [FromBody] JsonPatchDocument<UpdateProjectPageDto> patchDocument,
         CancellationToken cancellationToken)
     {
@@ -73,10 +73,10 @@ public class ProjectPageController(IMediator mediator) : ControllerBase
     ///     Gets the project page by id.
     /// </summary>
     /// <param name="id">Page identifier.</param>
-    [HttpGet("{id:guid}")]
+    [HttpGet("{page-id:guid}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> Get([FromRoute] Guid id, CancellationToken cancellationToken)
+    public async Task<IActionResult> Get([FromRoute(Name = "page-id")] Guid id, CancellationToken cancellationToken)
     {
         var query = new GetProjectPageByIdQuery(id, GetIdAuthorizedUser());
         return Ok(await mediator.Send(query, cancellationToken));
@@ -86,12 +86,13 @@ public class ProjectPageController(IMediator mediator) : ControllerBase
     ///     Allows you to get a list of users who have rights to edit the page.
     /// </summary>
     /// <param name="id">Page identifier.</param>
-    [HttpGet("{id:guid}/editors")]
+    [HttpGet("{page-id:guid}/editors")]
     [Authorize(Roles = "Student, Curator")]
     [Produces("application/json")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetEditors([FromRoute] Guid id, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetEditors([FromRoute(Name = "page-id")] Guid id,
+        CancellationToken cancellationToken)
     {
         var query = new GetProjectPageEditorsQuery(id, GetIdAuthorizedUser());
         return Ok(await mediator.Send(query, cancellationToken));
@@ -102,11 +103,11 @@ public class ProjectPageController(IMediator mediator) : ControllerBase
     /// </summary>
     /// <param name="id">Page identifier.</param>
     /// <param name="userEmail">Email user address.</param>
-    [HttpPost("{id:guid}/editors")]
+    [HttpPost("{page-id:guid}/editors")]
     [Authorize(Roles = "Student, Curator")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> AddEditors([FromRoute] Guid id, [FromBody] EmailDto userEmail,
+    public async Task<IActionResult> AddEditors([FromRoute(Name = "page-id")] Guid id, [FromBody] EmailDto userEmail,
         CancellationToken cancellationToken)
     {
         var command = new AddEditorByUserEmailCommand(id, userEmail, GetIdAuthorizedUser());
@@ -119,10 +120,11 @@ public class ProjectPageController(IMediator mediator) : ControllerBase
     /// <param name="id">Page identifier.</param>
     /// <param name="editorId">Editor identifier.</param>
     [Authorize(Roles = "Student, Curator")]
-    [HttpDelete("{id:guid}/editors/{editorId:guid}")]
+    [HttpDelete("{page-id:guid}/editors/{editor-id:guid}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> DeleteEditors([FromRoute] Guid id, [FromRoute] Guid editorId,
+    public async Task<IActionResult> DeleteEditors([FromRoute(Name = "page-id")] Guid id,
+        [FromRoute(Name = "editor-id")] Guid editorId,
         CancellationToken cancellationToken)
     {
         var command = new DeleteEditorByPageEditorIdCommand(id, editorId, GetIdAuthorizedUser());

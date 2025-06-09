@@ -13,7 +13,7 @@ public class SpecializationRepository(IAppDbContext dbContext) : ISpecialization
         await dbContext.Specializations.ToArrayAsync(cancellationToken);
 
     /// <inheritdoc />
-    public async Task<Specialization> Delete(int id, CancellationToken cancellationToken)
+    public async Task<Specialization> Delete(Guid id, CancellationToken cancellationToken)
     {
         var specialization = await dbContext.Specializations.FindAsync(id, cancellationToken);
 
@@ -30,7 +30,7 @@ public class SpecializationRepository(IAppDbContext dbContext) : ISpecialization
     /// <inheritdoc />
     public async Task<Specialization> Create(string name, CancellationToken cancellationToken)
     {
-        var specialization = new Specialization { Name = name };
+        var specialization = new Specialization { Id = Guid.NewGuid(), Name = name };
         dbContext.Specializations.Add(specialization);
         await dbContext.SaveChangesAsync(cancellationToken);
         return specialization;

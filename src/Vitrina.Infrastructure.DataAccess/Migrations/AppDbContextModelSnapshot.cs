@@ -453,11 +453,9 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
 
             modelBuilder.Entity("Vitrina.Domain.User.Specialization", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Name")
                         .IsRequired()

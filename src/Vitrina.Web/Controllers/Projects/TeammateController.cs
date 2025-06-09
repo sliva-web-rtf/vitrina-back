@@ -18,12 +18,12 @@ public class TeammateController(IMediator mediator) : ControllerBase
     /// <summary>
     ///     Updates the data of the team's member.
     /// </summary>
-    [HttpPatch("{id:int}")]
+    [HttpPatch("{teammate-id:int}")]
     [Authorize(Roles = "Student, Curator")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> Update([FromRoute] int id,
+    public async Task<IActionResult> Update([FromRoute(Name = "teammate-id")] int id,
         [FromBody] JsonPatchDocument<ResponceTeammateDto> patchDocument,
         CancellationToken cancellationToken)
     {
@@ -35,10 +35,11 @@ public class TeammateController(IMediator mediator) : ControllerBase
     /// <summary>
     ///     Get a team member by id.
     /// </summary>
-    [HttpGet("{id:int}")]
+    [HttpGet("{teammate-id:int}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetById([FromRoute] int id, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetById([FromRoute(Name = "teammate-id")] int id,
+        CancellationToken cancellationToken)
     {
         var query = new GetTeammateByIdQuery(id);
         return Ok(await mediator.Send(query, cancellationToken));
@@ -47,11 +48,12 @@ public class TeammateController(IMediator mediator) : ControllerBase
     /// <summary>
     ///     Delete a user by id.
     /// </summary>
-    [HttpDelete("{id:int}")]
+    [HttpDelete("{teammate-id:int}")]
     [Authorize(Roles = "Student, Curator")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> Delete([FromRoute] int id, CancellationToken cancellationToken)
+    public async Task<IActionResult> Delete([FromRoute(Name = "teammate-id")] int id,
+        CancellationToken cancellationToken)
     {
         var idAuthorizedUser = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
         var command = new DeleteTeammateCommand(id, idAuthorizedUser);

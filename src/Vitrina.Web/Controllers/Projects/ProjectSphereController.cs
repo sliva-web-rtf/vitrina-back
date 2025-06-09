@@ -24,10 +24,11 @@ public class ProjectSphereController(IMediator mediator) : ControllerBase
         return Ok(await mediator.Send(query, cancellationToken));
     }
 
-    [HttpGet("{id:guid}")]
+    [HttpGet("{sphere-id:guid}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetById([FromRoute] Guid id, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetById([FromRoute(Name = "sphere-id")] Guid id,
+        CancellationToken cancellationToken)
     {
         var query = new GetSphereByIdQuery(id);
         return Ok(await mediator.Send(query, cancellationToken));
@@ -44,23 +45,24 @@ public class ProjectSphereController(IMediator mediator) : ControllerBase
         return Created($"api/project-spheres/{result}", new { Id = result });
     }
 
-    [HttpDelete("{id:guid}")]
+    [HttpDelete("{sphere-id:guid}")]
     [Authorize(Roles = "Administrator")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> Delete([FromRoute] Guid id, CancellationToken cancellationToken)
+    public async Task<IActionResult> Delete([FromRoute(Name = "sphere-id")] Guid id,
+        CancellationToken cancellationToken)
     {
         var command = new DeleteSphereCommand(id);
         await mediator.Send(command, cancellationToken);
         return NoContent();
     }
 
-    [HttpPatch("{id:guid}")]
+    [HttpPatch("{sphere-id:guid}")]
     [Authorize(Roles = "Administrator")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> Update([FromRoute] Guid id,
+    public async Task<IActionResult> Update([FromRoute(Name = "sphere-id")] Guid id,
         [FromBody] JsonPatchDocument<RequestSphereDto> patchDocument,
         CancellationToken cancellationToken)
     {

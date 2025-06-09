@@ -6,7 +6,7 @@ namespace Vitrina.UseCases.UserSpecialization.CreateSpecialization;
 /// <summary>
 ///     The specialization creation command.
 /// </summary>
-public record CreateSpecializationCommand : IRequest<SpecializationDto>
+public record CreateSpecializationCommand : IRequest<Guid>
 {
     [StringLength(255, ErrorMessage = "The Name must be no more than 255 characters long.")]
     public string Name { get; init; }

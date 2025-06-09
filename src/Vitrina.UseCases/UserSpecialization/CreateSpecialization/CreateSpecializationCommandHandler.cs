@@ -1,18 +1,17 @@
-using AutoMapper;
 using MediatR;
 using Vitrina.Infrastructure.Abstractions.Interfaces.Repositories;
 
 namespace Vitrina.UseCases.UserSpecialization.CreateSpecialization;
 
 /// <inheritdoc />
-public class CreateSpecializationCommandHandler(ISpecializationRepository repository, IMapper mapper)
-    : IRequestHandler<CreateSpecializationCommand, SpecializationDto>
+public class CreateSpecializationCommandHandler(ISpecializationRepository repository)
+    : IRequestHandler<CreateSpecializationCommand, Guid>
 {
     /// <inheritdoc />
-    public async Task<SpecializationDto> Handle(CreateSpecializationCommand request,
+    public async Task<Guid> Handle(CreateSpecializationCommand request,
         CancellationToken cancellationToken)
     {
         var specialization = await repository.Create(request.Name, cancellationToken);
-        return mapper.Map<SpecializationDto>(specialization);
+        return specialization.Id;
     }
 }

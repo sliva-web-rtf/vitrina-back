@@ -30,10 +30,10 @@ public class ProjectRoleController(IMediator mediator) : ControllerBase
     /// <summary>
     ///     Gets a role in ID.
     /// </summary>
-    [HttpGet("{id:int}")]
+    [HttpGet("{role-id:int}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetById([FromRoute] int id, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetById([FromRoute(Name = "role-id")] int id, CancellationToken cancellationToken)
     {
         var query = new GetRoleByIdQuery(id);
         return Ok(await mediator.Send(query, cancellationToken));
@@ -56,11 +56,11 @@ public class ProjectRoleController(IMediator mediator) : ControllerBase
     /// <summary>
     ///     Removes the role.
     /// </summary>
-    [HttpDelete("{id:int}")]
+    [HttpDelete("{role-id:int}")]
     [Authorize(Roles = "Administrator")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> Delete([FromRoute] int id, CancellationToken cancellationToken)
+    public async Task<IActionResult> Delete([FromRoute(Name = "role-id")] int id, CancellationToken cancellationToken)
     {
         var command = new DeleteRoleCommand(id);
         await mediator.Send(command, cancellationToken);
@@ -70,12 +70,12 @@ public class ProjectRoleController(IMediator mediator) : ControllerBase
     /// <summary>
     ///     Updates the role.
     /// </summary>
-    [HttpPatch("{id:int}")]
+    [HttpPatch("{role-id:int}")]
     [Authorize(Roles = "Administrator")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> Update([FromRoute] int id,
+    public async Task<IActionResult> Update([FromRoute(Name = "role-id")] int id,
         [FromBody] JsonPatchDocument<RequestRoleDto> patchDocument, CancellationToken cancellationToken)
     {
         var command = new UpdateRoleCommand(patchDocument, id);

@@ -8,10 +8,10 @@ public class Specialization
     ///     ID of the specialization.
     /// </summary>
     [Key]
-    public int Id { get; set; }
+    required public Guid Id { get; init; }
 
     /// <summary>
     ///     Name of the specialization.
     /// </summary>
-    public string Name { get; init; }
+    required public string Name { get; init; }
 }

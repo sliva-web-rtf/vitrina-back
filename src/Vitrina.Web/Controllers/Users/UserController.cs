@@ -18,11 +18,12 @@ namespace Vitrina.Web.Controllers.Users;
 [ApiExplorerSettings(GroupName = "users")]
 public class UserController(IMediator mediator) : ControllerBase
 {
-    [HttpGet("{id:int}")]
+    [HttpGet("{user-id:int}")]
     [Produces("application/json")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetUserById([FromRoute] int id, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetUserById([FromRoute(Name = "user-id")] int id,
+        CancellationToken cancellationToken)
     {
         var query = new GetUserByIdQuery(id);
         var result = await mediator.Send(query, cancellationToken);
@@ -35,10 +36,10 @@ public class UserController(IMediator mediator) : ControllerBase
     [ValidateUserId]
     [Authorize(Roles = "Student, Curator, Partner")]
     [Produces("application/json")]
-    [HttpPatch("{id:int}")]
+    [HttpPatch("{user-id:int}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> Update([FromRoute] int id,
+    public async Task<IActionResult> Update([FromRoute(Name = "user-id")] int id,
         [FromBody] JsonPatchDocument<UserDto> patchDocument, CancellationToken cancellationToken)
     {
         var command = new UpdateUserByIdCommand(id, patchDocument);
@@ -50,12 +51,12 @@ public class UserController(IMediator mediator) : ControllerBase
     ///     Retrieves the list of project pages of the user with the specified id.
     /// </summary>
     [ValidateUserId]
-    [HttpGet("{id:int}/pages")]
+    [HttpGet("{user-id:int}/pages")]
     [Authorize(Roles = "Student, Curator")]
     [Produces("application/json")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ICollection<ResponceProjectPageDto>> GetProjectPages([FromRoute] int id,
+    public async Task<ICollection<ResponceProjectPageDto>> GetProjectPages([FromRoute(Name = "user-id")] int id,
         CancellationToken cancellationToken)
     {
         var query = new GetUserProjectPagesByUserIdQuey(id);
@@ -67,11 +68,11 @@ public class UserController(IMediator mediator) : ControllerBase
     /// </summary>
     [ValidateUserId]
     [Authorize(Roles = "Student, Curator")]
-    [HttpGet("{id:int}/projects")]
+    [HttpGet("{user-id:int}/projects")]
     [Produces("application/json")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ICollection<ResponceProjectDto>> GetProjects([FromRoute] int id,
+    public async Task<ICollection<ResponceProjectDto>> GetProjects([FromRoute(Name = "user-id")] int id,
         CancellationToken cancellationToken)
     {
         var query = new GetUserProjectsByUserIdQuery(id);

@@ -9,8 +9,8 @@ using Vitrina.UseCases.UserSpecialization.GetAllSpecializations;
 namespace Vitrina.Web.Controllers.Users;
 
 /// <inheritdoc />
-[Route("api/specializations")]
-[ApiExplorerSettings(GroupName = "specializations")]
+[Route("api/user-specializations")]
+[ApiExplorerSettings(GroupName = "user-specializations")]
 public class SpecializationsController(IMediator mediator) : ControllerBase
 {
     /// <summary>
@@ -19,7 +19,7 @@ public class SpecializationsController(IMediator mediator) : ControllerBase
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<SpecializationDto[]> GetAllSpecializations(CancellationToken cancellationToken) =>
+    public async Task<ICollection<SpecializationDto>> GetAllSpecializations(CancellationToken cancellationToken) =>
         await mediator.Send(new GetAllSpecializationsQuery(), cancellationToken);
 
     /// <summary>
@@ -34,7 +34,7 @@ public class SpecializationsController(IMediator mediator) : ControllerBase
         CancellationToken cancellationToken)
     {
         var result = await mediator.Send(command, cancellationToken);
-        return Created($"api/specializations/{result.Id}", result);
+        return Created($"api/specializations/{result}", new { id = result });
     }
 
     /// <summary>
@@ -42,10 +42,10 @@ public class SpecializationsController(IMediator mediator) : ControllerBase
     /// </summary>
     [Authorize(Roles = "Administrator")]
     [Produces("application/json")]
-    [HttpDelete("{id:int}")]
+    [HttpDelete("{specialization-id:guid}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<SpecializationDto> DeleteSpecialization([FromRoute] int id,
+    public async Task<SpecializationDto> DeleteSpecialization([FromRoute(Name = "specialization-id")] Guid id,
         CancellationToken cancellationToken)
     {
         var command = new DeleteSpecializationCommand(id);

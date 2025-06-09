@@ -16,7 +16,7 @@ public interface ISpecializationRepository
     ///     Delete a user by ID.
     /// </summary>
     /// <returns></returns>
-    public Task<Specialization> Delete(int id, CancellationToken cancellationToken);
+    public Task<Specialization> Delete(Guid id, CancellationToken cancellationToken);
 
     /// <summary>
     ///     Create a user by ID.

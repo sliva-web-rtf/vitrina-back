@@ -14,8 +14,8 @@ using Vitrina.UseCases.ProjectTeam.UpdateTeam;
 namespace Vitrina.Web.Controllers.Projects;
 
 [ApiController]
-[Route("api/teams")]
-[ApiExplorerSettings(GroupName = "teams")]
+[Route("api/project-teams")]
+[ApiExplorerSettings(GroupName = "project-teams")]
 public class TeamController(IMediator mediator) : ControllerBase
 {
     /// <summary>
@@ -36,12 +36,12 @@ public class TeamController(IMediator mediator) : ControllerBase
     /// <summary>
     ///     Creates a new team member.
     /// </summary>
-    [HttpPost("{id:guid}/teammates")]
+    [HttpPost("{team-id:guid}/teammates")]
     [Authorize(Roles = "Student, Curator")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> AddTeammate([FromRoute] Guid id,
+    public async Task<IActionResult> AddTeammate([FromRoute(Name = "team-id")] Guid id,
         [FromBody] RequestTeammateDto teammateDto, CancellationToken cancellationToken)
     {
         var command = new AddTeammateCommand(teammateDto, GetIdAuthorizedUser(), id);
@@ -52,11 +52,11 @@ public class TeamController(IMediator mediator) : ControllerBase
     /// <summary>
     ///     Deletes the team.
     /// </summary>
-    [HttpDelete("{id:guid}")]
+    [HttpDelete("{team-id:guid}")]
     [Authorize(Roles = "Student, Curator")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task Delete([FromRoute] Guid id, CancellationToken cancellationToken)
+    public async Task Delete([FromRoute(Name = "team-id")] Guid id, CancellationToken cancellationToken)
     {
         var command = new DeleteTeamCommand(id, GetIdAuthorizedUser());
         await mediator.Send(command, cancellationToken);
@@ -65,10 +65,10 @@ public class TeamController(IMediator mediator) : ControllerBase
     /// <summary>
     ///     Gets the command by id.
     /// </summary>
-    [HttpGet("{id:guid}")]
+    [HttpGet("{team-id:guid}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetById([FromRoute] Guid id, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetById([FromRoute(Name = "team-id")] Guid id, CancellationToken cancellationToken)
     {
         var query = new GetTeamByIdQuery(id);
         return Ok(await mediator.Send(query, cancellationToken));
@@ -77,11 +77,11 @@ public class TeamController(IMediator mediator) : ControllerBase
     /// <summary>
     ///     Updates the team by ID.
     /// </summary>
-    [HttpPatch("{id:guid}")]
+    [HttpPatch("{team-id:guid}")]
     [Authorize(Roles = "Student, Curator")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> Update([FromRoute] Guid id,
+    public async Task<IActionResult> Update([FromRoute(Name = "team-id")] Guid id,
         [FromBody] JsonPatchDocument<UpdateTeamDto> patchDocument,
         CancellationToken cancellationToken)
     {
@@ -89,10 +89,11 @@ public class TeamController(IMediator mediator) : ControllerBase
         return Ok(await mediator.Send(command, cancellationToken));
     }
 
-    [HttpGet("{id:guid}/teammates")]
+    [HttpGet("{team-id:guid}/teammates")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetTeammates([FromRoute] Guid id, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetTeammates([FromRoute(Name = "team-id")] Guid id,
+        CancellationToken cancellationToken)
     {
         var query = new GetTeamByIdQuery(id);
         return Ok(await mediator.Send(query, cancellationToken));
