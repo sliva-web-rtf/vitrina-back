@@ -30,9 +30,10 @@ public class SaveResumeCommandHandler(IS3StorageService s3Storage, IAppDbContext
             throw new DomainException("Неправильный формат файла.");
         }
 
-        if (appDbContext.Resume.FirstOrDefault(resume => resume.UserId == request.UserId) != null)
+        var resume = appDbContext.Resume.FirstOrDefault(resume => resume.UserId == request.UserId);
+        if (resume == null)
         {
-            throw new DomainException("У пользователя уже есть резюме.");
+            throw new DomainException("У пользователя нет резюме.");
         }
 
         await using var stream = request.File.OpenReadStream();
@@ -41,7 +42,7 @@ public class SaveResumeCommandHandler(IS3StorageService s3Storage, IAppDbContext
             request.File.ContentType,
             cancellationToken);
 
-        var resume = new Domain.Project.Resume { UserId = request.UserId, FileName = fileName, User = currentUser };
+        resume = new() { UserId = request.UserId, FileName = fileName, User = currentUser };
         appDbContext.Resume.Add(resume);
 
         await appDbContext.SaveChangesAsync(cancellationToken);

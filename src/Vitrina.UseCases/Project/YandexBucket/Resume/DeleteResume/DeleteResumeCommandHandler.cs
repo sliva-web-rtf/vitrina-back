@@ -9,12 +9,7 @@ public class DeleteResumeCommandHandler(IS3StorageService s3Storage, IAppDbConte
 {
     public async Task Handle(DeleteResumeCommand request, CancellationToken cancellationToken)
     {
-        if (appDbContext.Users.FirstOrDefault(user => user.Id == request.UserId) == null)
-        {
-            throw new DomainException("Такого пользователя не существует.");
-        }
-
-        var resume = appDbContext.Resume.FirstOrDefault(resume => resume.UserId == request.UserId);
+        var resume = appDbContext.Resume.FirstOrDefault(resume => resume.Id == request.Id);
         if (resume == null)
         {
             throw new DomainException("У пользователя нет резюме.");

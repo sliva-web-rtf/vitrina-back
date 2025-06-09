@@ -16,9 +16,6 @@ public class ReplacementResumeCommandHandler(IS3StorageService s3Storage, IAppDb
             throw new DomainException("Попытка отправить пустой файл.");
         }
 
-        var currentUser = appDbContext.Users.FirstOrDefault(user => user.Id == request.UserId) ??
-            throw new DomainException("Такого пользователя не существует.");
-
         if (request.File.FileName.Split(".").Length < 2)
         {
             throw new DomainException("Неправильный формат файла.");
@@ -30,7 +27,7 @@ public class ReplacementResumeCommandHandler(IS3StorageService s3Storage, IAppDb
             throw new DomainException("Неправильный формат файла.");
         }
 
-        var resume = appDbContext.Resume.FirstOrDefault(resume => resume.UserId == request.UserId);
+        var resume = appDbContext.Resume.FirstOrDefault(resume => resume.Id == request.Id);
         if (resume == null)
         {
             throw new DomainException("У пользователя нет резюме.");
@@ -45,7 +42,7 @@ public class ReplacementResumeCommandHandler(IS3StorageService s3Storage, IAppDb
             request.File.ContentType,
             cancellationToken);
 
-        resume = new() { UserId = request.UserId, FileName = fileName, User = currentUser };
+        resume = new() { UserId = resume.UserId, FileName = fileName, User = resume.User };
         appDbContext.Resume.Add(resume);
 
         await appDbContext.SaveChangesAsync(cancellationToken);

@@ -9,7 +9,7 @@ public class GetResumeURLCommandHandler(IS3StorageService s3Storage, IAppDbConte
 {
     public Task<string> Handle(GetResumeURLCommand request, CancellationToken cancellationToken)
     {
-        var resume = appDbContext.Resume.FirstOrDefault(resume => resume.UserId == request.UserId);
+        var resume = appDbContext.Resume.FirstOrDefault(resume => resume.Id == request.Id);
         if (resume == null)
         {
             throw new DomainException("У пользователя нет резюме.");
