@@ -38,5 +38,5 @@ public class AdditionalUserInfo
     /// <summary>
     ///     Student specializations.
     /// </summary>
-    public SpecializationDto? Specialization { get; init; } = new();
+    public SpecializationDto? Specialization { get; init; }
 }

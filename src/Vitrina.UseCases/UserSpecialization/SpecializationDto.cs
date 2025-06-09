@@ -10,11 +10,11 @@ public record SpecializationDto
     /// <summary>
     ///     ID of the specialization.
     /// </summary>
-    public int Id { get; set; }
+    required public Guid Id { get; set; }
 
     /// <summary>
     ///     Name of the specialization.
     /// </summary>
     [StringLength(255, ErrorMessage = "The Name must be no more than 255 characters long.")]
-    public string Name { get; init; }
+    required public string Name { get; init; }
 }
