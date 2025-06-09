@@ -1,7 +1,14 @@
+using Vitrina.Domain.Project.Page;
+
 namespace Vitrina.UseCases.ProjectPage.Dto;
 
-public class CreateProjectPageDto
+public record UpdateProjectPageDto
 {
+    /// <summary>
+    ///     Page status.
+    /// </summary>
+    required public PageReadyStatusEnum ReadyStatus { get; init; }
+
     /// <summary>
     ///     Page content blocks.
     /// </summary>

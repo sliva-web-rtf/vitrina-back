@@ -5,5 +5,8 @@ using Vitrina.UseCases.ProjectPage.Dto;
 namespace Vitrina.UseCases.ProjectPage.UpdateProjectPage;
 
 /// <inheritdoc />
-public record UpdateProjectPageCommand(Guid Id, JsonPatchDocument<ProjectPageDto> PatchDocument, int? IdAuthorizedUser)
+public record UpdateProjectPageCommand(
+    Guid Id,
+    JsonPatchDocument<UpdateProjectPageDto> PatchDocument,
+    int? IdAuthorizedUser)
     : IRequest;

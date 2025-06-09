@@ -33,13 +33,7 @@ internal class CreateProjectCommandHandler(IMapper mapper, IAppDbContext dbConte
         mapper.Map(request.ProjectDto, project);
         project.Page.ReadyStatus = PageReadyStatusEnum.UnderReview;
         await dbContext.Projects.AddAsync(project, cancellationToken);
-        try
-        {
-            await dbContext.SaveChangesAsync(cancellationToken);
-        }
-        catch (Exception e)
-        {
-        }
+        await dbContext.SaveChangesAsync(cancellationToken);
 
         return project.Id;
     }

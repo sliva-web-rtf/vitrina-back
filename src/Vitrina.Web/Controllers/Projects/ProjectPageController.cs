@@ -61,7 +61,7 @@ public class ProjectPageController(IMediator mediator) : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Update([FromRoute] Guid id,
-        [FromBody] JsonPatchDocument<ProjectPageDto> patchDocument,
+        [FromBody] JsonPatchDocument<UpdateProjectPageDto> patchDocument,
         CancellationToken cancellationToken)
     {
         var command = new UpdateProjectPageCommand(id, patchDocument, GetIdAuthorizedUser());

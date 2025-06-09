@@ -3,17 +3,17 @@ using Vitrina.UseCases.Common.DTO;
 
 namespace Vitrina.UseCases.ProjectPage.Dto;
 
-public record ProjectPageDto : BaseEntityDto<Guid>
+public record ResponceProjectPageDto : BaseEntityDto<Guid>
 {
     /// <summary>
     ///     Page status.
     /// </summary>
-    public PageReadyStatusEnum ReadyStatus { get; init; }
+    required public PageReadyStatusEnum ReadyStatus { get; init; }
 
     /// <summary>
     ///     Page content blocks.
     /// </summary>
-    public ICollection<ContentBlockDto> ContentBlocks { get; init; } = new List<ContentBlockDto>();
+    required public ICollection<ContentBlockDto> ContentBlocks { get; init; } = new List<ContentBlockDto>();
 
     /// <summary>
     ///     Project id.

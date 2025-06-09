@@ -23,12 +23,8 @@ public class UpdateProjectPageCommandHandler(
         var page = await repository.GetByIdAsync(request.Id, cancellationToken);
         page.ThrowExceptionIfNoAccessRights(request.IdAuthorizedUser);
         page.SortContentBlocks();
-        var pageDto = mapper.Map<ProjectPageDto>(page);
+        var pageDto = mapper.Map<UpdateProjectPageDto>(page);
         request.PatchDocument.ApplyTo(pageDto);
-        if (pageDto.Id != request.Id)
-        {
-            throw new ArgumentException("Invalid page id.");
-        }
 
         foreach (var block in pageDto.ContentBlocks)
         {

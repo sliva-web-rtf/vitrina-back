@@ -8,15 +8,15 @@ namespace Vitrina.UseCases.User.GetUserProjectsPages;
 
 /// <inheritdoc />
 public class GetUserProjectPagesByUserIdQueyHandler(UserManager<Domain.User.User> userManager, IMapper mapper)
-    : IRequestHandler<GetUserProjectPagesByUserIdQuey, ICollection<ProjectPageDto>>
+    : IRequestHandler<GetUserProjectPagesByUserIdQuey, ICollection<ResponceProjectPageDto>>
 {
     /// <inheritdoc />
-    public async Task<ICollection<ProjectPageDto>> Handle(GetUserProjectPagesByUserIdQuey request,
+    public async Task<ICollection<ResponceProjectPageDto>> Handle(GetUserProjectPagesByUserIdQuey request,
         CancellationToken cancellationToken)
     {
         var user = await userManager.FindByIdAsync($"{request.UserId}") ??
                    throw new NotFoundException("The user with the specified Id was not found");
 
-        return mapper.Map<ICollection<ProjectPageDto>>(user.EditingRights.Select(editor => editor.Page));
+        return mapper.Map<ICollection<ResponceProjectPageDto>>(user.EditingRights.Select(editor => editor.Page));
     }
 }

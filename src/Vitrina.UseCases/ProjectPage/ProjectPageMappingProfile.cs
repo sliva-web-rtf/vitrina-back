@@ -13,8 +13,8 @@ public class ProjectPageMappingProfile : Profile
 {
     public ProjectPageMappingProfile()
     {
-        CreateMap<Domain.Project.Page.ProjectPage, ProjectPageDto>();
-        CreateMap<ProjectPageDto, Domain.Project.Page.ProjectPage>()
+        CreateMap<Domain.Project.Page.ProjectPage, ResponceProjectPageDto>();
+        CreateMap<ResponceProjectPageDto, Domain.Project.Page.ProjectPage>()
             .ForMember(projectPage => projectPage.Editors, member => member.Ignore())
             .ForMember(projectPage => projectPage.Project, member => member.Ignore());
         CreateMap<ContentBlock, ContentBlockDto>()
@@ -31,5 +31,6 @@ public class ProjectPageMappingProfile : Profile
             .ForAllMembers(member => member.Ignore());
         CreateMap<CreateProjectPageCommand, Domain.Project.Page.ProjectPage>()
             .ForAllMembers(member => member.Ignore());
+        CreateMap<Domain.Project.Page.ProjectPage, UpdateProjectPageDto>().ReverseMap();
     }
 }

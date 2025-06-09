@@ -29,12 +29,12 @@ public class ProjectPageRepository : IProjectPageRepository
     public async Task Delete(Guid id, CancellationToken cancellationToken)
     {
         ProjectPage? page;
-        if ((page = await pages.FindAsync(id, cancellationToken)) != null)
+        if ((page = await pages.FindAsync(id, cancellationToken)) is null)
         {
-            pages.Remove(page);
+            throw new NotFoundException("Project page not found");
         }
 
-        throw new NotFoundException("Project page not found");
+        pages.Remove(page);
     }
 
     public async Task SaveChangesAsync(CancellationToken cancellationToken) =>

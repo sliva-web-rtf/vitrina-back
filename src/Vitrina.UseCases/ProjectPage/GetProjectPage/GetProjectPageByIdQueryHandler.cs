@@ -13,10 +13,11 @@ public class GetProjectPageByIdQueryHandler(
     IProjectPageRepository repository,
     IMapper mapper,
     UserManager<Domain.User.User> userManager)
-    : IRequestHandler<GetProjectPageByIdQuery, ProjectPageDto>
+    : IRequestHandler<GetProjectPageByIdQuery, ResponceProjectPageDto>
 {
     /// <inheritdoc />
-    public async Task<ProjectPageDto> Handle(GetProjectPageByIdQuery request, CancellationToken cancellationToken)
+    public async Task<ResponceProjectPageDto> Handle(GetProjectPageByIdQuery request,
+        CancellationToken cancellationToken)
     {
         var page = await repository.GetByIdAsync(request.Id, cancellationToken);
         if (page.ReadyStatus != PageReadyStatusEnum.Published)
@@ -29,7 +30,7 @@ public class GetProjectPageByIdQueryHandler(
         }
 
         page.SortContentBlocks();
-        var p = mapper.Map<ProjectPageDto>(page);
+        var p = mapper.Map<ResponceProjectPageDto>(page);
         return p;
     }
 }
