@@ -1,6 +1,7 @@
-using System.Security.Claims;
 using MediatR;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Vitrina.UseCases.Project.YandexBucket.Resume.Dto;
 using Vitrina.UseCases.Project.YandexBucket.Resume.GetFileURL;
 using Vitrina.UseCases.Project.YandexBucket.Resume.SaveResume;
@@ -25,6 +26,7 @@ public class ResumeController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Roles = "Student, Curator")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -43,6 +45,7 @@ public class ResumeController : ControllerBase
     }
 
     [HttpPut("{resume-id:guid}")]
+    [Authorize(Roles = "Student, Curator")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -74,6 +77,7 @@ public class ResumeController : ControllerBase
     }
 
     [HttpDelete("{resume-id:guid}")]
+    [Authorize(Roles = "Student, Curator")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

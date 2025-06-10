@@ -1,5 +1,6 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Vitrina.UseCases.Project.YandexBucket.Image.Dto;
 using Vitrina.UseCases.Project.YandexBucket.Image.SaveImage;
 using Vitrina.UseCases.Project.YandexBucket.Image.GetImageURL;
@@ -26,6 +27,7 @@ public class ImageController : ControllerBase
     }
 
     [HttpPost("{id:int}")]
+    [Authorize(Roles = "Student, Curator")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -57,6 +59,7 @@ public class ImageController : ControllerBase
     }
 
     [HttpDelete("{file-name}")]
+    [Authorize(Roles = "Student, Curator")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
