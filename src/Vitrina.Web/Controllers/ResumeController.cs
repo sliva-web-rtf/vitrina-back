@@ -25,6 +25,11 @@ public class ResumeController : ControllerBase
     }
 
     [HttpPost]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status409Conflict)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> SaveResume(
         IFormFile file,
         CancellationToken cancellationToken
@@ -38,6 +43,10 @@ public class ResumeController : ControllerBase
     }
 
     [HttpPut("{resume-id:guid}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> ReplacementResume(
         [FromRoute(Name = "resume-id")] Guid id,
         IFormFile file,
@@ -50,6 +59,10 @@ public class ResumeController : ControllerBase
     }
 
     [HttpGet("{resume-id:guid}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> GetResumeUrl(
         [FromRoute(Name = "resume-id")] Guid id,
         CancellationToken cancellationToken
@@ -61,6 +74,10 @@ public class ResumeController : ControllerBase
     }
 
     [HttpDelete("{resume-id:guid}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> DeleteResume(
         [FromRoute(Name = "resume-id")] Guid id,
         CancellationToken cancellationToken

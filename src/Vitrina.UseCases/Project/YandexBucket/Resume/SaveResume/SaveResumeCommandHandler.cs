@@ -17,7 +17,7 @@ public class SaveResumeCommandHandler(IS3StorageService s3Storage, IAppDbContext
         }
 
         var currentUser = appDbContext.Users.FirstOrDefault(user => user.Id == request.UserId) ??
-            throw new DomainException("Такого пользователя не существует.");
+            throw new NotFoundException("Такого пользователя не существует.");
 
         if (request.File.FileName.Split(".").Length < 2)
         {
@@ -31,9 +31,9 @@ public class SaveResumeCommandHandler(IS3StorageService s3Storage, IAppDbContext
         }
 
         var resume = appDbContext.Resume.FirstOrDefault(resume => resume.UserId == request.UserId);
-        if (resume == null)
+        if (resume != null)
         {
-            throw new DomainException("У пользователя нет резюме.");
+            throw new ConflictException("У пользователя уже есть резюме.");
         }
 
         await using var stream = request.File.OpenReadStream();

@@ -26,6 +26,10 @@ public class ImageController : ControllerBase
     }
 
     [HttpPost("{id:int}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> SaveImage(
         [FromRoute] int id,
         IFormFile file,
@@ -38,6 +42,10 @@ public class ImageController : ControllerBase
     }
 
     [HttpGet("{file-name}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> GetImageUrl(
         [FromRoute(Name = "file-name")] string fileName,
         CancellationToken cancellationToken
@@ -49,6 +57,10 @@ public class ImageController : ControllerBase
     }
 
     [HttpDelete("{file-name}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> DeleteImage(
         [FromRoute(Name = "file-name")] string fileName,
         CancellationToken cancellationToken

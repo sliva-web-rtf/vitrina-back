@@ -12,7 +12,7 @@ public class DeleteResumeCommandHandler(IS3StorageService s3Storage, IAppDbConte
         var resume = appDbContext.Resume.FirstOrDefault(resume => resume.Id == request.Id);
         if (resume == null)
         {
-            throw new DomainException("У пользователя нет резюме.");
+            throw new NotFoundException("У пользователя нет резюме.");
         }
 
         await s3Storage.DeleteFileAsync(resume.FileName, request.Path, cancellationToken);
