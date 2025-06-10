@@ -18,10 +18,4 @@ public abstract record PageQueryFilter
     /// </summary>
     [Range(1, 1000)]
     public int PageSize { get; init; } = 100;
-
-    /// <summary>
-    ///     Specifies results ordering logic. Supporting fields for sorting: id, date.
-    ///     For sort descending use sort_field:desc. For example, id:desc.
-    /// </summary>
-    public virtual string OrderBy { get; set; } = string.Empty;
 }

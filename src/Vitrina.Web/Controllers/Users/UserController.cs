@@ -80,8 +80,10 @@ public class UserController(IMediator mediator) : ControllerBase
     }
 
     [HttpGet("")]
-    public async Task<ICollection<RequestShortenedUserDto>> GetUsers(
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> GetUsers(
         [FromQuery] GetUsersQuery query,
         CancellationToken cancellationToken) =>
-        throw new NotImplementedException();
+        Ok(await mediator.Send(query, cancellationToken));
 }
