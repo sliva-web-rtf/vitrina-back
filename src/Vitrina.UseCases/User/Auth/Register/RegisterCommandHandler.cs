@@ -68,7 +68,7 @@ public class RegisterCommandHandler(
             _ => throw new NotImplementedException(
                 $"Logic for {nameof(RoleOnPlatformEnum)} = {userDto.RoleOnPlatform} is not defined")
         };
-        user.UserName = $"{Guid.NewGuid()}";
+        user.UserName = request.Email;
         user.RegistrationStatus = RegistrationStatusEnum.Registered;
         user.CreatedAt = DateTime.UtcNow;
         return user;
