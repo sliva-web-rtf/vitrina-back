@@ -3,7 +3,6 @@ using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Saritasa.Tools.Domain.Exceptions;
 using Vitrina.Domain.User;
-using Vitrina.Infrastructure.Abstractions.Interfaces;
 using Vitrina.UseCases.User.DTO;
 
 namespace Vitrina.UseCases.User.Auth.Register;
@@ -13,7 +12,6 @@ namespace Vitrina.UseCases.User.Auth.Register;
 /// </summary>
 public class RegisterCommandHandler(
     UserManager<Domain.User.User> userManager,
-    IAppDbContext appDbContext,
     IMapper mapper,
     UpdateUserDtoValidator validator)
     : IRequestHandler<RegisterCommand, RegisterCommandResult>
@@ -32,22 +30,9 @@ public class RegisterCommandHandler(
         }
 
         await userManager.AddToRoleAsync(user, $"{request.RoleOnPlatform}");
-        var code = await userManager.GenerateEmailConfirmationTokenAsync(user);
-        var confirmEmailCode = int.Parse(code);
+        var confirmEmailCode = await userManager.GenerateEmailConfirmationTokenAsync(user);
 
-        try
-        {
-            var confirmationCode = new ConfirmationCode { UserId = user.Id, Code = confirmEmailCode };
-            await appDbContext.Codes.AddAsync(confirmationCode, cancellationToken);
-            await appDbContext.SaveChangesAsync(cancellationToken);
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            return new RegisterCommandResult { IsSuccess = false, Message = "failed to save confirmation code." };
-        }
-
-        return new RegisterCommandResult { IsSuccess = true, UserId = user.Id };
+        return new RegisterCommandResult { IsSuccess = true, UserId = user.Id, ConfirmationCode = confirmEmailCode };
     }
 
     private async Task<Domain.User.User> CreateUserAsync(RegisterCommand request, CancellationToken cancellationToken)
