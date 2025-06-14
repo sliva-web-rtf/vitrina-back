@@ -13,6 +13,11 @@ internal class ResumeConfiguration : IEntityTypeConfiguration<Resume>
     {
         builder.HasKey(r => r.Id);
 
+        builder.HasOne(resume => resume.User)
+            .WithOne()
+            .HasForeignKey<Resume>(resume => resume.UserId)
+            .OnDelete(DeleteBehavior.NoAction);
+
         builder.Property(r => r.FileName)
             .IsRequired();
 
