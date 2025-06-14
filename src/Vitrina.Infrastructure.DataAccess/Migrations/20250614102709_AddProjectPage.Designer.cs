@@ -12,15 +12,15 @@ using Vitrina.Infrastructure.DataAccess;
 namespace Vitrina.Infrastructure.DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250510040139_SmallChanges")]
-    partial class SmallChanges
+    [Migration("20250614102709_AddProjectPage")]
+    partial class AddProjectPage
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.3")
+                .HasAnnotation("ProductVersion", "9.0.5")
                 .HasAnnotation("Proxies:ChangeTracking", false)
                 .HasAnnotation("Proxies:CheckEquality", false)
                 .HasAnnotation("Proxies:LazyLoading", true)
@@ -162,85 +162,75 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("ProjectRoleTeammate", b =>
+            modelBuilder.Entity("Vitrina.Domain.Project.Page.Content.ContentBlock", b =>
                 {
-                    b.Property<int>("RolesId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("UsersId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("RolesId", "UsersId");
-
-                    b.HasIndex("UsersId");
-
-                    b.ToTable("ProjectRoleTeammate");
-                });
-
-            modelBuilder.Entity("ProjectTag", b =>
-                {
-                    b.Property<int>("ProjectsId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("TagsId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("ProjectsId", "TagsId");
-
-                    b.HasIndex("TagsId");
-
-                    b.ToTable("ProjectTag");
-                });
-
-            modelBuilder.Entity("Vitrina.Domain.Project.Block", b =>
-                {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("uuid");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("ProjectId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Text")
+                    b.Property<string>("Content")
                         .IsRequired()
                         .IsUnicode(false)
-                        .HasColumnType("text");
+                        .HasColumnType("jsonb");
 
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .IsUnicode(false)
-                        .HasColumnType("text");
+                    b.Property<int>("ContentType")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("NumberOnPage")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid>("PageId")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProjectId");
+                    b.HasIndex("PageId");
 
-                    b.ToTable("Block");
+                    b.ToTable("ContentBlocks", (string)null);
                 });
 
-            modelBuilder.Entity("Vitrina.Domain.Project.Content", b =>
+            modelBuilder.Entity("Vitrina.Domain.Project.Page.Editor.PageEditor", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("PageId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Status")
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ImageUrl")
-                        .IsRequired()
-                        .IsUnicode(false)
-                        .HasColumnType("text");
-
-                    b.Property<int>("ProjectId")
+                    b.Property<int>("UserId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProjectId");
+                    b.HasIndex("PageId");
 
-                    b.ToTable("Contents");
+                    b.HasIndex("UserId");
+
+                    b.ToTable("PageEditors");
+                });
+
+            modelBuilder.Entity("Vitrina.Domain.Project.Page.ProjectPage", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<int?>("ProjectId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ReadyStatus")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProjectId")
+                        .IsUnique();
+
+                    b.ToTable("ProjectPages", (string)null);
                 });
 
             modelBuilder.Entity("Vitrina.Domain.Project.Project", b =>
@@ -251,26 +241,17 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Aim")
-                        .IsUnicode(false)
-                        .HasColumnType("text");
-
                     b.Property<string>("Client")
                         .IsUnicode(false)
                         .HasColumnType("text");
 
-                    b.Property<int>("CompletionStatus")
+                    b.Property<int>("CreatorId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("CuratorId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Description")
-                        .IsUnicode(false)
-                        .HasColumnType("text");
-
-                    b.Property<string>("Idea")
-                        .IsUnicode(false)
-                        .HasColumnType("text");
-
-                    b.Property<string>("Markdown")
                         .IsUnicode(false)
                         .HasColumnType("text");
 
@@ -279,10 +260,8 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                         .IsUnicode(false)
                         .HasColumnType("text");
 
-                    b.Property<string>("Period")
-                        .IsRequired()
-                        .IsUnicode(false)
-                        .HasColumnType("text");
+                    b.Property<Guid>("PageId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("PreviewImagePath")
                         .IsUnicode(false)
@@ -291,50 +270,91 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                     b.Property<int>("Priority")
                         .HasColumnType("integer");
 
-                    b.Property<string>("Problem")
-                        .IsUnicode(false)
-                        .HasColumnType("text");
+                    b.Property<Guid?>("SphereId")
+                        .HasColumnType("uuid");
 
-                    b.Property<int>("Semester")
-                        .HasColumnType("integer");
+                    b.Property<Guid?>("TeamId")
+                        .HasColumnType("uuid");
 
-                    b.Property<string>("Solution")
-                        .IsUnicode(false)
-                        .HasColumnType("text");
-
-                    b.Property<string>("Sphere")
-                        .IsUnicode(false)
-                        .HasColumnType("text");
-
-                    b.Property<string>("TextPreview")
-                        .IsUnicode(false)
-                        .HasColumnType("text");
-
-                    b.Property<string>("Type")
-                        .IsUnicode(false)
-                        .HasColumnType("text");
-
-                    b.Property<int>("TypeInitiative")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("VideoUrl")
-                        .IsUnicode(false)
-                        .HasColumnType("text");
+                    b.Property<Guid?>("ThematicsId")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Client");
+                    b.HasIndex("CuratorId");
 
                     b.HasIndex("Name");
 
-                    b.HasIndex("Period");
+                    b.HasIndex("PageId");
 
-                    b.HasIndex("Semester");
+                    b.HasIndex("SphereId");
+
+                    b.HasIndex("TeamId")
+                        .IsUnique();
+
+                    b.HasIndex("ThematicsId");
 
                     b.ToTable("Projects");
                 });
 
-            modelBuilder.Entity("Vitrina.Domain.Project.ProjectRole", b =>
+            modelBuilder.Entity("Vitrina.Domain.Project.ProjectSphere", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .IsUnicode(false)
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("ProjectSpheres");
+                });
+
+            modelBuilder.Entity("Vitrina.Domain.Project.ProjectThematics", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .IsUnicode(false)
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("ProjectThematics");
+                });
+
+            modelBuilder.Entity("Vitrina.Domain.Project.Team", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .IsUnicode(false)
+                        .HasColumnType("text");
+
+                    b.Property<int>("ProjectId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Teams");
+                });
+
+            modelBuilder.Entity("Vitrina.Domain.Project.Teammate.ProjectRole", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -347,15 +367,20 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                         .IsUnicode(false)
                         .HasColumnType("text");
 
+                    b.Property<int?>("TeammateId")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
                     b.HasIndex("Name")
                         .IsUnique();
+
+                    b.HasIndex("TeammateId");
 
                     b.ToTable("ProjectRoles");
                 });
 
-            modelBuilder.Entity("Vitrina.Domain.Project.Tag", b =>
+            modelBuilder.Entity("Vitrina.Domain.Project.Teammate.Teammate", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -363,36 +388,15 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .IsUnicode(false)
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Name")
-                        .IsUnique();
-
-                    b.ToTable("Tags");
-                });
-
-            modelBuilder.Entity("Vitrina.Domain.Project.Teammate", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("ProjectId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("TeamId")
+                        .HasColumnType("uuid");
 
                     b.Property<int>("UserId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProjectId");
+                    b.HasIndex("TeamId");
 
                     b.HasIndex("UserId");
 
@@ -452,11 +456,9 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
 
             modelBuilder.Entity("Vitrina.Domain.User.Specialization", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -536,6 +538,7 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("NormalizedEmail")
+                        .IsRequired()
                         .HasMaxLength(256)
                         .IsUnicode(false)
                         .HasColumnType("character varying(256)");
@@ -568,9 +571,6 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                         .HasColumnType("integer")
                         .HasDefaultValue(1);
 
-                    b.Property<DateTime?>("RemovedAt")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<int>("RoleOnPlatform")
                         .HasColumnType("integer");
 
@@ -587,9 +587,6 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                         .HasColumnType("boolean")
                         .HasDefaultValue(false);
 
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
                         .IsUnicode(false)
@@ -598,6 +595,7 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedEmail")
+                        .IsUnique()
                         .HasDatabaseName("EmailIndex");
 
                     b.HasIndex("NormalizedUserName")
@@ -658,84 +656,132 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ProjectRoleTeammate", b =>
+            modelBuilder.Entity("Vitrina.Domain.Project.Page.Content.ContentBlock", b =>
                 {
-                    b.HasOne("Vitrina.Domain.Project.ProjectRole", null)
-                        .WithMany()
-                        .HasForeignKey("RolesId")
+                    b.HasOne("Vitrina.Domain.Project.Page.ProjectPage", "Page")
+                        .WithMany("ContentBlocks")
+                        .HasForeignKey("PageId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Vitrina.Domain.Project.Teammate", null)
-                        .WithMany()
-                        .HasForeignKey("UsersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Page");
                 });
 
-            modelBuilder.Entity("ProjectTag", b =>
+            modelBuilder.Entity("Vitrina.Domain.Project.Page.Editor.PageEditor", b =>
                 {
-                    b.HasOne("Vitrina.Domain.Project.Project", null)
-                        .WithMany()
-                        .HasForeignKey("ProjectsId")
+                    b.HasOne("Vitrina.Domain.Project.Page.ProjectPage", "Page")
+                        .WithMany("Editors")
+                        .HasForeignKey("PageId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Vitrina.Domain.Project.Tag", null)
-                        .WithMany()
-                        .HasForeignKey("TagsId")
+                    b.HasOne("Vitrina.Domain.User.User", "User")
+                        .WithMany("EditingRights")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Page");
+
+                    b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Vitrina.Domain.Project.Block", b =>
+            modelBuilder.Entity("Vitrina.Domain.Project.Page.ProjectPage", b =>
                 {
                     b.HasOne("Vitrina.Domain.Project.Project", "Project")
-                        .WithMany("CustomBlocks")
-                        .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithOne("Page")
+                        .HasForeignKey("Vitrina.Domain.Project.Page.ProjectPage", "ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Project");
                 });
 
-            modelBuilder.Entity("Vitrina.Domain.Project.Content", b =>
+            modelBuilder.Entity("Vitrina.Domain.Project.Project", b =>
                 {
-                    b.HasOne("Vitrina.Domain.Project.Project", "Project")
-                        .WithMany("Contents")
-                        .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("Vitrina.Domain.User.User", "Curator")
+                        .WithMany()
+                        .HasForeignKey("CuratorId");
 
-                    b.Navigation("Project");
+                    b.HasOne("Vitrina.Domain.Project.ProjectSphere", "Sphere")
+                        .WithMany()
+                        .HasForeignKey("SphereId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Vitrina.Domain.Project.Team", "Team")
+                        .WithOne("Project")
+                        .HasForeignKey("Vitrina.Domain.Project.Project", "TeamId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("Vitrina.Domain.Project.ProjectThematics", "Thematics")
+                        .WithMany()
+                        .HasForeignKey("ThematicsId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.Navigation("Curator");
+
+                    b.Navigation("Sphere");
+
+                    b.Navigation("Team");
+
+                    b.Navigation("Thematics");
                 });
 
-            modelBuilder.Entity("Vitrina.Domain.Project.Teammate", b =>
+            modelBuilder.Entity("Vitrina.Domain.Project.Teammate.ProjectRole", b =>
                 {
-                    b.HasOne("Vitrina.Domain.Project.Project", "Project")
-                        .WithMany("Users")
-                        .HasForeignKey("ProjectId")
+                    b.HasOne("Vitrina.Domain.Project.Teammate.Teammate", null)
+                        .WithMany("Roles")
+                        .HasForeignKey("TeammateId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Vitrina.Domain.Project.Teammate.Teammate", b =>
+                {
+                    b.HasOne("Vitrina.Domain.Project.Team", "Team")
+                        .WithMany("TeamMembers")
+                        .HasForeignKey("TeamId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Vitrina.Domain.User.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("Project");
+                    b.Navigation("Team");
 
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Vitrina.Domain.Project.Page.ProjectPage", b =>
+                {
+                    b.Navigation("ContentBlocks");
+
+                    b.Navigation("Editors");
+                });
+
             modelBuilder.Entity("Vitrina.Domain.Project.Project", b =>
                 {
-                    b.Navigation("Contents");
+                    b.Navigation("Page")
+                        .IsRequired();
+                });
 
-                    b.Navigation("CustomBlocks");
+            modelBuilder.Entity("Vitrina.Domain.Project.Team", b =>
+                {
+                    b.Navigation("Project")
+                        .IsRequired();
 
-                    b.Navigation("Users");
+                    b.Navigation("TeamMembers");
+                });
+
+            modelBuilder.Entity("Vitrina.Domain.Project.Teammate.Teammate", b =>
+                {
+                    b.Navigation("Roles");
+                });
+
+            modelBuilder.Entity("Vitrina.Domain.User.User", b =>
+                {
+                    b.Navigation("EditingRights");
                 });
 #pragma warning restore 612, 618
         }

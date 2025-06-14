@@ -24,9 +24,6 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                 name: "Block");
 
             migrationBuilder.DropTable(
-                name: "Contents");
-
-            migrationBuilder.DropTable(
                 name: "ProjectRoleTeammate");
 
             migrationBuilder.DropTable(
@@ -120,6 +117,11 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                 table: "Projects",
                 newName: "CreatorId");
 
+            migrationBuilder.RenameColumn(
+                name: "ProfileData",
+                table: "AspNetUsers",
+                newName: "AdditionalInformation");
+
             migrationBuilder.AddColumn<Guid>(
                 name: "TeamId",
                 table: "Teammates",
@@ -134,8 +136,8 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                 name: "Specializations",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false, defaultValueSql: "gen_random_uuid()"),
-                    Name = table.Column<string>(type: "text", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: true) // пример других колонок
                 },
                 constraints: table =>
                 {
@@ -178,6 +180,16 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                 table: "ProjectRoles",
                 type: "integer",
                 nullable: true);
+
+            migrationBuilder.AlterColumn<int>(
+                name: "RegistrationStatus",
+                table: "AspNetUsers",
+                type: "integer",
+                nullable: true,
+                defaultValue: 1,
+                oldClrType: typeof(int),
+                oldType: "integer",
+                oldDefaultValue: 1);
 
             migrationBuilder.AlterColumn<string>(
                 name: "NormalizedEmail",
@@ -539,6 +551,11 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                 table: "Projects",
                 newName: "TypeInitiative");
 
+            migrationBuilder.RenameColumn(
+                name: "AdditionalInformation",
+                table: "AspNetUsers",
+                newName: "ProfileData");
+
             migrationBuilder.AddColumn<int>(
                 name: "ProjectId",
                 table: "Teammates",
@@ -554,9 +571,8 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy",
-                            Npgsql.EntityFrameworkCore.PostgreSQL.Metadata.NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "text", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", Npgsql.EntityFrameworkCore.PostgreSQL.Metadata.NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -648,6 +664,17 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                 unicode: false,
                 nullable: true);
 
+            migrationBuilder.AlterColumn<int>(
+                name: "RegistrationStatus",
+                table: "AspNetUsers",
+                type: "integer",
+                nullable: false,
+                defaultValue: 1,
+                oldClrType: typeof(int),
+                oldType: "integer",
+                oldNullable: true,
+                oldDefaultValue: 1);
+
             migrationBuilder.AlterColumn<string>(
                 name: "NormalizedEmail",
                 table: "AspNetUsers",
@@ -688,26 +715,6 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                     table.PrimaryKey("PK_Block", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Block_Projects_ProjectId",
-                        column: x => x.ProjectId,
-                        principalTable: "Projects",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Contents",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    ProjectId = table.Column<int>(type: "integer", nullable: false),
-                    ImageUrl = table.Column<string>(type: "text", unicode: false, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Contents", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Contents_Projects_ProjectId",
                         column: x => x.ProjectId,
                         principalTable: "Projects",
                         principalColumn: "Id",
@@ -803,11 +810,6 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Block_ProjectId",
                 table: "Block",
-                column: "ProjectId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Contents_ProjectId",
-                table: "Contents",
                 column: "ProjectId");
 
             migrationBuilder.CreateIndex(
