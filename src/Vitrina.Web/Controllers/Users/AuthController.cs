@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Vitrina.UseCases.CodeSender;
 using Vitrina.UseCases.User.Auth;
 using Vitrina.UseCases.User.Auth.ConfirmEmail;
 using Vitrina.UseCases.User.Auth.GetUserById;
@@ -49,6 +50,8 @@ public class AuthController(IMediator mediator) : ControllerBase
             return BadRequest(result.Message);
         }
 
+        await mediator.Send(new SendConfirmationCodeCommand(command.Email, result.ConfirmationCode), cancellationToken);
+
         return Ok(result);
     }
 
@@ -58,8 +61,10 @@ public class AuthController(IMediator mediator) : ControllerBase
     [HttpPost("confirm")]
     [ProducesResponseType(200)]
     [ProducesResponseType(400)]
-    public async Task<IActionResult> ConfirmEmail([Required] ConfirmEmailCommand command,
-        CancellationToken cancellationToken)
+    public async Task<IActionResult> ConfirmEmail(
+        [Required] ConfirmEmailCommand command,
+        CancellationToken cancellationToken
+    )
     {
         var result = await mediator.Send(command, cancellationToken);
         if (!result.IsSuccess)
@@ -80,8 +85,8 @@ public class AuthController(IMediator mediator) : ControllerBase
     [ProducesResponseType(200)]
     [ProducesResponseType(400)]
     [ProducesResponseType(403)]
-    public Task<TokenModel> RefreshToken([Required] RefreshTokenCommand command, CancellationToken cancellationToken)
-        => mediator.Send(command, cancellationToken);
+    public Task<TokenModel> RefreshToken([Required] RefreshTokenCommand command, CancellationToken cancellationToken) =>
+        mediator.Send(command, cancellationToken);
 
     /// <summary>
     ///     Get current logged user info.

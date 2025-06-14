@@ -18,10 +18,5 @@ public class RegisterCommandResult
     /// <summary>
     ///     Only for test.
     /// </summary>
-    public int ConfirmationCode { get; init; }
-
-    /// <summary>
-    ///     Only for test.
-    /// </summary>
     public int UserId { get; init; }
 }

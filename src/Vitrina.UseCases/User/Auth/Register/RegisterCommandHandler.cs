@@ -32,11 +32,12 @@ public class RegisterCommandHandler(
         }
 
         await userManager.AddToRoleAsync(user, $"{request.RoleOnPlatform}");
+        var code = await userManager.GenerateEmailConfirmationTokenAsync(user);
+        var confirmEmailCode = int.Parse(code);
 
-        var code = ConfirmationCodeGenerator.Generate();
         try
         {
-            var confirmationCode = new ConfirmationCode { UserId = user.Id, Code = code };
+            var confirmationCode = new ConfirmationCode { UserId = user.Id, Code = confirmEmailCode };
             await appDbContext.Codes.AddAsync(confirmationCode, cancellationToken);
             await appDbContext.SaveChangesAsync(cancellationToken);
         }
@@ -46,7 +47,7 @@ public class RegisterCommandHandler(
             return new RegisterCommandResult { IsSuccess = false, Message = "failed to save confirmation code." };
         }
 
-        return new RegisterCommandResult { IsSuccess = true, UserId = user.Id, ConfirmationCode = code };
+        return new RegisterCommandResult { IsSuccess = true, UserId = user.Id };
     }
 
     private async Task<Domain.User.User> CreateUserAsync(RegisterCommand request, CancellationToken cancellationToken)
@@ -57,7 +58,7 @@ public class RegisterCommandHandler(
         if (!validationResult.IsValid)
         {
             throw new DomainException($"Data did not go through the validity check:" +
-                                      $"{Environment.NewLine}{string.Join(Environment.NewLine, validationResult.Errors)}");
+                $"{Environment.NewLine}{string.Join(Environment.NewLine, validationResult.Errors)}");
         }
 
         var user = userDto.RoleOnPlatform switch
