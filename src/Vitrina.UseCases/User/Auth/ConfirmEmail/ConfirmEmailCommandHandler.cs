@@ -32,7 +32,7 @@ public class ConfirmEmailCommandHandler : IRequestHandler<ConfirmEmailCommand, C
         CancellationToken cancellationToken)
     {
         var user = await appDbContext.Users.FirstAsync(u => u.Id == request.UserId, cancellationToken);
-        await userManager.ConfirmEmailAsync(user, request.ConfirmationCode.ToString());
+        await userManager.ConfirmEmailAsync(user, request.ConfirmationCode);
         var principal = await signInManager.CreateUserPrincipalAsync(user);
         await appDbContext.SaveChangesAsync(cancellationToken);
         return new ConfirmEmailCommandResult
