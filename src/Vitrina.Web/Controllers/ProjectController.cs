@@ -4,7 +4,6 @@ using Saritasa.Tools.Common.Pagination;
 using Vitrina.UseCases.Common;
 using Vitrina.UseCases.Project.AddProject;
 using Vitrina.UseCases.Project.DeleteProject;
-using Vitrina.UseCases.Project.DeleteProjectImages;
 using Vitrina.UseCases.Project.GetOrganizations;
 using Vitrina.UseCases.Project.GetPeriods;
 using Vitrina.UseCases.Project.GetProjectById;
@@ -16,6 +15,7 @@ using Vitrina.UseCases.Project.UpdateProject;
 using Vitrina.UseCases.Project.UpdateProject.DTO;
 using Vitrina.UseCases.Project.UploadImages;
 using Vitrina.UseCases.Project.UploadImages.Dto;
+using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 using SearchProjectsQuery = Vitrina.UseCases.Project.SearchProjects.SearchProjectsQuery;
 using V2 = Vitrina.UseCases.Project.SearchProjects.V2;
 
@@ -31,12 +31,12 @@ namespace Vitrina.Web.Controllers;
 public class ProjectController : ControllerBase
 {
     private readonly IMediator mediator;
-    private readonly Microsoft.AspNetCore.Hosting.IHostingEnvironment hostingEnvironment;
+    private readonly IHostingEnvironment hostingEnvironment;
 
     /// <summary>
     /// Constructor.
     /// </summary>
-    public ProjectController(IMediator mediator, Microsoft.AspNetCore.Hosting.IHostingEnvironment hostingEnvironment)
+    public ProjectController(IMediator mediator, IHostingEnvironment hostingEnvironment)
     {
         this.mediator = mediator;
         this.hostingEnvironment = hostingEnvironment;
@@ -174,19 +174,6 @@ public class ProjectController : ControllerBase
     )
     {
         await mediator.Send(new UpdateProjectCommand { ProjectId = id, Project = projectDto }, cancellationToken);
-    }
-
-    /// <summary>
-    /// DeleteProjectImages.
-    /// </summary>
-    /// <param name="id"></param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
-    /*[Authorize]*/
-    [HttpDelete("{id}/images")]
-    public async Task DeleteProjectImages(int id, CancellationToken cancellationToken)
-    {
-        await mediator.Send(new DeleteProjectImagesCommand { ProjectId = id }, cancellationToken);
     }
 
     /// <summary>

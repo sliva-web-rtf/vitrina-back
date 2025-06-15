@@ -186,6 +186,44 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                     b.ToTable("ProjectTag");
                 });
 
+            modelBuilder.Entity("Vitrina.Domain.File", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("CreatorId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Path")
+                        .IsRequired()
+                        .IsUnicode(false)
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatorId");
+
+                    b.ToTable("Files");
+                });
+
+            modelBuilder.Entity("Vitrina.Domain.Image", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("FileId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FileId")
+                        .IsUnique();
+
+                    b.ToTable("Images");
+                });
+
             modelBuilder.Entity("Vitrina.Domain.Project.Block", b =>
                 {
                     b.Property<int>("Id")
@@ -237,18 +275,7 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
 
                     b.HasIndex("ProjectId");
 
-                    b.ToTable("Contents");
-                });
-
-            modelBuilder.Entity("Vitrina.Domain.Project.Image", b =>
-                {
-                    b.Property<string>("Id")
-                        .IsUnicode(false)
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Images");
+                    b.ToTable("Content");
                 });
 
             modelBuilder.Entity("Vitrina.Domain.Project.Project", b =>
@@ -351,28 +378,6 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                         .IsUnique();
 
                     b.ToTable("ProjectRoles");
-                });
-
-            modelBuilder.Entity("Vitrina.Domain.Project.Resume", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("FileName")
-                        .IsRequired()
-                        .IsUnicode(false)
-                        .HasColumnType("text");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId")
-                        .IsUnique();
-
-                    b.ToTable("Resume");
                 });
 
             modelBuilder.Entity("Vitrina.Domain.Project.Tag", b =>
@@ -484,6 +489,29 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Codes");
+                });
+
+            modelBuilder.Entity("Vitrina.Domain.User.Resume", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("FileId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FileId")
+                        .IsUnique();
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("Resumes");
                 });
 
             modelBuilder.Entity("Vitrina.Domain.User.User", b =>
@@ -683,6 +711,28 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Vitrina.Domain.File", b =>
+                {
+                    b.HasOne("Vitrina.Domain.User.User", "Creator")
+                        .WithMany()
+                        .HasForeignKey("CreatorId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Creator");
+                });
+
+            modelBuilder.Entity("Vitrina.Domain.Image", b =>
+                {
+                    b.HasOne("Vitrina.Domain.File", "File")
+                        .WithOne()
+                        .HasForeignKey("Vitrina.Domain.Image", "FileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("File");
+                });
+
             modelBuilder.Entity("Vitrina.Domain.Project.Block", b =>
                 {
                     b.HasOne("Vitrina.Domain.Project.Project", "Project")
@@ -705,17 +755,6 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                     b.Navigation("Project");
                 });
 
-            modelBuilder.Entity("Vitrina.Domain.Project.Resume", b =>
-                {
-                    b.HasOne("Vitrina.Domain.User.User", "User")
-                        .WithOne("Resume")
-                        .HasForeignKey("Vitrina.Domain.Project.Resume", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Vitrina.Domain.Project.Teammate", b =>
                 {
                     b.HasOne("Vitrina.Domain.Project.Project", "Project")
@@ -727,6 +766,25 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                     b.Navigation("Project");
                 });
 
+            modelBuilder.Entity("Vitrina.Domain.User.Resume", b =>
+                {
+                    b.HasOne("Vitrina.Domain.File", "File")
+                        .WithOne()
+                        .HasForeignKey("Vitrina.Domain.User.Resume", "FileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Vitrina.Domain.User.User", "User")
+                        .WithOne()
+                        .HasForeignKey("Vitrina.Domain.User.Resume", "UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("File");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Vitrina.Domain.Project.Project", b =>
                 {
                     b.Navigation("Contents");
@@ -734,11 +792,6 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                     b.Navigation("CustomBlocks");
 
                     b.Navigation("Users");
-                });
-
-            modelBuilder.Entity("Vitrina.Domain.User.User", b =>
-                {
-                    b.Navigation("Resume");
                 });
 #pragma warning restore 612, 618
         }

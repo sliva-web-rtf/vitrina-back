@@ -2,9 +2,11 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Vitrina.Domain;
 using Vitrina.Domain.Project;
 using Vitrina.Domain.User;
 using Vitrina.Infrastructure.Abstractions.Interfaces;
+using File = Vitrina.Domain.File;
 
 namespace Vitrina.Infrastructure.DataAccess;
 
@@ -27,8 +29,7 @@ public class AppDbContext : IdentityDbContext<User, AppIdentityRole, int>, IAppD
     /// <inheritdoc/>
     public DbSet<ProjectRole> ProjectRoles => Set<ProjectRole>();
 
-    /// <inheritdoc/>
-    public DbSet<Content> Contents => Set<Content>();
+    public DbSet<File> Files => Set<File>();
 
     /// <inheritdoc/>
     public DbSet<ConfirmationCode> Codes => Set<ConfirmationCode>();
@@ -37,7 +38,7 @@ public class AppDbContext : IdentityDbContext<User, AppIdentityRole, int>, IAppD
     public DbSet<Image> Images => Set<Image>();
 
     /// <inheritdoc/>
-    public DbSet<Resume> Resume => Set<Resume>();
+    public DbSet<Resume> Resumes => Set<Resume>();
 
     /// <summary>
     /// Constructor.

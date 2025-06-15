@@ -2,15 +2,14 @@ using Amazon.Runtime;
 using Amazon.S3;
 using Amazon.S3.Model;
 using Microsoft.Extensions.Configuration;
-using SixLabors.ImageSharp;
 using Vitrina.Infrastructure.Abstractions.Interfaces;
 
 namespace Vitrina.Infrastructure.DataAccess;
 
 public class YandexS3StorageService : IS3StorageService
 {
-    private readonly AmazonS3Client s3Client;
     private readonly string bucketName;
+    private readonly AmazonS3Client s3Client;
 
     public YandexS3StorageService(IConfiguration config)
     {
@@ -22,33 +21,12 @@ public class YandexS3StorageService : IS3StorageService
             amazonConfig);
     }
 
-    public async Task<string> SaveImageAsync(
-        Stream fileStream,
-        string fileName,
-        string path,
-        string contentType,
-        CancellationToken cancellationToken
-    )
-    {
-        fileName = Guid.NewGuid() + ".webp";
-
-        using var image = await Image.LoadAsync(fileStream, cancellationToken);
-
-        await using var webpStream = new MemoryStream();
-        await image.SaveAsWebpAsync(webpStream, cancellationToken);
-
-        webpStream.Seek(0, SeekOrigin.Begin);
-
-        await SaveFileAsync(webpStream, fileName, path, contentType, cancellationToken);
-        return fileName;
-    }
-
-    public Task<string> GetPreSignedURL(string fileName, string path, TimeSpan validFor)
+    public Task<string> GetPreSignedURL(string path, TimeSpan validFor)
     {
         var request = new GetPreSignedUrlRequest
         {
             BucketName = bucketName,
-            Key = path + fileName,
+            Key = path,
             Expires = DateTime.UtcNow.Add(validFor),
             Verb = HttpVerb.GET
         };
@@ -56,16 +34,15 @@ public class YandexS3StorageService : IS3StorageService
         return s3Client.GetPreSignedURLAsync(request);
     }
 
-    public async Task DeleteFileAsync(string fileName, string path, CancellationToken cancellationToken)
+    public async Task DeleteFileAsync(string path, CancellationToken cancellationToken)
     {
-        var removeRequest = new DeleteObjectRequest { BucketName = bucketName, Key = path + fileName };
+        var removeRequest = new DeleteObjectRequest { BucketName = bucketName, Key = path };
 
         await s3Client.DeleteObjectAsync(removeRequest, cancellationToken);
     }
 
     public async Task SaveFileAsync(
         Stream fileStream,
-        string fileName,
         string path,
         string contentType,
         CancellationToken cancellationToken
@@ -74,7 +51,7 @@ public class YandexS3StorageService : IS3StorageService
         var putRequest = new PutObjectRequest
         {
             BucketName = bucketName,
-            Key = path + fileName,
+            Key = path,
             InputStream = fileStream,
             ContentType = contentType,
             CannedACL = S3CannedACL.PublicRead

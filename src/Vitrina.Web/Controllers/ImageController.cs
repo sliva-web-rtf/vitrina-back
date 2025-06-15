@@ -1,10 +1,9 @@
 using MediatR;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using Vitrina.UseCases.Project.YandexBucket.Image.Dto;
-using Vitrina.UseCases.Project.YandexBucket.Image.SaveImage;
-using Vitrina.UseCases.Project.YandexBucket.Image.GetImageURL;
-using Vitrina.UseCases.Project.YandexBucket.Image.DeleteImage;
+using Microsoft.AspNetCore.Mvc;
+using Vitrina.UseCases.YandexBucket.Image.DeleteImage;
+using Vitrina.UseCases.YandexBucket.Image.GetImage;
+using Vitrina.UseCases.YandexBucket.Image.SaveImage;
 
 namespace Vitrina.Web.Controllers;
 
@@ -14,7 +13,7 @@ namespace Vitrina.Web.Controllers;
 [ApiController]
 [Route("api/images")]
 [ApiExplorerSettings(GroupName = "images")]
-public class ImageController : ControllerBase
+public class ImageController : BaseVitrinaController
 {
     private readonly IMediator mediator;
 
@@ -26,51 +25,46 @@ public class ImageController : ControllerBase
         this.mediator = mediator;
     }
 
-    [HttpPost("{id:int}")]
+    [HttpPost("")]
     [Authorize(Roles = "Student, Curator")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> SaveImage(
-        [FromRoute] int id,
         IFormFile file,
         CancellationToken cancellationToken
     )
     {
-        var command = new SaveImageCommand(file, "Images/", id);
-        var result = new ImageDto { Url = await mediator.Send(command, cancellationToken) };
-        return Ok(result);
+        var command = new SaveImageCommand(file, "Images/", GetIdAuthorizedUser());
+        var result = await mediator.Send(command, cancellationToken);
+        return Created($"api/images/{result}", new { Id = result });
     }
 
-    [HttpGet("{file-name}")]
+    [HttpGet("{image-id:guid}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> GetImageUrl(
-        [FromRoute(Name = "file-name")] string fileName,
+    public async Task<IActionResult> GetImage(
+        [FromRoute(Name = "image-id")] Guid id,
         CancellationToken cancellationToken
     )
     {
-        var command = new GetImageURLCommand(fileName, "Images/");
-        var result = new ImageDto { Url = await mediator.Send(command, cancellationToken) };
-        return Ok(result);
+        var command = new GetImageCommand(id);
+        return Ok(await mediator.Send(command, cancellationToken));
     }
 
-    [HttpDelete("{file-name}")]
+    [HttpDelete("{image-id:guid}")]
     [Authorize(Roles = "Student, Curator")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> DeleteImage(
-        [FromRoute(Name = "file-name")] string fileName,
+        [FromRoute(Name = "image-id")] Guid id,
         CancellationToken cancellationToken
     )
     {
-        var command = new DeleteImageCommand(fileName, "Images/");
+        var command = new DeleteImageCommand(id, GetIdAuthorizedUser());
         await mediator.Send(command, cancellationToken);
-        return Ok();
+        return NoContent();
     }
 }

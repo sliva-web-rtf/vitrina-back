@@ -1,12 +1,10 @@
 using MediatR;
-using System.Security.Claims;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using Vitrina.UseCases.Project.YandexBucket.Resume.Dto;
-using Vitrina.UseCases.Project.YandexBucket.Resume.GetFileURL;
-using Vitrina.UseCases.Project.YandexBucket.Resume.SaveResume;
+using Microsoft.AspNetCore.Mvc;
 using Vitrina.UseCases.Project.YandexBucket.Resume.DeleteResume;
-using Vitrina.UseCases.Project.YandexBucket.Resume.ReplacementResume;
+using Vitrina.UseCases.YandexBucket.Resume.GetResume;
+using Vitrina.UseCases.YandexBucket.Resume.ReplacementResume;
+using Vitrina.UseCases.YandexBucket.Resume.SaveResume;
 
 namespace Vitrina.Web.Controllers;
 
@@ -16,32 +14,22 @@ namespace Vitrina.Web.Controllers;
 [ApiController]
 [Route("api/resumes")]
 [ApiExplorerSettings(GroupName = "resumes")]
-public class ResumeController : ControllerBase
+public class ResumeController(IMediator mediator) : BaseVitrinaController
 {
-    private readonly IMediator mediator;
-
-    public ResumeController(IMediator mediator)
-    {
-        this.mediator = mediator;
-    }
-
     [HttpPost]
     [Authorize(Roles = "Student, Curator")]
-    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status409Conflict)]
-    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> SaveResume(
         IFormFile file,
         CancellationToken cancellationToken
     )
     {
-        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
-        var id = int.Parse(userIdClaim!.Value);
-        var command = new SaveResumeCommand(file, "Resume/", id);
-        await mediator.Send(command, cancellationToken);
-        return Ok();
+        var command = new SaveResumeCommand(file, "Resume/", GetIdAuthorizedUser());
+        var result = await mediator.Send(command, cancellationToken);
+        return Created($"api/resumes/{result}", new { Id = result });
     }
 
     [HttpPut("{resume-id:guid}")]
@@ -49,45 +37,40 @@ public class ResumeController : ControllerBase
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> ReplacementResume(
-        [FromRoute(Name = "resume-id")] Guid id,
+        [FromRoute(Name = "resume-id")] Guid resumeId,
         IFormFile file,
         CancellationToken cancellationToken
     )
     {
-        var command = new ReplacementResumeCommand(file, "Resume/", id);
+        var command = new ReplacementResumeCommand(file, resumeId, GetIdAuthorizedUser());
         await mediator.Send(command, cancellationToken);
-        return Ok();
+        return NoContent();
     }
 
     [HttpGet("{resume-id:guid}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> GetResumeUrl(
         [FromRoute(Name = "resume-id")] Guid id,
         CancellationToken cancellationToken
     )
     {
-        var command = new GetResumeURLCommand(id, "Resume/");
-        var result = new ResumeDto { Url = await mediator.Send(command, cancellationToken) };
-        return Ok(result);
+        var command = new GetResumeCommand(id);
+        return Ok(await mediator.Send(command, cancellationToken));
     }
 
-    [HttpDelete("{resume-id:guid}")]
     [Authorize(Roles = "Student, Curator")]
+    [HttpDelete("{resume-id:guid}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> DeleteResume(
         [FromRoute(Name = "resume-id")] Guid id,
         CancellationToken cancellationToken
     )
     {
-        var command = new DeleteResumeCommand(id, "Resume/");
+        var command = new DeleteResumeCommand(id, GetIdAuthorizedUser());
         await mediator.Send(command, cancellationToken);
         return Ok();
     }

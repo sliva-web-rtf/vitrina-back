@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Vitrina.Domain.Project;
+using Vitrina.Domain.User;
 
 namespace Vitrina.Infrastructure.DataAccess.ModelConfigurations;
 
@@ -11,17 +11,19 @@ internal class ResumeConfiguration : IEntityTypeConfiguration<Resume>
 {
     public void Configure(EntityTypeBuilder<Resume> builder)
     {
-        builder.HasKey(r => r.Id);
+        builder.HasKey(resume => resume.Id);
 
         builder.HasOne(resume => resume.User)
             .WithOne()
             .HasForeignKey<Resume>(resume => resume.UserId)
             .OnDelete(DeleteBehavior.NoAction);
 
-        builder.Property(r => r.FileName)
-            .IsRequired();
+        builder.HasOne(resume => resume.File)
+            .WithOne()
+            .HasForeignKey<Resume>(resume => resume.FileId)
+            .OnDelete(DeleteBehavior.Cascade);
 
-        builder.HasIndex(r => r.UserId)
+        builder.HasIndex(resume => resume.UserId)
             .IsUnique();
     }
 }

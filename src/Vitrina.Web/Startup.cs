@@ -10,6 +10,7 @@ using Vitrina.Web.Infrastructure.DependencyInjection;
 using Vitrina.Web.Infrastructure.Middlewares;
 using Vitrina.Web.Infrastructure.Settings;
 using Vitrina.Web.Infrastructure.Startup;
+using Vitrina.Web.Infrastructure.Startup.HealthCheck;
 using Vitrina.Web.Infrastructure.Startup.Swagger;
 
 namespace Vitrina.Web;
@@ -140,7 +141,7 @@ public class Startup
         app.UseAuthorization();
         app.UseEndpoints(endpoints =>
         {
-            Infrastructure.Startup.HealthCheck.HealthCheckModule.Register(endpoints);
+            HealthCheckModule.Register(endpoints);
             endpoints.Map("/", context =>
             {
                 context.Response.Redirect("/swagger");

@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Vitrina.Domain;
 using Vitrina.Domain.Project;
 using Vitrina.Domain.User;
+using File = Vitrina.Domain.File;
 
 namespace Vitrina.Infrastructure.Abstractions.Interfaces;
 
@@ -29,10 +31,7 @@ public interface IAppDbContext : IDbContextWithSets, IDisposable
     /// </summary>
     DbSet<ProjectRole> ProjectRoles { get; }
 
-    /// <summary>
-    /// Contents.
-    /// </summary>
-    DbSet<Content> Contents { get; }
+    DbSet<File> Files { get; }
 
     /// <summary>
     /// Users.
@@ -52,5 +51,5 @@ public interface IAppDbContext : IDbContextWithSets, IDisposable
     /// <summary>
     /// Resumes.
     /// </summary>
-    DbSet<Resume> Resume { get; }
+    DbSet<Resume> Resumes { get; }
 }
