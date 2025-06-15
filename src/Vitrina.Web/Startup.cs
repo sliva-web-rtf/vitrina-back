@@ -41,10 +41,8 @@ public class Startup
         // CORS.
         var frontendOrigin = (configuration["AppSettings:FrontendOrigin"] ?? string.Empty)
             .Split(';', StringSplitOptions.RemoveEmptyEntries);
-        services.AddCors(new CorsOptionsSetup(
-            environment.IsDevelopment(),
-            frontendOrigin
-        ).Setup);
+        services.AddCors(new CorsOptionsSetup(environment.IsDevelopment(),
+            frontendOrigin).Setup);
 
         // x-forward
         var knownProxies = (configuration["AppSettings:KnownProxies"] ?? string.Empty)
@@ -59,8 +57,8 @@ public class Startup
 
         // Health check.
         var databaseConnectionString = configuration.GetConnectionString("AppDatabase")
-                                       ?? throw new ArgumentNullException("ConnectionStrings:AppDatabase",
-                                           "Database connection string is not initialized");
+            ?? throw new ArgumentNullException("ConnectionStrings:AppDatabase",
+                "Database connection string is not initialized");
 
         // MVC.
         services
@@ -79,7 +77,13 @@ public class Startup
         services.AddIdentity<User, AppIdentityRole>()
             .AddEntityFrameworkStores<AppDbContext>()
             .AddDefaultTokenProviders();
-        services.Configure<IdentityOptions>(new IdentityOptionsSetup().Setup);
+
+        services.Configure<IdentityOptions>(options =>
+        {
+            options.User.RequireUniqueEmail = true;
+            options.Password.RequireNonAlphanumeric = false;
+            options.Tokens.EmailConfirmationTokenProvider = TokenOptions.DefaultEmailProvider;
+        });
 
         // JWT
         var jwtSecretKey = configuration["Jwt:SecretKey"] ?? throw new ArgumentNullException("Jwt:SecretKey");
@@ -89,14 +93,11 @@ public class Startup
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             })
-            .AddJwtBearer(new JwtBearerOptionsSetup(
-                jwtSecretKey,
-                jwtIssuer).Setup
-            );
+            .AddJwtBearer(new JwtBearerOptionsSetup(jwtSecretKey,
+                jwtIssuer).Setup);
 
         // Database.
-        services.AddDbContext<AppDbContext>(
-            new DbContextOptionsSetup(databaseConnectionString).Setup);
+        services.AddDbContext<AppDbContext>(new DbContextOptionsSetup(databaseConnectionString).Setup);
         services.AddAsyncInitializer<DatabaseInitializer>();
 
         // Logging.
@@ -113,6 +114,7 @@ public class Startup
         ApplicationModule.Register(services, configuration);
         MediatRModule.Register(services);
         SystemModule.Register(services);
+        EmailSenderModule.Register(services, configuration);
     }
 
     /// <summary>

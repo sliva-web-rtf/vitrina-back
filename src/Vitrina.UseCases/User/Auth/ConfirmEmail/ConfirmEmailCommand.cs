@@ -15,5 +15,5 @@ public class ConfirmEmailCommand : IRequest<ConfirmEmailCommandResult>
     /// <summary>
     ///     Confirmation code.
     /// </summary>
-    public int ConfirmationCode { get; init; }
+    public string ConfirmationCode { get; init; }
 }
