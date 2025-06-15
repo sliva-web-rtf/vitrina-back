@@ -79,6 +79,8 @@ public class AuthController(IMediator mediator) : ControllerBase
     }
 
     [HttpPost("forgot-password/{email}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> ForgotPassword([FromRoute] string email, CancellationToken cancellationToken)
     {
         var result = await mediator.Send(new ForgotPasswordCommand { Email = email, UrlHelper = Url },
@@ -92,6 +94,10 @@ public class AuthController(IMediator mediator) : ControllerBase
     }
 
     [HttpPost("reset-password")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+
     public async Task<IActionResult> ResetPassword(
         [Required] ResetPasswordCommand command,
         CancellationToken cancellationToken
