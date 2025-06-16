@@ -825,7 +825,7 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                     b.HasOne("Vitrina.Domain.User.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Team");

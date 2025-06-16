@@ -11,6 +11,10 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropForeignKey(
+                name: "FK_Teammates_AspNetUsers_UserId",
+                table: "Teammates");
+
             migrationBuilder.CreateTable(
                 name: "Files",
                 columns: table => new
@@ -93,11 +97,23 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                 table: "Resumes",
                 column: "UserId",
                 unique: true);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Teammates_AspNetUsers_UserId",
+                table: "Teammates",
+                column: "UserId",
+                principalTable: "AspNetUsers",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Cascade);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropForeignKey(
+                name: "FK_Teammates_AspNetUsers_UserId",
+                table: "Teammates");
+
             migrationBuilder.DropTable(
                 name: "Images");
 
@@ -106,6 +122,13 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "Files");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Teammates_AspNetUsers_UserId",
+                table: "Teammates",
+                column: "UserId",
+                principalTable: "AspNetUsers",
+                principalColumn: "Id");
         }
     }
 }

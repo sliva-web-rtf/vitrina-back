@@ -12,7 +12,7 @@ using Vitrina.Infrastructure.DataAccess;
 namespace Vitrina.Infrastructure.DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250616085607_AddFilesTables")]
+    [Migration("20250616124348_AddFilesTables")]
     partial class AddFilesTables
     {
         /// <inheritdoc />
@@ -828,7 +828,7 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                     b.HasOne("Vitrina.Domain.User.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Team");
