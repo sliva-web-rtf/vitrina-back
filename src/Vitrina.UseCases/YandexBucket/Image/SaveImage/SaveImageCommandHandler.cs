@@ -62,13 +62,15 @@ public class SaveImageCommandHandler(IS3StorageService s3Storage, IAppDbContext 
 
         try
         {
-            appDbContext.Files.Add(file);
-            appDbContext.Images.Add(result);
+            await appDbContext.Files.AddAsync(file, cancellationToken);
+            await appDbContext.Images.AddAsync(result, cancellationToken);
             await appDbContext.SaveChangesAsync(cancellationToken);
         }
         catch (Exception)
         {
             await s3Storage.DeleteFileAsync(path, cancellationToken);
+            appDbContext.Files.Remove(file);
+            appDbContext.Images.Remove(result);
             throw;
         }
 

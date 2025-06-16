@@ -18,7 +18,7 @@ internal class ImageConfiguration : IEntityTypeConfiguration<Image>
 
         builder.HasOne(image => image.File)
             .WithOne()
-            .HasForeignKey<Image>(resume => resume.FileId)
+            .HasForeignKey<Image>(image => image.FileId)
             .OnDelete(DeleteBehavior.Cascade);
     }
 }

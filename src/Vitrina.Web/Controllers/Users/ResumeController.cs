@@ -72,6 +72,6 @@ public class ResumeController(IMediator mediator) : BaseVitrinaController
     {
         var command = new DeleteResumeCommand(id, GetIdAuthorizedUser());
         await mediator.Send(command, cancellationToken);
-        return Ok();
+        return NoContent();
     }
 }

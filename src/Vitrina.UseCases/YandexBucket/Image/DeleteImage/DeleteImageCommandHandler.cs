@@ -13,6 +13,7 @@ public class DeleteImageCommandHandler(IS3StorageService s3Storage, IAppDbContex
                     ?? throw new NotFoundException("Изоображение не найдено");
         image.File.ThrowExceptionIfNoAccess(request.IdAuthorizedUser);
         appDbContext.Images.Remove(image);
+        appDbContext.Files.Remove(image.File);
         await appDbContext.SaveChangesAsync(cancellationToken);
         await s3Storage.DeleteFileAsync(image.File.Path, cancellationToken);
     }

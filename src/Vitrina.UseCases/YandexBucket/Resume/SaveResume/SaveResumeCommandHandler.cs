@@ -60,6 +60,8 @@ public class SaveResumeCommandHandler(IS3StorageService s3Storage, IAppDbContext
         catch (Exception)
         {
             await s3Storage.DeleteFileAsync(path, cancellationToken);
+            appDbContext.Files.Remove(file);
+            appDbContext.Resumes.Remove(result);
             throw;
         }
 

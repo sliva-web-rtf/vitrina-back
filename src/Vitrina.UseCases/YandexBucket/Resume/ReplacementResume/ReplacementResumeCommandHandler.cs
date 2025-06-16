@@ -42,8 +42,7 @@ public class ReplacementResumeCommandHandler(IS3StorageService s3Storage, IAppDb
     {
         await using var stream = request.File.OpenReadStream();
         var previousFilePath = resume.File.Path;
-        var path = Path.Combine(Path.GetDirectoryName(previousFilePath),
-            $"{Guid.NewGuid()}.{Path.GetExtension(previousFilePath)}");
+        var path = $"{Path.GetDirectoryName(previousFilePath)}/{Guid.NewGuid()}{Path.GetExtension(previousFilePath)}";
         await s3Storage.SaveFileAsync(stream, path, request.File.ContentType, cancellationToken);
         resume.File.Path = path;
 

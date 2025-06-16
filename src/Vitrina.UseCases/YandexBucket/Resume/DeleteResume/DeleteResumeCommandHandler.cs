@@ -13,6 +13,7 @@ public class DeleteResumeCommandHandler(IS3StorageService s3Storage, IAppDbConte
                      ?? throw new NotFoundException("Резюме не существует.");
         resume.File.ThrowExceptionIfNoAccess(request.IdAuthorizedUser);
         appDbContext.Resumes.Remove(resume);
+        appDbContext.Files.Remove(resume.File);
         await appDbContext.SaveChangesAsync(cancellationToken);
         await s3Storage.DeleteFileAsync(resume.File.Path, cancellationToken);
     }

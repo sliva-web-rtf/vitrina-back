@@ -52,9 +52,9 @@ public class ImageController : BaseVitrinaController
 
     [HttpDelete("{image-id:guid}")]
     [Authorize(Roles = "Student, Curator")]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> DeleteImage(
         [FromRoute(Name = "image-id")] Guid id,
         CancellationToken cancellationToken

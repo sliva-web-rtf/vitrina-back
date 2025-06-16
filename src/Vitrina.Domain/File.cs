@@ -5,7 +5,8 @@ namespace Vitrina.Domain;
 
 public class File
 {
-    [Key] required public Guid Id { get; init; }
+    [Key]
+    required public Guid Id { get; init; }
 
     required public string Path { get; set; }
 
@@ -15,7 +16,7 @@ public class File
 
     public void ThrowExceptionIfNoAccess(int userId)
     {
-        if (userId == CreatorId)
+        if (userId != CreatorId)
         {
             throw new ForbiddenException("Действия, изменяющие файл для вас запрещены.");
         }
