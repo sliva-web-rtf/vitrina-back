@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Vitrina.UseCases.ProjectThematics;
 using Vitrina.UseCases.ProjectThematics.CreateThematics;
 using Vitrina.UseCases.ProjectThematics.DeleteThematics;
-using Vitrina.UseCases.ProjectThematics.GetThematics;
+using Vitrina.UseCases.ProjectThematics.GetAllThematics;
 using Vitrina.UseCases.ProjectThematics.GetThematicsById;
 using Vitrina.UseCases.ProjectThematics.UpdateThematics;
 

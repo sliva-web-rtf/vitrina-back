@@ -1,4 +1,3 @@
-using System.Security.Claims;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
@@ -16,7 +15,7 @@ namespace Vitrina.Web.Controllers.Projects;
 [ApiController]
 [Route("api/project-teams")]
 [ApiExplorerSettings(GroupName = "project-teams")]
-public class TeamController(IMediator mediator) : ControllerBase
+public class TeamController(IMediator mediator) : BaseVitrinaController
 {
     /// <summary>
     ///     Adds a team to the project.
@@ -98,6 +97,4 @@ public class TeamController(IMediator mediator) : ControllerBase
         var query = new GetTeamByIdQuery(id);
         return Ok(await mediator.Send(query, cancellationToken));
     }
-
-    private int GetIdAuthorizedUser() => int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
 }

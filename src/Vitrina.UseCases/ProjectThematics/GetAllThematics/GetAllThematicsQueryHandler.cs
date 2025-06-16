@@ -3,7 +3,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Vitrina.Infrastructure.Abstractions.Interfaces;
 
-namespace Vitrina.UseCases.ProjectThematics.GetThematics;
+namespace Vitrina.UseCases.ProjectThematics.GetAllThematics;
 
 public class GetAllThematicsQueryHandler(IAppDbContext dbContext, IMapper mapper)
     : IRequestHandler<GetAllThematicsQuery, ICollection<ResponceThematicsDto>>

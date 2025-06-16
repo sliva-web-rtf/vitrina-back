@@ -17,6 +17,7 @@ public class DeleteProjectPageCommandHandler(IProjectPageRepository repository)
         {
             throw new DomainException("The project page cannot be deleted while the associated project exists.");
         }
+
         await repository.Delete(request.Id, cancellationToken);
         await repository.SaveChangesAsync(cancellationToken);
     }

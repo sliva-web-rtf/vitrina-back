@@ -1,10 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Vitrina.Domain;
 using Vitrina.Domain.Project;
 using Vitrina.Domain.Project.Page;
 using Vitrina.Domain.Project.Page.Content;
 using Vitrina.Domain.Project.Page.Editor;
 using Vitrina.Domain.Project.Teammate;
 using Vitrina.Domain.User;
+using File = Vitrina.Domain.File;
 
 namespace Vitrina.Infrastructure.Abstractions.Interfaces;
 
@@ -48,6 +50,8 @@ public interface IAppDbContext : IDbContextWithSets, IDisposable
     /// </summary>
     DbSet<ProjectPage> ProjectPages { get; }
 
+    DbSet<File> Files { get; }
+
     /// <summary>
     ///     Users.
     /// </summary>
@@ -72,4 +76,14 @@ public interface IAppDbContext : IDbContextWithSets, IDisposable
     ///     Page content blocks.
     /// </summary>
     DbSet<ContentBlock> ContentBlocks { get; }
+
+    /// <summary>
+    ///     Images.
+    /// </summary>
+    DbSet<Image> Images { get; }
+
+    /// <summary>
+    ///     Resumes.
+    /// </summary>
+    DbSet<Resume> Resumes { get; }
 }

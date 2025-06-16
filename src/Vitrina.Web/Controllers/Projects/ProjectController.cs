@@ -1,5 +1,4 @@
-﻿using System.Security.Claims;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -20,7 +19,7 @@ namespace Vitrina.Web.Controllers.Projects;
 [ApiController]
 [Route("api/projects")]
 [ApiExplorerSettings(GroupName = "projects")]
-public class ProjectController(IMediator mediator) : ControllerBase
+public class ProjectController(IMediator mediator) : BaseVitrinaController
 {
     /// <summary>
     ///     Create project.
@@ -97,6 +96,4 @@ public class ProjectController(IMediator mediator) : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<PagedListMetadataDto<ResponceProjectDto>> SearchProjects([FromQuery] GetProjectsQuery query,
         CancellationToken cancellationToken) => (await mediator.Send(query, cancellationToken)).ToMetadataObject();
-
-    private int GetIdAuthorizedUser() => int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
 }

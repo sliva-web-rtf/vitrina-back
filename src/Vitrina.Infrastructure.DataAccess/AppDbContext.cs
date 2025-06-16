@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Vitrina.Domain;
 using Vitrina.Domain.Project;
 using Vitrina.Domain.Project.Page;
 using Vitrina.Domain.Project.Page.Content;
@@ -8,6 +9,7 @@ using Vitrina.Domain.Project.Page.Editor;
 using Vitrina.Domain.Project.Teammate;
 using Vitrina.Domain.User;
 using Vitrina.Infrastructure.Abstractions.Interfaces;
+using File = Vitrina.Domain.File;
 
 namespace Vitrina.Infrastructure.DataAccess;
 
@@ -25,6 +27,12 @@ public class AppDbContext : IdentityDbContext<User, AppIdentityRole, int>, IAppD
     }
 
     public DbSet<Project> Projects => Set<Project>();
+
+    public DbSet<File> Files => Set<File>();
+
+    public DbSet<Image> Images => Set<Image>();
+
+    public DbSet<Resume> Resumes => Set<Resume>();
 
     public DbSet<ProjectSphere> ProjectSpheres => Set<ProjectSphere>();
 

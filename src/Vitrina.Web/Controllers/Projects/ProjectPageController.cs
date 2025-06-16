@@ -1,4 +1,3 @@
-using System.Security.Claims;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
@@ -19,7 +18,7 @@ namespace Vitrina.Web.Controllers.Projects;
 [ApiController]
 [Route("api/project-pages")]
 [ApiExplorerSettings(GroupName = "project-pages")]
-public class ProjectPageController(IMediator mediator) : ControllerBase
+public class ProjectPageController(IMediator mediator) : BaseVitrinaController
 {
     /// <summary>
     ///     Creates a project page.
@@ -130,16 +129,5 @@ public class ProjectPageController(IMediator mediator) : ControllerBase
         var command = new DeleteEditorByPageEditorIdCommand(id, editorId, GetIdAuthorizedUser());
         await mediator.Send(command, cancellationToken);
         return NoContent();
-    }
-
-    private int? GetIdAuthorizedUser()
-    {
-        var claim = User.FindFirst(ClaimTypes.NameIdentifier);
-        if (claim == null || !int.TryParse(claim.Value, out var userId))
-        {
-            return null;
-        }
-
-        return userId;
     }
 }
