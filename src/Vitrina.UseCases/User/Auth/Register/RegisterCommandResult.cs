@@ -16,7 +16,7 @@ public class RegisterCommandResult
     public string? Message { get; init; }
 
     /// <summary>
-    ///     Only for test.
+    ///     Confirmation сode.
     /// </summary>
     public string ConfirmationCode { get; set; }
 

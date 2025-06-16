@@ -5,9 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 using Vitrina.UseCases.CodeSender;
 using Vitrina.UseCases.User.Auth;
 using Vitrina.UseCases.User.Auth.ConfirmEmail;
-using Vitrina.UseCases.User.Auth.ForgotPassword;
 using Vitrina.UseCases.User.Auth.GetUserById;
 using Vitrina.UseCases.User.Auth.Login;
+using Vitrina.UseCases.User.Auth.RecoveryPassword;
 using Vitrina.UseCases.User.Auth.RefreshToken;
 using Vitrina.UseCases.User.Auth.Register;
 using Vitrina.UseCases.User.Auth.ResetPassword;
@@ -78,12 +78,12 @@ public class AuthController(IMediator mediator) : ControllerBase
         return Ok(result);
     }
 
-    [HttpPost("forgot-password/{email}")]
+    [HttpPost("recover-password")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> ForgotPassword([FromRoute] string email, CancellationToken cancellationToken)
+    public async Task<IActionResult> ForgotPassword([FromBody] string email, CancellationToken cancellationToken)
     {
-        var result = await mediator.Send(new ForgotPasswordCommand { Email = email, UrlHelper = Url },
+        var result = await mediator.Send(new GenerateTokenCommand { Email = email, UrlHelper = Url },
             cancellationToken);
         if (!result.IsSuccess)
         {

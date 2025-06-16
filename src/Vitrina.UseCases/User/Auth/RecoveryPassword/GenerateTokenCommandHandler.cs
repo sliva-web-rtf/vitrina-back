@@ -1,17 +1,18 @@
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Vitrina.Domain.Enums.Email;
 using Vitrina.Infrastructure.Abstractions.Interfaces;
 
-namespace Vitrina.UseCases.User.Auth.ForgotPassword;
+namespace Vitrina.UseCases.User.Auth.RecoveryPassword;
 
-public class ForgotPasswordCommandHandler(
+public class GenerateTokenCommandHandler(
     UserManager<Domain.User.User> userManager,
     IEmailSender emailSender,
-    IHttpContextAccessor httpContextAccessor) : IRequestHandler<ForgotPasswordCommand, ForgotPasswordCommandResult>
+    IHttpContextAccessor httpContextAccessor) : IRequestHandler<GenerateTokenCommand, GenerateTokenCommandResult>
 {
-    public async Task<ForgotPasswordCommandResult> Handle(
-        ForgotPasswordCommand request,
+    public async Task<GenerateTokenCommandResult> Handle(
+        GenerateTokenCommand request,
         CancellationToken cancellationToken
     )
     {
@@ -26,10 +27,10 @@ public class ForgotPasswordCommandHandler(
         var baseUrl = $"{httpContextRequest.Scheme}://{httpContextRequest.Host}";
         var resetLink = $"{baseUrl}/api/auth/reset-password?token={token}&email={user.Email}";
 
-        await emailSender.SendEmailAsync(request.Email,
+        var result = await emailSender.SendEmailAsync(request.Email,
             resetLink,
             "Восстановление пароля");
 
-        return new() { IsSuccess = true };
+        return new() { IsSuccess = result == EmailResult.Success };
     }
 }

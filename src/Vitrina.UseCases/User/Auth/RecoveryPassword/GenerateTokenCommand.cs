@@ -2,9 +2,9 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
-namespace Vitrina.UseCases.User.Auth.ForgotPassword;
+namespace Vitrina.UseCases.User.Auth.RecoveryPassword;
 
-public class ForgotPasswordCommand : IRequest<ForgotPasswordCommandResult>
+public class GenerateTokenCommand : IRequest<GenerateTokenCommandResult>
 {
     [Required]
     [EmailAddress]
