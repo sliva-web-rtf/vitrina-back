@@ -7,9 +7,8 @@ namespace Vitrina.Infrastructure.DataAccess.ModelConfigurations.ProjectConfigura
 public class TeammateConfiguration : IEntityTypeConfiguration<Teammate>
 {
     public void Configure(EntityTypeBuilder<Teammate> builder) =>
-        builder
-            .HasOne(teammate => teammate.User)
+        builder.HasOne(teammate => teammate.User)
             .WithMany()
-            .HasForeignKey(t => t.UserId)
-            .OnDelete(DeleteBehavior.NoAction);
+            .HasForeignKey(teammate => teammate.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
 }

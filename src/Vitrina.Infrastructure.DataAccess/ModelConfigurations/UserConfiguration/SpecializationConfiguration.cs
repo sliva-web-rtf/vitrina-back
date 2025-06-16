@@ -7,7 +7,6 @@ namespace Vitrina.Infrastructure.DataAccess.ModelConfigurations.UserConfiguratio
 public class SpecializationConfiguration : IEntityTypeConfiguration<Specialization>
 {
     public void Configure(EntityTypeBuilder<Specialization> builder) =>
-        builder
-            .HasIndex(s => s.Name)
+        builder.HasIndex(specialization => specialization.Name)
             .IsUnique();
 }

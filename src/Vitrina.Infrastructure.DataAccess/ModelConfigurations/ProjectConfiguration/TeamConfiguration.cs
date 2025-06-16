@@ -8,10 +8,9 @@ public class TeamConfiguration : IEntityTypeConfiguration<Team>
 {
     public void Configure(EntityTypeBuilder<Team> builder)
     {
-        builder
-            .HasOne(team => team.Project)
+        builder.HasOne(team => team.Project)
             .WithOne(team => team.Team)
-            .HasForeignKey<Project>(team => team.TeamId)
+            .HasForeignKey<Project>(project => project.TeamId)
             .OnDelete(DeleteBehavior.NoAction);
         builder
             .HasMany(team => team.TeamMembers)

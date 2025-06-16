@@ -14,18 +14,15 @@ internal class ProjectConfiguration : IEntityTypeConfiguration<Project>
     {
         builder.HasIndex(project => project.Name);
         builder.HasIndex(project => project.PageId);
-        builder
-            .HasOne(project => project.Team)
+        builder.HasOne(project => project.Team)
             .WithOne(team => team.Project)
-            .HasForeignKey<Project>(project => project.TeamId)
+            .HasForeignKey<Team>(team => team.ProjectId)
             .OnDelete(DeleteBehavior.Cascade);
-        builder
-            .HasOne(project => project.Page)
+        builder.HasOne(project => project.Page)
             .WithOne(page => page.Project)
             .HasForeignKey<ProjectPage>(projectPage => projectPage.ProjectId)
             .OnDelete(DeleteBehavior.Cascade);
-        builder
-            .HasOne(project => project.Curator)
+        builder.HasOne(project => project.Curator)
             .WithMany()
             .HasForeignKey(project => project.CuratorId)
             .OnDelete(DeleteBehavior.ClientSetNull);
