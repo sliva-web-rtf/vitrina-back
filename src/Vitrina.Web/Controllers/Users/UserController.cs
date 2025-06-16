@@ -10,6 +10,7 @@ using Vitrina.UseCases.User.GetUserProjects;
 using Vitrina.UseCases.User.GetUserProjectsPages;
 using Vitrina.UseCases.User.GetUsers;
 using Vitrina.UseCases.User.UpdateUser;
+using Vitrina.UseCases.YandexBucket.Files.GetFilesByCreatorId;
 
 namespace Vitrina.Web.Controllers.Users;
 
@@ -72,13 +73,33 @@ public class UserController(IMediator mediator) : ControllerBase
     [Produces("application/json")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ICollection<ResponceProjectDto>> GetProjects([FromRoute(Name = "user-id")] int id,
-        CancellationToken cancellationToken)
+    public async Task<ICollection<ResponceProjectDto>> GetProjects(
+        [FromRoute(Name = "user-id")] int id,
+        CancellationToken cancellationToken
+        )
     {
         var query = new GetUserProjectsByUserIdQuery(id);
         return await mediator.Send(query, cancellationToken);
     }
 
+    /// <summary>
+    ///     Get the user's files.
+    /// </summary>
+    [HttpGet("{user-id:int}/files")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetUserFiles(
+        [FromRoute(Name = "user-id")] int id,
+        CancellationToken cancellationToken
+        )
+    {
+        var query = new GetFilesByCreatorIdQuery(id);
+        return Ok(await mediator.Send(query, cancellationToken));
+    }
+
+    /// <summary>
+    ///     Searches for users based on a query.
+    /// </summary>
     [HttpGet("")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
