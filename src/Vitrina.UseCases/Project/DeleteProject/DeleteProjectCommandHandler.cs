@@ -14,10 +14,6 @@ internal class DeleteProjectCommandHandler(IAppDbContext appDbContext)
                           .FirstOrDefaultAsync(p => p.Id == request.ProjectId, cancellationToken)
                       ?? throw new NotFoundException($"Project with id = {request.ProjectId} not found.");
         project.ThrowExceptionIfNoAccessRights(request.IdAuthorizedUser);
-
-        // TODO: реализовать удаление previewImage проекта из облака
-        // TODO: реализовать удаление файлов боков страниц проектов из облака
-
         appDbContext.Projects.Remove(project);
         await appDbContext.SaveChangesAsync(cancellationToken);
     }

@@ -18,7 +18,7 @@ public class AdditionalStudentInfo
     /// <summary>
     ///     Link to the image in the cloud storage.
     /// </summary>
-    public string? Resume { get; init; }
+    public Guid? ResumeId { get; init; }
 
     /// <summary>
     ///     Role in the team.

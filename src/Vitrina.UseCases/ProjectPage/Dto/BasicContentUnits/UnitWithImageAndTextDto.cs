@@ -11,5 +11,5 @@ public record UnitWithImageAndTextDto : UnitWithImageBaseDto
     ///     The marking of the text.
     /// </summary>
     [StringLength(1_000_000, ErrorMessage = "The markup is too voluminous")]
-    required public string Markdown { get; init; }
+    required public string Markup { get; init; }
 }

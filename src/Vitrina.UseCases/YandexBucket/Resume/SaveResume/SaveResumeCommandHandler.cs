@@ -1,4 +1,5 @@
 using MediatR;
+using Newtonsoft.Json.Linq;
 using Saritasa.Tools.Domain.Exceptions;
 using Vitrina.Infrastructure.Abstractions.Interfaces;
 using File = Vitrina.Domain.File;
@@ -50,11 +51,16 @@ public class SaveResumeCommandHandler(IS3StorageService s3Storage, IAppDbContext
         {
             Id = Guid.NewGuid(), FileId = file.Id, UserId = request.IdAuthorizedUser
         };
+        var user = await appDbContext.Users.FindAsync(request.IdAuthorizedUser, cancellationToken)
+                   ?? throw new NotFoundException("Авторизированный пользователь не найден.");
+        var additionalInformationJson = JObject.Parse(user.AdditionalInformation);
+        additionalInformationJson["ResumeId"] = result.Id;
+        user.AdditionalInformation = additionalInformationJson.ToString();
+        await appDbContext.Files.AddAsync(file, cancellationToken);
+        await appDbContext.Resumes.AddAsync(result, cancellationToken);
 
         try
         {
-            appDbContext.Files.Add(file);
-            appDbContext.Resumes.Add(result);
             await appDbContext.SaveChangesAsync(cancellationToken);
         }
         catch (Exception)
@@ -62,6 +68,7 @@ public class SaveResumeCommandHandler(IS3StorageService s3Storage, IAppDbContext
             await s3Storage.DeleteFileAsync(path, cancellationToken);
             appDbContext.Files.Remove(file);
             appDbContext.Resumes.Remove(result);
+            await appDbContext.Users.Entry(user).ReloadAsync(cancellationToken);
             throw;
         }
 

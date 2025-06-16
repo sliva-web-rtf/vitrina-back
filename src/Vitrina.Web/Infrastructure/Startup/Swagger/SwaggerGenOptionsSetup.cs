@@ -24,7 +24,6 @@ internal class SwaggerGenOptionsSetup
         options.SwaggerDoc("v1", new OpenApiInfo
         {
             Version = fileVersionInfo.ProductVersion,
-            // TODO:
             Title = "Swagger Setup Example",
             Description = "API documentation for the project."
         });
@@ -39,7 +38,6 @@ internal class SwaggerGenOptionsSetup
                 Type = SecuritySchemeType.Http
             });
 
-        // TODO: Add your assemblies here.
         options.IncludeXmlCommentsWithRemarks(GetAssemblyLocationByType(GetType()));
         options.IncludeXmlCommentsWithRemarks(GetAssemblyLocationByType(typeof(PageQueryFilter)));
         options.IncludeXmlCommentsFromInheritDocs(true);

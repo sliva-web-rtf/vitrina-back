@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using Vitrina.UseCases.Common.DTO;
 
 namespace Vitrina.UseCases.ProjectPage.Dto.BasicContentUnits;
 
@@ -8,7 +7,7 @@ public abstract record UnitWithImageBaseDto
     /// <summary>
     ///     Image url.
     /// </summary>
-    required public FileDto Image { get; init; }
+    required public Guid ImageId { get; init; }
 
     /// <summary>
     ///     Block styles.

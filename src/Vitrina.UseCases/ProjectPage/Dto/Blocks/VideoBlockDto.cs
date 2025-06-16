@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using Vitrina.UseCases.Common.DTO;
 
 namespace Vitrina.UseCases.ProjectPage.Dto.Blocks;
 
@@ -8,7 +7,7 @@ public record VideoBlockDto
     /// <summary>
     ///     Link to the video.
     /// </summary>
-    required public FileDto Video { get; init; }
+    required public string VideoUrl { get; init; }
 
     /// <summary>
     ///     Block styles.
