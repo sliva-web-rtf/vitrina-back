@@ -114,6 +114,7 @@ public class AuthController(IMediator mediator) : ControllerBase
     }
 
     [HttpPost("reset-password")]
+    [Authorize("Student, Curator, Partner")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
