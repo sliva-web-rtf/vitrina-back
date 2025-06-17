@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Vitrina.UseCases.CodeSender;
 using Vitrina.UseCases.User.Auth;
+using Vitrina.UseCases.User.Auth.ChangePassword;
 using Vitrina.UseCases.User.Auth.ConfirmEmail;
 using Vitrina.UseCases.User.Auth.GetUserById;
 using Vitrina.UseCases.User.Auth.Login;
@@ -78,10 +79,29 @@ public class AuthController(IMediator mediator) : ControllerBase
         return Ok(result);
     }
 
+    [HttpPost("change-password")]
+    [Authorize("Student, Curator, Partner")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> ChangePassword(
+        [Required] ChangePasswordCommand command,
+        CancellationToken cancellationToken
+    )
+    {
+        var result = await mediator.Send(command, cancellationToken);
+
+        if (!result.IsSuccess)
+        {
+            return BadRequest();
+        }
+
+        return Ok(result);
+    }
+
     [HttpPost("recover-password")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> ForgotPassword([FromBody] string email, CancellationToken cancellationToken)
+    public async Task<IActionResult> RecoverPassword([FromBody] string email, CancellationToken cancellationToken)
     {
         var result = await mediator.Send(new GenerateTokenCommand { Email = email, UrlHelper = Url },
             cancellationToken);
@@ -97,7 +117,6 @@ public class AuthController(IMediator mediator) : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-
     public async Task<IActionResult> ResetPassword(
         [Required] ResetPasswordCommand command,
         CancellationToken cancellationToken
