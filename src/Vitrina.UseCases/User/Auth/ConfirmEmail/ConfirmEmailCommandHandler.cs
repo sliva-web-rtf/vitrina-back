@@ -13,32 +13,26 @@ public class ConfirmEmailCommandHandler : IRequestHandler<ConfirmEmailCommand, C
     private readonly IAppDbContext appDbContext;
     private readonly SignInManager<Domain.User.User> signInManager;
     private readonly IAuthenticationTokenService tokenService;
+    private readonly UserManager<Domain.User.User> userManager;
 
     /// <summary>
     ///     Constructor.
     /// </summary>
     public ConfirmEmailCommandHandler(IAppDbContext appDbContext, SignInManager<Domain.User.User> signInManager,
-        IAuthenticationTokenService tokenService)
+        IAuthenticationTokenService tokenService, UserManager<Domain.User.User> userManager)
     {
         this.appDbContext = appDbContext;
         this.signInManager = signInManager;
         this.tokenService = tokenService;
+        this.userManager = userManager;
     }
 
     /// <inheritdoc />
     public async Task<ConfirmEmailCommandResult> Handle(ConfirmEmailCommand request,
         CancellationToken cancellationToken)
     {
-        var exist = await appDbContext.Codes
-            .AnyAsync(c => c.Code == request.ConfirmationCode && c.UserId == request.UserId,
-                cancellationToken);
-        if (!exist)
-        {
-            return new ConfirmEmailCommandResult { IsSuccess = false, Message = "wrong confirmation code." };
-        }
-
         var user = await appDbContext.Users.FirstAsync(u => u.Id == request.UserId, cancellationToken);
-        user.EmailConfirmed = true;
+        await userManager.ConfirmEmailAsync(user, request.ConfirmationCode);
         var principal = await signInManager.CreateUserPrincipalAsync(user);
         await appDbContext.SaveChangesAsync(cancellationToken);
         return new ConfirmEmailCommandResult

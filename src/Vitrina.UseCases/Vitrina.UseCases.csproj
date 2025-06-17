@@ -6,7 +6,10 @@
 
   <ItemGroup>
     <PackageReference Include="FluentValidation" Version="12.0.0"/>
+    <PackageReference Include="MailKit" Version="4.12.1" />
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.3.1"/>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.3.0" />
+    <PackageReference Include="MimeKit" Version="4.12.0" />
     <PackageReference Include="Microsoft.AspNetCore.JsonPatch" Version="9.0.6"/>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="9.0.6"/>
     <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="9.0.6"/>
@@ -24,6 +27,12 @@
     <ProjectReference Include="..\Vitrina.Domain\Vitrina.Domain.csproj"/>
     <ProjectReference Include="..\Vitrina.Infrastructure.Abstractions\Vitrina.Infrastructure.Abstractions.csproj"/>
     <ProjectReference Include="..\Vitrina.UseCases.Common\Vitrina.UseCases.Common.csproj"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Microsoft.AspNetCore.Mvc.Abstractions">
+      <HintPath>C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App\9.0.2\Microsoft.AspNetCore.Mvc.Abstractions.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

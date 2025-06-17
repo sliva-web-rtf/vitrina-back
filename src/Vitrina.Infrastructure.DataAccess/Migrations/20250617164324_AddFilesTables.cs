@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
@@ -14,6 +15,9 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
             migrationBuilder.DropForeignKey(
                 name: "FK_Teammates_AspNetUsers_UserId",
                 table: "Teammates");
+
+            migrationBuilder.DropTable(
+                name: "Codes");
 
             migrationBuilder.CreateTable(
                 name: "Files",
@@ -122,6 +126,20 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "Files");
+
+            migrationBuilder.CreateTable(
+                name: "Codes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Code = table.Column<int>(type: "integer", nullable: false),
+                    UserId = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Codes", x => x.Id);
+                });
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Teammates_AspNetUsers_UserId",

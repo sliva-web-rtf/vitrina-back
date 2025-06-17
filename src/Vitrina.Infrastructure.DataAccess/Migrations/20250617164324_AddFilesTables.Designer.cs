@@ -12,7 +12,7 @@ using Vitrina.Infrastructure.DataAccess;
 namespace Vitrina.Infrastructure.DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250616124348_AddFilesTables")]
+    [Migration("20250617164324_AddFilesTables")]
     partial class AddFilesTables
     {
         /// <inheritdoc />
@@ -471,25 +471,6 @@ namespace Vitrina.Infrastructure.DataAccess.Migrations
                         .HasDatabaseName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles", (string)null);
-                });
-
-            modelBuilder.Entity("Vitrina.Domain.User.ConfirmationCode", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("Code")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Codes");
                 });
 
             modelBuilder.Entity("Vitrina.Domain.User.Resume", b =>

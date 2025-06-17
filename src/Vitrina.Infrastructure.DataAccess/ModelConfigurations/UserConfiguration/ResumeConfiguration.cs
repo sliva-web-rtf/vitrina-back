@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Vitrina.Domain.User;
 
-namespace Vitrina.Infrastructure.DataAccess.ModelConfigurations;
+namespace Vitrina.Infrastructure.DataAccess.ModelConfigurations.UserConfiguration;
 
 /// <summary>
 ///     Configuration of Resume entity.

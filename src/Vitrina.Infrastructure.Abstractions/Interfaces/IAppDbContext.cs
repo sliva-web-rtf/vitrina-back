@@ -58,11 +58,6 @@ public interface IAppDbContext : IDbContextWithSets, IDisposable
     DbSet<User> Users { get; }
 
     /// <summary>
-    ///     Confirmation codes.
-    /// </summary>
-    DbSet<ConfirmationCode> Codes { get; }
-
-    /// <summary>
     ///     Students' specializations.
     /// </summary>
     DbSet<Specialization> Specializations { get; }

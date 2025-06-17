@@ -46,8 +46,6 @@ public class AppDbContext : IdentityDbContext<User, AppIdentityRole, int>, IAppD
 
     public DbSet<ProjectPage> ProjectPages => Set<ProjectPage>();
 
-    public DbSet<ConfirmationCode> Codes => Set<ConfirmationCode>();
-
     public DbSet<Specialization> Specializations => Set<Specialization>();
 
     public DbSet<PageEditor> PageEditors => Set<PageEditor>();

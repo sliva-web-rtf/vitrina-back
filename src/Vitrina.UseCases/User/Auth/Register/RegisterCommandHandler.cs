@@ -3,7 +3,6 @@ using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Saritasa.Tools.Domain.Exceptions;
 using Vitrina.Domain.User;
-using Vitrina.Infrastructure.Abstractions.Interfaces;
 using Vitrina.UseCases.User.DTO;
 
 namespace Vitrina.UseCases.User.Auth.Register;
@@ -13,7 +12,6 @@ namespace Vitrina.UseCases.User.Auth.Register;
 /// </summary>
 public class RegisterCommandHandler(
     UserManager<Domain.User.User> userManager,
-    IAppDbContext appDbContext,
     IMapper mapper,
     UpdateUserDtoValidator validator)
     : IRequestHandler<RegisterCommand, RegisterCommandResult>
@@ -32,21 +30,9 @@ public class RegisterCommandHandler(
         }
 
         await userManager.AddToRoleAsync(user, $"{request.RoleOnPlatform}");
+        var confirmEmailCode = await userManager.GenerateEmailConfirmationTokenAsync(user);
 
-        var code = ConfirmationCodeGenerator.Generate();
-        try
-        {
-            var confirmationCode = new ConfirmationCode { UserId = user.Id, Code = code };
-            await appDbContext.Codes.AddAsync(confirmationCode, cancellationToken);
-            await appDbContext.SaveChangesAsync(cancellationToken);
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            return new RegisterCommandResult { IsSuccess = false, Message = "failed to save confirmation code." };
-        }
-
-        return new RegisterCommandResult { IsSuccess = true, UserId = user.Id, ConfirmationCode = code };
+        return new RegisterCommandResult { IsSuccess = true, UserId = user.Id, ConfirmationCode = confirmEmailCode };
     }
 
     private async Task<Domain.User.User> CreateUserAsync(RegisterCommand request, CancellationToken cancellationToken)
@@ -57,7 +43,7 @@ public class RegisterCommandHandler(
         if (!validationResult.IsValid)
         {
             throw new DomainException($"Data did not go through the validity check:" +
-                                      $"{Environment.NewLine}{string.Join(Environment.NewLine, validationResult.Errors)}");
+                $"{Environment.NewLine}{string.Join(Environment.NewLine, validationResult.Errors)}");
         }
 
         var user = userDto.RoleOnPlatform switch
