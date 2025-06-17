@@ -29,8 +29,6 @@ public class UpdateUserDtoValidator : AbstractValidator<UserDto>
             .WithMessage("The education course does not correspond to the education level.");
         RuleFor(user => user.AdditionalInformation.RoleInTeam)
             .MaximumLength(255).WithMessage("RoleInTeam: allowed length is exceeded");
-        RuleFor(user => user.AdditionalInformation.Resume)
-            .MaximumLength(255).WithMessage("Resume: allowed length is exceeded");
         RuleFor(user => user.AdditionalInformation.Company)
             .MaximumLength(255).WithMessage("Company: allowed length is exceeded");
         RuleFor(user => user.AdditionalInformation.Post)
