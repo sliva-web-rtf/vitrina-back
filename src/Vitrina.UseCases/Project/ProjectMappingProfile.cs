@@ -18,7 +18,9 @@ public class ProjectMappingProfile : Profile
     /// </summary>
     public ProjectMappingProfile()
     {
-        CreateMap<AddProjectCommand, Domain.Project.Project>();
+        CreateMap<AddProjectCommand, Domain.Project.Project>()
+            .ForMember(project => project.Id, member => member.Ignore())
+            .ForMember(project => project.Contents, member => member.Ignore());
         CreateMap<Content, ContentDto>().ReverseMap();
         CreateMap<Tag, TagDto>().ReverseMap();
         CreateMap<ProjectRole, RoleDto>().ReverseMap();

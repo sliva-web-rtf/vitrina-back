@@ -32,7 +32,7 @@ public class UpdateUserDto
     /// <summary>
     /// User patronymic.
     /// </summary>
-    public string? Patronymic { get; init; }
+    public string? Surname { get; init; }
 
     /// <summary>
     /// User avatar.

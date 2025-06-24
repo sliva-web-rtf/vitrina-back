@@ -31,7 +31,7 @@ public class Teammate
     /// <summary>
     /// User patronymic.
     /// </summary>
-    public string? Patronymic { get; set; }
+    public string? Surname { get; set; }
 
     /// <summary>
     /// User avatar.
