@@ -33,13 +33,17 @@ public class AppDbContext : IdentityDbContext<User, AppIdentityRole, int>, IAppD
     /// <inheritdoc/>
     public DbSet<ConfirmationCode> Codes => Set<ConfirmationCode>();
 
+    /// <inheritdoc/>
+    public DbSet<Image> Images => Set<Image>();
+
+    /// <inheritdoc/>
+    public DbSet<Resume> Resume => Set<Resume>();
+
     /// <summary>
     /// Constructor.
     /// </summary>
     /// <param name="options">The options to be used by a <see cref="Microsoft.EntityFrameworkCore.DbContext" />.</param>
-    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
-    {
-    }
+    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
     /// <inheritdoc />
     protected override void OnModelCreating(ModelBuilder modelBuilder)
