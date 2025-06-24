@@ -1,9 +1,9 @@
-namespace Vitrina.UseCases.Tests.Infrastructure;
-
 using Microsoft.EntityFrameworkCore;
 using Vitrina.Domain.Project;
 using Vitrina.Domain.User;
 using Vitrina.Infrastructure.Abstractions.Interfaces;
+
+namespace Vitrina.UseCases.Tests.Infrastructure;
 
 /// <summary>
 /// Test database context.
@@ -28,4 +28,8 @@ internal class TestDbContext : DbContext, IAppDbContext
     public DbSet<User> Users { get; set; } = null!;
 
     public DbSet<ConfirmationCode> Codes { get; set; } = null!;
+
+    public DbSet<Image> Images { get; set; } = null!;
+
+    public DbSet<Resume> Resume { get; set; } = null!;
 }
