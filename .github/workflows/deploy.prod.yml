@@ -55,8 +55,8 @@ jobs:
             EOF
 
             # Обновление сервиса
-            docker-compose --env-file .env.prod pull app
-            docker-compose --env-file .env.prod up -d app
+            docker compose --env-file .env.prod pull app
+            docker compose --env-file .env.prod up -d app
 
             # Очистка неиспользуемых образов
             docker image prune -af
