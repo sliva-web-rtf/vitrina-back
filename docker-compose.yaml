@@ -15,7 +15,7 @@ services:
       - YandexS3__BucketName=${YANDEX_S3_BUCKET_NAME}
       - ASPNETCORE_URLS=http://+:5000
     volumes:
-      - /${ENV_NAME}/wwwroot:/app/wwwroot
+      - ~/${ENV_NAME}/wwwroot:/app/wwwroot
     ports:
       - "${APP_PORT}:5000"
 
