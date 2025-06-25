@@ -39,7 +39,7 @@ jobs:
             ENV_NAME=stage
             VERSION=${{ github.event.inputs.version }}
             CR_ID=${{ vars.CR_ID }}
-            APP_PORT=5001
+            APP_PORT=5002
 
             DB_PORT=5433
             POSTGRES_DB=${{ secrets.POSTGRES_DB_STAGE }}
