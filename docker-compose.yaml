@@ -1,28 +1,44 @@
 version: "3.8"
 
 services:
-  ###
-  # Postgres main database
-  postgres:
-    hostname: redman-db
-    container_name: redman-db
-    image: postgres:13
-    ports:
-      - "5432:5432" # database
+  app:
+    image: cr.yandex/${CR_ID}/app:${VERSION}
+    container_name: vitrina-back-${ENV_NAME}
+    restart: unless-stopped
+    networks:
+      - vitrina
     environment:
-      - POSTGRES_DB=redman
-      - POSTGRES_USER=redman
-      - POSTGRES_PASSWORD=1
+      - ConnectionStrings__AppDatabase=${DATABASE_URL}
+      - Jwt__SecretKey=${JWT_SECRET}
+      - YandexS3__AccessKey=${YANDEX_S3_ACCESS_KEY}
+      - YandexS3__SecretKey=${YANDEX_S3_SECRET_KEY}
+      - YandexS3__BucketName=${YANDEX_S3_BUCKET_NAME}
+      - ASPNETCORE_URLS=http://+:5000
     volumes:
-      - .data/pgdata:/var/lib/postgresql/data
-
-  ###
-  # Mail catcher
-  mail:
-    hostname: redman-email
-    container_name: redman-email
-    image: inbucket/inbucket
+      - /${ENV_NAME}/wwwroot:/app/wwwroot
     ports:
-      - "9000:9000" # web ui
-      - "2500:2500" # smtp
-      - "1100:1100" # pop3
+      - "${APP_PORT}:5000"
+
+  db:
+    image: postgres:16
+    container_name: vitrina-db-${ENV_NAME}
+    restart: unless-stopped
+    networks:
+      - vitrina
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    volumes:
+      - ~/pgdata-${ENV_NAME}:/var/lib/postgresql/data
+      - ~/backup_db/dumps/${ENV_NAME}:/backups
+    ports:
+      - "${DB_PORT}:5432"
+
+volumes:
+  pgdata-${ENV_NAME}:
+
+networks:
+  vitrina:
+    name: vitrina-${ENV_NAME}
+    external: true

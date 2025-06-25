@@ -1,4 +1,4 @@
-name: Deploy to Production
+name: Deploy to Prod
 
 on:
   workflow_dispatch:
@@ -7,49 +7,24 @@ on:
         description: "Release version to deploy"
         required: true
 
-permissions:
-  actions: write
-  attestations: write
-  checks: write
-  contents: write
-  deployments: write
-  id-token: write
-  issues: write
-  discussions: write
-  packages: write
-  pages: write
-  pull-requests: write
-  repository-projects: write
-  security-events: write
-  statuses: write
-
 jobs:
+  test:
+    uses: ./.github/workflows/tests.yml
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-      - name: Set formatted date and time
-        run: echo "CURRENT_DATE=$(date +'%d-%m-%Y %H:%M')" >> $GITHUB_ENV
-
-      - name: Set up SSH key
+      - name: Setup SSH key
         uses: webfactory/ssh-agent@v0.5.4
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY_PROD }}
 
-      - name: Add host to known_hosts
+      - name: Add server to known_hosts
         run: ssh-keyscan -H ${{ vars.SERVER_IP_PROD }} >> ~/.ssh/known_hosts
 
-      - name: Login to Yandex Cloud Container Registry
-        id: login-cr
-        uses: yc-actions/yc-cr-login@v2
-        with:
-          yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_PULLER }}
-
-      - name: Check Docker image
-        run: docker pull cr.yandex/${{ vars.CR_ID }}/app:${{ github.event.inputs.version }}_latest
-
-      - name: Deploy to production server
+      - name: Deploy to Prod via SSH
         uses: appleboy/ssh-action@v0.1.6
         with:
           host: ${{ vars.SERVER_IP_PROD }}
@@ -57,27 +32,31 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY_PROD }}
           port: 22
           script: |
-            sudo docker stop vitrina-back || true
-            sudo docker rm vitrina-back || true
-            sudo docker run -d --restart unless-stopped --name vitrina-back --network vitrina \
-              -e ConnectionStrings__AppDatabase='${{ secrets.DATABASE_PROD }}' \
-              -e Jwt__SecretKey='${{ secrets.JWT_SECRET_PROD }}' \
-              -e ASPNETCORE_URLS=http://+:5000 \
-              -v /prod/wwwroot:/app/wwwroot \
-              cr.yandex/${{ vars.CR_ID }}/app:${{ github.event.inputs.version }}_latest
+            cd /home/ubuntu/vitrina-back
 
-      - name: Remove old Docker image
-        uses: appleboy/ssh-action@v0.1.6
-        with:
-          host: ${{ vars.SERVER_IP_PROD }}
-          username: ${{ secrets.USER_PROD }}
-          key: ${{ secrets.SSH_PRIVATE_KEY_PROD }}
-          port: 22
-          script: "sudo docker image prune -af"
+            # Создание .env.prod с подстановкой параметров
+            cat <<EOF > .env.prod
+            ENV_NAME=prod
+            VERSION=${{ github.event.inputs.version }}
+            CR_ID=${{ vars.CR_ID }}
+            APP_PORT=5000
 
-      - name: Add comment to issue
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          ISSUE_NUMBER=$(gh issue list --search ${{ github.event.inputs.version }} --limit 1 --json number --jq ".[0].number")
-          gh issue comment $ISSUE_NUMBER --body "Release v${{ github.event.inputs.version }} has been deployed to production.<br><br>**Date:** ${{ env.CURRENT_DATE }}<br>**Author:** ${{ github.actor }}"
+            DB_PORT=5432
+            POSTGRES_DB=${{ secrets.POSTGRES_DB_PROD }}
+            POSTGRES_USER=${{ secrets.POSTGRES_USER_PROD }}
+            POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD_PROD }}
+            DATABASE_URL=Host=db;Port=5432;Database=${{ secrets.POSTGRES_DB_PROD }};Username=${{ secrets.POSTGRES_USER_PROD }};Password=${{ secrets.POSTGRES_PASSWORD_PROD }}
+
+            YANDEX_S3_ACCESS_KEY=${{ secrets.YANDEX_S3_ACCESS_KEY }}
+            YANDEX_S3_SECRET_KEY=${{ secrets.YANDEX_S3_SECRET_KEY }}
+            YANDEX_S3_BUCKET_NAME=${{ secrets.YANDEX_S3_BUCKET_NAME }}
+
+            JWT_SECRET=${{ secrets.JWT_SECRET_PROD }}
+            EOF
+
+            # Обновление сервиса
+            docker-compose --env-file .env.prod pull app
+            docker-compose --env-file .env.prod up -d app
+
+            # Очистка неиспользуемых образов
+            docker image prune -af
