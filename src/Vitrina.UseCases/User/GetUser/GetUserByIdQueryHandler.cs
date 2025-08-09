@@ -8,7 +8,7 @@ using Vitrina.UseCases.User.DTO;
 namespace Vitrina.UseCases.User.GetUser;
 
 /// <inheritdoc />
-public class GetUserByIdQueryHandler(UserManager<Domain.User.User> userManager, IMapper mapper)
+public class GetUserById(UserManager<Domain.User.User> userManager, IMapper mapper)
     : IRequestHandler<GetUserByIdQuery, object>
 {
     /// <inheritdoc />

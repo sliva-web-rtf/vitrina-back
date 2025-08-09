@@ -18,12 +18,12 @@ public class UpdateUserByIdCommandHandler(
 {
     private static readonly HashSet<string> CommonPatchPaths =
     [
-        "/firstName",
-        "/lastName",
-        "/patronymic",
-        "/telegram",
-        "/email",
-        "/phoneNumber"
+        "/FirstName",
+        "/LastName",
+        "/Patronymic",
+        "/Telegram",
+        "/Email",
+        "/PhoneNumber"
     ];
 
     private static readonly HashSet<string> StudentPathPaths =

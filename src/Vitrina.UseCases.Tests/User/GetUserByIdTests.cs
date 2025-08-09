@@ -9,11 +9,11 @@ using Microsoft.AspNetCore.Identity;
 namespace Vitrina.UseCases.Tests.User
 {
     [TestFixture]
-    public class GetUserByIdQueryHandlerTests
+    public class GetUserByIdTests
     {
         private UserManager<Domain.User.User> userManager = null!;
         private IMapper mapper = null!;
-        private GetUserByIdQueryHandler handler = null!;
+        private GetUserById handler = null!;
         private CancellationToken cancellationToken;
 
         [SetUp]
@@ -26,7 +26,7 @@ namespace Vitrina.UseCases.Tests.User
                     null, null, null, null, null, null, null, null)));
 
             mapper = A.Fake<IMapper>();
-            handler = new GetUserByIdQueryHandler(userManager, mapper);
+            handler = new GetUserById(userManager, mapper);
             cancellationToken = CancellationToken.None;
         }
 

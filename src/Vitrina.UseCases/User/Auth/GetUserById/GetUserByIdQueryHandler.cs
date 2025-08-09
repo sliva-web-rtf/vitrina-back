@@ -9,7 +9,7 @@ namespace Vitrina.UseCases.User.Auth.GetUserById;
 /// <summary>
 ///     Handler for <see cref="GetUserByIdQuery" />.
 /// </summary>
-internal class GetUserByIdQueryHandler(IAppDbContext dbContext, IMapper mapper)
+internal class GetUserById(IAppDbContext dbContext, IMapper mapper)
     : IRequestHandler<GetUserByIdQuery, UserDetailsDto>
 {
     /// <inheritdoc />
