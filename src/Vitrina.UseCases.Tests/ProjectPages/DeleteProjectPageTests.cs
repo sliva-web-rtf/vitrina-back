@@ -68,7 +68,7 @@ public class DeleteProjectPageTests
     }
 
     [Test]
-    public async Task Handle_ShouldThrowException_WhenAccessDenied()
+    public async Task ShouldThrowException_WhenAccessDenied()
     {
         var pageId = Guid.NewGuid();
 
@@ -85,7 +85,7 @@ public class DeleteProjectPageTests
     }
 
     [Test]
-    public async Task Handle_ShouldThrow_WhenPageNotFound()
+    public async Task ShouldThrow_WhenPageNotFound()
     {
         var pageId = Guid.NewGuid();
 
