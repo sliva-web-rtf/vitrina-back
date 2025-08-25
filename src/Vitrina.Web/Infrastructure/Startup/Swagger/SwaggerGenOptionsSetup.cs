@@ -43,6 +43,7 @@ internal class SwaggerGenOptionsSetup
         options.IncludeXmlCommentsFromInheritDocs(true);
 
         // Our custom filters.
+        options.DocumentFilter<AdditionalSchemasDocumentFilter>();
         options.SchemaFilter<SwaggerExampleSetterSchemaFilter>();
         options.SchemaFilter<SwaggerEnumDescriptionSchemaOperationFilter>();
         options.OperationFilter<SwaggerEnumDescriptionSchemaOperationFilter>();

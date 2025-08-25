@@ -10,10 +10,9 @@ public class GetResumeCommandHandler(IS3StorageService s3Storage, IAppDbContext 
 {
     public async Task<ResumeDto> Handle(GetResumeCommand request, CancellationToken cancellationToken)
     {
-        var image = await dbContext.Resumes.FindAsync(request.Id, cancellationToken)
+        var resume = await dbContext.Resumes.FindAsync(request.Id, cancellationToken)
                     ?? throw new NotFoundException($"Резюме с id = {request.Id} не найдено.");
-        var path = Path.GetFileName(image.File.Path);
-        var url = await s3Storage.GetPreSignedURL(path, TimeSpan.FromHours(1));
-        return new ResumeDto { Id = image.Id, Url = url };
+        var url = await s3Storage.GetPreSignedURL(resume.File.Path, TimeSpan.FromHours(1));
+        return new ResumeDto { Id = resume.Id, Url = url };
     }
 }
