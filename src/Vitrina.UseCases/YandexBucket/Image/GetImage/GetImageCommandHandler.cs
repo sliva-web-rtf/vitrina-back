@@ -12,8 +12,7 @@ public class GetImageCommandHandler(IS3StorageService s3Storage, IAppDbContext d
     {
         var image = await dbContext.Images.FindAsync(request.Id, cancellationToken)
                     ?? throw new NotFoundException($"Изоображение с id = {request.Id} не найдено.");
-        var path = Path.GetFileName(image.File.Path);
-        var url = await s3Storage.GetPreSignedURL(path, TimeSpan.FromHours(1));
+        var url = await s3Storage.GetPreSignedURL(image.File.Path, TimeSpan.FromHours(1));
         return new ImageDto { Id = image.Id, Url = url };
     }
 }
