@@ -54,9 +54,12 @@ public class AuthController(IMediator mediator) : ControllerBase
         }
 
         await mediator.Send(new SendConfirmationCodeCommand(command.Email, result.ConfirmationCode), cancellationToken);
-        result.ConfirmationCode = string.Empty;
 
-        return Ok(result);
+        return Ok(new
+        {
+            Message = result.Message,
+            UserId = result.UserId
+        });
     }
 
     /// <summary>
