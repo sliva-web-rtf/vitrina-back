@@ -81,4 +81,6 @@ public interface IAppDbContext : IDbContextWithSets, IDisposable
     ///     Resumes.
     /// </summary>
     DbSet<Resume> Resumes { get; }
+
+    DbSet<VerificationResult> VerificationResults { get; }
 }

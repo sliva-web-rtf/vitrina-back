@@ -34,6 +34,8 @@ public class AppDbContext : IdentityDbContext<User, AppIdentityRole, int>, IAppD
 
     public DbSet<Resume> Resumes => Set<Resume>();
 
+    public DbSet<VerificationResult> VerificationResults => Set<VerificationResult>();
+
     public DbSet<ProjectSphere> ProjectSpheres => Set<ProjectSphere>();
 
     public DbSet<ProjectThematics> ProjectThematics => Set<ProjectThematics>();

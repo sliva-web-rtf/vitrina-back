@@ -7,5 +7,6 @@ public enum PageReadyStatusEnum
 {
     Draft,
     UnderReview,
-    Published
+    Published,
+    Rejected
 }

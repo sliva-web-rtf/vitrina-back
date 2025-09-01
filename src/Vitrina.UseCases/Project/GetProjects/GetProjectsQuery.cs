@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Saritasa.Tools.Common.Pagination;
+using Vitrina.Domain.Project.Page;
 using Vitrina.UseCases.Common.Pagination;
 using Vitrina.UseCases.Project.Dto;
 
@@ -29,4 +30,9 @@ public record GetProjectsQuery : PageQueryFilter, IRequest<PagedList<ResponcePro
     ///     Sphere.
     /// </summary>
     public string? Sphere { get; init; }
+
+    /// <summary>
+    ///     Page readiness status.
+    /// </summary>
+    public PageReadyStatusEnum? ReadyStatus { get; init; }
 }
