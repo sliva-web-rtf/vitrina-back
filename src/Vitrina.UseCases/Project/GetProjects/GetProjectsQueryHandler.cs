@@ -46,19 +46,22 @@ internal class GetProjectsQueryHandler(IMapper mapper, IAppDbContext dbContext)
 
         if (!string.IsNullOrEmpty(filteringParameters.Client))
         {
-            query =
-                query.Where(project => project.Client != null && project.Client.Contains(filteringParameters.Client));
+            query = query.Where(project => project.Client != null && project.Client.Contains(filteringParameters.Client));
         }
 
         if (!string.IsNullOrEmpty(filteringParameters.Sphere))
         {
-            query = query.Where(project =>
-                project.Sphere != null && project.Sphere.Name.Contains(filteringParameters.Sphere));
+            query = query.Where(project => project.Sphere != null && project.Sphere.Name.Contains(filteringParameters.Sphere));
         }
 
         if (!string.IsNullOrEmpty(filteringParameters.Thematics))
         {
-            query = query.Where(p => p.Thematics != null && p.Thematics.Name.Contains(filteringParameters.Thematics));
+            query = query.Where(project => project.Thematics != null && project.Thematics.Name.Contains(filteringParameters.Thematics));
+        }
+
+        if (filteringParameters.ReadyStatus is not null)
+        {
+            query = query.Where(project => project.Page.ReadyStatus == filteringParameters.ReadyStatus);
         }
 
         return query;

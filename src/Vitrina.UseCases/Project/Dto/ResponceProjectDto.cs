@@ -1,3 +1,5 @@
+using Vitrina.Domain.Project.Page;
+
 namespace Vitrina.UseCases.Project.Dto;
 
 public record ResponceProjectDto : CreateProjectDto
@@ -6,4 +8,6 @@ public record ResponceProjectDto : CreateProjectDto
     ///     ID.
     /// </summary>
     public int Id { get; init; }
+
+    public PageReadyStatusEnum PageReadyStatus { get; init; }
 }

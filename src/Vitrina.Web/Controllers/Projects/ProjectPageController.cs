@@ -130,4 +130,14 @@ public class ProjectPageController(IMediator mediator) : BaseVitrinaController
         await mediator.Send(command, cancellationToken);
         return NoContent();
     }
+
+    [Authorize(Roles = "Administrator")]
+    [HttpPost("{page-id:guid}/verify")]
+    public async Task<IActionResult> Verify(
+        [FromRoute(Name = "page-id")] Guid id,
+        [FromBody] VerificationResultDto verificationResult
+        )
+    {
+        throw new NotImplementedException();
+    }
 }
