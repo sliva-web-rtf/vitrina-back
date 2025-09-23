@@ -18,7 +18,7 @@ internal class GetProjectsQueryHandler(IMapper mapper, IAppDbContext dbContext)
         CancellationToken cancellationToken)
     {
         var projects = dbContext.Projects
-            .Where(project => project.Page.ReadyStatus == PageReadyStatusEnum.Published)
+            .Where(project => project.Page.ReadyStatus != PageReadyStatusEnum.Draft)
             .OrderByDescending(project => project.Priority)
             .AsQueryable();
         var filteredProjects = ApplyFilters(projects, request);

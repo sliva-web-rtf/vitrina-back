@@ -10,7 +10,10 @@ using Vitrina.UseCases.ProjectPage.DeleteProjectPage;
 using Vitrina.UseCases.ProjectPage.Dto;
 using Vitrina.UseCases.ProjectPage.GetProjectPage;
 using Vitrina.UseCases.ProjectPage.GetProjectPageEditors;
+using Vitrina.UseCases.ProjectPage.GetVerificationResult;
+using Vitrina.UseCases.ProjectPage.SendingNotifications;
 using Vitrina.UseCases.ProjectPage.UpdateProjectPage;
+using Vitrina.UseCases.ProjectPage.VerifyPage;
 
 namespace Vitrina.Web.Controllers.Projects;
 
@@ -106,8 +109,11 @@ public class ProjectPageController(IMediator mediator) : BaseVitrinaController
     [Authorize(Roles = "Student, Curator")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> AddEditors([FromRoute(Name = "page-id")] Guid id, [FromBody] EmailDto userEmail,
-        CancellationToken cancellationToken)
+    public async Task<IActionResult> AddEditors(
+        [FromRoute(Name = "page-id")] Guid id,
+        [FromBody] EmailDto userEmail,
+        CancellationToken cancellationToken
+    )
     {
         var command = new AddEditorByUserEmailCommand(id, userEmail, GetIdAuthorizedUser());
         return Ok(await mediator.Send(command, cancellationToken));
@@ -133,11 +139,35 @@ public class ProjectPageController(IMediator mediator) : BaseVitrinaController
 
     [Authorize(Roles = "Administrator")]
     [HttpPost("{page-id:guid}/verify")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> Verify(
         [FromRoute(Name = "page-id")] Guid id,
-        [FromBody] VerificationResultDto verificationResult
-        )
+        [FromBody] VerificationResultDto verificationResult,
+        CancellationToken cancellationToken
+    )
     {
-        throw new NotImplementedException();
+        verificationResult.ModeratorId = GetIdAuthorizedUser();
+        var verifyCommand = new VerifyPageCommand(id, verificationResult);
+        await mediator.Send(verifyCommand, cancellationToken);
+
+        var sendingCommand = new SendingNotificationsCommand(id);
+        await mediator.Send(sendingCommand, cancellationToken);
+
+        return NoContent();
+    }
+
+    [Authorize(Roles = "Student, Curator, Administrator")]
+    [HttpGet("{page-id:guid}/verification-result")]
+    [ProducesResponseType<VerificationResultDto>(StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetVerificationResult(
+        [FromRoute(Name = "page-id")] Guid id,
+        CancellationToken cancellationToken
+    )
+    {
+        var query = new GetVerificationResultQuery(id, GetIdAuthorizedUser());
+
+        var result = await mediator.Send(query, cancellationToken);
+
+        return Ok(result);
     }
 }

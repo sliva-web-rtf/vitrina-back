@@ -83,4 +83,6 @@ public interface IAppDbContext : IDbContextWithSets, IDisposable
     DbSet<Resume> Resumes { get; }
 
     DbSet<VerificationResult> VerificationResults { get; }
+
+    DbSet<ModeratorView> AdminViews { get; }
 }

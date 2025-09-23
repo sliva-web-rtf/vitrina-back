@@ -1,5 +1,5 @@
-using System.Transactions;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Vitrina.Domain.Project.Page;
 using Vitrina.Infrastructure.Abstractions.Interfaces;
 using Vitrina.Infrastructure.Abstractions.Interfaces.Repositories;
@@ -21,12 +21,16 @@ public class VerifyPageCommandHandler(IProjectPageRepository pageRepository, IAp
             PageId = request.PageId,
             NewPageStatus = request.VerificationDto.NewPageStatus,
             Message = request.VerificationDto.Message,
+            ModeratorId = request.VerificationDto.ModeratorId,
         };
 
-        using var transaction = new TransactionScope();
+        var previousResult = await dbContext.VerificationResults.FirstOrDefaultAsync(result => result.PageId == request.PageId);
+        if (previousResult != null)
+        {
+            dbContext.VerificationResults.Remove(previousResult);
+        }
         await dbContext.VerificationResults.AddAsync(verificationResult, cancellationToken);
         page.ReadyStatus = request.VerificationDto.NewPageStatus;
         await dbContext.SaveChangesAsync(cancellationToken);
-        transaction.Complete();
     }
 }

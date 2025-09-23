@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Saritasa.Tools.Domain.Exceptions;
 using Vitrina.Domain.Project.Page;
 using Vitrina.Domain.User;
+using Vitrina.Infrastructure.Abstractions.Interfaces;
 using Vitrina.Infrastructure.Abstractions.Interfaces.Repositories;
 using Vitrina.UseCases.ProjectPage.Dto;
 using Vitrina.UseCases.ProjectPage.GetProjectPage;
@@ -16,6 +17,7 @@ public class GetProjectPageByIdTests
 {
     private IProjectPageRepository repository;
     private IMapper mapper;
+    private IAppDbContext dbContext;
     private UserManager<Domain.User.User> userManager;
     private GetProjectPageByIdQueryHandler handler;
 
@@ -26,13 +28,14 @@ public class GetProjectPageByIdTests
     {
         repository = A.Fake<IProjectPageRepository>();
         mapper = A.Fake<IMapper>();
+        dbContext = A.Fake<IAppDbContext>();
         userManager = A.Fake<UserManager<Domain.User.User>>(
             o => o.WithArgumentsForConstructor(
                 () => new UserManager<Domain.User.User>(
                     A.Fake<IUserStore<Domain.User.User>>(),
                     null, null, null, null, null, null, null, null)));
 
-        handler = new GetProjectPageByIdQueryHandler(repository, mapper, userManager);
+        handler = new GetProjectPageByIdQueryHandler(repository, mapper, userManager, dbContext);
     }
 
     [Test]
@@ -117,6 +120,11 @@ public class GetProjectPageByIdTests
         if (userManager is IDisposable disposable)
         {
             disposable.Dispose();
+        }
+
+        if (dbContext is IDisposable dbContextIsDisposable)
+        {
+            dbContextIsDisposable.Dispose();
         }
     }
 }

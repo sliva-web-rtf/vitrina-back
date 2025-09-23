@@ -15,7 +15,6 @@ public class ContentBlockDtoValidator : AbstractValidator<ContentBlockDto>
         { ContentTypeEnum.BlockWithTextsAndImages, typeof(BlockWithTextsAndImagesDto) },
         { ContentTypeEnum.ImageCarouselBlock, typeof(CarouselImagesDto) },
         { ContentTypeEnum.CodeBlock, typeof(CodeBlockDto) },
-        { ContentTypeEnum.CommandBlock, typeof(CommandBlockDto) },
         { ContentTypeEnum.HorizontalDividerBlock, typeof(HorizontalDividerDto) },
         { ContentTypeEnum.ImageBlock, typeof(ImageBlockDto) },
         { ContentTypeEnum.TextBlock, typeof(TextBlockDto) },

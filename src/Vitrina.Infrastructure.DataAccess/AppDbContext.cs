@@ -36,6 +36,8 @@ public class AppDbContext : IdentityDbContext<User, AppIdentityRole, int>, IAppD
 
     public DbSet<VerificationResult> VerificationResults => Set<VerificationResult>();
 
+    public DbSet<ModeratorView> AdminViews => Set<ModeratorView>();
+
     public DbSet<ProjectSphere> ProjectSpheres => Set<ProjectSphere>();
 
     public DbSet<ProjectThematics> ProjectThematics => Set<ProjectThematics>();
