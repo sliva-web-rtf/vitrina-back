@@ -6,37 +6,37 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 public class FakeDbSet<T> : DbSet<T>, IQueryable<T>, IAsyncEnumerable<T> where T : class
 {
-    private readonly IQueryable<T> _queryable;
+    private readonly IQueryable<T> queryable;
 
     public FakeDbSet(IEnumerable<T> data)
     {
-        _queryable = data.AsQueryable();
+        queryable = data.AsQueryable();
     }
 
     public override IEntityType EntityType { get; }
-    public Type ElementType => _queryable.ElementType;
+    public Type ElementType => queryable.ElementType;
 
-    public Expression Expression => _queryable.Expression;
+    public Expression Expression => queryable.Expression;
 
-    public IQueryProvider Provider => new AsyncQueryProvider<T>(_queryable.Provider);
+    public IQueryProvider Provider => new AsyncQueryProvider<T>(queryable.Provider);
 
     public IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken cancellationToken = default)
     {
-        return new AsyncEnumerator<T>(_queryable.GetEnumerator());
+        return new AsyncEnumerator<T>(queryable.GetEnumerator());
     }
 
-    public IEnumerator<T> GetEnumerator() => _queryable.GetEnumerator();
+    public IEnumerator<T> GetEnumerator() => queryable.GetEnumerator();
 
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 }
 
 internal class AsyncQueryProvider<TEntity> : IAsyncQueryProvider
 {
-    private readonly IQueryProvider _inner;
+    private readonly IQueryProvider inner;
 
     public AsyncQueryProvider(IQueryProvider inner)
     {
-        _inner = inner;
+        this.inner = inner;
     }
 
     public IQueryable CreateQuery(Expression expression)
@@ -51,12 +51,12 @@ internal class AsyncQueryProvider<TEntity> : IAsyncQueryProvider
 
     public object Execute(Expression expression)
     {
-        return _inner.Execute(expression);
+        return inner.Execute(expression);
     }
 
     public TResult Execute<TResult>(Expression expression)
     {
-        return _inner.Execute<TResult>(expression);
+        return inner.Execute<TResult>(expression);
     }
 
     public TResult ExecuteAsync<TResult>(Expression expression, CancellationToken cancellationToken)
@@ -69,12 +69,10 @@ internal class AsyncQueryProvider<TEntity> : IAsyncQueryProvider
 internal class AsyncEnumerable<T> : EnumerableQuery<T>, IAsyncEnumerable<T>, IQueryable<T>
 {
     public AsyncEnumerable(IEnumerable<T> enumerable)
-        : base(enumerable)
-    { }
+        : base(enumerable) { }
 
     public AsyncEnumerable(Expression expression)
-        : base(expression)
-    { }
+        : base(expression) { }
 
     public IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken cancellationToken = default)
     {
@@ -86,23 +84,23 @@ internal class AsyncEnumerable<T> : EnumerableQuery<T>, IAsyncEnumerable<T>, IQu
 
 internal class AsyncEnumerator<T> : IAsyncEnumerator<T>
 {
-    private readonly IEnumerator<T> _inner;
+    private readonly IEnumerator<T> inner;
 
     public AsyncEnumerator(IEnumerator<T> inner)
     {
-        _inner = inner;
+        this.inner = inner;
     }
 
-    public T Current => _inner.Current;
+    public T Current => inner.Current;
 
     public ValueTask DisposeAsync()
     {
-        _inner.Dispose();
+        inner.Dispose();
         return ValueTask.CompletedTask;
     }
 
     public ValueTask<bool> MoveNextAsync()
     {
-        return new ValueTask<bool>(_inner.MoveNext());
+        return new ValueTask<bool>(inner.MoveNext());
     }
 }
