@@ -25,8 +25,8 @@ resource "yandex_compute_instance" "vitrina_vm" {
   }
 
   network_interface {
-    subnet_id = yandex_vpc_subnet.public.id
-    nat       = true
+    subnet_id = yandex_vpc_subnet.private.id
+    nat       = false
   }
 
   metadata = {

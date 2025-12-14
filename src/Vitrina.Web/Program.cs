@@ -23,6 +23,7 @@ internal sealed class Program
         // For dev: builder.WebHost.UseUrls("http://localhost:5006");
         startup.ConfigureServices(builder.Services, builder.Environment);
         app = builder.Build();
+        app.Urls.Add("http://0.0.0.0:5000");
         startup.Configure(app, app.Environment);
         // Command line processing.
         var commandLineApplication = new CommandLineApplication<Program>();

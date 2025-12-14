@@ -6,19 +6,19 @@ export DEBIAN_FRONTEND=noninteractive
 apt-get update -y
 apt-get install -y git wget apt-transport-https ca-certificates
 
-# Установка .NET 8 (пример, проверь актуальность версии в доках Microsoft)
+# Установка .NET 8
 wget https://packages.microsoft.com/config/ubuntu/22.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
 dpkg -i packages-microsoft-prod.deb
 apt-get update -y
-apt-get install -y dotnet-sdk-8.0
+apt-get install -y aspnetcore-runtime-8.0
 
 # Создадим папку и пользователя
 useradd -m -s /bin/bash appuser || true
 mkdir -p /srv/vitrina
 chown appuser:appuser /srv/vitrina
 
-# Клонируем репозиторий (замени, если нужен другой branch)
-sudo -u appuser git clone https://github.com/sliva-web-rtf/vitrina-back.git /srv/vitrina || (cd /srv/vitrina && sudo -u appuser git pull)
+# Клонируем репозиторий
+sudo -u appuser git clone -b terraform https://github.com/sliva-web-rtf/vitrina-back.git /srv/vitrina || (cd /srv/vitrina && sudo -u appuser git pull)
 
 # Сборка
 cd /srv/vitrina
@@ -45,9 +45,3 @@ EOF
 
 systemctl daemon-reload
 systemctl enable --now vitrina.service
-
-# (опционально) установка и настройка fail2ban / ufw
-apt-get install -y ufw
-ufw allow ssh
-ufw allow 5000/tcp
-ufw --force enable
