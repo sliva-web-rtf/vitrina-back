@@ -1,5 +1,5 @@
 resource "yandex_vpc_network" "vitrina_network" {
-  name = var.network_name
+  name        = var.network_name
   description = "VPC for vitrina project"
 }
 
@@ -20,11 +20,28 @@ resource "yandex_vpc_subnet" "private" {
 resource "yandex_vpc_security_group" "alb_sg" {
   name       = "alb-sg"
   network_id = yandex_vpc_network.vitrina_network.id
+  
+  ingress {
+    protocol       = "TCP"
+    description    = "Yandex ALB health checks"
+    v4_cidr_blocks = [
+      "198.18.235.0/24",
+      "198.18.248.0/24"
+    ]
+    from_port = 1
+    to_port   = 65535
+  }
+
+  # Публичный HTTP
+  ingress {
+    protocol       = "TCP"
+    port           = 80
+    v4_cidr_blocks = ["0.0.0.0/0"]
+  }
 
   ingress {
     protocol       = "TCP"
-    description    = "HTTPS from internet"
-    port           = 80
+    port           = 443
     v4_cidr_blocks = ["0.0.0.0/0"]
   }
 
@@ -34,15 +51,23 @@ resource "yandex_vpc_security_group" "alb_sg" {
   }
 }
 
+# Security Group для VM
 resource "yandex_vpc_security_group" "vm_sg" {
   name       = "vm-sg"
   network_id = yandex_vpc_network.vitrina_network.id
 
+  # Трафик от ALB к приложению
   ingress {
     protocol          = "TCP"
-    description       = "From ALB to app"
     port              = 5000
     security_group_id = yandex_vpc_security_group.alb_sg.id
+  }
+
+  # Health checks к backend
+  ingress {
+    protocol          = "TCP"
+    port              = 5000
+    predefined_target = "loadbalancer_healthchecks"
   }
 
   egress {
