@@ -30,6 +30,6 @@ resource "yandex_compute_instance" "vitrina_vm" {
   }
 
   metadata = {
-    docker-container-declaration = file("${path.module}/docker-compose.yaml")
+    docker-compose = file("${path.module}/docker-compose.yaml")
   }
 }
