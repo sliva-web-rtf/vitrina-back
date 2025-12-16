@@ -1,32 +1,36 @@
 version: "3.8"
 
 services:
-  ###
-  # Postgres main database
   postgres:
-    hostname: redman-db
-    container_name: redman-db
     image: postgres:13
-    ports:
-      - "5432:5432" # database
+    container_name: redman-db
     environment:
-      - POSTGRES_DB=redman
-      - POSTGRES_USER=redman
-      - POSTGRES_PASSWORD=1
+      POSTGRES_DB: vitrina-test
+      POSTGRES_USER: redman
+      POSTGRES_PASSWORD: password
     volumes:
       - .data/pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U redman"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
-  ###
-  # Mail catcher
   mail:
-    hostname: redman-email
-    container_name: redman-email
     image: inbucket/inbucket
+    container_name: redman-email
     ports:
-      - "9000:9000" # web ui
-      - "2500:2500" # smtp
-      - "1100:1100" # pop3
+      - "9000:9000"
+      - "2500:2500"
+      - "1100:1100"
 
   web:
+    image: my-app
+    container_name: vitrina-web
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      ConnectionStrings__Default: "Host=postgres;Port=5432;Database=vitrina-test;Username=redman;Password=password"
     ports:
-      - "5000:8080"
+      - "5000:5000"
