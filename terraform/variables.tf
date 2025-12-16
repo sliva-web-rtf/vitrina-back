@@ -36,7 +36,7 @@ variable "vm_zone" {
 
 variable "image_id" {
   type = string
-  description = "fd84mnbiarffhtfrhnog"
+  description = "container-optimized-image"
 }
 
 variable "service_account_key_file" {

@@ -4,12 +4,12 @@ locals {
 
 # Image: ubuntu-22.04 / or choose a suitable image id
 data "yandex_compute_image" "ubuntu" {
-  family = "ubuntu-2204-lts"
+  family = "container-optimized-image"
 }
 
 resource "yandex_compute_instance" "vitrina_vm" {
   name        = "vitrina-vm"
-  platform_id = "standard-v1"
+  platform_id = "standard-v3"
   zone        = var.vm_zone
 
   resources {
@@ -31,5 +31,6 @@ resource "yandex_compute_instance" "vitrina_vm" {
 
   metadata = {
     docker-compose = file("${path.module}/docker-compose.yaml")
+    user-data      = file("${path.module}/cloud_config.yaml")
   }
 }

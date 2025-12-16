@@ -24,6 +24,7 @@ resource "yandex_compute_instance_group" "vitrina_ig" {
 
     metadata = {
       docker-compose = file("${path.module}/docker-compose.yaml")
+      user-data      = file("${path.module}/cloud_config.yaml")
     }
   }
 
