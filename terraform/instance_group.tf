@@ -23,7 +23,7 @@ resource "yandex_compute_instance_group" "vitrina_ig" {
     }
 
     metadata = {
-      user-data = file("${path.module}/vm_startup.sh")
+      docker-container-declaration = file("${path.module}/docker-compose.yaml")
     }
   }
 

@@ -21,8 +21,7 @@ chown appuser:appuser /srv/vitrina
 sudo -u appuser git clone -b terraform https://github.com/sliva-web-rtf/vitrina-back.git /srv/vitrina || (cd /srv/vitrina && sudo -u appuser git pull)
 
 # Сборка
-cd /srv/vitrina
-sudo -u appuser dotnet publish -c Release -o /srv/vitrina/published
+cd /srv/vitrina && sudo -u appuser dotnet Vitrina.Web -c Release -o /srv/vitrina/published
 
 # systemd сервис
 cat >/etc/systemd/system/vitrina.service <<'EOF'

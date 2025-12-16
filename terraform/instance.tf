@@ -19,17 +19,17 @@ resource "yandex_compute_instance" "vitrina_vm" {
 
   boot_disk {
     initialize_params {
-      image_id = "fd84mnbiarffhtfrhnog"
+      image_id = data.yandex_compute_image.ubuntu.id
       size     = 20
     }
   }
 
   network_interface {
     subnet_id = yandex_vpc_subnet.private.id
-    nat       = false
+    nat       = true
   }
 
   metadata = {
-    user-data = file("${path.module}/vm_startup.sh")
+    docker-container-declaration = file("${path.module}/docker-compose.yaml")
   }
 }
