@@ -1,5 +1,6 @@
 ﻿using McMaster.Extensions.CommandLineUtils;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 using Vitrina.Infrastructure.DataAccess;
 using Vitrina.Web.Infrastructure.Settings;
 
@@ -23,6 +24,8 @@ internal sealed class Program
         // For dev: builder.WebHost.UseUrls("http://localhost:5006");
         startup.ConfigureServices(builder.Services, builder.Environment);
         app = builder.Build();
+        //Serilog, log to console
+        builder.Host.UseSerilog((ctx, lc) => lc.WriteTo.Console());
         startup.Configure(app, app.Environment);
         // Command line processing.
         var commandLineApplication = new CommandLineApplication<Program>();
