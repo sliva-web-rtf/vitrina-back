@@ -33,4 +33,8 @@ resource "yandex_compute_instance" "vitrina_vm" {
     docker-compose = file("${path.module}/docker-compose.yaml")
     user-data      = file("${path.module}/cloud_config.yaml")
   }
+
+  depends_on = [
+    yandex_mdb_postgresql_cluster.project-postgres
+  ]
 }

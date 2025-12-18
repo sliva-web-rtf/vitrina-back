@@ -13,7 +13,7 @@ services:
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U redman"]
       interval: 5s
-      timeout: 5s
+      timeout: 15s
       retries: 5
 
   mail:
@@ -31,6 +31,6 @@ services:
       postgres:
         condition: service_healthy
     environment:
-      ConnectionStrings__Default: "Host=postgres;Port=5432;Database=vitrina-test;Username=redman;Password=password"
+      ConnectionStrings__Default: "Host=redman-db;Port=5432;Database=vitrina-test;Username=redman;Password=password"
     ports:
       - "5000:5000"
