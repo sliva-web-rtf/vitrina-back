@@ -1,10 +1,8 @@
 using FluentValidation;
 using FluentValidation.AspNetCore;
-using MediatR;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Vitrina.UseCases.ProjectPage;
-using Vitrina.Web.Infrastructure.Behaviors;
 
 namespace Vitrina.Web.Infrastructure.DependencyInjection;
 
@@ -30,6 +28,5 @@ internal static class ApplicationModule
             });
         services.AddFluentValidationAutoValidation();
         services.AddValidatorsFromAssemblyContaining<ContentBlockDtoValidator>();
-        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(SerilogLoggingBehavior<,>));
     }
 }
