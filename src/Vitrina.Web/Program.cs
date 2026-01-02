@@ -23,9 +23,9 @@ internal sealed class Program
         var startup = new Startup(builder.Configuration);
         // For dev: builder.WebHost.UseUrls("http://localhost:5006");
         startup.ConfigureServices(builder.Services, builder.Environment);
-        app = builder.Build();
         //Serilog, log to console
         builder.Host.UseSerilog((ctx, lc) => lc.WriteTo.Console());
+        app = builder.Build();
         startup.Configure(app, app.Environment);
         // Command line processing.
         var commandLineApplication = new CommandLineApplication<Program>();
