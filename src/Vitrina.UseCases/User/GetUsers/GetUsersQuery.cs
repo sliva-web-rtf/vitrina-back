@@ -10,6 +10,7 @@ namespace Vitrina.UseCases.User.GetUsers;
 /// </summary>
 public record GetUsersQuery : IRequest<PagedList<ResponceShortenedUserDto>>
 {
+    [EmailAddress]
     public string? Email { get; init; }
 
     /// <summary>

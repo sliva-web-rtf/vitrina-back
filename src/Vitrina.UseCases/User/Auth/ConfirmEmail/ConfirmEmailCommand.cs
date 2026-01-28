@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using MediatR;
 
 namespace Vitrina.UseCases.User.Auth.ConfirmEmail;
@@ -15,5 +16,6 @@ public class ConfirmEmailCommand : IRequest<ConfirmEmailCommandResult>
     /// <summary>
     ///     Confirmation code.
     /// </summary>
+    [DataType(DataType.Password)]
     public string ConfirmationCode { get; init; }
 }

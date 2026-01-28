@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace Vitrina.UseCases.User.DTO;
 
 public record RequestShortenedUserDto
@@ -20,5 +22,6 @@ public record RequestShortenedUserDto
     /// <summary>
     ///     User email.
     /// </summary>
+    [EmailAddress]
     public string Email { get; init; }
 }

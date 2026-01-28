@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace Vitrina.UseCases.User.DTO;
 
 /// <summary>
@@ -13,6 +15,7 @@ public class UserDetailsDto
     /// <summary>
     ///     User email.
     /// </summary>
+    [EmailAddress]
     required public string Email { get; set; }
 
     /// <summary>
