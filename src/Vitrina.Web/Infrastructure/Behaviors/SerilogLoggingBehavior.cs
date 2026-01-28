@@ -1,4 +1,6 @@
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
+using System.Reflection;
 using MediatR;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -17,7 +19,7 @@ public class SerilogLoggingBehavior<TRequest, TResponse>(
         Formatting = Formatting.None,
         NullValueHandling = NullValueHandling.Ignore,
         ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-        ContractResolver = new CamelCasePropertyNamesContractResolver(),
+        ContractResolver = new SensitiveDataContractResolver(),
         MaxDepth = 2
     };
 
