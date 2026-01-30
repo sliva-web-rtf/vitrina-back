@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Destructurama.Attributed;
 using MediatR;
 
 namespace Vitrina.UseCases.User.Auth.Login;
@@ -14,6 +15,7 @@ public record LoginUserCommand : IRequest<LoginUserCommandResult>
     [EmailAddress]
     [Required]
     [DataType(DataType.EmailAddress)]
+    [LogMasked]
     required public string Email { get; init; }
 
     /// <summary>
@@ -21,6 +23,7 @@ public record LoginUserCommand : IRequest<LoginUserCommandResult>
     /// </summary>
     [Required]
     [DataType(DataType.Password)]
+    [LogMasked]
     required public string Password { get; init; }
 
     /// <summary>

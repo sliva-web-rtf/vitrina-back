@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Destructurama.Attributed;
 
 namespace Vitrina.UseCases.User.DTO;
 
@@ -15,7 +16,7 @@ public class UserDetailsDto
     /// <summary>
     ///     User email.
     /// </summary>
-    [EmailAddress]
+    [LogMasked]
     required public string Email { get; set; }
 
     /// <summary>

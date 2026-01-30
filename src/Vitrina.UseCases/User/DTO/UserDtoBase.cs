@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Destructurama.Attributed;
 using Vitrina.Domain.User;
 
 namespace Vitrina.UseCases.User.DTO;
@@ -16,12 +17,12 @@ public abstract record UserDtoBase : ResponceShortenedUserDto
     /// <summary>
     ///     Telegram username of user.
     /// </summary>
-    [EmailAddress]
+    [LogMasked]
     public string? Telegram { get; init; }
 
     /// <summary>
     ///     User phone number.
     /// </summary>
-    [DataType(DataType.PhoneNumber)]
+    [LogMasked]
     public string? PhoneNumber { get; init; }
 }
