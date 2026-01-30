@@ -1,9 +1,5 @@
-using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
-using System.Reflection;
 using MediatR;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 using Serilog.Context;
 
 
@@ -14,27 +10,17 @@ public class SerilogLoggingBehavior<TRequest, TResponse>(
     : IPipelineBehavior<TRequest, TResponse>
     where TRequest : IRequest<TResponse>
 {
-    private static readonly JsonSerializerSettings JsonSettings = new()
-    {
-        Formatting = Formatting.None,
-        NullValueHandling = NullValueHandling.Ignore,
-        ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-        ContractResolver = new SensitiveDataContractResolver(),
-        MaxDepth = 2
-    };
-
     public async Task<TResponse> Handle(
         TRequest request,
         RequestHandlerDelegate<TResponse> next,
         CancellationToken cancellationToken)
     {
         var requestName = typeof(TRequest).Name;
-        var requestJson = JsonConvert.SerializeObject(request, JsonSettings);
         using (LogContext.PushProperty("RequestName", requestName))
         {
             logger.LogInformation(
-                "[MediatR] Starting request {RequestName}, input: {RequestJson}",
-                requestName, requestJson);
+                "[MediatR] Starting request {RequestName}, input: {@RequestJson}",
+                requestName, request);
 
             var stopwatch = Stopwatch.StartNew();
 
@@ -42,10 +28,9 @@ public class SerilogLoggingBehavior<TRequest, TResponse>(
             {
                 var response = await next();
                 stopwatch.Stop();
-                var responseJson = JsonConvert.SerializeObject(response, JsonSettings);
                 logger.LogInformation(
-                    "[MediatR] Completed request {RequestName} in {ElapsedMs}ms, output: {ResponseJson}",
-                    requestName, stopwatch.ElapsedMilliseconds, responseJson);
+                    "[MediatR] Completed request {RequestName} in {ElapsedMs}ms, output: {@ResponseJson}",
+                    requestName, stopwatch.ElapsedMilliseconds, response);
 
                 return response;
             }
