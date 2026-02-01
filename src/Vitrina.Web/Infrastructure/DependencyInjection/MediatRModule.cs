@@ -1,7 +1,9 @@
+using MediatR;
 using Vitrina.Infrastructure.Abstractions.Interfaces.Repositories;
 using Vitrina.Infrastructure.DataAccess.Repositories;
 using Vitrina.UseCases.Project.CreateProject;
 using Vitrina.UseCases.User;
+using Vitrina.Web.Infrastructure.Behaviors;
 
 namespace Vitrina.Web.Infrastructure.DependencyInjection;
 
@@ -20,6 +22,10 @@ internal static class MediatRModule
         services.AddTransient<ISpecializationRepository, SpecializationRepository>();
         services.AddTransient<IProjectPageRepository, ProjectPageRepository>();
         services.AddTransient<IPageEditorRepository, PageEditorRepository>();
-        services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateProjectCommand).Assembly));
+        services.AddMediatR(cfg =>
+        {
+            cfg.RegisterServicesFromAssembly(typeof(CreateProjectCommand).Assembly);
+            cfg.AddBehavior(typeof(IPipelineBehavior<,>), typeof(SerilogLoggingBehavior<,>));
+        });
     }
 }
