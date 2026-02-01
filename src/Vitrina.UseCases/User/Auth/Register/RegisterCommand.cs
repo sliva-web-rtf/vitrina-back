@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Destructurama.Attributed;
 using MediatR;
 using Vitrina.Domain.User;
 
@@ -14,6 +15,7 @@ public class RegisterCommand : IRequest<RegisterCommandResult>
     /// </summary>
     [Required]
     [EmailAddress]
+    [LogMasked]
     required public string Email { get; set; }
 
     /// <summary>
@@ -21,6 +23,7 @@ public class RegisterCommand : IRequest<RegisterCommandResult>
     /// </summary>
     [Required]
     [DataType(DataType.Password)]
+    [LogMasked]
     required public string Password { get; set; }
 
     /// <summary>
@@ -29,6 +32,7 @@ public class RegisterCommand : IRequest<RegisterCommandResult>
     [Required]
     [Compare("Password", ErrorMessage = "Пароли не совпадают")]
     [DataType(DataType.Password)]
+    [LogMasked]
     required public string PasswordConfirm { get; set; }
 
     /// <summary>

@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+using Destructurama.Attributed;
 using MediatR;
 
 namespace Vitrina.UseCases.User.Auth.ConfirmEmail;
@@ -15,5 +17,6 @@ public class ConfirmEmailCommand : IRequest<ConfirmEmailCommandResult>
     /// <summary>
     ///     Confirmation code.
     /// </summary>
+    [LogMasked]
     public string ConfirmationCode { get; init; }
 }

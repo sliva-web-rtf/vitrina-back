@@ -1,5 +1,7 @@
-﻿using McMaster.Extensions.CommandLineUtils;
+﻿using Destructurama;
+using McMaster.Extensions.CommandLineUtils;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 using Vitrina.Infrastructure.DataAccess;
 using Vitrina.Web.Infrastructure.Settings;
 
@@ -22,6 +24,14 @@ internal sealed class Program
         var startup = new Startup(builder.Configuration);
         // For dev: builder.WebHost.UseUrls("http://localhost:5006");
         startup.ConfigureServices(builder.Services, builder.Environment);
+        //Serilog, log to console
+        builder.Host.UseSerilog((context, services, configuration) => {
+            configuration
+                .WriteTo.Console()
+                .Destructure.UsingAttributes()
+                .ReadFrom.Configuration(context.Configuration)
+                .ReadFrom.Services(services);
+        });
         app = builder.Build();
         startup.Configure(app, app.Environment);
         // Command line processing.

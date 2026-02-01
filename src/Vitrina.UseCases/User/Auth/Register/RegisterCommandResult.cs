@@ -1,3 +1,6 @@
+using System.ComponentModel.DataAnnotations;
+using Destructurama.Attributed;
+
 namespace Vitrina.UseCases.User.Auth.Register;
 
 /// <summary>
@@ -18,6 +21,8 @@ public class RegisterCommandResult
     /// <summary>
     ///     Confirmation сode.
     /// </summary>
+    [DataType(DataType.Password)]
+    [LogMasked]
     public string ConfirmationCode { get; set; }
 
     /// <summary>

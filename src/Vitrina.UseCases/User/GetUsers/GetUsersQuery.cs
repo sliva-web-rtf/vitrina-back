@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Destructurama.Attributed;
 using MediatR;
 using Saritasa.Tools.Common.Pagination;
 using Vitrina.UseCases.User.DTO;
@@ -10,6 +11,7 @@ namespace Vitrina.UseCases.User.GetUsers;
 /// </summary>
 public record GetUsersQuery : IRequest<PagedList<ResponceShortenedUserDto>>
 {
+    [LogMasked]
     public string? Email { get; init; }
 
     /// <summary>
